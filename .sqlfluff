@@ -1,0 +1,19 @@
+[sqlfluff]
+templater = dbt
+dialect = postgresql #Check docks
+exclude_rules = ST06
+
+[sqlfluff:rules:capitalisation.identifiers]
+extended_capitalisation_policy = lower
+unquoted_identifiers_policy = all
+
+[sqlfluff:rules:capitalisation.keywords]
+capitalisation_policy = lower
+
+[sqlfluff:rules:capitalisation.functions]
+extended_capitalisation_policy = lower
+
+[sqlfluff:templater:dbt]
+project_dir = dags/transform/dbt
+profiles_dir = dags/transform/dbt
+profile = postgresql #Check docks
