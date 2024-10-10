@@ -8,6 +8,7 @@
 /captures
 .externalNativeBuild
 .cxx
+My_Copy.java
 build.gradle.kts
 gradle.properties
 gradlew
