@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.os.Bundle
 import android.view.Gravity
@@ -40,7 +41,10 @@ class MainActivity : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.navigationBarColor = ContextCompat.getColor(this, R.color.navigationBar)
         }
-
+        ////////////////
+        window.statusBarColor = ContextCompat.getColor(this, R.color.statusBar_night)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        ////////////////////
         bottomNavigationView = findViewById(R.id.bottomNavigationView)
         fab = findViewById(R.id.fab)
 
@@ -59,7 +63,22 @@ class MainActivity : AppCompatActivity() {
         fab.setOnClickListener{
             showBottomDialog()
         }
+
+        val yourView = findViewById<View>(R.id.frame_layout)
+
+        val gradientDrawable = GradientDrawable(
+            GradientDrawable.Orientation.TOP_BOTTOM,
+            intArrayOf(
+                ContextCompat.getColor(this, R.color.dark_color_start),
+                ContextCompat.getColor(this, R.color.dark_color_middle),
+                ContextCompat.getColor(this, R.color.dark_color_end),
+                ContextCompat.getColor(this, R.color.fragment_bcgr_night)
+            )
+        )
+        gradientDrawable.setDither(true)
+        yourView.background = gradientDrawable
     }
+
     private  fun replaceFragment(fragment: Fragment) {
         val fragmentManager = getSupportFragmentManager();
         val fragmentTransaction = fragmentManager.beginTransaction();
@@ -124,9 +143,11 @@ class MainActivity : AppCompatActivity() {
         val sharedPreferences = getSharedPreferences("MODE", Context.MODE_PRIVATE)
         if (sharedPreferences.getBoolean("night", false)) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            window.statusBarColor = ContextCompat.getColor(this, R.color.statusBar_night)
             getWindow().setStatusBarColor(getResources().getColor(R.color.panel_night))
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            window.statusBarColor = ContextCompat.getColor(this, R.color.statusBar_day)
             getWindow().setStatusBarColor(getResources().getColor(R.color.panel_light))
         }
     }

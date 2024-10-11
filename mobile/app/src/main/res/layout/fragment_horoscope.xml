@@ -1,15 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/horoscopeFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HoroscopeFragment">
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context=".HoroscopeFragment"
+    style="@style/Fragment">
 
-    <TextView
+    <LinearLayout
+        android:id="@+id/zodiac_selection_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            style="@style/TextOnPrimary"
+            android:id="@+id/tv_zodiac_sign"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/horoscope_setSign_title"
+            android:textStyle="bold"
+            android:textSize="32sp"
+            android:layout_gravity="center"
+            android:paddingBottom="16dp"/>
+
+        <TextView
+            style="@style/TextOnPrimary"
+            android:id="@+id/tv_horoscope_today"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/horoscope_setSign_descrp"
+            android:textSize="22sp"
+            android:layout_gravity="center"
+            android:paddingBottom="44dp"/>
+
+        <Button
+            android:id="@+id/btn_refresh_horoscope"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/hotoscope_setSign_button"
+            android:textSize="22sp"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/primaryVariant"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Horoscope"
-        android:textSize="34sp"
-        android:gravity="center"/>
+        android:fillViewport="true"
+        android:scrollbars="none">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/zodiac_main_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="visible">
 
-</FrameLayout>
+            <ImageView
+                style="@style/ImageIcon"
+                android:id="@+id/iconImage"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_sign_libra"
+                app:layout_constraintHeight_percent="0.25"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/zodiacSignText" />
+
+            <TextView
+                android:id="@+id/zodiacSignText"
+                style="@style/TextOnPrimary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:text="@string/horoscope_sign_name"
+                android:textSize="32sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iconImage" />
+
+            <TextView
+                android:id="@+id/tv_horoscope_today2"
+                style="@style/TextOnPrimary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:fontFamily="sans-serif"
+                android:gravity="center"
+                android:letterSpacing="0.02"
+                android:lineSpacingExtra="6dp"
+                android:paddingBottom="20dp"
+                android:text="@string/horoscope_sign_descrp"
+                android:textSize="22sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/zodiacSignText" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</LinearLayout>

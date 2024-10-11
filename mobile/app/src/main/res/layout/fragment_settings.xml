@@ -3,12 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SettingsFragment">
+    tools:context=".SettingsFragment"
+    style="@style/Fragment">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <TextView
+            style="@style/TextOnPrimary"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="Мій хазяїн, якщо потрібно прибрати порожні місця з самого векторного малюнка, то вам потрібно відредагувати атрибути pathData у вашому SVG.

@@ -3,25 +3,36 @@
     <color name="primary">#71D4F2</color>
     <color name="primaryVariant">#1D93D1</color>
     <color name="onPrimary">#3762CA</color>
-
     <color name="secondary">#3762CA</color>
     <color name="secondaryVariant">#3762CA</color>
     <color name="onSecondary">#3762CA</color>
     <color name="white">#FFFFFFFF</color>
     <color name="black">#000000</color>
     <color name="navigationBar">#000000</color>
+    <color name="transparent">#00FFFFFF</color>
+
     <color name="selected_item_day">#E1EEF8</color>
     <color name="selected_item_night">#E1EEF8</color>
+    <color name="text_onPrimary_day">#FF000000</color>
+    <color name="text_onPrimary_day2">#000000</color>
+    <color name="text_onPrimary_night">#FFD4E5F4</color>
+    <color name="nav_button_day">#E1EEF8</color>
+    <color name="nav_button_night">#183045</color>
+    <color name="statusBar_day">#2B8FC1</color>
+    <color name="statusBar_night">#FF121212</color>
+    <color name="fragment_bcgr_day">#CFEEFB</color>
+    <color name="fragment_bcgr_night">#0D1921</color>
+    <color name="background_night">#152431</color>
 
-
-
+    <color name="light_color_start">#FFFFFF</color>
+    <color name="light_color_middle">#000000</color>
+    <color name="light_color_end">#000000</color>
+    <color name="dark_color_start">#132B3C</color>
+    <color name="dark_color_middle">#12212B</color>
+    <color name="dark_color_end">#0F1E25</color>
 
     <color name="dark_blue">#131F29</color>
     <color name="background_light">#FFFFF4E4</color>
-    <color name="background_night">#FF192730</color>
-    <color name="text_light">#FF000000</color>
-    <color name="text_light_gray">#FF79726a</color>
-    <color name="text_night">#FFD4E5F4</color>
     <color name="button_bgTint_light">#FF8F5A5A</color>
     <color name="button_bgTint_night">#FF374955</color>
     <color name="button_text_light">#FFFFFFFF</color>

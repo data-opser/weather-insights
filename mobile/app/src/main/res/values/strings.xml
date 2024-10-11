@@ -1,10 +1,14 @@
 <resources>
-    <string name="app_name">weather-insights</string>
+    <string name="app_name">Weather insights</string>
     <string name="page1">Weather</string>
     <string name="page2">Premium</string>
     <string name="page3">Horoscope</string>
     <string name="page4">Settings</string>
     <string name="error">error :(</string>
-
+    <string name="horoscope_setSign_title">Your Zodiac Sign</string>
+    <string name="horoscope_setSign_descrp">Choose your zodiac sign in settings</string>
+    <string name="horoscope_sign_name">Libra</string>
+    <string name="horoscope_sign_descrp">У понеділок сконцентруйте свою увагу на дрібних турботах і справах, і все більші проблеми вирішаться самі собою. У вівторок та середу Вам слід виявляти особливу обережність у стосунках з іншими людьми. Вкладайте в них більше уваги та сил. Якщо Вам потрібно написати якийсь важливий лист, виділіть додатковий час на те, щоб надати йому відтінок зайнятості та чемності. У четвер і п`ятницю намагайтеся утримуватися від надмірностей у їжі та зберігати нейтральну позицію у відносинах із ворогуючими друзями. Субота та неділя протікатимуть у вельми неоднозначному ключі.</string>
+    <string name="hotoscope_setSign_button">Go to settings</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
