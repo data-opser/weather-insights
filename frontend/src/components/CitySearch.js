@@ -3,7 +3,7 @@ import '../styles/CitySearch.css'
 function CitySearch() {
     return (
       <div className="CitySearch">
-        <p>City</p>
+        <input type='text' placeholder='City...'></input>
       </div>
     );
   }
