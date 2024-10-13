@@ -1,10 +1,29 @@
+.CitySearch {
+    margin: 1% 2%;
+    height: 30px;
+    cursor: pointer;
+    display: flex;
+    padding: 1% 2%;
+    background-color: white;
+    border-radius: 1.5em;
+    align-items: center;
+    box-shadow: 0 5px 10px black;
+    justify-content: space-between;
+    width: 20%;
+}
 
 .CitySearch input {
     background-color: rgb(255, 255, 255);
     color: black;
-    width: 200px;
+    width: 90%;
     margin: 1% 2%;
     border-radius: 1.5em;
     border: 0;
     font-size: 24px;
+    outline: none;
+}
+
+.loopa {
+    width: auto;
+    height: 90%;
 }
