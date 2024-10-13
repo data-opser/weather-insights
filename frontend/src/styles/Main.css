@@ -1,6 +1,5 @@
 .Main {
     background-color: #BDECFF;
-    height: 200px;
     display: flex;
     flex-direction: column;
 }
