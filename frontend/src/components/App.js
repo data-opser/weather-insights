@@ -1,14 +1,14 @@
-import '../styles/App.css';
-import Main from './Main';
-import Header from './Header';
-
-function App() {
-  return (
-    <div className="App">
-      <Header />
-      <Main />
-    </div>
-  );
-}
-
+import '../styles/App.css'; 
+import Header from './Header'; 
+import Main from './Main'; 
+ 
+function App() { 
+  return ( 
+    <div className="App"> 
+      <Header /> 
+      <Main />  
+    </div> 
+  ); 
+} 
+ 
 export default App;
