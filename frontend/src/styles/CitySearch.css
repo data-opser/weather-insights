@@ -1,7 +1,4 @@
-.CitySearch {
-    
 
-}
 .CitySearch input {
     background-color: rgb(255, 255, 255);
     color: black;
@@ -9,4 +6,5 @@
     margin: 1% 2%;
     border-radius: 1.5em;
     border: 0;
+    font-size: 24px;
 }
