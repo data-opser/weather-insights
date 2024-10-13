@@ -1,2 +1,4 @@
 dbt-core
 dbt-postgres
+dlt==1.2.0
+astronomer-cosmos

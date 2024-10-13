@@ -1,3 +1,11 @@
+# ignore basic python artifacts
+.env
+**/__pycache__/
+**/*.py[cod]
+**/*$py.class
+
 *.idea
 *.terraform*
 terraform.tfstate
+venv/
+*.DS_Store
