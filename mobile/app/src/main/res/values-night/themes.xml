@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Theme.Weatherinsights" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:navigationBarColor">#FF0000</item>
@@ -17,6 +17,8 @@
     </style>
     <style name="TextOnPrimary">
         <item name="android:textColor">@color/text_onPrimary_night</item>
+        <!--<item name="android:letterSpacing">0.02</item>-->
+        <item name="android:fontFamily">@font/inkfree</item>
     </style>
 
     <style name="TextOnPrimary2">

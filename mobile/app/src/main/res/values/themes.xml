@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto" >
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <style name="Theme.Weatherinsights" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorPrimary">@color/primary</item>
@@ -36,6 +33,8 @@
     </style>
     <style name="TextOnPrimary">
         <item name="android:textColor">@color/text_onPrimary_day</item>
+        <!--<item name="android:letterSpacing">0.02</item>-->
+        <item name="android:fontFamily">@font/inkfree</item>
     </style>
     <style name="TextOnPrimary2">
         <item name="android:textColor">@color/text_onPrimary_day2</item>

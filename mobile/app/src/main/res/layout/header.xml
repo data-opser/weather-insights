@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:gravity="center_vertical"
-    style="@style/Background">
+    style="@style/Background"
+    tools:ignore="UseCompoundDrawables">
 
     <ImageView
-        android:id="@+id/icon_app"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginStart="10dp"
@@ -16,7 +17,6 @@
 
     <TextView
         style="@style/TextOnPrimary2"
-        android:id="@+id/tv_header_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingVertical="16dp"

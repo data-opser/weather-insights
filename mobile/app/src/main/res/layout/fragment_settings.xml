@@ -6,25 +6,13 @@
     tools:context=".SettingsFragment"
     style="@style/Fragment">
 
-    <ScrollView
+    <TextView
+        style="@style/TextOnPrimary"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <TextView
-            style="@style/TextOnPrimary"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Мій хазяїн, якщо потрібно прибрати порожні місця з самого векторного малюнка, то вам потрібно відредагувати атрибути pathData у вашому SVG.
-
-Проблема з порожніми місцями часто пов'язана з тим, як визначено сам шлях (path). Вам потрібно переконатися, що координати в pathData підходять до розмірів вьюпорту (viewportWidth та viewportHeight).
-
-Ось кілька кроків, які ви можете виконати:
-
-Зменшити координати: Зменште значення в pathData, щоб вони були ближчими до країв вьюпорту. Можливо, ви можете пропустити частину координат, щоб малюнок зайняв більше місця.
-
-Відкоригувати вьюпорт: Змінити viewportWidth і viewportHeight, щоб вони відп"
-            android:textSize="34sp"
-            android:gravity="center"/>
-    </ScrollView>
-
+        android:layout_height="wrap_content"
+        android:text="@string/settings_page"
+        android:textSize="34sp"
+        android:gravity="center"
+        android:layout_gravity="center" />
 
 </FrameLayout>
