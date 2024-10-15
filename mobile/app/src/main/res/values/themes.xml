@@ -1,5 +1,6 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
     <style name="Theme.Weatherinsights" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryVariant">@color/primaryVariant</item>
@@ -11,6 +12,10 @@
 
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <item name="android:navigationBarColor">#FF0000</item>
+
+        <item name="gradientStartColor">@color/light_color_start</item>
+        <item name="gradientMiddleColor">@color/light_color_middle</item>
+        <item name="gradientEndColor">@color/light_color_middle</item>
     </style>
 
     <style name="DialogAnimation">
@@ -18,20 +23,36 @@
         <item name="android:windowExitAnimation">@anim/slide_out</item>
     </style>
 
+
     <!-- DAY STYLE-->
 
-
+    <style name="Fragment">
+    </style>
     <style name="Background">
         <item name="android:background">@color/primary</item>
     </style>
-
+    <style name="TextOnPrimary">
+        <item name="android:textColor">@color/text_onPrimary_day</item>
+        <!--<item name="android:letterSpacing">0.02</item>-->
+        <item name="android:fontFamily">@font/inkfree</item>
+    </style>
+    <style name="TextOnPrimary2">
+        <item name="android:textColor">@color/text_onPrimary_day2</item>
+    </style>
+    <style name="NavigationView">
+        <item name="itemIconTint">@color/text_onPrimary_day</item>
+        <item name="itemTextColor">@color/text_onPrimary_day</item>
+        <item name="android:background">@color/primary</item>
+    </style>
+    <style name="FloatingActionButton">
+        <item name="tint">@color/primaryVariant</item>
+        <item name="android:backgroundTint">@color/nav_button_day</item>
+    </style>
+    <style name="ImageIcon">
+        <item name="tint">@color/text_onPrimary_day</item>
+    </style>
     <style name="App.Custom.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
         <item name="android:color">@color/selected_item_day</item>
     </style>
-
-
-
-
-
 
 </resources>

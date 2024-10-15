@@ -1,10 +1,23 @@
 <resources>
-    <string name="app_name">weather-insights</string>
-    <string name="page1">Weather</string>
-    <string name="page2">Premium</string>
-    <string name="page3">Horoscope</string>
-    <string name="page4">Settings</string>
+    <string name="app_name">Weather insights</string>
+    <string name="weather_page">Weather</string>
+    <string name="premium_page">Premium</string>
+    <string name="horoscope_page">Horoscope</string>
+    <string name="settings_page">Settings</string>
     <string name="error">error :(</string>
+    <string name="bottom_menu_title">Add weather</string>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="horoscope_setSign_title">Your Zodiac Sign</string>
+    <string name="horoscope_setSign_descrp">Choose your zodiac sign in settings</string>
+    <string name="horoscope_sign_name">Libra</string>
+    <string name="horoscope_sign_descrp">\u00A0\u00A0\u00A0\u00A0This day may bring unexpected
+        changes to your plans. You will feel that life is pushing you to make important
+        decisions, especially in your personal relationships and career. In the morning,
+        there may be minor conflicts or misunderstandings, but they will quickly disappear
+        if you show patience and diplomacy, which Libras are usually known for. In the
+        afternoon, the stars will favour conversations that will help clarify the situation
+        and strengthen relationships.\u00A0\u00A0\u00A0\u00A0In the financial sphere, you
+        should be careful - do not make hasty decisions about money, it is better to postpone
+        any important purchases. Instead, focus on long-term plans.</string>
+    <string name="horoscope_setSign_button">Go to settings</string>
 </resources>
