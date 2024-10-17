@@ -16,7 +16,7 @@
         android:visibility="gone">
 
         <TextView
-            style="@style/TextOnPrimary"
+            style="@style/Text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/horoscope_setSign_title"
@@ -26,7 +26,7 @@
             android:paddingBottom="16dp"/>
 
         <TextView
-            style="@style/TextOnPrimary"
+            style="@style/Text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/horoscope_setSign_descrp"
@@ -56,7 +56,6 @@
             android:visibility="visible">
 
             <ImageView
-                style="@style/ImageIcon"
                 android:id="@+id/iconImage"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -69,28 +68,29 @@
 
             <TextView
                 android:id="@+id/zodiacSignText"
-                style="@style/TextOnPrimary"
+                style="@style/Text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 android:text="@string/horoscope_sign_name"
                 android:textSize="32sp"
+                android:fontFamily="@font/inkfree"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/iconImage" />
 
             <com.codesgood.views.JustifiedTextView
-                style="@style/TextOnPrimary"
+                style="@style/Text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:lineSpacingExtra="6dp"
                 android:paddingBottom="20dp"
                 android:paddingHorizontal="10dp"
+                android:fontFamily="@font/inkfree"
                 android:text="@string/horoscope_sign_descrp"
-                android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/zodiacSignText"

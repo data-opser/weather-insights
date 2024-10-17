@@ -27,30 +27,48 @@
     <!-- DAY STYLE-->
 
     <style name="Fragment">
+        <item name="android:paddingTop">20dp</item>
+        <item name="android:background">@drawable/gradient_bcgrd_day</item>
     </style>
+
+    <style name="Layout">
+        <item name="android:background">@color/layout_night</item>
+    </style>
+
     <style name="Background">
         <item name="android:background">@color/primary</item>
     </style>
-    <style name="TextOnPrimary">
+
+    <style name="Text">
+        <item name="android:fontFamily">@font/inter</item>
+        <item name="android:textSize">24sp</item>
         <item name="android:textColor">@color/text_onPrimary_day</item>
-        <!--<item name="android:letterSpacing">0.02</item>-->
-        <item name="android:fontFamily">@font/inkfree</item>
     </style>
-    <style name="TextOnPrimary2">
-        <item name="android:textColor">@color/text_onPrimary_day2</item>
+
+    <style name="TextSmallAndGray">
+        <item name="android:fontFamily">@font/inter</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/text_onPrimary_gray_day</item>
     </style>
+
+    <style name="SwitchCompat">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="trackTint">@drawable/switch_track_day</item>
+        <item name="thumbTint">@drawable/switch_thump_day</item>
+    </style>
+
     <style name="NavigationView">
         <item name="itemIconTint">@color/text_onPrimary_day</item>
         <item name="itemTextColor">@color/text_onPrimary_day</item>
         <item name="android:background">@color/primary</item>
     </style>
+
     <style name="FloatingActionButton">
         <item name="tint">@color/primaryVariant</item>
         <item name="android:backgroundTint">@color/nav_button_day</item>
     </style>
-    <style name="ImageIcon">
-        <item name="tint">@color/text_onPrimary_day</item>
-    </style>
+
     <style name="App.Custom.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
         <item name="android:color">@color/selected_item_day</item>
     </style>

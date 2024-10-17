@@ -16,7 +16,7 @@
         android:contentDescription="@string/error" />
 
     <TextView
-        style="@style/TextOnPrimary2"
+        style="@style/Text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingVertical="16dp"

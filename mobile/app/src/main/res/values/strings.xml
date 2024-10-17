@@ -4,9 +4,9 @@
     <string name="premium_page">Premium</string>
     <string name="horoscope_page">Horoscope</string>
     <string name="settings_page">Settings</string>
+    <string name="settings_page_title">App Settings</string>
     <string name="error">error :(</string>
     <string name="bottom_menu_title">Add weather</string>
-
     <string name="horoscope_setSign_title">Your Zodiac Sign</string>
     <string name="horoscope_setSign_descrp">Choose your zodiac sign in settings</string>
     <string name="horoscope_sign_name">Libra</string>
@@ -20,4 +20,14 @@
         should be careful - do not make hasty decisions about money, it is better to postpone
         any important purchases. Instead, focus on long-term plans.</string>
     <string name="horoscope_setSign_button">Go to settings</string>
+
+    <string name="settings_notify_main">Notifications</string>
+    <string name="settings_notify_addition">Turn on notifications</string>
+    <string name="settings_notify_descrp">Turn on notifications</string>
+    <string name="settings_theme_main">Dark theme</string>
+    <string name="settings_theme_addition">Application theme</string>
+    <string name="settings_theme_descrp">Turn on dark theme</string>
+    <string name="settings_1_main">Go to settings</string>
+    <string name="settings_1_addition">Go to settings</string>
+
 </resources>

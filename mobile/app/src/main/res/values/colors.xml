@@ -7,17 +7,31 @@
     <color name="secondaryVariant">#3762CA</color>
     <color name="onSecondary">#3762CA</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="black">#FF000000</color>
     <color name="navigationBar">#000000</color>
 
     <color name="selected_item_day">#E1EEF8</color>
     <color name="text_onPrimary_day">#FF000000</color>
-    <color name="text_onPrimary_day2">#000000</color>
     <color name="text_onPrimary_night">#FFD4E5F4</color>
+    <color name="text_onPrimary_gray_day">#9E9E9E</color>
+    <color name="text_onPrimary_gray_night">#9E9E9E</color>
     <color name="nav_button_day">#E1EEF8</color>
     <color name="statusBar_day">#2B8FC1</color>
     <color name="statusBar_night">#FF121212</color>
+    <color name="switch_track_on_day">#2B8FC1</color>
+    <color name="switch_track_off_day">#2B8FC1</color>
+    <color name="switch_track_on_night">#157216</color>
+    <color name="switch_track_off_night">#5A5A5A</color>
+    <color name="switch_thumb_on_day">#2B8FC1</color>
+    <color name="switch_thumb_off_day">#2B8FC1</color>
+    <color name="switch_thumb_on_night">#0ab207</color>
+    <color name="switch_thumb_off_night">#B0B0B0</color>
+
+
     <color name="fragment_bcgrd_night">#0D1921</color>
     <color name="background_night">#152431</color>
+    <color name="layout_day">#2A3945</color>
+    <color name="layout_night">#213545</color>
 
     <color name="light_color_start">#FFFFFF</color>
     <color name="light_color_middle">#000000</color>

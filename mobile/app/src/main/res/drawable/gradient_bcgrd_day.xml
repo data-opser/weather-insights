@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape>
+            <gradient
+                android:angle="270"
+                android:dither="true"
+                android:startColor="@color/dark_color_start"
+                android:centerColor="@color/dark_color_middle"
+                android:endColor="@color/button_system_night" />
+        </shape>
+    </item>
+</layer-list>

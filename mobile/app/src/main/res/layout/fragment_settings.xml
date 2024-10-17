@@ -1,18 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingTop="10dp"
+    android:paddingHorizontal="15dp"
+    android:orientation="vertical"
     tools:context=".SettingsFragment"
     style="@style/Fragment">
 
     <TextView
-        style="@style/TextOnPrimary"
+        style="@style/Text"
+        android:id="@+id/settingsTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="20dp"
+        android:text="@string/settings_page_title"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/settings_page"
-        android:textSize="34sp"
-        android:gravity="center"
-        android:layout_gravity="center" />
+        app:cardCornerRadius="20dp"
+        app:cardElevation="4dp"
+        android:layout_marginVertical="16dp"
+        android:backgroundTint="@color/layout_night">
 
-</FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/Text"
+                    android:id="@+id/mainTextNotify"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings_notify_main"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    style="@style/TextSmallAndGray"
+                    android:id="@+id/additionalTextNotify"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings_notify_addition"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/mainTextNotify"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginTop="4dp" />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    style="@style/SwitchCompat"
+                    android:id="@+id/switchNotify"
+                    android:contentDescription="@string/settings_notify_descrp"
+
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/mainTextNotify"
+                    app:layout_constraintBottom_toBottomOf="@id/additionalTextNotify" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="35dp">
+
+                <TextView
+                    style="@style/Text"
+                    android:id="@+id/mainTextTheme"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings_theme_main"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    style="@style/TextSmallAndGray"
+                    android:id="@+id/additionalTextTheme"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings_theme_addition"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/mainTextTheme"
+                    android:layout_marginTop="4dp"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    style="@style/SwitchCompat"
+                    android:id="@+id/switchTheme"
+                    android:contentDescription="@string/settings_theme_descrp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/mainTextTheme"
+                    app:layout_constraintBottom_toBottomOf="@id/additionalTextTheme" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>
