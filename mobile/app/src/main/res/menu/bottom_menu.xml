@@ -3,12 +3,12 @@
 
     <item
         android:id="@+id/weather"
-        android:title="@string/page1"
+        android:title="@string/weather_page"
         android:icon="@drawable/ic_weather" />
 
     <item
         android:id="@+id/premium"
-        android:title="@string/page2"
+        android:title="@string/premium_page"
         android:icon="@drawable/ic_premium" />
 
     <item
@@ -16,11 +16,11 @@
 
     <item
         android:id="@+id/horoscope"
-        android:title="@string/page3"
+        android:title="@string/horoscope_page"
         android:icon="@drawable/ic_horoscope" />
 
     <item
         android:id="@+id/settings"
-        android:title="@string/page4"
+        android:title="@string/settings_page"
         android:icon="@drawable/ic_settings" />
 </menu>
