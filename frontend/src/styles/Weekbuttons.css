@@ -1,0 +1,25 @@
+.week-buttons {
+    background-color: white;
+    width: 70%;
+    padding: 1% 2%;
+    border-radius: 1.5em;
+    margin: 1% 2%;
+    display: flex;
+    justify-content: space-between;
+}
+.week-buttons button {
+    background-color: white;
+    color: black;
+    border: none;
+    padding: 10px 30px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border-radius: 0.5em;
+    font-size: 20px;
+}
+
+.week-buttons button.blue {
+    background: rgb(19,99,223);
+    background: linear-gradient(135deg, rgba(19,99,223,1) 0%, rgba(28,75,130,1) 100%);
+    color: white;  
+}

@@ -3,3 +3,10 @@
     display: flex;
     flex-direction: column;
 }
+.top-elements {
+    display: flex;
+}
+.day-elements {
+    display: flex;
+    justify-content: center;
+}

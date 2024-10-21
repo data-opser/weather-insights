@@ -1,13 +1,13 @@
 .CitySearch {
     margin: 1% 2%;
-    height: 30px;
+
     cursor: pointer;
     display: flex;
     padding: 1% 2%;
     background-color: white;
     border-radius: 1.5em;
     align-items: center;
-    box-shadow: 0 5px 10px black;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.231);
     justify-content: space-between;
     width: 20%;
 }
@@ -26,4 +26,5 @@
 .loopa {
     width: auto;
     height: 90%;
+    color: rgba(0, 0, 0, 0.226);
 }

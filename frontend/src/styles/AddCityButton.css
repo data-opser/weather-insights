@@ -1,0 +1,31 @@
+.add-city-button {
+    background-color: white;
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin: 5px;
+    font-size: 16px;
+    border-radius: 1em;
+    transition: background-color 0.3s;
+    width: 17%;
+    border: 2px solid #1363DF;
+}
+.add-city-button:hover {
+    background-color: #E8F1FF;
+}
+.plus {
+    color: #1363DF;
+    width: 20px;
+    height: 20px;
+}
+.plus.blue {
+    color: white;
+}
+.add-city-button.blue {
+    color: white;
+    background: rgb(19,99,223);
+    background: linear-gradient(135deg, rgba(19,99,223,1) 0%, rgba(71,181,255,1) 100%);
+}
+
+
