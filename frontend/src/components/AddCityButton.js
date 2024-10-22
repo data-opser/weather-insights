@@ -15,7 +15,8 @@ function AddCityButton() {
             className={`add-city-button ${isClicked ? 'blue' : ''}`} 
             onClick={handleClick}
         >
-            <GoPlus className='plus'/> Add New City
+            <GoPlus className={`plus ${isClicked ? 'icon-blue' : ''}`} />
+            Add New City
         </button>
     );
 }

@@ -7,25 +7,34 @@
     margin: 5px;
     font-size: 16px;
     border-radius: 1em;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, color 0.3s;
     width: 17%;
     border: 2px solid #1363DF;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
+
 .add-city-button:hover {
     background-color: #E8F1FF;
 }
+
 .plus {
     color: #1363DF;
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px;
+    transition: color 0.3s;
 }
-.plus.blue {
+
+.icon-blue {
     color: white;
 }
+
 .add-city-button.blue {
     color: white;
     background: rgb(19,99,223);
     background: linear-gradient(135deg, rgba(19,99,223,1) 0%, rgba(71,181,255,1) 100%);
 }
-
-
+.plus.icon-blue {
+    color: white;
+}
