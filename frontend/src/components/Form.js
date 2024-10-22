@@ -1,5 +1,6 @@
 import '../styles/Form.css';
 import form_weather_icon from '../images/form-weather-icon.png';
+import google_icon from '../images/google-icon.png';
 import { IoArrowBack } from "react-icons/io5";
 import { MdOutlineEmail } from "react-icons/md";
 import { RiLockPasswordLine } from "react-icons/ri";
@@ -25,8 +26,13 @@ function Form() {
             <input type='password' placeholder='password'></input>
           </div>
           <button type='submit'>Login</button>
-        </form>
+          <div className='link'>
+            <p>Haven't got an account?</p> 
+            <a href='#'>Sign up</a> 
+          </div>          
+        </form>        
       </div>
+      <img src={google_icon} className='google-icon'></img>
     </div>
   );
 }
