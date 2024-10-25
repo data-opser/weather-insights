@@ -81,6 +81,15 @@
   margin: 5%;
 }
 
+.show-password {
+  cursor: pointer;
+  transition: .5s;
+}
+
+.show-password:hover {
+  color:#333;
+}
+
 .data-form button {
   width: 100%;
   height: 15%;

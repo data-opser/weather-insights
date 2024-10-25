@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import '../styles/Form.css';
 import form_weather_icon from '../images/form-weather-icon.png';
 import google_icon from '../images/google-icon.png';
@@ -5,6 +6,7 @@ import { IoArrowBack } from "react-icons/io5";
 import { MdOutlineEmail } from "react-icons/md";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { BsPersonFill } from "react-icons/bs";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 
 function Form({ type }) {
   const formConfig = {
@@ -25,6 +27,10 @@ function Form({ type }) {
   };
 
   const config = formConfig[type] || formConfig.Login;
+  const [show, setShow] = useState(false);
+  const handleClick = () => {
+    setShow(!show);
+  };
 
   return (
     <div className='form'>
@@ -51,7 +57,8 @@ function Form({ type }) {
           </div>
           <div className='input-field'>
             <RiLockPasswordLine className='icon' />
-            <input type='password' placeholder='password'></input>
+            <input type={show ? "text" : "password"} placeholder='password'></input>
+            {show ? <FiEyeOff onClick={handleClick} className='icon show-password' /> : <FiEye onClick={handleClick} className='icon show-password' />}
           </div>
           <button type='submit'>{config.buttonText}</button>
           <div className='link'>
