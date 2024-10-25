@@ -6,6 +6,8 @@
     margin: 1% 2%;
     display: flex;
     justify-content: space-between;
+    height: 40%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.231);
 }
 .week-buttons button {
     background-color: white;

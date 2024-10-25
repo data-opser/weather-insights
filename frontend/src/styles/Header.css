@@ -1,12 +1,45 @@
 .header {
-  background: #333;
   display: flex;
   align-items: center;
-  color:white;
+  justify-content: space-between; /* Вирівнюємо елементи */
+  padding: 10px 20px; /* Додаємо трохи простору */
 }
 
+.header p {
+  font-size: 24px;
+}
+.block-with-logo {
+  display: flex;
+  height: 100%;
+  align-items: center;
+}
 .logo {
   border-radius: 50%;
   height: 50%;
-  padding: 10px;  
+  padding: 10px;
+}
+
+/* Нові стилі для кнопки "Log in/Sign in" */
+.login-button {
+  background-color: white;
+  color: black;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  border-radius: 0.5em;
+  font-size: 16px;
+  border: 2px solid #1363DF;
+}
+
+/* Колір кнопки при наведенні */
+.login-button:hover {
+  background-color: #E8F1FF;
+}
+
+/* Синій колір кнопки, коли вона натиснута */
+.login-button.blue {
+  background: rgb(19,99,223);
+  background: linear-gradient(135deg, rgba(19,99,223,1) 0%, rgba(28,75,130,1) 100%);
+  color: white;
 }

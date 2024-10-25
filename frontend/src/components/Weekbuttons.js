@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import '../styles/Weekbuttons.css'
+import '../styles/Weekbuttons.css';
 
 function Weekbuttons() {
-    // Створюємо стан для збереження стану кнопок
-    const [activeButton, setActiveButton] = useState(null);
+    // Встановлюємо початковий стан на 6 (кнопка "Week" буде активною)
+    const [activeButton, setActiveButton] = useState(6);
 
     // Функція для обробки натискання на кнопку
     const handleButtonClick = (index) => {

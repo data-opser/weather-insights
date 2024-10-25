@@ -1,7 +1,8 @@
 .Main {
-    background-color: #BDECFF;
+    
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
 }
 .top-elements {
     display: flex;
