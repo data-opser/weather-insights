@@ -3,14 +3,22 @@
   width: 40%;
   height: 70%;
   border-radius: 3em;
-  margin: 25px;
+  margin: 5%;
   padding: 20px;
-  display: flex;
+  display: grid;
   position: relative;
+  grid-template-columns: 50% 50%;
 }
 
-.column {
-  width: 50%;
+.left-column {
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+}
+
+.form-weather-icon {
+  max-width: 90%;
+  max-height: 90%;
 }
 
 .return-button {
@@ -18,8 +26,10 @@
   border: none;
   background: transparent;
   cursor: pointer;
-  display: block;
   padding: 0;
+  position: absolute;
+  left: 2%;
+  top: 2%;
 }
 
 .return-arrow {
@@ -27,21 +37,14 @@
   height: 100%;
 }
 
-.form-weather-icon {
-  margin-left: 15%;
-  margin-top: 15%;
-  height: 40%;
-}
-/* --------------- */
-
-/* right column */
 .data-form {
   width: 100%;
   height: 100%;
 }
 
 .data-form h1 {
-  font-weight: 400;
+  font-weight: 400;  
+  margin-top: 0;
 }
 
 .input-field {
@@ -72,7 +75,7 @@
 .data-form button {
   width: 100%;
   height: 15%;
-  margin: 20% 0% 7%;
+  margin: 0% 0% 7%;
   background: #FFE3AB;
   cursor: pointer;
   border: none;
@@ -106,4 +109,41 @@
   background: white;
   border-radius: 2em;
   cursor: pointer;
+}
+
+@media screen and (max-width: 1100px) {
+  .form {
+    grid-template-columns: 100%;
+  }
+  .left-column {
+    display: none;
+  }
+
+  .data-form h1 {
+    text-align: center;
+  }
+
+  .google-icon {
+    bottom: -3%;
+    right: 45%;
+  }
+
+  .return-button {
+    height: 9%;
+    left: 4%;
+    top: 4%;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .form {
+    width: 80%;
+  }
+  /* .input-field {
+    margin-bottom: 2.5%;
+  }
+
+  .data-form button {
+    margin-bottom: 2.5%;
+  } */
 }
