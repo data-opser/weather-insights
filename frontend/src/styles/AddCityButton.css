@@ -8,11 +8,12 @@
     font-size: 16px;
     border-radius: 1em;
     transition: background-color 0.3s, color 0.3s;
-    width: 17%;
+    width: 10%;
     border: 2px solid #1363DF;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    height: auto;
 }
 
 .add-city-button:hover {
@@ -24,6 +25,7 @@
     width: 30px;
     height: 30px;
     transition: color 0.3s;
+    
 }
 
 .icon-blue {
@@ -37,4 +39,8 @@
 }
 .plus.icon-blue {
     color: white;
+}
+
+.add-city-button-text {
+    margin: 0 auto 0 auto;
 }

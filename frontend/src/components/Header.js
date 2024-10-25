@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import '../styles/Header.css';
 import logo from '../images/logo.png';
+import { CiLogin } from "react-icons/ci";
 
 function Header() {
   const [isLoginClicked, setIsLoginClicked] = useState(false);
@@ -20,7 +21,8 @@ function Header() {
         className={`login-button ${isLoginClicked ? 'blue' : ''}`} 
         onClick={handleLoginClick}
       >
-        Log in/Sign in
+        <CiLogin className={`icon-button-login ${isLoginClicked ? 'white' : ''}`}/>
+        Log in
       </button>
     </div>
   );

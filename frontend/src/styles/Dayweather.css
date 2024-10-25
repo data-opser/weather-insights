@@ -26,3 +26,11 @@
     width: 25px;
     height: 25px;
 }
+
+.one-day:first-child {
+    border-left: none;
+}
+
+.one-day:last-child {
+    border-right: none;
+}

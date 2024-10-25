@@ -2,12 +2,13 @@
   display: flex;
   align-items: center;
   justify-content: space-between; /* Вирівнюємо елементи */
-  padding: 10px 20px; /* Додаємо трохи простору */
+  padding: 10px 40px; /* Додаємо трохи простору */
 }
 
 .header p {
   font-size: 24px;
 }
+
 .block-with-logo {
   display: flex;
   height: 100%;
@@ -28,8 +29,13 @@
   cursor: pointer;
   transition: background-color 0.3s, color 0.3s;
   border-radius: 0.5em;
-  font-size: 16px;
+  font-size: 20px;
   border: 2px solid #1363DF;
+  width: 8%;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  height: 100%;
 }
 
 /* Колір кнопки при наведенні */
@@ -41,5 +47,16 @@
 .login-button.blue {
   background: rgb(19,99,223);
   background: linear-gradient(135deg, rgba(19,99,223,1) 0%, rgba(28,75,130,1) 100%);
+  color: white;
+}
+
+.icon-button-login {
+  width: auto;
+  height: 100%;
+  padding-right: 8%;
+  color: #002644;
+}
+
+.icon-button-login.white {
   color: white;
 }
