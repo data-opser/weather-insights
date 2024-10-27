@@ -18,7 +18,7 @@ jobs:
         uses: tj-actions/changed-files@v45
 
       - name: Set output for ALL_CHANGED_FILES
-        run: echo "::set-output name=ALL_CHANGED_FILES::${{ steps.changed-files.outputs.all_changed_files}} | tr ' ' '\n'"
+        run: echo "::set-output name=ALL_CHANGED_FILES::${{ steps.changed-files.outputs.all_changed_files}}"
     outputs:
       ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
 
@@ -41,7 +41,7 @@ jobs:
         if: ${{ env.ALL_CHANGED_FILES && env.ALL_CHANGED_FILES != '' }}
         run: |
           echo "${ALL_CHANGED_FILES}"
-          kt_files=$(echo "${ALL_CHANGED_FILES}" | grep '\.kt' || true)
+          kt_files=$(echo "$(${ALL_CHANGED_FILES}) | tr ' ' '\n'" | grep '\.kt' || true)
           if [ -n "$kt_files" ]; then
             echo "$kt_files" | xargs ktlint
           fi
