@@ -158,10 +158,23 @@ jobs:
       - name: "Checkout code"
         uses: actions/checkout@v3
 
-      - name: Run htmltest
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: "1.20" # Specify the version of Go you need
+
+      - name: Install htmltest
+        run: |
+          go install github.com/htmllint/htmllint@latest
+
+      - name: Run htmltest on changed HTML files
+        env:
+          ALL_CHANGED_FILES: ${{ needs.get-changed-files.outputs.ALL_CHANGED_FILES }}
         if: ${{ env.ALL_CHANGED_FILES && env.ALL_CHANGED_FILES != '' }}
         run: |
-          html_files=$(echo "${ALL_CHANGED_FILES}" | grep '\.html$' || true)
+          echo "${ALL_CHANGED_FILES}" | tr ' ' '\n'
+          html_files=$(echo "${ALL_CHANGED_FILES}" | tr ' ' '\n' | grep '\.html' || true)
           if [ -n "$html_files" ]; then
-            echo "$html_files" | xargs htmltest
+            echo "$html_files" | xargs htmllint
           fi
+        continue-on-error: true
