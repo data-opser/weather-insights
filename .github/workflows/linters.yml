@@ -32,6 +32,11 @@ jobs:
       - name: "Checkout code"
         uses: actions/checkout@v3
 
+      - name: "Filter kt files"
+        run: |
+          for file in ${ALL_CHANGED_FILES}; do
+            echo "$file was changed"
+          done
       - name: Run Ktlint on changed Kotlin files
         if: ${{ env.ALL_CHANGED_FILES && env.ALL_CHANGED_FILES != '' }}
         run: |
