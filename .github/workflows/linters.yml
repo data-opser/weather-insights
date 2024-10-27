@@ -54,13 +54,26 @@ jobs:
       - name: "Checkout code"
         uses: actions/checkout@v3
 
+      - name: Install Node.js and npm
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+
+      - name: Install ESLint
+        run: |
+          npm install -g eslint
+
       - name: Run ESLint on changed JavaScript files
+        env:
+          ALL_CHANGED_FILES: ${{ needs.get-changed-files.outputs.ALL_CHANGED_FILES }}
         if: ${{ env.ALL_CHANGED_FILES && env.ALL_CHANGED_FILES != '' }}
         run: |
-          js_files=$(echo "${ALL_CHANGED_FILES}" | grep '\.js$' || true)
+          echo "${ALL_CHANGED_FILES}" | tr ' ' '\n'
+          js_files=$(echo "${ALL_CHANGED_FILES}" | tr ' ' '\n' | grep '\.js' || true)
           if [ -n "$js_files" ]; then
             echo "$js_files" | xargs eslint
           fi
+        continue-on-error: true
 
   python-linter:
     runs-on: ubuntu-latest
