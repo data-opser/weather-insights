@@ -105,20 +105,28 @@ jobs:
           fi
         continue-on-error: true
 
-  sql-linter: #Check on dbt
+  sql-linter:
     runs-on: ubuntu-latest
     needs: get-changed-files
     steps:
       - name: "Checkout code"
         uses: actions/checkout@v3
 
+      - name: Install SQL Fluff
+        run: |
+          pip install sqlfluff
+
       - name: Run SQL Fluff on changed SQL files
+        env:
+          ALL_CHANGED_FILES: ${{ needs.get-changed-files.outputs.ALL_CHANGED_FILES }}
         if: ${{ env.ALL_CHANGED_FILES && env.ALL_CHANGED_FILES != '' }}
         run: |
-          sql_files=$(echo "${ALL_CHANGED_FILES}" | grep '\.sql$' || true)
+          echo "${ALL_CHANGED_FILES}" | tr ' ' '\n'
+          sql_files=$(echo "${ALL_CHANGED_FILES}" | tr ' ' '\n' | grep '\.sql' || true)
           if [ -n "$sql_files" ]; then
             echo "$sql_files" | xargs sqlfluff lint --config .sqlfluff
           fi
+        continue-on-error: true
 
   yaml-yml-linter:
     runs-on: ubuntu-latest
