@@ -5,6 +5,13 @@ on:
   push:
 
 jobs:
+  name: linters
+
+on:
+  pull_request:
+  push:
+
+jobs:
   get-changed-files:
     runs-on: ubuntu-latest
     outputs:
@@ -12,11 +19,14 @@ jobs:
     steps:
       - name: "Checkout code"
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Полный клон для доступа к origin/main
 
       - name: Get changed files
         id: get_changed_files
         run: |
-          echo "::set-output name=changed_files::$(git diff --name-only origin/main)"
+          changed_files=$(git diff --name-only origin/main)
+          echo "changed_files=$changed_files" >> $GITHUB_OUTPUT
 
   kotlint-linter:
     runs-on: ubuntu-latest
@@ -24,19 +34,22 @@ jobs:
     steps:
       - name: "Checkout code"
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
       - name: Filter Kotlin files
         id: filter_kt_files
         run: |
           changed_files="${{ needs.get-changed-files.outputs.changed_files }}"
           kt_files=$(echo "$changed_files" | grep '\.kt$' || true)
-          echo "::set-output name=kt_files::$kt_files"
+          echo "kt_files=$kt_files" >> $GITHUB_OUTPUT
 
       - name: Run Ktlint on changed Kotlin files
         if: ${{ steps.filter_kt_files.outputs.kt_files != '' }}
         uses: vroy/gha-kotlin-linter@v1
         with:
           files: ${{ steps.filter_kt_files.outputs.kt_files }}
+
 
   javascript-linter:
     runs-on: ubuntu-latest
