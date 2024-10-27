@@ -40,7 +40,7 @@ jobs:
           ALL_CHANGED_FILES: ${{ needs.get-changed-files.outputs.ALL_CHANGED_FILES }}
         if: ${{ env.ALL_CHANGED_FILES && env.ALL_CHANGED_FILES != '' }}
         run: |
-          kt_files=$(echo "${ALL_CHANGED_FILES}" | grep '\.kt$' || true)
+          kt_files=$(echo "${ALL_CHANGED_FILES}" | grep '\.kt' || true)
           if [ -n "$kt_files" ]; then
             echo "$kt_files" | xargs ktlint
           fi
