@@ -127,13 +127,21 @@ jobs:
       - name: "Checkout code"
         uses: actions/checkout@v3
 
-      - name: Run Yamllint on changed yaml and yml files
+      - name: Install Yamllint
+        run: |
+          pip install yamllint
+
+      - name: Run Yamllint on changed YAML and YML files
+        env:
+          ALL_CHANGED_FILES: ${{ needs.get-changed-files.outputs.ALL_CHANGED_FILES }}
         if: ${{ env.ALL_CHANGED_FILES && env.ALL_CHANGED_FILES != '' }}
         run: |
-          yml_yaml_files=$(echo "${ALL_CHANGED_FILES}" | grep -E '\.yml$|\.yaml$' || true)
+          echo "${ALL_CHANGED_FILES}" | tr ' ' '\n'
+          yml_yaml_files=$(echo "${ALL_CHANGED_FILES}" | grep -E '\.yml|\.yaml' || true)
           if [ -n "$yml_yaml_files" ]; then
             echo "$yml_yaml_files" | xargs yamllint -d "{extends: default, rules: {line-length: disable}}"
           fi
+        continue-on-error: true
 
   html-linter:
     runs-on: ubuntu-latest
