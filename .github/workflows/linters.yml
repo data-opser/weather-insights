@@ -40,11 +40,11 @@ jobs:
           ALL_CHANGED_FILES: ${{ needs.get-changed-files.outputs.ALL_CHANGED_FILES }}
         if: ${{ env.ALL_CHANGED_FILES && env.ALL_CHANGED_FILES != '' }}
         run: |
-          echo "$(${ALL_CHANGED_FILES}) | tr ' ' '\n'"
-          kt_files=$(echo "$(${ALL_CHANGED_FILES}) | tr ' ' '\n'" | grep '\.kt' || true)
-          if [ -n "$kt_files" ]; then
-            echo "$kt_files" | xargs ktlint
-          fi
+          echo "${ALL_CHANGED_FILES}" | tr ' ' '\n'
+           kt_files=$(echo "$(${ALL_CHANGED_FILES}) | tr ' ' '\n'" | grep '\.kt' || true)
+           if [ -n "$kt_files" ]; then
+             echo "$kt_files" | xargs ktlint
+           fi
 
   javascript-linter:
     runs-on: ubuntu-latest
