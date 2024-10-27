@@ -137,7 +137,7 @@ jobs:
         if: ${{ env.ALL_CHANGED_FILES && env.ALL_CHANGED_FILES != '' }}
         run: |
           echo "${ALL_CHANGED_FILES}" | tr ' ' '\n'
-          yml_yaml_files=$(echo "${ALL_CHANGED_FILES}" | grep '\.yml' || true)
+          yml_yaml_files=$(echo "${ALL_CHANGED_FILES}" | tr ' ' '\n' | grep -E '\.yml|\.yaml' || true)
           if [ -n "$yml_yaml_files" ]; then
             echo "$yml_yaml_files" | xargs yamllint -d "{extends: default, rules: {line-length: disable}}"
           fi
