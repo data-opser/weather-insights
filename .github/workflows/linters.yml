@@ -11,12 +11,12 @@ jobs:
       changed_files: ${{ steps.get_changed_files.outputs.changed_files }}
     steps:
       - name: "Checkout code"
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Get changed files
         id: get_changed_files
         run: |
-          echo "::set-output name=changed_files::$(git diff --name-only origin/main)"
+          echo "::set-output name=changed_files::$(git --no-pager diff --name-only FETCH_HEAD $(git merge-base FETCH_HEAD main))"
       - name: Debug changed files
         run: |
           echo "Changed files: $changed_files"
@@ -26,7 +26,7 @@ jobs:
     needs: get-changed-files
     steps:
       - name: "Checkout code"
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Filter Kotlin files
         id: filter_kt_files
@@ -46,7 +46,7 @@ jobs:
     needs: get-changed-files
     steps:
       - name: "Checkout code"
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Filter JavaScript files
         id: filter_js_files
@@ -66,7 +66,7 @@ jobs:
     needs: get-changed-files
     steps:
       - name: "Checkout code"
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Python environment
         uses: actions/setup-python@v4
@@ -91,7 +91,7 @@ jobs:
     needs: get-changed-files
     steps:
       - name: "Checkout code"
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Filter SQL files
         id: filter_sql_files
@@ -121,7 +121,7 @@ jobs:
     needs: get-changed-files
     steps:
       - name: "Checkout code"
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Filter yml adm yaml files
         id: filter_yml_yaml_files
@@ -143,7 +143,7 @@ jobs:
     needs: get-changed-files
     steps:
       - name: "Checkout code"
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Run htmltest
         uses: wjdp/htmltest-action@master
         with:
