@@ -1,8 +1,10 @@
-const standard = require("eslint-config-standard");
+import { defineConfig } from "eslint-define-config";
 
-module.exports = [
-  standard,
-  {
-    // your overrides here
+export default defineConfig({
+  languageOptions: {
+    parserOptions: {
+      ecmaVersion: 2020,
+      sourceType: "module",
+    },
   },
-];
+});
