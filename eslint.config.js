@@ -1,10 +1,10 @@
-import { defineConfig } from "eslint-define-config";
-import babelEslint from "@babel/eslint-parser";
+const { defineConfig } = require("eslint-define-config");
+const babelEslint = require("@babel/eslint-parser");
 
-export default defineConfig({
-  parser: babelEslint, // Set the parser directly
+module.exports = defineConfig({
+  parser: babelEslint,
   parserOptions: {
-    requireConfigFile: false, // Use false if you don't have a Babel config file
+    requireConfigFile: false,
     ecmaVersion: 2020,
     sourceType: "module",
     ecmaFeatures: {
