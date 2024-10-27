@@ -62,6 +62,7 @@ jobs:
       - name: Install ESLint
         run: |
           npm install -g eslint
+          npm install --save-dev eslint eslint-config-standard
 
       - name: Run ESLint on changed JavaScript files
         env:
