@@ -1,6 +1,6 @@
 const { defineConfig } = require("eslint-define-config");
 
-export default defineConfig({
+module.exports = defineConfig({
   languageOptions: {
     parserOptions: {
       ecmaVersion: 2020,
