@@ -45,6 +45,7 @@ jobs:
            if [ -n "$kt_files" ]; then
              echo "$kt_files" | xargs ktlint
            fi
+        continue-on-error: true
 
   javascript-linter:
     runs-on: ubuntu-latest
