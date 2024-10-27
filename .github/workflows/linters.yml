@@ -1,5 +1,4 @@
-jobs:
-  name: linters
+name: linters
 
 on:
   pull_request:
@@ -14,7 +13,7 @@ jobs:
       - name: "Checkout code"
         uses: actions/checkout@v2
         with:
-          fetch-depth: 0  # Полный клон для доступа к origin/main
+          fetch-depth: 0
 
       - name: Get changed files
         id: get_changed_files
@@ -43,7 +42,6 @@ jobs:
         uses: vroy/gha-kotlin-linter@v1
         with:
           files: ${{ steps.filter_kt_files.outputs.kt_files }}
-
 
   javascript-linter:
     runs-on: ubuntu-latest
