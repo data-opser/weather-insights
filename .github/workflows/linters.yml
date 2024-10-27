@@ -11,9 +11,9 @@ jobs:
       changed_files: ${{ steps.get_changed_files.outputs.changed_files }}
     steps:
       - name: "Checkout code"
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3 # Обновлено для поддержки Node.js 16 и 20
         with:
-          fetch-depth: 0
+          fetch-depth: 0 # Полный клон для доступа к origin/main
 
       - name: Get changed files
         id: get_changed_files
@@ -26,7 +26,7 @@ jobs:
     needs: get-changed-files
     steps:
       - name: "Checkout code"
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
