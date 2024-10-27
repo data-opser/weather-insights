@@ -16,7 +16,7 @@ jobs:
       - name: Get changed files
         id: get_changed_files
         run: |
-          echo "::set-output name=changed_files::$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})"
+          echo "::set-output name=changed_files::$(git diff --name-only origin/main)"
 
   kotlint-linter:
     runs-on: ubuntu-latest
