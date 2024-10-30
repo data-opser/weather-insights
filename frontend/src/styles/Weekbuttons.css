@@ -1,27 +1,92 @@
 .week-buttons {
     background-color: white;
-    width: 70%;
+    width: 100%; 
+    max-width: 800px; 
     padding: 1% 2%;
     border-radius: 1.5em;
-    margin: 1% 2%;
+    margin: 2% 1%;
     display: flex;
     justify-content: space-between;
-    height: 40%;
+    flex-wrap: wrap; 
+    height: auto; 
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.231);
+    overflow: hidden;
 }
+
 .week-buttons button {
     background-color: white;
     color: black;
     border: none;
-    padding: 10px 30px;
+    padding: 1em 2em;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, font-size 0.3s ease, padding 0.3s ease;
     border-radius: 0.5em;
-    font-size: 20px;
+    font-size: 1em; 
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1 1 100px; 
 }
 
 .week-buttons button.blue {
     background: rgb(19,99,223);
     background: linear-gradient(135deg, rgba(19,99,223,1) 0%, rgba(28,75,130,1) 100%);
     color: white;  
+}
+
+
+@media (max-width: 1200px) {
+    .week-buttons {
+        max-width: 90%;
+    }
+    .week-buttons button {
+        font-size: 0.9em;
+        padding: 0.8em 1.8em;
+    }
+}
+
+@media (max-width: 992px) {
+    .week-buttons {
+        max-width: 95%;
+    }
+    .week-buttons button {
+        font-size: 0.8em;
+        padding: 0.7em 1.5em;
+    }
+}
+
+@media (max-width: 768px) {
+    .week-buttons {
+        max-width: 100%;
+    }
+    .week-buttons button {
+        font-size: 0.75em;
+        padding: 0.6em 1.2em;
+    }
+}
+
+@media (max-width: 576px) {
+    .week-buttons {
+        max-width: 90%;
+        flex-wrap: wrap; 
+        
+    }
+    .week-buttons button {
+        font-size: 0.7em;
+        padding: 0.5em 1em;
+        flex: 1 1 45%; 
+        margin: 1% 2%;
+    }
+}
+
+@media (max-width: 400px) {
+    .week-buttons {
+        width: 100%;
+    }
+    .week-buttons button {
+        width: 100%;
+        font-size: 0.65em;
+        padding: 0.5em 0.8em;
+
+    }
 }

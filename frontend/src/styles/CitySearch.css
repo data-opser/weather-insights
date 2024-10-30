@@ -1,5 +1,5 @@
 .CitySearch {
-    margin: 1% 2%;
+    margin: 2% 2%;
     cursor: pointer;
     display: flex;
     padding: 1% 2%;
@@ -10,6 +10,7 @@
     justify-content: space-between;
     width: 20%;
     height: 40%;
+    transition: width 0.3s ease, height 0.3s ease; 
 }
 
 .CitySearch input {
@@ -27,4 +28,55 @@
     width: auto;
     height: 90%;
     color: rgba(0, 0, 0, 0.226);
+}
+
+
+@media (max-width: 1200px) {
+    .CitySearch {
+        width: 30%;
+        height: 35%;
+    }
+    .CitySearch input {
+        font-size: 22px;
+    }
+}
+
+@media (max-width: 992px) {
+    .CitySearch {
+        width: 40%;
+        height: 30%;
+    }
+    .CitySearch input {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .CitySearch {
+        width: 50%;
+        height: 25%;
+    }
+    .CitySearch input {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 576px) {
+    .CitySearch {
+        width: 70%;
+        height: 20%;
+    }
+    .CitySearch input {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 400px) {
+    .CitySearch {
+        width: 90%;
+        height: 15%;
+    }
+    .CitySearch input {
+        font-size: 14px;
+    }
 }
