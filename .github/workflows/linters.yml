@@ -62,7 +62,7 @@ jobs:
       - name: Install ESLint
         run: |
           cd frontend
-          npm install eslint@^8.0.1 eslint-config-standard eslint-plugin-import@^2.25.2 eslint-plugin-n@^15.0.0 eslint-plugin-promise@^6.0.0
+          npm ci
           npm init @eslint/config@latest --config eslint-config-standard
 
       - name: Run ESLint on changed JavaScript files
