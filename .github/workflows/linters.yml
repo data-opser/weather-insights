@@ -69,11 +69,10 @@ jobs:
           ALL_CHANGED_FILES: ${{ needs.get-changed-files.outputs.ALL_CHANGED_FILES }}
         if: ${{ env.ALL_CHANGED_FILES && env.ALL_CHANGED_FILES != '' }}
         run: |
-          cd frontend
           echo "${ALL_CHANGED_FILES}" | tr ' ' '\n'
-          js_files=$(echo "${ALL_CHANGED_FILES}" | tr ' ' '\n' | grep 'frontend/*.js' || true)
+          js_files=$(echo "${ALL_CHANGED_FILES}" | tr ' ' '\n' | grep '\.js' || true)
           if [ -n "$js_files" ]; then
-            echo "$js_files" | xargs npx eslint
+            echo "$js_files" | xargs npx eslint --congfig frontend/eslint.config.mjs
           fi
         continue-on-error: true
 
