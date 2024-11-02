@@ -72,7 +72,7 @@ jobs:
           echo "${ALL_CHANGED_FILES}" | tr ' ' '\n'
           js_files=$(echo "${ALL_CHANGED_FILES}" | tr ' ' '\n' | grep '\.js' || true)
           if [ -n "$js_files" ]; then
-            echo "$js_files" | xargs npx eslint --congfig frontend/eslint.config.mjs
+            echo "$js_files" | xargs npx eslint --config frontend/eslint.config.mjs
           fi
         continue-on-error: true
 
