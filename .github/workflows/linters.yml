@@ -61,8 +61,8 @@ jobs:
 
       - name: Install ESLint
         run: |
-          npm install -g eslint
-          npm install -g eslint-plugin-react
+          cd frontend
+          npm init @eslint/config@latest -- --config eslint-config-standard
 
       - name: Run ESLint on changed JavaScript files
         env:
@@ -72,7 +72,7 @@ jobs:
           echo "${ALL_CHANGED_FILES}" | tr ' ' '\n'
           js_files=$(echo "${ALL_CHANGED_FILES}" | tr ' ' '\n' | grep '\.js' || true)
           if [ -n "$js_files" ]; then
-            echo "$js_files" | xargs eslint
+            echo "$js_files" | xargs npx eslint
           fi
         continue-on-error: true
 
