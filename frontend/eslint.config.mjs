@@ -7,15 +7,13 @@ export default [
         ecmaVersion: 2020,
         sourceType: "module",
         ecmaFeatures: {
-          jsx: true, // Включите поддержку JSX
+          jsx: true,
         },
       },
     },
-    files: ["**/*.js", "**/*.jsx"], // Добавьте расширение .jsx
+    files: ["**/*.js", "**/*.jsx"],
     rules: {
       "no-unused-vars": "warn",
-      semi: ["error", "always"],
-      // Добавьте другие правила по мере необходимости
     },
     ignores: ["frontend/package.json", "frontend/package-lock.json"],
   },
