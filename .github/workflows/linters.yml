@@ -63,7 +63,6 @@ jobs:
         run: |
           cd frontend
           npm ci
-          npm init @eslint/config@latest --config eslint-config-standard
 
       - name: Run ESLint on changed JavaScript files
         env:
