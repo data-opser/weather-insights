@@ -17,6 +17,6 @@ export default [
       semi: ["error", "always"],
       // Добавьте другие правила по мере необходимости
     },
-    ignores: ["package.json", "package-lock.json"],
+    ignores: ["frontend/package.json", "frontend/package-lock.json"],
   },
 ];
