@@ -1,13 +1,17 @@
 import js from "@eslint/js";
-import standard from "eslint-config-standard";
 
 export default [
-  js.configs.recommended,
-  standard,
   {
     languageOptions: {
-      ecmaVersion: 2020,
-      sourceType: "module",
+      parserOptions: {
+        ecmaVersion: 2020, // Укажите нужную версию ECMAScript
+        sourceType: "module", // Укажите, если используете модули
+      },
+    },
+    files: ["**/*.js"],
+    rules: {
+      "no-unused-vars": "warn",
+      semi: ["error", "always"],
     },
   },
 ];
