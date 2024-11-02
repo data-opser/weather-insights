@@ -71,7 +71,7 @@ jobs:
         run: |
           cd frontend
           echo "${ALL_CHANGED_FILES}" | tr ' ' '\n'
-          js_files=$(echo "${ALL_CHANGED_FILES}" | tr ' ' '\n' | grep '\.js' || true)
+          js_files=$(echo "${ALL_CHANGED_FILES}" | tr ' ' '\n' | grep 'frontend/*.js' || true)
           if [ -n "$js_files" ]; then
             echo "$js_files" | xargs npx eslint
           fi
