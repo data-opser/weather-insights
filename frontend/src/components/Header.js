@@ -2,13 +2,16 @@ import React, { useState } from 'react';
 import '../styles/Header.css';
 import logo from '../images/logo.png';
 import { CiLogin } from "react-icons/ci";
+import Modal from './Modal';
+import Form from './Form';
 
 function Header() {
   const [isLoginClicked, setIsLoginClicked] = useState(false);
+  const [modalActive, setModalActive] = useState(false);
 
-  // Функція для зміни стану кнопки при натисканні
   const handleLoginClick = () => {
     setIsLoginClicked(!isLoginClicked);
+    setModalActive(true);
   };
 
   return (
@@ -24,6 +27,9 @@ function Header() {
         <CiLogin className={`icon-button-login ${isLoginClicked ? 'white' : ''}`}/>
         Log in
       </button>
+      <Modal active={modalActive} setActive={setModalActive}>
+        <Form type='register' setActive={setModalActive} />
+      </Modal>
     </div>
   );
 }

@@ -1,6 +1,5 @@
 .form {
   background: #FFFAF1;
-  width: 40%;
   border-radius: 3em;
   margin: 20px;
   padding: 20px;
@@ -67,8 +66,12 @@
   background: transparent;
   border: none;
   outline: none;
-  width: 70%;
+  width: 75%;
   font-size: x-large;
+}
+
+.pass-input-field input {
+  width: 60%;
 }
 
 .input-field input::placeholder {
@@ -128,6 +131,7 @@
   background: white;
   border-radius: 2em;
   cursor: pointer;
+  /* border: 10px solid white; */
 }
 
 @media screen and (max-width: 1100px) {
@@ -150,7 +154,7 @@
   .return-button {
     height: 9%;
     left: 4%;
-    top: 4%;
+    top: 6%;
   }
 }
 
