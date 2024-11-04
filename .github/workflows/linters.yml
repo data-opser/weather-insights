@@ -31,7 +31,7 @@ jobs:
 
       - name: Check for Kotlin files
         run: |
-          kt_files=$(echo "${{ needs.get-changed-files.outputs.ALL_CHANGED_FILES }}" | tr ' ' '\n' | grep '\.kt')
+          kt_files=$(echo "${{ needs.get-changed-files.outputs.ALL_CHANGED_FILES }}" | tr ' ' '\n' | grep '\.kt' || true)
           echo "KT_FILES=$kt_files" >> $GITHUB_ENV
           if [ -z "$kt_files" ]; then
             echo "No Kotlin files found"
@@ -62,7 +62,7 @@ jobs:
 
       - name: Check for JavaScript files
         run: |
-          js_files=$(echo "${{ needs.get-changed-files.outputs.ALL_CHANGED_FILES }}" | tr ' ' '\n' | grep '\.js')
+          js_files=$(echo "${{ needs.get-changed-files.outputs.ALL_CHANGED_FILES }}" | tr ' ' '\n' | grep '\.js' || true)
           echo "JS_FILES=$js_files" >> $GITHUB_ENV
           if [ -z "$js_files" ]; then
             echo "No JavaScript files found"
@@ -97,7 +97,7 @@ jobs:
 
       - name: Check for Python files
         run: |
-          py_files=$(echo "${{ needs.get-changed-files.outputs.ALL_CHANGED_FILES }}" | tr ' ' '\n' | grep '\.py')
+          py_files=$(echo "${{ needs.get-changed-files.outputs.ALL_CHANGED_FILES }}" | tr ' ' '\n' | grep '\.py' || true)
           echo "PY_FILES=$py_files" >> $GITHUB_ENV
           if [ -z "$py_files" ]; then
             echo "No Python files found"
@@ -132,7 +132,7 @@ jobs:
 
       - name: Check for SQL files
         run: |
-          sql_files=$(echo "${{ needs.get-changed-files.outputs.ALL_CHANGED_FILES }}" | tr ' ' '\n' | grep '\.sql')
+          sql_files=$(echo "${{ needs.get-changed-files.outputs.ALL_CHANGED_FILES }}" | tr ' ' '\n' | grep '\.sql' || true)
           echo "SQL_FILES=$sql_files" >> $GITHUB_ENV
           if [ -z "$sql_files" ]; then
             echo "No SQL files found"
@@ -161,7 +161,7 @@ jobs:
 
       - name: Check for YAML/YML files
         run: |
-          yml_yaml_files=$(echo "${{ needs.get-changed-files.outputs.ALL_CHANGED_FILES }}" | tr ' ' '\n' | grep -E '\.yml|\.yaml')
+          yml_yaml_files=$(echo "${{ needs.get-changed-files.outputs.ALL_CHANGED_FILES }}" | tr ' ' '\n' | grep -E '\.yml|\.yaml' || true)
           echo "YML_YAML_FILES=$yml_yaml_files" >> $GITHUB_ENV
           if [ -z "$yml_yaml_files" ]; then
             echo "No YAML files found"
