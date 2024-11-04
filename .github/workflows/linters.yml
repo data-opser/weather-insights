@@ -31,16 +31,17 @@ jobs:
 
       - name: Check for Kotlin files
         run: |
-          kt_files=$(echo "${{ needs.get-changed-files.outputs.ALL_CHANGED_FILES }}" | grep '\.kt')
+          kt_files=$(echo "${{ needs.get-changed-files.outputs.ALL_CHANGED_FILES }}" | tr ' ' '\n' | grep '\.kt')
           echo "KT_FILES=$kt_files" >> $GITHUB_ENV
           if [ -z "$kt_files" ]; then
             echo "No Kotlin files found"
-            exit 1
           else
-            echo "Changed Kotlin files: $kt_files"
+            echo "Changed Kotlin files:"
+            echo "$kt_files" | tr ' ' '\n'
           fi
 
       - name: Install Ktlint
+        if: env.KT_FILES
         run: |
           curl -sSLO https://github.com/pinterest/ktlint/releases/download/0.48.2/ktlint &&
           chmod a+x ktlint &&
@@ -61,13 +62,13 @@ jobs:
 
       - name: Check for JavaScript files
         run: |
-          js_files=$(echo "${{ needs.get-changed-files.outputs.ALL_CHANGED_FILES }}" | grep '\.js')
+          js_files=$(echo "${{ needs.get-changed-files.outputs.ALL_CHANGED_FILES }}" | tr ' ' '\n' | grep '\.js')
           echo "JS_FILES=$js_files" >> $GITHUB_ENV
           if [ -z "$js_files" ]; then
             echo "No JavaScript files found"
-            exit 1
           else
-            echo "Changed JavaScript files: $js_files"
+            echo "Changed JavaScript files:"
+            echo "$js_files" | tr ' ' '\n'
           fi
 
       - name: Install Node.js and npm
@@ -76,6 +77,7 @@ jobs:
           node-version: "18.18.0"
 
       - name: Install ESLint
+        if: env.JS_FILES
         run: |
           cd frontend
           npm ci
@@ -95,13 +97,13 @@ jobs:
 
       - name: Check for Python files
         run: |
-          py_files=$(echo "${{ needs.get-changed-files.outputs.ALL_CHANGED_FILES }}" | grep '\.py')
+          py_files=$(echo "${{ needs.get-changed-files.outputs.ALL_CHANGED_FILES }}" | tr ' ' '\n' | grep '\.py')
           echo "PY_FILES=$py_files" >> $GITHUB_ENV
           if [ -z "$py_files" ]; then
             echo "No Python files found"
-            exit 1
           else
-            echo "Changed Python files: $py_files"
+            echo "Changed Python files:"
+            echo "$py_files" | tr ' ' '\n'
           fi
 
       - name: Set up Python environment
@@ -110,6 +112,7 @@ jobs:
           python-version: "3.12"
 
       - name: Install Flake8
+        if: env.PY_FILES
         run: |
           python -m pip install --upgrade pip
           pip install flake8
@@ -129,16 +132,17 @@ jobs:
 
       - name: Check for SQL files
         run: |
-          sql_files=$(echo "${{ needs.get-changed-files.outputs.ALL_CHANGED_FILES }}" | grep '\.sql')
+          sql_files=$(echo "${{ needs.get-changed-files.outputs.ALL_CHANGED_FILES }}" | tr ' ' '\n' | grep '\.sql')
           echo "SQL_FILES=$sql_files" >> $GITHUB_ENV
           if [ -z "$sql_files" ]; then
             echo "No SQL files found"
-            exit 1
           else
-            echo "Changed SQL files: $sql_files"
+            echo "Changed SQL files:"
+            echo "$sql_files" | tr ' ' '\n'
           fi
 
       - name: Install SQL Fluff
+        if: env.SQL_FILES
         run: |
           pip install sqlfluff
 
@@ -157,16 +161,17 @@ jobs:
 
       - name: Check for YAML/YML files
         run: |
-          yml_yaml_files=$(echo "${{ needs.get-changed-files.outputs.ALL_CHANGED_FILES }}" | grep -E '\.yml|\.yaml')
+          yml_yaml_files=$(echo "${{ needs.get-changed-files.outputs.ALL_CHANGED_FILES }}" | tr ' ' '\n' | grep -E '\.yml|\.yaml')
           echo "YML_YAML_FILES=$yml_yaml_files" >> $GITHUB_ENV
           if [ -z "$yml_yaml_files" ]; then
-            echo "No YAML/YML files found"
-            exit 1
+            echo "No YAML files found"
           else
-            echo "Changed YAML/YML files: $yml_yaml_files"
+            echo "Changed YAML/YML files:"
+            echo "$yml_yaml_files" | tr ' ' '\n'
           fi
 
       - name: Install Yamllint
+        if: env.YML_YAML_FILES
         run: |
           pip install yamllint
 
