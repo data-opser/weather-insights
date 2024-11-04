@@ -183,30 +183,6 @@ jobs:
       - name: "Checkout code"
         uses: actions/checkout@v3
 
-      - name: Check for HTML files
-        run: |
-          html_files=$(echo "${{ needs.get-changed-files.outputs.ALL_CHANGED_FILES }}" | grep '\.html')
-          echo "HTML_FILES=$html_files" >> $GITHUB_ENV
-          if [ -z "$html_files" ]; then
-            echo "No HTML files found"
-            exit 1
-          else
-            echo "Changed HTML files: $html_files"
-          fi
-
-      - name: Run htmltest
-        uses: wjdp/htmltest-action@master
-        with:
-          path: .
-        continue-on-error: true
-
-  html-linter:
-    runs-on: ubuntu-latest
-    needs: get-changed-files
-    steps:
-      - name: "Checkout code"
-        uses: actions/checkout@v3
-
       - name: Run htmltest
         uses: wjdp/htmltest-action@master
         with:
