@@ -6,7 +6,7 @@
     border-right: 1px solid black;
     border-left: 1px solid black;
     padding: 10px 0; /* Додаємо трохи відступу */
-    font-size: 16px; /* Базовий розмір шрифту */
+    font-size: 22px; /* Базовий розмір шрифту */
 }
 
 .one-day:hover {
@@ -46,7 +46,7 @@
 @media (max-width: 768px) {
     .one-day {
         width: 15%; 
-        font-size: 14px; 
+        font-size: 16px; 
     }
 
     .sun, .raindrop {
@@ -59,7 +59,7 @@
 @media (max-width: 576px) {
     .one-day {
         width: 20%; 
-        font-size: 12px; 
+        font-size: 14px; 
         padding: 5px 0; 
     }
 
