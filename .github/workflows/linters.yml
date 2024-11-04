@@ -31,7 +31,7 @@ jobs:
 
       - name: Check for Kotlin files
         run: |
-          kt_files=$(echo "${{ needs.get-changed-files.outputs.ALL_CHANGED_FILES }}" | tr ' ' '\n' | grep '\.kt' || true)
+          kt_files=$(echo "${{ needs.get-changed-files.outputs.ALL_CHANGED_FILES }}" | grep '\.kt$' || true)
           echo "KT_FILES=$kt_files" >> $GITHUB_ENV
           if [ -z "$kt_files" ]; then
             echo "No Kotlin files found"
@@ -50,7 +50,7 @@ jobs:
       - name: Run Ktlint on changed Kotlin files
         if: env.KT_FILES
         run: |
-          echo "$KT_FILES" | xargs ktlint
+          echo "$KT_FILES" | tr ' ' '\n' | xargs ktlint
         continue-on-error: true
 
   javascript-linter:
@@ -62,7 +62,7 @@ jobs:
 
       - name: Check for JavaScript files
         run: |
-          js_files=$(echo "${{ needs.get-changed-files.outputs.ALL_CHANGED_FILES }}" | tr ' ' '\n' | grep '\.js' || true)
+          js_files=$(echo "${{ needs.get-changed-files.outputs.ALL_CHANGED_FILES }}" | grep '\.js$' || true)
           echo "JS_FILES=$js_files" >> $GITHUB_ENV
           if [ -z "$js_files" ]; then
             echo "No JavaScript files found"
@@ -85,7 +85,7 @@ jobs:
       - name: Run ESLint on changed JavaScript files
         if: env.JS_FILES
         run: |
-          echo "$JS_FILES" | xargs npx eslint --config frontend/eslint.config.mjs
+          echo "$JS_FILES"| tr ' ' '\n'| xargs npx eslint --config frontend/eslint.config.mjs
         continue-on-error: true
 
   python-linter:
@@ -97,7 +97,7 @@ jobs:
 
       - name: Check for Python files
         run: |
-          py_files=$(echo "${{ needs.get-changed-files.outputs.ALL_CHANGED_FILES }}" | tr ' ' '\n' | grep '\.py' || true)
+          py_files=$(echo "${{ needs.get-changed-files.outputs.ALL_CHANGED_FILES }}" | grep '\.py$' || true)
           echo "PY_FILES=$py_files" >> $GITHUB_ENV
           if [ -z "$py_files" ]; then
             echo "No Python files found"
@@ -120,7 +120,7 @@ jobs:
       - name: Run Flake8 on changed Python files
         if: env.PY_FILES
         run: |
-          echo "$PY_FILES" | xargs flake8
+          echo "$PY_FILES" | tr ' ' '\n' | xargs flake8
         continue-on-error: true
 
   sql-linter:
@@ -132,7 +132,7 @@ jobs:
 
       - name: Check for SQL files
         run: |
-          sql_files=$(echo "${{ needs.get-changed-files.outputs.ALL_CHANGED_FILES }}" | tr ' ' '\n' | grep '\.sql' || true)
+          sql_files=$(echo "${{ needs.get-changed-files.outputs.ALL_CHANGED_FILES }}" | grep '\.sql$' || true)
           echo "SQL_FILES=$sql_files" >> $GITHUB_ENV
           if [ -z "$sql_files" ]; then
             echo "No SQL files found"
@@ -149,7 +149,7 @@ jobs:
       - name: Run SQL Fluff on changed SQL files
         if: env.SQL_FILES
         run: |
-          echo "$SQL_FILES" | xargs sqlfluff lint --config .sqlfluff
+          echo "$SQL_FILES" | tr ' ' '\n' | xargs sqlfluff lint --config .sqlfluff
         continue-on-error: true
 
   yaml-yml-linter:
@@ -161,7 +161,7 @@ jobs:
 
       - name: Check for YAML/YML files
         run: |
-          yml_yaml_files=$(echo "${{ needs.get-changed-files.outputs.ALL_CHANGED_FILES }}" | tr ' ' '\n' | grep -E '\.yml|\.yaml' || true)
+          yml_yaml_files=$(echo "${{ needs.get-changed-files.outputs.ALL_CHANGED_FILES }}" | grep -E '\.yml$|\.yaml$' || true)
           echo "YML_YAML_FILES=$yml_yaml_files" >> $GITHUB_ENV
           if [ -z "$yml_yaml_files" ]; then
             echo "No YAML files found"
@@ -178,7 +178,7 @@ jobs:
       - name: Run Yamllint on changed YAML and YML files
         if: env.YML_YAML_FILES
         run: |
-          echo "$YML_YAML_FILES" | xargs yamllint -d "{extends: default, rules: {line-length: disable}}"
+          echo "$YML_YAML_FILES" | tr ' ' '\n' | xargs yamllint -d "{extends: default, rules: {line-length: disable}}"
         continue-on-error: true
 
   html-linter:
