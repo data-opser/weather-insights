@@ -17,8 +17,10 @@ jobs:
         id: changed-files
         uses: tj-actions/changed-files@v45
 
-      - name: Set output for ALL_CHANGED_FILES
-        run: echo "::set-output name=ALL_CHANGED_FILES::${{ steps.changed-files.outputs.all_changed_files}}"
+      - name: Output all changed files
+        run: |
+          echo "Changed files:"
+          echo "${{ steps.changed-files.outputs.all_changed_files }}" | tr ' ' '\n'
     outputs:
       ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
 
