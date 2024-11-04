@@ -37,6 +37,7 @@ jobs:
             echo "HAS_KT_FILES=false" >> $GITHUB_ENV
           else
             echo "Changed Kotlin files:"
+            echo "$kt_files" | tr ' ' '\n'
             echo "$kt_files" > changed_kotlin_files.txt
             echo "HAS_KT_FILES=true" >> $GITHUB_ENV
           fi
@@ -69,6 +70,7 @@ jobs:
             echo "HAS_JS_FILES=false" >> $GITHUB_ENV
           else
             echo "Changed JavaScript files:"
+            echo "$js_files" | tr ' ' '\n'
             echo "$js_files" > changed_js_files.txt
             echo "HAS_JS_FILES=true" >> $GITHUB_ENV
           fi
@@ -105,6 +107,7 @@ jobs:
             echo "HAS_PY_FILES=false" >> $GITHUB_ENV
           else
             echo "Changed Python files:"
+            echo "$py_files" | tr ' ' '\n'
             echo "$py_files" > changed_py_files.txt
             echo "HAS_PY_FILES=true" >> $GITHUB_ENV
           fi
@@ -141,6 +144,7 @@ jobs:
             echo "HAS_SQL_FILES=false" >> $GITHUB_ENV
           else
             echo "Changed SQL files:"
+            echo "$sql_files" | tr ' ' '\n'
             echo "$sql_files" > changed_sql_files.txt
             echo "HAS_SQL_FILES=true" >> $GITHUB_ENV
           fi
@@ -171,6 +175,7 @@ jobs:
             echo "HAS_YML_YAML_FILES=false" >> $GITHUB_ENV
           else
             echo "Changed YAML/YML files:"
+            echo "$yml_yaml_files" | tr ' ' '\n'
             echo "$yml_yaml_files" > changed_yml_yaml_files.txt
             echo "HAS_YML_YAML_FILES=true" >> $GITHUB_ENV
           fi
