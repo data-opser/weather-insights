@@ -8,16 +8,19 @@ on:
 jobs:
   get-changed-files:
     runs-on: ubuntu-latest
-    name: Get changed files
+    name: Get changed-files
     permissions:
       pull-requests: read
+
     steps:
       - name: Get changed files
         id: changed-files
         uses: tj-actions/changed-files@v45
 
-      - name: Save changed files to environment
-        run: echo "ALL_CHANGED_FILES=${{ steps.changed-files.outputs.all_changed_files }}" >> $GITHUB_ENV
+      - name: Set output for ALL_CHANGED_FILES
+        run: echo "::set-output name=ALL_CHANGED_FILES::${{ steps.changed-files.outputs.all_changed_files}}"
+    outputs:
+      ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
 
   kotlint-linter:
     runs-on: ubuntu-latest
@@ -27,15 +30,14 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Check for Kotlin files
-        id: check_kt_files
         run: |
-          kt_files=$(echo "${{ env.ALL_CHANGED_FILES }}" | grep '\.kt')
+          kt_files=$(echo "${{ needs.get-changed-files.outputs.ALL_CHANGED_FILES }}" | grep '\.kt')
+          echo "KT_FILES=$kt_files" >> $GITHUB_ENV
           if [ -z "$kt_files" ]; then
             echo "No Kotlin files found"
             exit 1
           else
-            echo "Kotlin files: $kt_files"
-            echo "kt_files=$kt_files" >> $GITHUB_ENV
+            echo "Changed Kotlin files: $kt_files"
           fi
 
       - name: Install Ktlint
@@ -45,8 +47,9 @@ jobs:
           sudo mv ktlint /usr/local/bin/
 
       - name: Run Ktlint on changed Kotlin files
+        if: env.KT_FILES
         run: |
-          echo "$kt_files" | xargs ktlint
+          echo "$KT_FILES" | xargs ktlint
         continue-on-error: true
 
   javascript-linter:
@@ -57,15 +60,14 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Check for JavaScript files
-        id: check_js_files
         run: |
-          js_files=$(echo "${{ env.ALL_CHANGED_FILES }}" | grep '\.js')
+          js_files=$(echo "${{ needs.get-changed-files.outputs.ALL_CHANGED_FILES }}" | grep '\.js')
+          echo "JS_FILES=$js_files" >> $GITHUB_ENV
           if [ -z "$js_files" ]; then
             echo "No JavaScript files found"
             exit 1
           else
-            echo "JavaScript files: $js_files"
-            echo "js_files=$js_files" >> $GITHUB_ENV
+            echo "Changed JavaScript files: $js_files"
           fi
 
       - name: Install Node.js and npm
@@ -79,8 +81,9 @@ jobs:
           npm ci
 
       - name: Run ESLint on changed JavaScript files
+        if: env.JS_FILES
         run: |
-          echo "$js_files" | xargs npx eslint --config frontend/eslint.config.mjs
+          echo "$JS_FILES" | xargs npx eslint --config frontend/eslint.config.mjs
         continue-on-error: true
 
   python-linter:
@@ -91,15 +94,14 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Check for Python files
-        id: check_py_files
         run: |
-          py_files=$(echo "${{ env.ALL_CHANGED_FILES }}" | grep '\.py')
+          py_files=$(echo "${{ needs.get-changed-files.outputs.ALL_CHANGED_FILES }}" | grep '\.py')
+          echo "PY_FILES=$py_files" >> $GITHUB_ENV
           if [ -z "$py_files" ]; then
             echo "No Python files found"
             exit 1
           else
-            echo "Python files: $py_files"
-            echo "py_files=$py_files" >> $GITHUB_ENV
+            echo "Changed Python files: $py_files"
           fi
 
       - name: Set up Python environment
@@ -113,8 +115,9 @@ jobs:
           pip install flake8
 
       - name: Run Flake8 on changed Python files
+        if: env.PY_FILES
         run: |
-          echo "$py_files" | xargs flake8
+          echo "$PY_FILES" | xargs flake8
         continue-on-error: true
 
   sql-linter:
@@ -125,15 +128,14 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Check for SQL files
-        id: check_sql_files
         run: |
-          sql_files=$(echo "${{ env.ALL_CHANGED_FILES }}" | grep '\.sql')
+          sql_files=$(echo "${{ needs.get-changed-files.outputs.ALL_CHANGED_FILES }}" | grep '\.sql')
+          echo "SQL_FILES=$sql_files" >> $GITHUB_ENV
           if [ -z "$sql_files" ]; then
             echo "No SQL files found"
             exit 1
           else
-            echo "SQL files: $sql_files"
-            echo "sql_files=$sql_files" >> $GITHUB_ENV
+            echo "Changed SQL files: $sql_files"
           fi
 
       - name: Install SQL Fluff
@@ -141,8 +143,9 @@ jobs:
           pip install sqlfluff
 
       - name: Run SQL Fluff on changed SQL files
+        if: env.SQL_FILES
         run: |
-          echo "$sql_files" | xargs sqlfluff lint --config .sqlfluff
+          echo "$SQL_FILES" | xargs sqlfluff lint --config .sqlfluff
         continue-on-error: true
 
   yaml-yml-linter:
@@ -153,15 +156,14 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Check for YAML/YML files
-        id: check_yml_yaml_files
         run: |
-          yml_files=$(echo "${{ env.ALL_CHANGED_FILES }}" | grep -E '\.yml|\.yaml')
-          if [ -z "$yml_files" ]; then
-            echo "No YAML files found"
+          yml_yaml_files=$(echo "${{ needs.get-changed-files.outputs.ALL_CHANGED_FILES }}" | grep -E '\.yml|\.yaml')
+          echo "YML_YAML_FILES=$yml_yaml_files" >> $GITHUB_ENV
+          if [ -z "$yml_yaml_files" ]; then
+            echo "No YAML/YML files found"
             exit 1
           else
-            echo "YAML files: $yml_files"
-            echo "yml_files=$yml_files" >> $GITHUB_ENV
+            echo "Changed YAML/YML files: $yml_yaml_files"
           fi
 
       - name: Install Yamllint
@@ -169,8 +171,33 @@ jobs:
           pip install yamllint
 
       - name: Run Yamllint on changed YAML and YML files
+        if: env.YML_YAML_FILES
         run: |
-          echo "$yml_files" | xargs yamllint -d "{extends: default, rules: {line-length: disable}}"
+          echo "$YML_YAML_FILES" | xargs yamllint -d "{extends: default, rules: {line-length: disable}}"
+        continue-on-error: true
+
+  html-linter:
+    runs-on: ubuntu-latest
+    needs: get-changed-files
+    steps:
+      - name: "Checkout code"
+        uses: actions/checkout@v3
+
+      - name: Check for HTML files
+        run: |
+          html_files=$(echo "${{ needs.get-changed-files.outputs.ALL_CHANGED_FILES }}" | grep '\.html')
+          echo "HTML_FILES=$html_files" >> $GITHUB_ENV
+          if [ -z "$html_files" ]; then
+            echo "No HTML files found"
+            exit 1
+          else
+            echo "Changed HTML files: $html_files"
+          fi
+
+      - name: Run htmltest
+        uses: wjdp/htmltest-action@master
+        with:
+          path: .
         continue-on-error: true
 
   html-linter:
