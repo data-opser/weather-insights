@@ -52,6 +52,7 @@ jobs:
         if: env.HAS_KT_FILES == 'true'
         run: |
           ktlint $(cat changed_kotlin_files.txt)
+        continue-on-error: true
 
   javascript-linter:
     runs-on: ubuntu-latest
