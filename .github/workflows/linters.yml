@@ -91,7 +91,6 @@ jobs:
       - name: Run ESLint on changed JavaScript files
         if: env.HAS_JS_FILES == 'true'
         run: |
-          cd frontend
           npx eslint $(cat changed_js_files.txt) --config frontend/eslint.config.mjs
         continue-on-error: true
 
