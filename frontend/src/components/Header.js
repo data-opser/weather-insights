@@ -28,7 +28,7 @@ function Header() {
         Log in
       </button>
       <Modal active={modalActive} setActive={setModalActive}>
-        <Form type='register' setActive={setModalActive} />
+        <Form type='login' setActive={setModalActive} />
       </Modal>
     </div>
   );

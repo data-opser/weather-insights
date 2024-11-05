@@ -124,14 +124,14 @@
 }
 
 .google-icon {
-  height: 8%;
+  height: 35px;
   position: absolute;
-  bottom: -4%;
-  right: 23%;
   background: white;
   border-radius: 2em;
   cursor: pointer;
-  /* border: 10px solid white; */
+  border: 8px solid white;
+  bottom: -25.5px;
+  right: calc(25% - 25.5px);
 }
 
 @media screen and (max-width: 1100px) {
@@ -147,8 +147,7 @@
   }
 
   .google-icon {
-    bottom: -3%;
-    right: 45%;
+    right: calc(50% - 25.5px);
   }
 
   .return-button {

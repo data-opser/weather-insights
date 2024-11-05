@@ -26,7 +26,7 @@ function Form({ type, setActive }) {
     },
   };
 
-  const config = formConfig[type] || formConfig.Login;
+  const config = formConfig[type] || formConfig.login;
   const [showPassword, setShowPassword] = useState(false);
   const handleClick = () => {
     setShowPassword(!showPassword);
@@ -68,7 +68,7 @@ function Form({ type, setActive }) {
           </div>
         </form>
       </div>
-      <img src={google_icon} className='google-icon'></img>
+      <img src={google_icon} className='google-icon' alt='google-ref'></img>
       <button className='return-button' onClick={closeForm} >
         <IoArrowBack className='return-arrow' />
       </button>
