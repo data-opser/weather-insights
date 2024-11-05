@@ -1,15 +1,7 @@
-from flask import Flask
-from .config import Config
-from .models import db
+from flask_login import LoginManager
+from authlib.integrations.flask_client import OAuth
+from flask_sqlalchemy import SQLAlchemy
 
-def create_app():
-    app = Flask(__name__)
-
-    app.config.from_object(Config)
-
-    db.init_app(app)
-
-    with app.app_context():
-        db.create_all()
-
-    return app
+db = SQLAlchemy()
+oauth = OAuth()
+login_manager = LoginManager()
