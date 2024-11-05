@@ -7,9 +7,11 @@ import Form from './Form';
 
 function Header() {
   const [modalActive, setModalActive] = useState(false);
+  const [formType, setFormType] = useState('login');
 
   const handleLoginClick = () => {
     setModalActive(true);
+    setFormType('login');
   };
 
   return (
@@ -26,7 +28,7 @@ function Header() {
         Log in
       </button>
       <Modal active={modalActive} setActive={setModalActive}>
-        <Form type='login' setActive={setModalActive} />
+        <Form type={formType} setActive={setModalActive} setFormType={setFormType} />
       </Modal>
     </div>
   );

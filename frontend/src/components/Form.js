@@ -8,7 +8,7 @@ import { LuUnlock } from "react-icons/lu";
 import { IoPersonOutline } from "react-icons/io5";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 
-function Form({ type, setActive }) {
+function Form({ type, setActive, setFormType }) {
   const formConfig = {
     login: {
       title: "Welcome back",
@@ -28,8 +28,19 @@ function Form({ type, setActive }) {
 
   const config = formConfig[type] || formConfig.login;
   const [showPassword, setShowPassword] = useState(false);
-  const handleClick = () => {
+  const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleEyeClick = () => {
     setShowPassword(!showPassword);
+  };
+
+  const handleLinkClick = () => {
+    setFormType(type === 'login' ? 'register' : 'login');
+    setFullName(''); 
+    setEmail('');
+    setPassword('');
   };
 
   const closeForm = () => {
@@ -48,23 +59,23 @@ function Form({ type, setActive }) {
             type === "register" && (
               <div className='input-field'>
                 <IoPersonOutline className='icon' />
-                <input type='text' placeholder='full name'></input>
+                <input type='text' value={fullName} onChange={(e) => setFullName(e.target.value)} placeholder='full name'></input>
               </div>
             )
           }
           <div className='input-field'>
             <MdOutlineEmail className='icon' />
-            <input type='email' placeholder='email'></input>
+            <input type='email' value={email} onChange={(e) => setEmail(e.target.value)} placeholder='email'></input>
           </div>
           <div className='input-field pass-input-field'>
             <LuUnlock className='icon' />
-            <input type={showPassword ? "text" : "password"} placeholder='password'></input>
-            {showPassword ? <FiEyeOff onClick={handleClick} className='icon show-password' /> : <FiEye onClick={handleClick} className='icon show-password' />}
+            <input type={showPassword ? "text" : "password"} value={password} onChange={(e) => setPassword(e.target.value)} placeholder='password'></input>
+            {showPassword ? <FiEyeOff onClick={handleEyeClick} className='icon show-password' /> : <FiEye onClick={handleEyeClick} className='icon show-password' />}
           </div>
           <button type='submit'>{config.buttonText}</button>
           <div className='link'>
             <p>{config.linkParagraph}</p>
-            <a href='#'>{config.linkText}</a>
+            <a href='#' onClick={handleLinkClick}>{config.linkText}</a>
           </div>
         </form>
       </div>
