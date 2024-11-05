@@ -6,11 +6,9 @@ import Modal from './Modal';
 import Form from './Form';
 
 function Header() {
-  const [isLoginClicked, setIsLoginClicked] = useState(false);
   const [modalActive, setModalActive] = useState(false);
 
   const handleLoginClick = () => {
-    setIsLoginClicked(!isLoginClicked);
     setModalActive(true);
   };
 
@@ -21,10 +19,10 @@ function Header() {
         <p>Weather Insights</p>
       </div>   
       <button 
-        className={`login-button ${isLoginClicked ? 'blue' : ''}`} 
+        className={`login-button ${modalActive ? 'blue' : ''}`}
         onClick={handleLoginClick}
       >
-        <CiLogin className={`icon-button-login ${isLoginClicked ? 'white' : ''}`}/>
+        <CiLogin className={`icon-button-login ${modalActive ? 'white' : ''}`}/>
         Log in
       </button>
       <Modal active={modalActive} setActive={setModalActive}>
