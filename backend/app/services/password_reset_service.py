@@ -4,14 +4,13 @@ from backend.app import mail, db
 from backend.app.models import User
 from flask import current_app, url_for
 from backend.app.config import Config
-import os
 
 s = URLSafeTimedSerializer(Config.SECRET_KEY)
 
 
 def send_password_reset_email(user):
     token = s.dumps(user.email, salt='password-reset-salt')
-    reset_url = url_for('mail_auth.reset_password', token=token, _external=True)
+    reset_url = url_for('password_reset.reset_password', token=token, _external=True)
 
     msg = Message("Password Reset Request",
                   recipients=[user.email],

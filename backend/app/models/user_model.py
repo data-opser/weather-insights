@@ -67,3 +67,7 @@ class User(db.Model, UserMixin):
         self.google_id = google_id
         self.google_token = google_token
         db.session.commit()
+
+    def verify_email(self):
+        self.email_confirmed = True
+        db.session.commit()

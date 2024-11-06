@@ -1,9 +1,9 @@
 from backend.app.models import User
-from backend.app import oauth, db
 from flask import jsonify, url_for, session, request
 from flask_login import current_user
 from datetime import date
-from backend.app import oauth
+from backend.app import oauth, db
+from backend.app.services.email_confirm_service import send_email_confirmation
 import os, requests
 
 google = oauth.register(
@@ -41,10 +41,14 @@ def register_user(data):
 def login_user(data):
     user = User.query.filter_by(email=data['email']).first()
     if user:
-        if user.password and user.check_password(data['password']):
-            return user, 200, 'Logged in successfully.'
+        if not user.email_confirmed:
+            send_email_confirmation(user)
+            return None, 403, "Please confirm your email first."
         elif user.password is None:
             return None, 401, 'Please login via Google or complete regular registration.'
+        elif user.password and user.check_password(data['password']):
+            return user, 200, 'Logged in successfully.'
+
     return None, 401, 'Invalid credentials.'
 
 
@@ -72,6 +76,7 @@ def handle_google_callback():
     if user:
         if not user.google_id:
             user.add_google_data(user_info['sub'], token['id_token'])
+            user.verify_email()
         return user, 200, 'Logged in with Google successfully.'
 
     user = User.create_user(
@@ -84,6 +89,8 @@ def handle_google_callback():
         google_id=user_info['sub'],
         google_token=token['id_token']
     )
+    user.verify_email()
+
     return user, 200, 'Logged in with Google successfully.'
 
 

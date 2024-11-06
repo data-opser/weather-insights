@@ -27,5 +27,7 @@ def create_app():
     app.register_blueprint(auth_bp)
     from backend.app.routes.password_reset_routes import password_reset_bp
     app.register_blueprint(password_reset_bp)
+    from backend.app.routes.email_confirm_routes import email_confirm_bp
+    app.register_blueprint(email_confirm_bp)
 
     return app

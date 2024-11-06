@@ -44,3 +44,5 @@ def google_callback():
     if user:
         login_user(user)
     return jsonify({'message': message}), status
+
+
