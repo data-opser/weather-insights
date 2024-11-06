@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify
 from backend.app.services.email_confirm_service import verify_email_token
 from backend.app.models import User
 
-email_confirm_bp = Blueprint('email_confirm', __name__)
+email_confirm_bp = Blueprint('email_confirmation', __name__)
 
 @email_confirm_bp.route('/confirm_email/<token>', methods=['GET'])
 def confirm_email(token):
