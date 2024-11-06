@@ -25,7 +25,45 @@ class User(db.Model, UserMixin):
         self.password = generate_password_hash(password)
 
     def check_password(self, password):
+        if self.password is None:
+            return False
         return check_password_hash(self.password, password)
 
     def get_id(self):
         return self.user_id
+
+    @classmethod
+    def create_user(cls, name, email, role, surname=None, birthday=None, password=None, google_id=None,
+                    google_token=None):
+        user = cls(
+            name=name,
+            surname=surname,
+            birthday=birthday,
+            email=email,
+            role=role,
+            google_id=google_id,
+            google_token=google_token
+        )
+
+        if password:
+            user.set_password(password)
+
+        db.session.add(user)
+        db.session.commit()
+        return user
+
+    def update_user(self, name=None, surname=None, birthday=None, password=None):
+        if name:
+            self.name = name
+        if surname:
+            self.surname = surname
+        if birthday:
+            self.birthday = birthday
+        if password:
+            self.set_password(password)
+        db.session.commit()
+
+    def add_google_data(self, google_id, google_token):
+        self.google_id = google_id
+        self.google_token = google_token
+        db.session.commit()
