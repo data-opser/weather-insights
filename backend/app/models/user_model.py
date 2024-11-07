@@ -63,6 +63,17 @@ class User(db.Model, UserMixin):
             self.set_password(password)
         db.session.commit()
 
+    def get_profile_data(self):
+        return {
+            "name": self.name,
+            "surname": self.surname,
+            "email": self.email,
+            "birthday": self.birthday,
+            "email_confirmed": self.email_confirmed,
+            "created_at": self.created_at,
+            "role": self.role
+        }
+
     def add_google_data(self, google_id, google_token):
         self.google_id = google_id
         self.google_token = google_token
@@ -71,3 +82,4 @@ class User(db.Model, UserMixin):
     def verify_email(self):
         self.email_confirmed = True
         db.session.commit()
+

@@ -7,8 +7,8 @@ from backend.app.config import Config
 
 
 def send_password_reset_email(user):
-    new_password = generate_random_password()  # Генерація нового пароля
-    update_password(user, new_password)  # Обновлення пароля в базі даних
+    new_password = generate_random_password()
+    update_password(user, new_password)
 
     html_body = f"""
     {common_style}

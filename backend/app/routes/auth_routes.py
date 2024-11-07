@@ -22,8 +22,11 @@ def login():
 @auth_bp.route('/logout', methods=['POST'])
 @login_required
 def logout():
-    logout_user()
-    return jsonify({'message': 'Logged out successfully.'}), 200
+    if current_user.is_authenticated:
+        logout_user()
+        return jsonify({'message': 'Logged out successfully.'}), 200
+    else:
+        return jsonify({'message': 'No user logged in.'}), 400
 
 @auth_bp.route('/auth/google')
 def google_login():

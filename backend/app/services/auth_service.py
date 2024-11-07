@@ -2,7 +2,7 @@ from backend.app.models import User
 from flask import jsonify, url_for, session, request
 from flask_login import current_user
 from datetime import date
-from backend.app import oauth, db
+from backend.app import oauth, db, login_manager
 from backend.app.services.email_confirm_service import send_email_confirmation
 import os, requests
 
@@ -16,6 +16,9 @@ google = oauth.register(
     client_kwargs={'scope': 'openid email profile https://www.googleapis.com/auth/user.birthday.read'}
 )
 
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(user_id)
 
 def register_user(data):
     email = data.get('email')
