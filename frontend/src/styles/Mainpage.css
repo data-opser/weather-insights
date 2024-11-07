@@ -28,3 +28,15 @@
     font-weight: 400;
     padding: 0 20px;
 }
+
+.sun-time {
+    grid-row: 2;
+}
+
+.map, .sun-time {
+    grid-column: 2;
+    background: white;
+    border-radius: 0.5em;
+    margin: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.231);
+}

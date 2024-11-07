@@ -7,18 +7,6 @@ import AddCityButton from './AddCityButton';
 function Mainpage() {
   return (
     <div className="main-page">
-      {/*<div className='top-elements'>
-        <CitySearch />
-        <Weekbuttons />
-      </div>
-      <div className='day-elements'>
-        <Dayweather />
-        <Dayweather /> 
-        <Dayweather /> 
-        <Dayweather /> 
-        <Dayweather />
-      </div>
-      <AddCityButton />*/}
       <div className='cities'>
         <AddCityButton />
         <Weekbuttons />
@@ -32,6 +20,12 @@ function Mainpage() {
           <Day />
           <Day />
         </div>
+      </div>
+      <div className='sun-time'>
+        
+      </div>
+      <div className='map'>
+        
       </div>
     </div>
   );
