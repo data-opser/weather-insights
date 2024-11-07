@@ -23,11 +23,8 @@ def create_app():
     with app.app_context():
         db.create_all()
 
-    from backend.app.routes.auth_routes import auth_bp
+    from backend.app.routes import auth_bp, user_profile_bp
     app.register_blueprint(auth_bp)
-    from backend.app.routes.password_reset_routes import password_reset_bp
-    app.register_blueprint(password_reset_bp)
-    from backend.app.routes.email_confirm_routes import email_confirm_bp
-    app.register_blueprint(email_confirm_bp)
+    app.register_blueprint(user_profile_bp)
 
     return app

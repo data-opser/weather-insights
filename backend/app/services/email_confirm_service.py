@@ -10,7 +10,7 @@ s = URLSafeTimedSerializer(Config.SECRET_KEY)
 
 def send_email_confirmation(user):
     token = s.dumps(user.email, salt='email-confirm-salt')
-    confirmation_url = url_for('email_confirmation.confirm_email', token=token, _external=True)
+    confirmation_url = url_for('user_profile.confirm_email', token=token, _external=True)
 
     html_body = f"""
     {common_style}
