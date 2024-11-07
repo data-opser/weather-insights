@@ -5,7 +5,6 @@ import '../styles/AddCityButton.css';
 function AddCityButton() {
     const [isClicked, setIsClicked] = useState(false);
 
-    // Функція для зміни стану кнопки при натисканні
     const handleClick = () => {
         setIsClicked(!isClicked); // змінюємо стан на протилежний при натисканні
     };
@@ -16,7 +15,7 @@ function AddCityButton() {
             onClick={handleClick}
         >
             <GoPlus className={`plus ${isClicked ? 'icon-blue' : ''}`} />
-            <span className='add-city-button-text'>Add New City</span>
+            <span className='add-city-button-text'>add new city</span>
             
         </button>
     );

@@ -1,0 +1,30 @@
+.main-page {    
+    display: grid;
+    grid-template-rows: 80px 1fr 1fr;
+    grid-template-columns: 2fr 1fr;
+}
+
+.cities {
+    grid-row: 1;
+    grid-column: 1/3;
+    display: flex;
+}
+
+.day-table {
+    display: flex;
+    margin: 20px;
+}
+
+.days {
+    grid-row: 2/4;
+    grid-column: 1;
+    background: white;
+    margin: 20px;
+    border-radius: 0.5em;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.231);
+}
+
+.days h1 {
+    font-weight: 400;
+    padding: 0 20px;
+}

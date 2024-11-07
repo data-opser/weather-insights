@@ -1,19 +1,17 @@
 .add-city-button {
     background-color: white;
     color: black;
-    border: 2px solid #1363DF;
     padding: 5px; 
     cursor: pointer;
-    margin: 1% 1%; 
-    font-size: 22px; 
-    border-radius: 1em;
+    border: none;
+    margin: 20px; 
+    font-size: medium; 
+    border-radius: 0.5em;
     transition: background-color 0.3s, color 0.3s;
-    width: 18%; 
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: auto;
-    white-space: nowrap;
+    align-items: center;    
+    width: 200px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.231);
 }
 
 .add-city-button:hover {
@@ -42,38 +40,6 @@
 
 .add-city-button-text {
     margin: 0 auto;
-    font-size: 1em; 
+    font-size: medium; 
     padding-right: 10px;
-}
-
-
-@media (max-width: 768px) {
-    .add-city-button {
-        width: 40%; 
-        font-size: 3vw;
-        padding: 8px 16px;
-        margin: 1% auto;
-        margin-bottom: 3%;
-    }
-
-    .plus {
-        width: 1.5em;
-        height: 1.5em;
-    }
-}
-
-
-@media (max-width: 576px) {
-    .add-city-button {
-        width: 40%; 
-        font-size: 4vw;
-        padding: 6px 12px;
-        margin: 1% auto; 
-        margin-bottom: 3%;
-    }
-
-    .plus {
-        width: 1.2em;
-        height: 1.2em;
-    }
 }

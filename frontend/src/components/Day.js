@@ -1,10 +1,10 @@
 import { GoSun } from "react-icons/go";
 import { WiRaindrop } from "react-icons/wi";
-import '../styles/Dayweather.css'
+import '../styles/Day.css'
 
-function Dayweather() {
+function Day() {
     return (
-        <div className="one-day">
+        <div className="day">
             <p>8 Oct.</p>
             <GoSun className="sun"/>
             <p>14/10</p>
@@ -18,4 +18,4 @@ function Dayweather() {
     );
 }
 
-export default Dayweather;
+export default Day;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import '../styles/Weekbuttons.css';
+import '../styles/CityList.css';
 
-function Weekbuttons() {
+function CityList() {
     // Встановлюємо початковий стан на 6 (кнопка "Week" буде активною)
     const [activeButton, setActiveButton] = useState(6);
 
@@ -12,7 +12,7 @@ function Weekbuttons() {
     };
 
     return (
-        <div className="week-buttons">
+        <div className="city-list">
             <button
                 className={activeButton === 1 ? 'blue' : ''}
                 onClick={() => handleButtonClick(1)}
@@ -53,4 +53,4 @@ function Weekbuttons() {
     );
 }
 
-export default Weekbuttons;
+export default CityList;
