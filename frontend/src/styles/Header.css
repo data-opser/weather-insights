@@ -3,11 +3,10 @@
   align-items: center;
   justify-content: space-between;
   padding: 10px; 
-  margin-top: 1%;
 }
 
 .header p {
-  font-size: 2vw; 
+  font-size: 30px; 
 }
 
 .block-with-logo {
@@ -24,7 +23,7 @@
 .login-button {
   background-color: white;
   color: black;
-  border: 2px solid #1363DF;
+  border: none;
   border-radius: 0.5em;
   font-size: 1.5vw; 
   width: 11vw; 
@@ -34,13 +33,13 @@
   align-items: center;
   justify-content: left;
   transition: background-color 0.3s, color 0.3s;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.231);
+  margin: 10px;
 }
-
 
 .login-button:hover {
   background-color: #E8F1FF;
 }
-
 
 .login-button.blue {
   background: linear-gradient(135deg, rgba(19,99,223,1) 0%, rgba(28,75,130,1) 100%);

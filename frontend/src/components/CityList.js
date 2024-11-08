@@ -2,55 +2,52 @@ import React, { useState } from 'react';
 import '../styles/CityList.css';
 
 function CityList() {
-    // Встановлюємо початковий стан на 6 (кнопка "Week" буде активною)
-    const [activeButton, setActiveButton] = useState(6);
+  const [activeButton, setActiveButton] = useState(6);
 
-    // Функція для обробки натискання на кнопку
-    const handleButtonClick = (index) => {
-        // Якщо кнопка вже активна, знімаємо виділення, інакше активуємо її
-        setActiveButton(activeButton === index ? null : index);
-    };
+  const handleButtonClick = (index) => {
+    setActiveButton(activeButton === index ? null : index);
+  };
 
-    return (
-        <div className="city-list">
-            <button
-                className={activeButton === 1 ? 'blue' : ''}
-                onClick={() => handleButtonClick(1)}
-            >
-                Day 1
-            </button>
-            <button
-                className={activeButton === 2 ? 'blue' : ''}
-                onClick={() => handleButtonClick(2)}
-            >
-                Day 2
-            </button>
-            <button
-                className={activeButton === 3 ? 'blue' : ''}
-                onClick={() => handleButtonClick(3)}
-            >
-                Day 3
-            </button>
-            <button
-                className={activeButton === 4 ? 'blue' : ''}
-                onClick={() => handleButtonClick(4)}
-            >
-                Day 4
-            </button>
-            <button
-                className={activeButton === 5 ? 'blue' : ''}
-                onClick={() => handleButtonClick(5)}
-            >
-                Day 5
-            </button>
-            <button
-                className={activeButton === 6 ? 'blue' : ''}
-                onClick={() => handleButtonClick(6)}
-            >
-                Week
-            </button>
-        </div>
-    );
+  return (
+    <div className="city-list">
+      <button
+        className={activeButton === 1 ? 'blue' : ''}
+        onClick={() => handleButtonClick(1)}
+      >
+        London
+      </button>
+      <button
+        className={activeButton === 2 ? 'blue' : ''}
+        onClick={() => handleButtonClick(2)}
+      >
+        Paris
+      </button>
+      <button
+        className={activeButton === 3 ? 'blue' : ''}
+        onClick={() => handleButtonClick(3)}
+      >
+        Denver
+      </button>
+      <button
+        className={activeButton === 4 ? 'blue' : ''}
+        onClick={() => handleButtonClick(4)}
+      >
+        Miami
+      </button>
+      <button
+        className={activeButton === 5 ? 'blue' : ''}
+        onClick={() => handleButtonClick(5)}
+      >
+        Kyiv
+      </button>
+      <button
+        className={activeButton === 6 ? 'blue' : ''}
+        onClick={() => handleButtonClick(6)}
+      >
+        Kharkiv
+      </button>
+    </div>
+  );
 }
 
 export default CityList;

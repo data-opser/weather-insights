@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../styles/Mainpage.css'
 import CitySearch from './CitySearch';
-import Weekbuttons from './CityList';
+import CityList from './CityList';
 import Day from './Day';
 import AddCityButton from './AddCityButton';
 import { GoSun } from "react-icons/go";
@@ -13,7 +13,7 @@ function Mainpage() {
     <div className="main-page">
       <div className='cities'>
         <AddCityButton />
-        <Weekbuttons />
+        <CityList />
       </div>
       <div className='days'>
         <h1>Weather for the next five days</h1>
