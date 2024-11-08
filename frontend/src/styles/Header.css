@@ -2,7 +2,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px; 
+  width: 70%;
+  justify-self: center;
 }
 
 .header p {
@@ -12,6 +13,7 @@
 .block-with-logo {
   display: flex;
   align-items: center;
+  margin: 10px;
 }
 
 .logo {
@@ -34,7 +36,7 @@
   justify-content: left;
   transition: background-color 0.3s, color 0.3s;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.231);
-  margin: 10px;
+  margin: 20px;
 }
 
 .login-button:hover {
