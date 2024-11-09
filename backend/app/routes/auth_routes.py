@@ -1,5 +1,5 @@
 from backend.app.models import User
-from backend.app.services import auth_service
+from backend.app.services import auth_service, email_confirm_service
 from flask import Blueprint, request, jsonify
 from flask_login import login_user, logout_user, login_required, current_user
 
@@ -22,17 +22,11 @@ def login():
 @auth_bp.route('/logout', methods=['POST'])
 @login_required
 def logout():
-    logout_user()
-    return jsonify({'message': 'Logged out successfully.'}), 200
-
-@auth_bp.route('/profile', methods=['GET'])
-@login_required
-def profile():
-    return jsonify({
-        'name': current_user.name,
-        'surname': current_user.surname,
-        'email': current_user.email
-    }), 200
+    if current_user.is_authenticated:
+        logout_user()
+        return jsonify({'message': 'Logged out successfully.'}), 200
+    else:
+        return jsonify({'message': 'No user logged in.'}), 400
 
 @auth_bp.route('/auth/google')
 def google_login():
@@ -44,3 +38,14 @@ def google_callback():
     if user:
         login_user(user)
     return jsonify({'message': message}), status
+
+@auth_bp.route('/confirm_email/<token>', methods=['GET'])
+def confirm_email(token):
+    user = email_confirm_service.verify_email_token(token)
+    if not user:
+        return jsonify({'message': 'The token is invalid or expired.'}), 400
+
+    user.verify_email()
+
+    return jsonify({'message': 'Your email has been confirmed.'}), 200
+
