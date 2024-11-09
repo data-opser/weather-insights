@@ -1,4 +1,4 @@
-from backend.app.config import Config
+from app.config import Config
 from flask import Flask
 from flask_login import LoginManager
 from authlib.integrations.flask_client import OAuth
@@ -31,7 +31,7 @@ def create_app():
     with app.app_context():
         db.create_all()
 
-    from backend.app.routes import auth_bp, user_profile_bp
+    from app.routes import auth_bp, user_profile_bp
     app.register_blueprint(auth_bp)
     app.register_blueprint(user_profile_bp)
 

@@ -1,4 +1,4 @@
-from backend.app.app import create_app
+from app.app import create_app
 
 flask_app = create_app()
 

@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
-from backend.app.models import User
-from backend.app.services.password_reset_service import send_password_reset_email
-from backend.app.services import profile_service
+from app.models import User
+from app.services.password_reset_service import send_password_reset_email
+from app.services import profile_service
 from flask_login import login_required, current_user
 
 user_profile_bp = Blueprint('user_profile', __name__)
