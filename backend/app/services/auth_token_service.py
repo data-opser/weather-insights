@@ -1,5 +1,5 @@
-from backend.app import db
-from backend.app.models import User
+from app import db
+from app.models import User
 from sqlalchemy.exc import IntegrityError
 import jwt, os
 from datetime import datetime, timedelta

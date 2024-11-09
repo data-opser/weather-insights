@@ -1,5 +1,5 @@
 from flask_mail import Message
-from backend.app import mail, db
+from app import mail, db
 import random, string
 from flask import render_template_string
 

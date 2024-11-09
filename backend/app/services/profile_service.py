@@ -1,4 +1,4 @@
-from backend.app.models import User
+from app.models import User
 
 def get_user_profile(user_id):
     user = User.query.get(user_id)
