@@ -2,7 +2,7 @@
     display: grid;
     grid-template-rows: 80px 1fr 1fr;
     grid-template-columns: 2fr 1fr;
-    width: 70%;
+    min-width: 1300px;
     justify-self: center;
 }
 
@@ -15,6 +15,10 @@
 .day-table {
     display: flex;
     margin: 20px;
+}
+
+.day-table .day:last-child {
+    margin-right: 0;
 }
 
 .days, .map, .sun-time {
@@ -43,6 +47,7 @@
     display: grid;
     grid-template-rows: 20% 1fr 20%;
     grid-template-columns: 50% 50%;
+    min-width: 260px;
 }
 
 .sun-button {

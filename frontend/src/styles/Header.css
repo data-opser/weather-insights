@@ -1,19 +1,23 @@
 .header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  width: 70%;
+  min-width: 1300px;
   justify-self: center;
+  position: relative;
 }
 
 .header p {
   font-size: 30px; 
 }
 
+.login-button {
+  margin: 20px;
+}
+
 .block-with-logo {
   display: flex;
   align-items: center;
-  margin: 10px;
+  margin-left: 10px;
 }
 
 .logo {
@@ -22,21 +26,26 @@
   padding: 10px;
 }
 
+.block-with-logo p {
+  margin: 0;
+}
+
 .login-button {
   background-color: white;
   color: black;
   border: none;
   border-radius: 0.5em;
-  font-size: 1.5vw; 
-  width: 11vw; 
-  padding: 10px 2vw; 
+  font-size: 20px; 
+  width: 150px; 
+  padding: 10px; 
   cursor: pointer;
   display: flex;
   align-items: center;
-  justify-content: left;
+  justify-content: center;
   transition: background-color 0.3s, color 0.3s;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.231);
-  margin: 10px;
+  position: absolute;
+  right: 0;
 }
 
 .login-button:hover {
@@ -51,8 +60,8 @@
 .icon-button-login {
   width: auto;
   height: 1em; 
-  padding-right: 8%;
   color: #002644;
+  padding-right: 10px;
 }
 
 .icon-button-login.white {
@@ -86,11 +95,5 @@
 
   .logo {
     height: 30px;
-  }
-
-  .login-button {
-    font-size: 3.5vw;
-    width: 30vw;
-    padding: 8px 5vw;
   }
 }
