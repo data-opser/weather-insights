@@ -4,6 +4,7 @@ from flask_login import LoginManager
 from authlib.integrations.flask_client import OAuth
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail
+from flask_cors import CORS
 
 db = SQLAlchemy()
 login_manager = LoginManager()
@@ -14,6 +15,13 @@ def create_app():
     app = Flask(__name__)
 
     app.config.from_object(Config)
+
+    CORS(app,
+         origins=app.config['CORS_ALLOW_ORIGINS'],
+         methods=app.config['CORS_ALLOW_METHODS'],
+         supports_credentials=app.config['CORS_SUPPORTS_CREDENTIALS'],
+         allow_headers=app.config['CORS_ALLOW_HEADERS'],
+         max_age=app.config['CORS_MAX_AGE'])
 
     db.init_app(app)
     login_manager.init_app(app)

@@ -1,4 +1,5 @@
 import os
+from datetime import timedelta
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -17,4 +18,11 @@ class Config:
     MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')
     MAIL_DEFAULT_SENDER = os.getenv('MAIL_DEFAULT_SENDER')
 
+    PERMANENT_SESSION_LIFETIME = timedelta(hours=3)
 
+    # CORS configuration
+    CORS_ALLOW_ORIGINS = os.environ.get('CORS_ALLOW_ORIGINS', '*').split(',')
+    CORS_ALLOW_METHODS = ['GET', 'POST', 'PUT', 'DELETE']
+    CORS_ALLOW_HEADERS = ['Content-Type', 'Authorization']
+    CORS_SUPPORTS_CREDENTIALS = True
+    CORS_MAX_AGE = 3600
