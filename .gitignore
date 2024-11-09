@@ -1,6 +1,8 @@
 *.idea
 *.terraform*
 terraform.tfstate
+feature/add-linters
+operational/airflow/logs/
 *.pyc
 *.env
 backend/venv/
