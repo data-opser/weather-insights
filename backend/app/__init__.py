@@ -1,1 +1,1 @@
-from backend.app.app import login_manager, oauth, db, mail
+from app.app import login_manager, oauth, db, mail

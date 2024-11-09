@@ -1,5 +1,5 @@
-from backend.app.models import User
-from backend.app.services import auth_service, email_confirm_service
+from app.models import User
+from app.services import auth_service, email_confirm_service
 from flask import Blueprint, request, jsonify
 from flask_login import login_user, logout_user, login_required, current_user
 

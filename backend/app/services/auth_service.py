@@ -1,9 +1,9 @@
-from backend.app.models import User
+from app.models import User
 from flask import jsonify, url_for, session, request
 from flask_login import current_user
 from datetime import date
-from backend.app import oauth, db, login_manager
-from backend.app.services.email_confirm_service import send_email_confirmation
+from app import oauth, db, login_manager
+from app.services.email_confirm_service import send_email_confirmation
 import os, requests
 
 google = oauth.register(
