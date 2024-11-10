@@ -5,12 +5,13 @@ import CityList from './CityList';
 import Day from './Day';
 import AddCityButton from './AddCityButton';
 import { GoSun } from "react-icons/go";
+import UserPage from './UserPage';
 
 function Mainpage() {
   const [activeButton, setActiveButton] = useState('sunrise');
 
   return (
-    <div className="main-page">
+    /*<div className="main-page">
       <div className='cities'>
         <AddCityButton />
         <CityList />
@@ -44,7 +45,8 @@ function Mainpage() {
       <div className='map'>
         
       </div>
-    </div>
+    </div>*/
+    <UserPage />
   );
 }
 

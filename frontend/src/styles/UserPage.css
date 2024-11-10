@@ -1,0 +1,21 @@
+.user-page {
+    display: flex;
+    justify-content: space-around;
+}
+
+.user, .notification {
+    width: 40%;
+    background-color: white;
+    height: 100%;
+    border-radius: 1em;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.231);
+    display: flex;
+    justify-content: center;
+}
+
+.user-photo {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    margin: 20px 0;
+}
