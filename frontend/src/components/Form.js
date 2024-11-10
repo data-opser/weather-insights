@@ -16,7 +16,7 @@ function Form({ type, setActive, setFormType }) {
       linkParagraph: "Haven't got an account?",
       linkText: "Sign up",
       linkUrl: "/register",
-      endpoint: "/api/login",
+      endpoint: "/login",
     },
     register: {
       title: "Join us",
@@ -24,13 +24,13 @@ function Form({ type, setActive, setFormType }) {
       linkParagraph: "Already have an account?",
       linkText: "Log in",
       linkUrl: "/login",
-      endpoint: "/api/register",
+      endpoint: "/register",
     },
   };
 
   const config = formConfig[type] || formConfig.login;
   const [showPassword, setShowPassword] = useState(false);
-  const [fullName, setFullName] = useState('');
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
@@ -42,7 +42,7 @@ function Form({ type, setActive, setFormType }) {
 
   const handleLinkClick = () => {
     setFormType(type === 'login' ? 'register' : 'login');
-    setFullName(''); 
+    setName(''); 
     setEmail('');
     setPassword('');
     setError(null);
@@ -65,7 +65,8 @@ function Form({ type, setActive, setFormType }) {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          fullName: type === 'register' ? fullName : undefined,
+          name: type === 'register' ? name : undefined,
+          surname: type === 'register' ? 'test' : undefined,
           email,
           password
         })
@@ -81,9 +82,9 @@ function Form({ type, setActive, setFormType }) {
 
       setTimeout(() => {
         closeForm();
-      }, 3000);
+      }, 1000);
 
-      setFullName(''); 
+      setName(''); 
       setEmail('');
       setPassword('');
     } catch (error) {
@@ -110,7 +111,7 @@ function Form({ type, setActive, setFormType }) {
             type === "register" && (
               <div className='input-field'>
                 <IoPersonOutline className='icon' />
-                <input type='text' value={fullName} onChange={(e) => setFullName(e.target.value)} placeholder='full name' required />
+                <input type='text' value={name} onChange={(e) => setName(e.target.value)} placeholder='full name' required />
               </div>
             )
           }
