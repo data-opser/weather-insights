@@ -16,7 +16,7 @@ function Form({ type, setActive, setFormType }) {
       linkParagraph: "Haven't got an account?",
       linkText: "Sign up",
       linkUrl: "/register",
-      endpoint: "/login",
+      endpoint: "http://localhost:5000/login",
     },
     register: {
       title: "Join us",
@@ -24,7 +24,7 @@ function Form({ type, setActive, setFormType }) {
       linkParagraph: "Already have an account?",
       linkText: "Log in",
       linkUrl: "/login",
-      endpoint: "/register",
+      endpoint: "http://localhost:5000/register",
     },
   };
 
