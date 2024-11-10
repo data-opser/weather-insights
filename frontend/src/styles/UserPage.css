@@ -1,21 +1,134 @@
 .user-page {
     display: flex;
     justify-content: space-around;
+    position: relative;
 }
 
-.user, .notification {
+.user, .notifications {
     width: 40%;
     background-color: white;
     height: 100%;
     border-radius: 1em;
     box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.231);
     display: flex;
-    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
 }
-
+.user-block1 {
+    position: relative;
+}
 .user-photo {
     width: 200px;
     height: 200px;
     border-radius: 50%;
     margin: 20px 0;
+}
+.plus-photo {
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    position: absolute;
+    right: 7px;
+    top: 170px;
+    background-color: white;
+    border-radius: 50%;
+    border: 1px solid black;
+}
+
+.user-block2 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 90%;
+}
+.user-text-bold {
+    font-weight: bold;
+    font-size: 24px;
+}
+.user-block2-text-gray {
+    color: gray;
+}
+.form-group {
+    width: 90%;
+}
+.name-input {
+    border: 0;
+    font-size: 18px;
+}
+.user-info {
+    color: gray;
+    font-size: 12px;
+    margin: 0;
+    margin-bottom: 5px;
+}
+.separator, .user-email {
+    margin: 0;
+}
+
+
+
+.notifications {
+    height: 90%;
+    align-self: flex-end;
+}
+.notification {
+    width: 90%;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.231);
+    border-radius: 1em;
+    margin: 10px;
+    padding: 10px;
+    position: relative;
+}
+.notifications .user-text-bold {
+    align-self: start;
+    margin-left: 20px;
+}
+.notification-name, .notification-text-bold {
+    font-weight: bold;
+}
+.notification-text {
+    margin-top: 0;
+}
+.notification-time {
+    color: gray;
+    position: absolute;
+    right: 10px;
+    bottom: 0;
+}
+
+.notification-weather {
+    display: flex;
+    align-items: center;
+}
+.notification-weather img {
+    width: 25px;
+    height: 25px;
+}
+
+.user-button {
+    border-radius: 1em;
+    background: rgb(19,99,223);
+    background: linear-gradient(135deg, rgba(19,99,223,1) 0%, rgba(28,75,130,1) 100%);
+    color: white;
+    border: 0;
+    font-size: 24px;
+    padding: 10px 20px;
+    cursor: pointer;
+    position: absolute;
+    bottom: 10px;
+}
+.settings, .getback {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+}
+.settings {
+    right: 50px;
+    top: -50px;
+}
+.getback {
+    right: 0;
+    top: -50px;
 }

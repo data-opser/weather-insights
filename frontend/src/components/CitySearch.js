@@ -5,7 +5,7 @@ function CitySearch() {
     return (
       <div className="CitySearch">
         <input type='text' placeholder='City...'></input>
-            <IoIosSearch className='loopa'/>
+        <IoIosSearch className='loopa'/>
       </div>
     );
   }

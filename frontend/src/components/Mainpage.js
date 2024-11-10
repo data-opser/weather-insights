@@ -11,7 +11,7 @@ function Mainpage() {
   const [activeButton, setActiveButton] = useState('sunrise');
 
   return (
-    /*<div className="main-page">
+    <div className="main-page">
       <div className='cities'>
         <AddCityButton />
         <CityList />
@@ -45,8 +45,8 @@ function Mainpage() {
       <div className='map'>
         
       </div>
-    </div>*/
-    <UserPage />
+    </div>
+
   );
 }
 
