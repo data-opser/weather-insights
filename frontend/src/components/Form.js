@@ -16,6 +16,7 @@ function Form({ type, setActive, setFormType }) {
       linkParagraph: "Haven't got an account?",
       linkText: "Sign up",
       linkUrl: "/register",
+      endpoint: "/api/login",
     },
     register: {
       title: "Join us",
@@ -23,6 +24,7 @@ function Form({ type, setActive, setFormType }) {
       linkParagraph: "Already have an account?",
       linkText: "Log in",
       linkUrl: "/login",
+      endpoint: "/api/register",
     },
   };
 
@@ -31,6 +33,8 @@ function Form({ type, setActive, setFormType }) {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
 
   const handleEyeClick = () => {
     setShowPassword(!showPassword);
@@ -41,35 +45,82 @@ function Form({ type, setActive, setFormType }) {
     setFullName(''); 
     setEmail('');
     setPassword('');
+    setError(null);
+    setSuccess(null);
   };
 
   const closeForm = () => {
     setActive(false);
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError(null);
+    setSuccess(null);
+
+    try {
+      const response = await fetch(config.endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          fullName: type === 'register' ? fullName : undefined,
+          email,
+          password
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Something went wrong');
+      }
+
+      const data = await response.json();
+      console.log('Success:', data);
+      setSuccess("Request successful!");
+
+      setTimeout(() => {
+        closeForm();
+      }, 3000);
+
+      setFullName(''); 
+      setEmail('');
+      setPassword('');
+    } catch (error) {
+      setError(error.message || 'Failed to submit');
+      console.error('Error:', error);
+    }
+  };
+
+  const handleGoogleAuth = () => {
+    window.location.href = 'http://localhost:5000/auth/google';
+  };
+
   return (
     <div className='form'>
       <div className='left-column'>
-        <img className='form-weather-icon' src={form_weather_icon} alt='form-weather-icon'></img>
+        <img className='form-weather-icon' src={form_weather_icon} alt='form-weather-icon' />
       </div>      
       <div className='right-column'>
-        <form className='data-form'>
+        <form className='data-form' onSubmit={handleSubmit}>
           <h1>{config.title}</h1>
+          {error && <p style={{ color: 'red' }}>{error}</p>}
+          {success && <p style={{ color: 'green' }}>{success}</p>}
           {
             type === "register" && (
               <div className='input-field'>
                 <IoPersonOutline className='icon' />
-                <input type='text' value={fullName} onChange={(e) => setFullName(e.target.value)} placeholder='full name'></input>
+                <input type='text' value={fullName} onChange={(e) => setFullName(e.target.value)} placeholder='full name' required />
               </div>
             )
           }
           <div className='input-field'>
             <MdOutlineEmail className='icon' />
-            <input type='email' value={email} onChange={(e) => setEmail(e.target.value)} placeholder='email'></input>
+            <input type='email' value={email} onChange={(e) => setEmail(e.target.value)} placeholder='email' required />
           </div>
           <div className='input-field pass-input-field'>
             <LuUnlock className='icon' />
-            <input type={showPassword ? "text" : "password"} value={password} onChange={(e) => setPassword(e.target.value)} placeholder='password'></input>
+            <input type={showPassword ? "text" : "password"} value={password} onChange={(e) => setPassword(e.target.value)} placeholder='password' required />
             {showPassword ? <FiEyeOff onClick={handleEyeClick} className='icon show-password' /> : <FiEye onClick={handleEyeClick} className='icon show-password' />}
           </div>
           <button type='submit'>{config.buttonText}</button>
@@ -79,8 +130,8 @@ function Form({ type, setActive, setFormType }) {
           </div>
         </form>
       </div>
-      <img src={google_icon} className='google-icon' alt='google-ref'></img>
-      <button className='return-button' onClick={closeForm} >
+      <img src={google_icon} className='google-icon' alt='google-ref' onClick={handleGoogleAuth}/>
+      <button className='return-button' onClick={closeForm}>
         <IoArrowBack className='return-arrow' />
       </button>
     </div>
