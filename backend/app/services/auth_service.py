@@ -15,6 +15,7 @@ google = oauth.register(
     client_kwargs={'scope': 'openid email profile https://www.googleapis.com/auth/user.birthday.read'}
 )
 
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(user_id)
@@ -107,7 +108,8 @@ def handle_google_callback():
 def fetch_google_birthday(access_token):
     headers = {'Authorization': f'Bearer {access_token}'}
     try:
-        response = requests.get('https://people.googleapis.com/v1/people/me?personFields=birthdays', headers=headers)
+        response = requests.get('https://people.googleapis.com/v1/people/me?personFields=birthdays',
+                                headers=headers)
         response.raise_for_status()
 
         birthday_info = response.json().get('birthdays', [{}])[0].get('date', {})
