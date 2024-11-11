@@ -25,19 +25,19 @@ function UserPage() {
 
                 <div className='form-group'>
                     <input className='name-input' placeholder='Anton Reshetniak'/>
-                    <hr class="separator"/>
-                    <p class="user-info">First name, last name</p>
+                    <hr className="separator"/>
+                    <p className="user-info">First name, last name</p>
 
                     <input className='name-input' placeholder='******'/>
-                    <hr class="separator"/>
-                    <p class="user-info">Old password</p>
+                    <hr className="separator"/>
+                    <p className="user-info">Old password</p>
                     <input className='name-input' placeholder='******'/>
-                    <hr class="separator"/>
-                    <p class="user-info">New password</p>
+                    <hr className="separator"/>
+                    <p className="user-info">New password</p>
 
                     <p className='user-email'>anton.reshetniak@nure.ua</p>
-                    <hr class="separator"/>
-                    <p class="user-info">Email</p>
+                    <hr className="separator"/>
+                    <p className="user-info">Email</p>
                 </div>
                 <button className='user-button'>Save</button>
             </div>
