@@ -8,6 +8,7 @@ from werkzeug.exceptions import NotFound
 
 s = URLSafeTimedSerializer(Config.SECRET_KEY)
 
+
 def send_email_confirmation(user):
     try:
         token = s.dumps(user.email, salt='email-confirm-salt')
@@ -22,9 +23,11 @@ def send_email_confirmation(user):
             confirmation_url=confirmation_url
         )
 
-        msg = Message("Email Confirmation",
+        msg = Message(
+            "Email Confirmation",
             recipients=[user.email],
-            body=f"To confirm your email address, visit the following link: {confirmation_url}",
+            body=f"To confirm your email address, "
+                 f"visit the following link: {confirmation_url}",
             html=html_body)
 
         mail.send(msg)
@@ -34,6 +37,7 @@ def send_email_confirmation(user):
         raise ValueError("Email template not found.") from e
     except Exception as e:
         raise RuntimeError("An error occurred while sending the email confirmation.") from e
+
 
 def verify_email_token(token):
     try:

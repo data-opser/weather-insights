@@ -6,6 +6,7 @@ from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.exceptions import NotFound
 
+
 class User(db.Model, UserMixin):
     __tablename__ = 'user'
     __table_args__ = {'schema': 'user_data'}

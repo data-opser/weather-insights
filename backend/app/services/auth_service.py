@@ -1,6 +1,5 @@
 from app.models import User
 from flask import url_for, session
-from flask_login import current_user
 from datetime import date
 from app import oauth, login_manager
 from app.services.email_confirm_service import send_email_confirmation
@@ -20,9 +19,9 @@ google = oauth.register(
 def load_user(user_id):
     return User.query.get(user_id)
 
+
 def register_user(data):
-    email = data.get('email')
-    existing_user = User.get_user_by_email(data['email'])
+    existing_user = User.get_user_by_email(data.get('email'))
 
     if existing_user:
         if existing_user.google_id:
@@ -37,6 +36,7 @@ def register_user(data):
         raise ve
     except Exception as e:
         raise RuntimeError("Internal server error during registration") from e
+
 
 def login_user(data):
     try:
@@ -56,6 +56,7 @@ def login_user(data):
     except Exception as e:
         raise RuntimeError("Internal server error during login") from e
 
+
 def initiate_google_login():
     try:
         nonce = os.urandom(16).hex()
@@ -64,6 +65,7 @@ def initiate_google_login():
         return google.authorize_redirect(redirect_uri, nonce=nonce)
     except Exception as e:
         raise RuntimeError("An error occurred during Google login initiation") from e
+
 
 def handle_google_callback():
     try:
@@ -100,6 +102,7 @@ def handle_google_callback():
         raise pe
     except Exception as e:
         raise RuntimeError("Internal server error during Google login") from e
+
 
 def fetch_google_birthday(access_token):
     headers = {'Authorization': f'Bearer {access_token}'}

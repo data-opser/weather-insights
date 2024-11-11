@@ -7,6 +7,7 @@ from flask_login import login_required, current_user
 
 user_profile_bp = Blueprint('user_profile', __name__)
 
+
 @user_profile_bp.route('/reset_password', methods=['POST'])
 def reset_password_request():
     data = request.get_json()
@@ -17,6 +18,7 @@ def reset_password_request():
     status, message = send_password_reset_email(user)
     return jsonify({'message': message}), status
 
+
 @user_profile_bp.route('/profile', methods=['GET'])
 @login_required
 def get_profile():
@@ -26,10 +28,10 @@ def get_profile():
     else:
         raise NotFound("User not found.")
 
+
 @user_profile_bp.route('/profile', methods=['PUT'])
 @login_required
 def update_profile():
     data = request.get_json()
     status, message = profile_service.update_user_profile(current_user.user_id, data)
     return jsonify({'message': message}), status
-

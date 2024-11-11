@@ -5,12 +5,14 @@ from app.utils.error_handler import ErrorHandler
 
 auth_bp = Blueprint('auth', __name__)
 
+
 @auth_bp.route('/register', methods=['POST'])
 def register():
     data = request.get_json()
     user, status, message = auth_service.register_user(data)
 
     return jsonify({'message': message}), status
+
 
 @auth_bp.route('/login', methods=['POST'])
 def login():
@@ -20,9 +22,11 @@ def login():
         login_user(user)
     return jsonify({'message': message}), status
 
+
 @auth_bp.route('/auth/google')
 def google_login():
     return auth_service.initiate_google_login()
+
 
 @auth_bp.route('/auth/google/callback')
 def google_callback():
@@ -30,6 +34,7 @@ def google_callback():
     if user:
         login_user(user)
     return jsonify({'message': message}), status
+
 
 @auth_bp.route('/confirm_email/<token>', methods=['GET'])
 def confirm_email(token):
@@ -39,6 +44,7 @@ def confirm_email(token):
 
     status, message = user.verify_email()
     return jsonify({'message': message}), status
+
 
 @auth_bp.route('/logout', methods=['POST'])
 @login_required

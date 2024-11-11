@@ -3,6 +3,7 @@ from app import mail, db
 import random, string
 from flask import render_template_string
 
+
 def send_password_reset_email(user):
     try:
         new_password = generate_random_password()
@@ -20,7 +21,9 @@ def send_password_reset_email(user):
         msg = Message(
             "Your New Password",
             recipients=[user.email],
-            body=f"Your new password is: {new_password}\nYou can log in using this password. Please change it after logging in.",
+            body=f"Your new password is: {new_password}\n"
+                 f"You can log in using this password. "
+                 f"Please change it after logging in.",
             html=html_body
         )
 
@@ -32,12 +35,14 @@ def send_password_reset_email(user):
     except Exception as e:
         raise RuntimeError("An error occurred while sending the password reset email.") from e
 
+
 def generate_random_password(length=8):
     try:
         characters = string.ascii_letters + string.digits
         return ''.join(random.choice(characters) for _ in range(length))
     except Exception as e:
         raise RuntimeError("An error occurred while generating the random password.") from e
+
 
 def update_password(user, new_password):
     try:

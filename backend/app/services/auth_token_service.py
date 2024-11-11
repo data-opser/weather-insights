@@ -4,6 +4,7 @@ from sqlalchemy.exc import IntegrityError
 import jwt, os
 from datetime import datetime, timedelta
 
+
 class AuthService:
     @staticmethod
     def register_user(name, surname, birthday, email, password):
