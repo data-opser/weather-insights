@@ -1,12 +1,23 @@
 from app.models import User
+from werkzeug.exceptions import NotFound
 
 def get_user_profile(user_id):
-    user = User.query.get(user_id)
-    return user.get_profile_data() if user else None
+    try:
+        user = User.query.get(user_id)
+        if user:
+            return user.get_profile_data()
+        else:
+            raise NotFound("User not found.")
+    except Exception as e:
+        raise RuntimeError("An error occurred while retrieving the user profile.") from e
 
 def update_user_profile(user_id, data):
-    user = User.query.get(user_id)
-    if user:
-        user.update_user(data['name'], data['surname'], data.get('birthday'), data['password'])
-        return True
-    return False
+    try:
+        user = User.query.get(user_id)
+        if user:
+            user.update_user(data)
+            return 200, 'Profile updated successfully.'
+        else:
+            raise NotFound("User not found.") 
+    except Exception as e:
+        raise RuntimeError("An error occurred while updating the user profile.") from e
