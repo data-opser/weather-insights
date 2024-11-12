@@ -1,18 +1,39 @@
-import '../styles/UserPage.css'
-import user from '../images/user.jpg'
+import React, { useState } from 'react';
+import '../styles/UserPage.css';
+import user from '../images/user.jpg';
 import { GoPlus } from "react-icons/go";
 import raincloud from '../images/raincloud.jfif'
 import { CiSettings } from "react-icons/ci";
 import { GoSignOut } from "react-icons/go";
 
 function UserPage() {
+
+    const [activeSaveButton, setActiveSaveButton] = useState(false);
+    const [activeViewButton, setActiveViewButton] = useState(false);
+    const [activeAddPhotoButton, setActiveAddPhotoButton] = useState(false);
+
+    const handleSaveButtonClick = () => {
+        setActiveSaveButton(true);
+    };
+
+    const handleViewButtonClick = () => {
+        setActiveViewButton(true);
+    };
+
+    const handleAddPhotoButtonClikc = () => {
+        setActiveAddPhotoButton(true);
+    }
+
     return (
         <div className="user-page">
             <div className="user">
 
                 <div className='user-block1'>
                     <img className='user-photo' src={user}></img>
-                    <GoPlus className='plus-photo'/>
+                    <GoPlus 
+                        className={`plus-photo ${activeAddPhotoButton ? 'gray' : ''}`}
+                        onClick={handleAddPhotoButtonClikc}
+                    />
                 </div>
 
                 <div className='user-block2'>
@@ -39,7 +60,12 @@ function UserPage() {
                     <hr className="separator"/>
                     <p className="user-info">Email</p>
                 </div>
-                <button className='user-button'>Save</button>
+                <button 
+                    className={`user-button ${activeSaveButton ? 'blue' : '' }`}
+                    onClick={handleSaveButtonClick}> 
+                    Save
+                </button>
+
             </div>
 
 
@@ -61,7 +87,11 @@ function UserPage() {
                     <p className='notification-text'>Expected rain in your area within the next 30 minutes. <span className='notification-text-bold'>Don’t forget to bring an umbrella if you're heading out!</span></p>
                     <p className='notification-time'>Today, 09:00</p>
                 </div>
-                <button className='user-button'>Veiw all</button>
+                <button 
+                    className={`user-button ${activeViewButton ? 'blue' : ''} `}
+                    onClick={handleViewButtonClick}>
+                    Veiw all
+                </button>
                 <CiSettings className='settings'/>
                 <GoSignOut className='getback'/>
             </div>

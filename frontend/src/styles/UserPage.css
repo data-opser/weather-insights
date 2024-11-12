@@ -116,6 +116,7 @@
     cursor: pointer;
     margin-bottom: 25px;
     margin-top: 20px;
+    transition: background 0.3s ease;
 }
 .settings, .getback {
     position: absolute;
@@ -130,4 +131,16 @@
 .getback {
     right: 0;
     top: -60px;
+}
+
+.user-button.blue {
+    background: linear-gradient(135deg, rgb(0, 66, 165) 0%, rgb(0, 41, 87) 100%);
+}
+
+.user-button:hover {
+    background: linear-gradient(135deg, rgb(0, 148, 188) 0%, rgb(0, 101, 164) 100%);
+}
+
+.gray {
+    background: rgb(215, 215, 215);
 }
