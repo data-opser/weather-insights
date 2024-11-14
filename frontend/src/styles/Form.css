@@ -51,6 +51,13 @@
   margin-top: 0;
 }
 
+.data-form .error-text {
+  color:red;
+  opacity: 50%;
+  font-size: 20px;
+  margin-left: 20px;
+}
+
 .input-field {
   width: 100%;
   background: #FFF4DE;
@@ -134,7 +141,7 @@
   right: calc(25% - 25.5px);
 }
 
-@media screen and (max-width: 1100px) {
+@media screen and (max-width: 1200px) {
   .form {
     grid-template-columns: 100%;
   }
