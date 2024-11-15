@@ -64,10 +64,12 @@
                     android:layout_marginTop="4dp" />
 
                 <androidx.appcompat.widget.SwitchCompat
-                    style="@style/SwitchCompat"
                     android:id="@+id/switchNotify"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:contentDescription="@string/settings_notify_descrp"
-
+                    app:trackTint="@drawable/switch_track"
+                    app:thumbTint="@drawable/switch_thumb"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/mainTextNotify"
                     app:layout_constraintBottom_toBottomOf="@id/additionalTextNotify" />
@@ -97,9 +99,12 @@
                     android:layout_marginTop="4dp"/>
 
                 <androidx.appcompat.widget.SwitchCompat
-                    style="@style/SwitchCompat"
                     android:id="@+id/switchTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:contentDescription="@string/settings_theme_descrp"
+                    app:trackTint="@drawable/switch_track"
+                    app:thumbTint="@drawable/switch_thumb"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/mainTextTheme"
                     app:layout_constraintBottom_toBottomOf="@id/additionalTextTheme" />

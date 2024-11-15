@@ -41,13 +41,8 @@ class MainActivity : AppCompatActivity() {
 
         val typedValue = TypedValue()
         theme.resolveAttribute(R.attr.navBarColor, typedValue, true)
-
         window.navigationBarColor = typedValue.data
 
-        /*
-        window.statusBarColor = ContextCompat.getColor(this, R.color.statusBar_night)
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        */
         bottomNavigationView = findViewById(R.id.bottomNavigationView)
         fab = findViewById(R.id.fab)
 //        val fragments = supportFragmentManager.fragments
@@ -130,12 +125,8 @@ class MainActivity : AppCompatActivity() {
         val sharedPreferences = getSharedPreferences("MODE", Context.MODE_PRIVATE)
         if (sharedPreferences.getBoolean("isNight", false)) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            window.statusBarColor = ContextCompat.getColor(this, R.color.statusBar_night)
-            window.statusBarColor = getColor(R.color.panel_night)
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            window.statusBarColor = ContextCompat.getColor(this, R.color.statusBar_day)
-            window.statusBarColor = getColor(R.color.panel_light)
         }
     }
 

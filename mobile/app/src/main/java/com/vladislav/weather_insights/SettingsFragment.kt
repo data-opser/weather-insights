@@ -142,23 +142,12 @@ class SettingsFragment : Fragment() {
     fun changeTheme(isChecked: Boolean) {
         if (isChecked) {
             editor.putBoolean("isNight", true)
-
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            myActivity.window.statusBarColor = ContextCompat.getColor(myActivity, R.color.statusBar_night)
-            myActivity.window.statusBarColor = myActivity.getColor(R.color.panel_night)
         } else {
             editor.putBoolean("isNight", false)
-
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            myActivity.window.statusBarColor = ContextCompat.getColor(myActivity, R.color.statusBar_day)
-            myActivity.window.statusBarColor = myActivity.getColor(R.color.panel_light)
         }
         editor.apply()
-
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.frame_layout, this)
-            .addToBackStack(null)
-            .commit()
     }
 
     private fun showSettingsDialog() {

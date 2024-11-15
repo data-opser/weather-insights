@@ -15,9 +15,9 @@
     <color name="text_gray_day">#9E9E9E</color>
     <color name="text_gray_night">#9E9E9E</color>
     <color name="nav_button_day">#E1EEF8</color>
-    <color name="statusBar_day">#2B8FC1</color>
-    <color name="statusBar_night">#FF121212</color>
-    <color name="navBar_day2">#a2b1f2</color>
+    <color name="dialog_bg_day">#FFFFFF</color>
+    <color name="dialog_bg_night">#13222F</color>
+    <color name="dialog_stroke">#2c2c2c</color>
     <color name="navBar_day">#BDC7F4</color>
     <color name="navBar_night">#152431</color>
     <color name="switch_track_on_day">#157216</color>
@@ -28,10 +28,6 @@
     <color name="switch_thumb_off_day">#93A5FA</color>
     <color name="switch_thumb_on_night">#0ab207</color>
     <color name="switch_thumb_off_night">#B0B0B0</color>
-
-
-    <color name="switch_track_off_da2y">#1F6385</color>
-    <color name="switch_thumb_off_day2">#2B8FC1</color>
 
     <color name="bg_day">#B3BEF4</color>
     <color name="bg_night">#152431</color>
@@ -45,7 +41,6 @@
     <color name="fragment_bg_start_day">#4b265c</color>  <!-- Замінили на більш насичений синій -->
     <color name="fragment_bg_middle_day">#485bc4</color>
     <color name="fragment_bg_end_day">#808FE0</color>
-
 
     <color name="fragment_bg_start_night">#193549</color>
     <color name="fragment_bg_middle_night">#11293A</color>
