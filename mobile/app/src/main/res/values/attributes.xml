@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <attr name="gradientStartColor" format="color"/>
-    <attr name="gradientMiddleColor" format="color"/>
-    <attr name="gradientEndColor" format="color"/>
+    <attr name="fragmentBgStartColor" format="color"/>
+    <attr name="fragmentBgMiddleColor" format="color"/>
+    <attr name="fragmentBgMiddleColor2" format="color"/>
+    <attr name="fragmentBgEndColor" format="color"/>
+    <attr name="navBarColor" format="color"/>
+    <attr name="statusBarColor" format="color"/>
 </resources>

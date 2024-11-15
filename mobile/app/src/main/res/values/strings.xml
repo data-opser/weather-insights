@@ -27,7 +27,21 @@
     <string name="settings_theme_main">Dark theme</string>
     <string name="settings_theme_addition">Application theme</string>
     <string name="settings_theme_descrp">Turn on dark theme</string>
-    <string name="settings_1_main">Go to settings</string>
-    <string name="settings_1_addition">Go to settings</string>
+    <string name="settings_sign_title">Selected zodiac sign</string>
+    <string name="settings_sign_descrp">Libra</string>
+
+    <string name="sign_aries">Aries</string>
+    <string name="sign_taurus">Taurus</string>
+    <string name="sign_gemini">Gemini</string>
+    <string name="sign_cancer">Cancer</string>
+    <string name="sign_leo">Leo</string>
+    <string name="sign_virgo">Virgo</string>
+    <string name="sign_libra">Libra</string>
+    <string name="sign_scorpio">Scorpio</string>
+    <string name="sign_sagittarius">Sagittarius</string>
+    <string name="sign_capricorn">Capricorn</string>
+    <string name="sign_aquarius">Aquarius</string>
+    <string name="sign_pisces">Pisces</string>
+
 
 </resources>

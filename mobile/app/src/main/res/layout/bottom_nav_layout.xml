@@ -16,7 +16,6 @@
         android:scaleType="centerCrop"/>
 
     <LinearLayout
-        android:id="@+id/f"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -34,19 +33,10 @@
             android:layout_marginTop="5dp"
             android:textSize="28sp" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:contentDescription="@string/error"
-            android:paddingHorizontal="20dp"
-            android:src="@drawable/ic_exit"
-            android:id="@+id/cancelButton"
-            app:layout_constraintEnd_toStartOf="@+id/f"/>
-
     </LinearLayout>
 
 
-    <!--
+
     <LinearLayout
         android:id="@+id/layoutVideo"
         android:orientation="horizontal"
@@ -57,8 +47,7 @@
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_baseline_upload_24"/>
+            android:layout_height="wrap_content"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -80,8 +69,7 @@
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_baseline_whatshot_24"/>
+            android:layout_height="wrap_content"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -106,8 +94,7 @@
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_baseline_vibration_24"/>
+            android:layout_height="wrap_content"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -118,5 +105,5 @@
             android:textSize="16sp"/>
 
     </LinearLayout>
--->
+
 </LinearLayout>

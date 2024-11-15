@@ -6,14 +6,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".MainActivity">
-
-    <include
-        layout="@layout/header"
-        android:id="@+id/header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
+    android:windowAnimationStyle="@style/WindowAnimationTransition"
+    android:id="@+id/mainActivity"
+    tools:context=".MainActivity"
+    android:background="@drawable/gradient_bcgrd_day">
+    <!-- видалити background -->
     <FrameLayout
         android:id="@+id/frame_layout"
         android:layout_width="match_parent"
@@ -22,20 +19,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/header"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/NavigationView"
         app:itemActiveIndicatorStyle="@style/App.Custom.Indicator"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/bottom_menu"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:labelVisibilityMode="labeled"
-        app:menu="@menu/bottom_menu" >
+        style="@style/NavigationView">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"
@@ -45,6 +42,7 @@
             android:contentDescription="@string/error"
             android:src="@drawable/ic_plus"
             style="@style/FloatingActionButton"
+            app:shapeAppearanceOverlay="@style/RoundedFAB"
             app:layout_anchor="@+id/bottomAppBar"
             app:layout_anchorGravity="center"
             app:maxImageSize="40dp"

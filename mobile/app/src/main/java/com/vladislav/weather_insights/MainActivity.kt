@@ -1,11 +1,16 @@
 package com.vladislav.weather_insights
 
+import android.Manifest
 import android.app.Dialog
 import android.content.Context
+import android.content.SharedPreferences
+import android.content.SharedPreferences.Editor
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.GradientDrawable
+import android.os.Build
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -17,33 +22,50 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {
     private lateinit var fab: FloatingActionButton
     private lateinit var bottomNavigationView: BottomNavigationView
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var editor: Editor
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
-        window.navigationBarColor = ContextCompat.getColor(this, R.color.navigationBar)
 
-        ////////////////
+        sharedPreferences = getSharedPreferences("MODE", Context.MODE_PRIVATE)
+        editor = sharedPreferences.edit()
+
+        val typedValue = TypedValue()
+        theme.resolveAttribute(R.attr.navBarColor, typedValue, true)
+
+        window.navigationBarColor = typedValue.data
+
+        /*
         window.statusBarColor = ContextCompat.getColor(this, R.color.statusBar_night)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        ////////////////////
+        */
         bottomNavigationView = findViewById(R.id.bottomNavigationView)
         fab = findViewById(R.id.fab)
+//        val fragments = supportFragmentManager.fragments
+//        for (fragment in fragments) {
+//            Log.d("FragmentStack", "Fragment in stack: ${fragment.javaClass.simpleName}")
+//        }
 
-        replaceFragment(WeatherFragment())
+        if (supportFragmentManager.findFragmentByTag("SettingsFragment") == null) {
+            replaceFragment(WeatherFragment(), "WeatherFragment")
+        }
+        setTheme()
 
         bottomNavigationView.setOnItemSelectedListener {
             when(it.itemId) {
-                R.id.weather -> replaceFragment(WeatherFragment ())
-                R.id.premium -> replaceFragment(PremiumFragment ())
-                R.id.horoscope -> replaceFragment(HoroscopeFragment ())
-                R.id.settings -> replaceFragment(SettingsFragment ())
+                R.id.nav_weather -> replaceFragment(WeatherFragment (), "WeatherFragment")
+                R.id.nav_premium -> replaceFragment(PremiumFragment (),"PremiumFragment")
+                R.id.nav_horoscope -> replaceFragment(HoroscopeFragment (),"HoroscopeFragment")
+                R.id.nav_settings -> replaceFragment(SettingsFragment (),"SettingsFragment")
             }
 
             true
@@ -52,74 +74,51 @@ class MainActivity : AppCompatActivity() {
             showBottomDialog()
         }
 
-        val yourView = findViewById<View>(R.id.frame_layout)
+        val mainView = findViewById<View>(R.id.mainActivity)
+
+        val colorsGradientBg = intArrayOf(
+            getColorFromAttr(R.attr.fragmentBgStartColor),
+            getColorFromAttr(R.attr.fragmentBgMiddleColor),
+            getColorFromAttr(R.attr.fragmentBgEndColor)
+        )
 
         val gradientDrawable = GradientDrawable(
             GradientDrawable.Orientation.TOP_BOTTOM,
-            intArrayOf(
-                ContextCompat.getColor(this, R.color.dark_color_start),
-                ContextCompat.getColor(this, R.color.dark_color_middle),
-                ContextCompat.getColor(this, R.color.dark_color_end),
-                ContextCompat.getColor(this, R.color.fragment_bcgrd_night)
-            )
+            colorsGradientBg
         )
         gradientDrawable.setDither(true)
-        yourView.background = gradientDrawable
+        mainView.background = gradientDrawable
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
+        {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
+                != (if (sharedPreferences.getBoolean("notification", false)) 1 else 0)
+            ) {
+                editor.putBoolean(
+                    "notification",
+                    ContextCompat.checkSelfPermission(
+                        this,
+                        Manifest.permission.POST_NOTIFICATIONS
+                    ) == 1
+                )
+            }
+        }
     }
 
-    private  fun replaceFragment(fragment: Fragment) {
+    fun replaceFragment(fragment: Fragment, tag: String) {
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.frame_layout, fragment)
+//        fragmentTransaction.setCustomAnimations(
+//            android.R.anim.fade_in,  // Анімація для входу
+//            android.R.anim.fade_out  // Анімація для виходу
+//        )
+        fragmentTransaction.replace(R.id.frame_layout, fragment, tag)
         fragmentTransaction.commit()
     }
 
     private fun showBottomDialog() {
-        val dialog = Dialog(this)
+        val dialog = BottomSheetDialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setContentView(R.layout.bottom_sheet_layout)
-
-        //val videoLayout = dialog.findViewById(R.id.layoutVideo)
-        //val shortsLayout = dialog.findViewById(R.id.layoutShorts)
-        //val liveLayout = dialog.findViewById(R.id.layoutLive)
-        val cancelButton:ImageView = dialog.findViewById(R.id.cancelButton)
-
-        /*videoLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                dialog.dismiss();
-                Toast.makeText(MainActivity.this,"Upload a Video is clicked",Toast.LENGTH_SHORT).show();
-
-            }
-        });
-
-        shortsLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                dialog.dismiss();
-                Toast.makeText(MainActivity.this,"Create a short is Clicked",Toast.LENGTH_SHORT).show();
-
-            }
-        });
-
-        liveLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                dialog.dismiss()
-                Toast.makeText(MainActivity.this,"Go live is Clicked",Toast.LENGTH_SHORT).show();
-
-            }
-        });*/
-
-        cancelButton.setOnClickListener {
-            @Override
-            fun onClick(view: View) {
-                dialog.dismiss()
-            }
-        }
+        dialog.setContentView(R.layout.bottom_nav_layout)
 
         dialog.show()
         dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT)
@@ -129,7 +128,7 @@ class MainActivity : AppCompatActivity() {
     }
     fun setTheme(){
         val sharedPreferences = getSharedPreferences("MODE", Context.MODE_PRIVATE)
-        if (sharedPreferences.getBoolean("night", false)) {
+        if (sharedPreferences.getBoolean("isNight", false)) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
             window.statusBarColor = ContextCompat.getColor(this, R.color.statusBar_night)
             window.statusBarColor = getColor(R.color.panel_night)
@@ -138,5 +137,15 @@ class MainActivity : AppCompatActivity() {
             window.statusBarColor = ContextCompat.getColor(this, R.color.statusBar_day)
             window.statusBarColor = getColor(R.color.panel_light)
         }
+    }
+
+    fun getColorFromAttr(attr: Int): Int {
+        val typedValue = TypedValue()
+        theme.resolveAttribute(attr, typedValue, true)
+        return typedValue.data
+    }
+
+    fun selectBottomNavItem(itemId: Int) {
+        bottomNavigationView.selectedItemId = itemId
     }
 }

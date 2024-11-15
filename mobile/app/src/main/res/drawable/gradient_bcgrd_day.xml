@@ -5,9 +5,9 @@
             <gradient
                 android:angle="270"
                 android:dither="true"
-                android:startColor="@color/dark_color_start"
-                android:centerColor="@color/dark_color_middle"
-                android:endColor="@color/button_system_night" />
+                android:startColor="#4b265c"
+                android:centerColor="#485bc4"
+                android:endColor="#808FE0" />
         </shape>
     </item>
 </layer-list>
