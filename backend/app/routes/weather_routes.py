@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify, Response
+from flask import Blueprint, request
 from app.models import СurrentWeather, City, ForecastWeatherDay, ForecastWeatherHour
 
 weather_bp = Blueprint('weather', __name__)
