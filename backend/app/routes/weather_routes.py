@@ -3,12 +3,12 @@ from app.models import СurrentWeather, City, ForecastWeatherDay, ForecastWeathe
 
 weather_bp = Blueprint('weather', __name__)
 
-@weather_bp.route('/weather_day/city', methods=['GET'])
+@weather_bp.route('/weatherday/city', methods=['GET'])
 def fetch_four_day_forecast():
     city_name = request.args.get('city')
     return ForecastWeatherDay.get_city_four_day_forecast(city_name)
 
-@weather_bp.route('/sun_times/city', methods=['GET'])
+@weather_bp.route('/suntimes/city', methods=['GET'])
 def fetch_sunrise_sunset_times():
     city_name = request.args.get('city')
     return СurrentWeather.get_sun_times_for_city(city_name)
