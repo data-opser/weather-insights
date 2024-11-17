@@ -1,43 +1,73 @@
 <resources>
     <!-- Base application theme. -->
     <style name="Theme.Weatherinsights" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="android:navigationBarColor">#FF0000</item>
 
-        <item name="gradientStartColor">@color/dark_color_start</item>
-        <item name="gradientMiddleColor">@color/dark_color_middle</item>
-        <item name="gradientEndColor">@color/dark_color_end</item>
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+        <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
+
+        <item name="switchThumbOnColor">@color/switch_thumb_on_night</item>
+        <item name="switchThumbOffColor">@color/switch_thumb_off_night</item>
+        <item name="switchTrackOnColor">@color/switch_track_on_night</item>
+        <item name="switchTrackOffColor">@color/switch_track_off_night</item>
+
+        <item name="dialogBgColor">@color/dialog_bg_night</item>
+        <item name="navBarColor">@color/navBar_night</item>
+        <item name="fragmentBgStartColor">@color/fragment_bg_start_night</item>
+        <item name="fragmentBgMiddleColor">@color/fragment_bg_middle_night</item>
+        <item name="fragmentBgEndColor">@color/fragment_bg_end_night</item>
     </style>
 
     <!-- NIGHT STYLE-->
 
     <style name="Fragment">
-    </style>
-    <style name="Background">
-        <item name="android:background">@color/background_night</item>
-    </style>
-    <style name="TextOnPrimary">
-        <item name="android:textColor">@color/text_onPrimary_night</item>
-        <!--<item name="android:letterSpacing">0.02</item>-->
-        <item name="android:fontFamily">@font/inkfree</item>
+        <item name="android:paddingTop">20dp</item>
     </style>
 
-    <style name="TextOnPrimary2">
-        <item name="android:textColor">@color/text_onPrimary_night</item>
+    <style name="Layout">
+        <item name="android:backgroundTint">@color/layout_night</item>
+    </style>
+
+    <style name="Background">
+        <item name="android:background">@color/bg_night</item>
+    </style>
+
+    <style name="BackgroundTint">
+        <item name="android:backgroundTint">@color/bg_night</item>
+    </style>
+
+    <style name="Text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/inter</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/text_night</item>
+    </style>
+
+    <style name="TextSmallAndGray">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:fontFamily">@font/inter</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/text_gray_night</item>
     </style>
 
     <style name="NavigationView">
         <item name="itemIconTint">@color/button_system_night</item>
         <item name="itemTextColor">@color/button_system_night</item>
-        <item name="android:background">@color/background_night</item>
+        <item name="android:background">@drawable/rounded_bottom_nav</item>
     </style>
 
     <style name="FloatingActionButton">
         <item name="android:backgroundTint">#2E4E66</item>
         <item name="tint">@color/button_system_night</item>
     </style>
-    <style name="ImageIcon">
-    </style>
+
     <style name="App.Custom.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
         <item name="android:color">@color/button_bgTint_night</item>
+    </style>
+
+    <style name="WindowAnimationTransition">
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
     </style>
 </resources>

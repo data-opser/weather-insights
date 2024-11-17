@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:gravity="center_vertical"
-    style="@style/Background"
+
     tools:ignore="UseCompoundDrawables">
 
     <ImageView
@@ -16,7 +16,7 @@
         android:contentDescription="@string/error" />
 
     <TextView
-        style="@style/TextOnPrimary2"
+        style="@style/Text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingVertical="16dp"
