@@ -67,33 +67,7 @@
 .icon-button-login.white {
   color: white;
 }
-/* 
-
-@media (max-width: 768px) {
-  .header p {
-    font-size: 3vw;
-  }
-  .logo {
-    height: 40px;
-  }
-  .login-button {
-    font-size: 2.5vw;
-    width: 15vw;
-  }
-}
 
 
-@media (max-width: 576px) {
-  .header {    
-    padding: 10px 5%;
-  }
 
-  .header p {
-    font-size: 4vw;
-    text-align: center;
-  }
 
-  .logo {
-    height: 30px;
-  }
-} */

@@ -7,7 +7,7 @@ function Day() {
         <div className="day">
             <p>8 Oct.</p>
             <GoSun className="sun"/>
-            <p>14/10</p>
+            <p>14°/10°</p>
             <div className="rain">
                 <WiRaindrop className="raindrop"/>
                 <p>14%</p>
