@@ -45,16 +45,20 @@ class ForecastWeatherHour(db.Model):
 
 
     @classmethod
-    def get_city_hourly_weather_by_date(cls, city_name, date):
+    def get_city_hourly_weather_by_date(cls, city_id, date):
         try:
-            if City.check_city_exists(city_name):
+            coordinates = City.get_lat_lng_by_id(city_id)
+            if "latitude" in coordinates and "longitude" in coordinates:
+                latitude = coordinates["latitude"]
+                longitude = coordinates["longitude"]
+
                 date_object = datetime.strptime(date, '%Y-%m-%d').date()
+
                 records = cls.query.filter(
-                    cls.city == city_name,
+                    cls.latitude == latitude,
+                    cls.longitude == longitude,
                     cast(cls.weather_time, Date) == date_object
                 ).all()
                 return  WeatherResponse.response_weather_hours(records)
-            return ErrorHandler.handle_error_2(None, message=f"City '{city_name}' does not exist in the database.",
-                                             status_code=404)
         except Exception as e:
             return ErrorHandler.handle_error_2(e, message="Internal Server Error", status_code=500)
