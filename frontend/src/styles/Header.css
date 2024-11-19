@@ -7,7 +7,7 @@
 }
 
 .header p {
-  font-size: 30px; 
+  font-size: 30px;
 }
 
 .login-button {
@@ -22,7 +22,7 @@
 
 .logo {
   border-radius: 50%;
-  height: 50px; 
+  height: 50px;
   padding: 10px;
 }
 
@@ -35,9 +35,9 @@
   color: black;
   border: none;
   border-radius: 0.5em;
-  font-size: 20px; 
-  width: 150px; 
-  padding: 10px; 
+  font-size: 20px;
+  width: 150px;
+  padding: 10px;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -53,13 +53,13 @@
 }
 
 .login-button.blue {
-  background: linear-gradient(135deg, rgba(19,99,223,1) 0%, rgba(28,75,130,1) 100%);
+  background: linear-gradient(135deg, rgba(19, 99, 223, 1) 0%, rgba(28, 75, 130, 1) 100%);
   color: white;
 }
 
 .icon-button-login {
   width: auto;
-  height: 1em; 
+  height: 1em;
   color: #002644;
   padding-right: 10px;
 }
@@ -67,11 +67,15 @@
 .icon-button-login.white {
   color: white;
 }
+
 @media only screen and (max-width: 1300px) {
   .header {
     min-width: 100%;
   }
 }
 
-
-
+@media only screen and (max-width: 600px) {
+  .block-with-logo p {
+    font-size: 25px;
+  }
+}
