@@ -51,13 +51,26 @@ class СurrentWeather(db.Model):
     sunset_time_utc = Column(DateTime)
 
 
+    # @classmethod
+    # def get_sun_times_for_city(cls, city_name):
+    #     try:
+    #         if City.check_city_exists(city_name):
+    #             record = cls.query.filter_by(city=city_name).first()
+    #             return WeatherResponse.response_sun_times(record)
+    #         return ErrorHandler.handle_error_2(None, message=f"City '{city_name}' does not exist in the database.",
+    #                                        status_code=404)
+    #     except Exception as e:
+    #         return ErrorHandler.handle_error_2(e, message="Internal Server Error", status_code=500)
+
     @classmethod
-    def get_sun_times_for_city(cls, city_name):
+    def get_sun_times_for_city(cls, city_id):
         try:
-            if City.check_city_exists(city_name):
-                record = cls.query.filter_by(city=city_name).first()
+            coordinates = City.get_lat_lng_by_id(city_id)
+            if "latitude" in coordinates and "longitude" in coordinates:
+                latitude = coordinates["latitude"]
+                longitude = coordinates["longitude"]
+                record = cls.query.filter_by(latitude=latitude, longitude=longitude).first()
+
                 return WeatherResponse.response_sun_times(record)
-            return ErrorHandler.handle_error_2(None, message=f"City '{city_name}' does not exist in the database.",
-                                           status_code=404)
         except Exception as e:
             return ErrorHandler.handle_error_2(e, message="Internal Server Error", status_code=500)
