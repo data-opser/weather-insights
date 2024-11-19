@@ -67,7 +67,11 @@
 .icon-button-login.white {
   color: white;
 }
-
+@media only screen and (max-width: 1300px) {
+  .header {
+    min-width: 100%;
+  }
+}
 
 
 

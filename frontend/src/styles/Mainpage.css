@@ -2,7 +2,7 @@
     display: grid;
     grid-template-rows: 80px 1fr 1fr;
     grid-template-columns: 2fr 1fr;
-    min-width: 1300px;
+    max-width: 1300px;
     justify-self: center;
 }
 
@@ -101,6 +101,15 @@
     .main-page {
       min-width: 100%;
     }
+    .day-table .day {
+        width: 20%;
+    }
+}
+@media only screen and (max-width: 1000px) {
+    .cities .city-list button {
+        min-width: 100px;
+    }
+    
 }
 @media only screen and (max-width: 800px) {
     .main-page {
@@ -115,10 +124,31 @@
     .sun-time {
         grid-row: 3;
         grid-column: 1;
-        min-width: 130px;
+        min-width: 230px;
     }
     .day-table {
-
         flex-direction: column;
     }
+    .cities .add-city-button {
+        justify-content: center;
+        min-width: 40px;
+        border-radius: 5em;
+    }
+    .cities .add-city-button .add-city-button-text {
+        display: none;
+    }
+    .cities .city-list {
+        width: fill;
+    }
+    .cities .city-list button {
+        min-width: 20%;
+    }
+    .day-table .day {
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 0 20px;
+        margin: 0;
+        margin-bottom: 10px;
+        width: calc(100% - 40px);
+      }
 }
