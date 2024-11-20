@@ -46,7 +46,7 @@ def register_user(data):
         return ErrorHandler.handle_validation_error(str(ve))
     except Exception as e:
         db.session.rollback()
-        return ErrorHandler.handle_error_2(e, message="Internal Server Error", status_code=500)
+        return ErrorHandler.handle_error(e, message="Internal Server Error", status_code=500)
 
 
 def login_user(data):
@@ -75,9 +75,9 @@ def login_user(data):
     except ValueError as ve:
         return ErrorHandler.handle_validation_error(str(ve))
     except PermissionError as pe:
-        return ErrorHandler.handle_error_2(pe, message=str(pe), status_code=403)
+        return ErrorHandler.handle_error(pe, message=str(pe), status_code=403)
     except Exception as e:
-        return ErrorHandler.handle_error_2(e, message="Internal server error during login", status_code=500)
+        return ErrorHandler.handle_error(e, message="Internal server error during login", status_code=500)
 
 
 def initiate_google_login():
@@ -88,7 +88,7 @@ def initiate_google_login():
         return google.authorize_redirect(redirect_uri, nonce=nonce)
 
     except Exception as e:
-        return ErrorHandler.handle_error_2(e, message="An error occurred during Google login initiation", status_code=500)
+        return ErrorHandler.handle_error(e, message="An error occurred during Google login initiation", status_code=500)
 
 
 def handle_google_callback():
@@ -125,9 +125,9 @@ def handle_google_callback():
         return jsonify({'message': 'Logged in with Google successfully.'}), 200
 
     except PermissionError as pe:
-        return ErrorHandler.handle_error_2(pe, message=str(pe), status_code=403)
+        return ErrorHandler.handle_error(pe, message=str(pe), status_code=403)
     except Exception as e:
-        return ErrorHandler.handle_error_2(e, message="Internal server error during Google login", status_code=500)
+        return ErrorHandler.handle_error(e, message="Internal server error during Google login", status_code=500)
 
 
 def fetch_google_birthday(access_token):
@@ -146,9 +146,9 @@ def fetch_google_birthday(access_token):
         )
 
     except requests.exceptions.RequestException as e:
-        return ErrorHandler.handle_error_2(e, message="Request failed while fetching birthday", status_code=500)
-    except (KeyError, TypeError, ValueError) as e:
-        return ErrorHandler.handle_validation_error("Error parsing birthday data")
+        return ErrorHandler.handle_error(e, message="Request failed while fetching birthday",
+                                         status_code=500)
+
 
 def logout_user():
     try:
@@ -156,6 +156,6 @@ def logout_user():
             flask_login.logout_user()
             return jsonify({'message': 'Logged out successfully.'}), 200
         else:
-            return ErrorHandler.handle_error_2(None, message="No user logged in", status_code=401)
+            return ErrorHandler.handle_error(None, message="No user logged in", status_code=401)
     except Exception as e:
-        return ErrorHandler.handle_error_2(e, message="Internal server error while logout", status_code=500)
+        return ErrorHandler.handle_error(e, message="Internal server error while logout", status_code=500)

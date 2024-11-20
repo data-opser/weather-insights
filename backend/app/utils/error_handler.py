@@ -3,27 +3,7 @@ from werkzeug.exceptions import HTTPException
 
 class ErrorHandler:
     @staticmethod
-    def handle_error(exception, message="An error occurred"):
-        return {
-            'success': False,
-            'message': f"{message}: {str(exception)}"
-        }, 500
-
-    @staticmethod
-    def handle_validation_error(message):
-        if isinstance(message, dict):
-            error_messages = []
-            for field, errors in message.items():
-                error_messages.append(f"{field}: {', '.join(errors)}")
-            message = "; ".join(error_messages)
-
-        return {
-            'success': False,
-            'message': message
-        }, 400
-
-    @staticmethod
-    def handle_error_2(error, message=None, status_code=None):
+    def handle_error(error, message=None, status_code=None):
         if isinstance(error, HTTPException):
             response = jsonify({
                 "error": error.name,
@@ -37,3 +17,16 @@ class ErrorHandler:
             })
             response.status_code = status_code or 500
         return response
+
+    @staticmethod
+    def handle_validation_error(message):
+        if isinstance(message, dict):
+            error_messages = []
+            for field, errors in message.items():
+                error_messages.append(f"{field}: {', '.join(errors)}")
+            message = "; ".join(error_messages)
+
+        return {
+            'success': False,
+            'message': message
+        }, 400

@@ -4,6 +4,7 @@ from app.utils import ErrorHandler
 
 from flask import jsonify
 
+
 class City(db.Model):
     __tablename__ = 'cities'
     __table_args__ = {'schema': 'prod_dbt_seeds'}
@@ -40,9 +41,9 @@ class City(db.Model):
                     "longitude": record.lng
                 }
             else:
-                return ErrorHandler.handle_error_2(None, message = "City not found", status_code = 404)
+                return ErrorHandler.handle_error(None, message="City not found", status_code=404)
         except Exception as e:
-            return ErrorHandler.handle_error_2(e, message="Failed to found city", status_code=500)
+            return ErrorHandler.handle_error(e, message="Failed to found city", status_code=500)
 
     @classmethod
     def get_all_cities_by_id(cls):
@@ -52,4 +53,4 @@ class City(db.Model):
             return jsonify(city_list)
 
         except Exception as e:
-            return ErrorHandler.handle_error_2(e, message="Failed to retrieve cities", status_code=500 )
+            return ErrorHandler.handle_error(e, message="Failed to retrieve cities", status_code=500)

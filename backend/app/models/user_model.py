@@ -55,7 +55,7 @@ class User(db.Model, UserMixin):
             return ErrorHandler.handle_validation_error(str(ve))
         except Exception as e:
             db.session.rollback()
-            return ErrorHandler.handle_error_2(e, message="Database error while user register", status_code=500)
+            return ErrorHandler.handle_error(e, message="Database error while user register", status_code=500)
 
     @classmethod
     def google_register_user(cls, data):
@@ -85,7 +85,7 @@ class User(db.Model, UserMixin):
             return ErrorHandler.handle_validation_error(str(ve))
         except Exception as e:
             db.session.rollback()
-            return ErrorHandler.handle_error_2(e, message="Database error while google register", status_code=500)
+            return ErrorHandler.handle_error(e, message="Database error while google register", status_code=500)
 
     def update_user(self, data):
         name = data.get('name')
@@ -103,7 +103,7 @@ class User(db.Model, UserMixin):
             db.session.commit()
         except Exception as e:
             db.session.rollback()
-            return ErrorHandler.handle_error_2(e, message="Database error while user updating", status_code=500)
+            return ErrorHandler.handle_error(e, message="Database error while user updating", status_code=500)
 
     def add_google_data(self, google_id, google_token):
         self.google_id = google_id
@@ -113,7 +113,7 @@ class User(db.Model, UserMixin):
             db.session.commit()
         except Exception as e:
             db.session.rollback()
-            return ErrorHandler.handle_error_2(e, message="Database error while adding google data", status_code=500)
+            return ErrorHandler.handle_error(e, message="Database error while adding google data", status_code=500)
 
     def verify_email(self):
         self.email_confirmed = True
@@ -121,14 +121,13 @@ class User(db.Model, UserMixin):
             db.session.commit()
         except Exception as e:
             db.session.rollback()
-            return ErrorHandler.handle_error_2(e, message="Database error while verifying email", status_code=500)
+            return ErrorHandler.handle_error(e, message="Database error while verifying email", status_code=500)
 
     @staticmethod
     def get_user_by_email(email):
         user = User.query.filter_by(email=email).first()
         if not user:
-            return ErrorHandler.handle_error_2(None, message=f"User with email '{email}' not found."
-                                               , status_code=404)
+            return ErrorHandler.handle_error(None, message=f"User with email '{email}' not found.", status_code=404)
         return user
 
     def get_profile_data(self):

@@ -56,4 +56,4 @@ class ForecastWeatherDay(db.Model):
                 return WeatherResponse.response_weather_days(list_weather)
 
         except Exception as e:
-            return ErrorHandler.handle_error_2(e, message="Internal Server Error", status_code=500)
+            return ErrorHandler.handle_error(e, message="Internal Server Error", status_code=500)
