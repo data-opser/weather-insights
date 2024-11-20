@@ -41,8 +41,9 @@ def create_app():
     def handle_validation_exception(error):
         return ErrorHandler.handle_validation_error(str(error))
 
-    from app.routes import auth_bp, user_profile_bp
+    from app.routes import auth_bp, user_profile_bp, weather_bp
     app.register_blueprint(auth_bp)
     app.register_blueprint(user_profile_bp)
+    app.register_blueprint(weather_bp)
 
     return app
