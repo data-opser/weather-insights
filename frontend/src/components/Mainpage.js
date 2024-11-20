@@ -17,9 +17,8 @@ function Mainpage() {
         <CityList />
       </div>
       <div className='days'>
-        <h1>Weather for the next five days</h1>
+        <h1>Weather for the next four days</h1>
         <div className='day-table'>
-          <Day />
           <Day />
           <Day />
           <Day />

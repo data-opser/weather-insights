@@ -1,7 +1,7 @@
 .main-page {
     display: grid;
     grid-template-rows: 80px 1fr 1fr;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: auto 1fr;
     max-width: 1300px;
     justify-self: center;
 }
@@ -103,11 +103,7 @@
 @media only screen and (max-width: 1300px) {
     .main-page {
         min-width: 100%;
-    }
-
-    .day-table .day {
-        width: 20%;
-    }
+    }   
 }
 
 @media only screen and (max-width: 1000px) {
@@ -119,7 +115,7 @@
 
 @media only screen and (max-width: 900px) {
     .main-page {
-        grid-template-rows: 80px 2fr 1fr;
+        grid-template-rows: 80px auto 1fr;
         grid-template-columns: 50% 50%;
     }
 
@@ -129,7 +125,7 @@
     }
 
     .days h1 {
-        font-size: 30px;
+        font-size: 29px;
     }
 
     .sun-time {
@@ -146,6 +142,7 @@
         justify-content: center;
         min-width: 40px;
         border-radius: 5em;
+        margin-right: 0;
     }
 
     .cities .add-city-button .add-city-button-text {
