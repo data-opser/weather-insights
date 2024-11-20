@@ -1,7 +1,6 @@
 from app import db
-from sqlalchemy.orm import deferred
-from sqlalchemy import Column, Integer, String, Float
-from app.error_handler import ErrorHandler
+from sqlalchemy import Column, String, Float
+from app.utils import ErrorHandler
 
 from flask import jsonify
 

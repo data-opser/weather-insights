@@ -5,7 +5,6 @@ from authlib.integrations.flask_client import OAuth
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail
 from flask_cors import CORS
-from app.utils.error_handler import ErrorHandler
 
 db = SQLAlchemy()
 login_manager = LoginManager()
@@ -32,14 +31,6 @@ def create_app():
 
     with app.app_context():
         db.create_all()
-
-    @app.errorhandler(Exception)
-    def handle_exception(error):
-        return ErrorHandler.handle_error(error)
-
-    @app.errorhandler(ValueError)
-    def handle_validation_exception(error):
-        return ErrorHandler.handle_validation_error(str(error))
 
     from app.routes import auth_bp, user_profile_bp, weather_bp
     app.register_blueprint(auth_bp)

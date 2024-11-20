@@ -3,8 +3,8 @@ from app import mail
 from app.config import Config
 from itsdangerous import URLSafeTimedSerializer
 from flask_mail import Message
-from flask import url_for, render_template_string
-from werkzeug.exceptions import NotFound
+from flask import url_for, render_template_string, jsonify
+from app.utils import ErrorHandler
 
 s = URLSafeTimedSerializer(Config.SECRET_KEY)
 
@@ -31,12 +31,11 @@ def send_email_confirmation(user):
             html=html_body)
 
         mail.send(msg)
-        return 200, 'Your email has been confirmed.'
+        return jsonify({'message': 'The email confirmation was sent successfully.'}), 200
 
-    except FileNotFoundError as e:
-        raise ValueError("Email template not found.") from e
     except Exception as e:
-        raise RuntimeError("An error occurred while sending the email confirmation.") from e
+        return ErrorHandler.handle_error_2(e, message="Internal server error while sending the email confirmation.",
+                                           status_code=500)
 
 
 def verify_email_token(token):
@@ -45,9 +44,13 @@ def verify_email_token(token):
         user = User.query.filter_by(email=email).first()
 
         if user is None:
-            raise NotFound("User not found for the given token.")
+            raise PermissionError('The token is invalid or expired.')
 
-        return user
+        user.verify_email()
+        return jsonify({'message': 'Email was confirmed successfully.'}), 200
 
+    except PermissionError as pe:
+        return ErrorHandler.handle_error_2(pe, message=str(pe), status_code=403)
     except Exception as e:
-        raise ValueError("Invalid or expired token.") from e
+        return ErrorHandler.handle_error_2(e, message="Internal server error while email confirmation",
+                                           status_code=500)

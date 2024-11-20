@@ -1,9 +1,13 @@
 from app.models import User
 from flask import url_for, session
 from datetime import date
-from app import oauth, login_manager
+from app import oauth, login_manager, db
 from app.services.email_confirm_service import send_email_confirmation
-import os, requests
+from app.utils import ErrorHandler
+from flask import jsonify
+import flask_login
+import os
+import requests
 
 google = oauth.register(
     name='google',
@@ -22,40 +26,58 @@ def load_user(user_id):
 
 
 def register_user(data):
-    existing_user = User.get_user_by_email(data.get('email'))
-
-    if existing_user:
-        if existing_user.google_id:
-            existing_user.update_user(data)
-            return existing_user, 200, 'User data updated successfully.'
-        raise ValueError('User already exists.')
-
     try:
-        user = User.register_user(data)
-        return user, 201, 'User registered successfully.'
+        email = data.get('email')
+        if not email:
+            raise ValueError("Email is required for registration.")
+
+        existing_user = User.get_user_by_email(email)
+
+        if existing_user:
+            if existing_user.google_id:
+                existing_user.update_user(data)
+                return jsonify({'message': 'User data updated successfully.'}), 200
+            raise ValueError('User already exists.')
+
+        User.register_user(data)
+        return jsonify({'message': 'User registered successfully.'}), 201
+
     except ValueError as ve:
-        raise ve
+        return ErrorHandler.handle_validation_error(str(ve))
     except Exception as e:
-        raise RuntimeError("Internal server error during registration") from e
+        db.session.rollback()
+        return ErrorHandler.handle_error_2(e, message="Internal Server Error", status_code=500)
 
 
 def login_user(data):
     try:
-        user = User.get_user_by_email(data['email'])
-        if user:
-            if not user.email_confirmed:
-                send_email_confirmation(user)
-                raise PermissionError("Please confirm your email first.")
-            elif user.password is None:
-                raise PermissionError('Please login via Google or complete regular registration.')
-            elif user.password and user.check_password(data['password']):
-                return user, 200, 'Logged in successfully.'
+        email = data.get('email')
+        if not email:
+            raise ValueError("Email is required for login.")
+
+        user = User.get_user_by_email(email)
+        if not user:
+            raise PermissionError('Invalid credentials.')
+
+        if not user.email_confirmed:
+            send_email_confirmation(user)
+            raise PermissionError("Please confirm your email first.")
+
+        if user.password is None:
+            raise PermissionError('Please login via Google or complete regular registration.')
+
+        if user.check_password(data.get('password')):
+            flask_login.login_user(user)
+            return jsonify({'message': 'Logged in successfully.'}), 200
+
         raise PermissionError('Invalid credentials.')
 
+    except ValueError as ve:
+        return ErrorHandler.handle_validation_error(str(ve))
     except PermissionError as pe:
-        raise pe
+        return ErrorHandler.handle_error_2(pe, message=str(pe), status_code=403)
     except Exception as e:
-        raise RuntimeError("Internal server error during login") from e
+        return ErrorHandler.handle_error_2(e, message="Internal server error during login", status_code=500)
 
 
 def initiate_google_login():
@@ -64,8 +86,9 @@ def initiate_google_login():
         session['nonce'] = nonce
         redirect_uri = url_for('auth.google_callback', _external=True)
         return google.authorize_redirect(redirect_uri, nonce=nonce)
+
     except Exception as e:
-        raise RuntimeError("An error occurred during Google login initiation") from e
+        return ErrorHandler.handle_error_2(e, message="An error occurred during Google login initiation", status_code=500)
 
 
 def handle_google_callback():
@@ -73,11 +96,11 @@ def handle_google_callback():
         token = google.authorize_access_token()
         nonce = session.pop('nonce', None)
         if not token or not nonce:
-            raise PermissionError('Authorization failed')
+            raise PermissionError('Authorization failed.')
 
         user_info = google.parse_id_token(token, nonce=nonce)
         if not user_info:
-            raise PermissionError('Failed to fetch user info')
+            raise PermissionError('Failed to fetch user info.')
 
         birthday = fetch_google_birthday(token.get('access_token'))
         user = User.get_user_by_email(user_info['email'])
@@ -98,11 +121,13 @@ def handle_google_callback():
         user = User.google_register_user(data)
         user.verify_email()
 
-        return user, 200, 'Logged in with Google successfully.'
+        flask_login.login_user(user)
+        return jsonify({'message': 'Logged in with Google successfully.'}), 200
+
     except PermissionError as pe:
-        raise pe
+        return ErrorHandler.handle_error_2(pe, message=str(pe), status_code=403)
     except Exception as e:
-        raise RuntimeError("Internal server error during Google login") from e
+        return ErrorHandler.handle_error_2(e, message="Internal server error during Google login", status_code=500)
 
 
 def fetch_google_birthday(access_token):
@@ -121,7 +146,16 @@ def fetch_google_birthday(access_token):
         )
 
     except requests.exceptions.RequestException as e:
-        raise RuntimeError("Request failed while fetching birthday") from e
+        return ErrorHandler.handle_error_2(e, message="Request failed while fetching birthday", status_code=500)
     except (KeyError, TypeError, ValueError) as e:
-        raise ValueError("Error parsing birthday data") from e
-    return None
+        return ErrorHandler.handle_validation_error("Error parsing birthday data")
+
+def logout_user():
+    try:
+        if flask_login.current_user.is_authenticated:
+            flask_login.logout_user()
+            return jsonify({'message': 'Logged out successfully.'}), 200
+        else:
+            return ErrorHandler.handle_error_2(None, message="No user logged in", status_code=401)
+    except Exception as e:
+        return ErrorHandler.handle_error_2(e, message="Internal server error while logout", status_code=500)

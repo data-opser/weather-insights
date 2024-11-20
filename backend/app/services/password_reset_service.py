@@ -1,8 +1,8 @@
 from flask_mail import Message
 from app import mail, db
 import random, string
-from flask import render_template_string
-
+from flask import render_template_string, jsonify
+from app.utils import ErrorHandler
 
 def send_password_reset_email(user):
     try:
@@ -28,12 +28,11 @@ def send_password_reset_email(user):
         )
 
         mail.send(msg)
-        return 200, 'A new password has been sent to your email.'
+        return jsonify({'message': 'A new password has been sent to your email.'}), 200
 
-    except FileNotFoundError as e:
-        raise ValueError("Password reset email template not found.") from e
     except Exception as e:
-        raise RuntimeError("An error occurred while sending the password reset email.") from e
+        return ErrorHandler.handle_error_2(e, message="Internal server error while sending the password reset email.",
+                                       status_code=500)
 
 
 def generate_random_password(length=8):
@@ -41,7 +40,8 @@ def generate_random_password(length=8):
         characters = string.ascii_letters + string.digits
         return ''.join(random.choice(characters) for _ in range(length))
     except Exception as e:
-        raise RuntimeError("An error occurred while generating the random password.") from e
+        return ErrorHandler.handle_error_2(e, message="Internal server error while generating the random password.",
+                                           status_code=500)
 
 
 def update_password(user, new_password):
@@ -49,4 +49,5 @@ def update_password(user, new_password):
         user.set_password(new_password)
         db.session.commit()
     except Exception as e:
-        raise RuntimeError("An error occurred while updating the user's password.") from e
+        return ErrorHandler.handle_error_2(e, message="Internal server error while updating the user's password.",
+                                           status_code=500)

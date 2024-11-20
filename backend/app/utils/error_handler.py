@@ -1,23 +1,13 @@
 from flask import jsonify
 from werkzeug.exceptions import HTTPException
 
-
 class ErrorHandler:
     @staticmethod
-    def handle_error(error, message=None, status_code=None):
-        if isinstance(error, HTTPException):
-            response = jsonify({
-                "error": error.name,
-                "message": message or error.description
-            })
-            response.status_code = status_code or error.code
-        else:
-            response = jsonify({
-                "error": "Internal Server Error",
-                "message": message or str(error)
-            })
-            response.status_code = status_code or 500
-        return response
+    def handle_error(exception, message="An error occurred"):
+        return {
+            'success': False,
+            'message': f"{message}: {str(exception)}"
+        }, 500
 
     @staticmethod
     def handle_validation_error(message):
@@ -31,3 +21,19 @@ class ErrorHandler:
             'success': False,
             'message': message
         }, 400
+
+    @staticmethod
+    def handle_error_2(error, message=None, status_code=None):
+        if isinstance(error, HTTPException):
+            response = jsonify({
+                "error": error.name,
+                "message": message or error.description
+            })
+            response.status_code = status_code or error.code
+        else:
+            response = jsonify({
+                "error": "Internal Server Error",
+                "message": message or str(error)
+            })
+            response.status_code = status_code or 500
+        return response

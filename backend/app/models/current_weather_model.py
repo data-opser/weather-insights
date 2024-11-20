@@ -1,7 +1,7 @@
 from app import db
 from sqlalchemy import Column, Integer, String, Float, DateTime, BigInteger
 from app.responses import WeatherResponse
-from app.error_handler import ErrorHandler
+from app.utils import ErrorHandler
 from app.models import City
 
 class СurrentWeather(db.Model):

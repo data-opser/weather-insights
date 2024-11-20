@@ -4,7 +4,7 @@ from sqlalchemy.dialects.postgresql import UUID
 import uuid
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
-from werkzeug.exceptions import NotFound
+from app.utils import ErrorHandler
 
 
 class User(db.Model, UserMixin):
@@ -34,52 +34,58 @@ class User(db.Model, UserMixin):
 
     @classmethod
     def register_user(cls, data):
-        name = data.get('name')
-        email = data.get('email')
-        password = data.get('password')
-
-        if not name or not email:
-            raise ValueError("Name and email are required for registration.")
-
-        user = cls(name=name, email=email)
-
-        if password:
-            user.set_password(password)
-
         try:
+            name = data.get('name')
+            email = data.get('email')
+            password = data.get('password')
+
+            if not name or not email:
+                raise ValueError("Name and email are required for registration.")
+
+            user = cls(name=name, email=email)
+
+            if password:
+                user.set_password(password)
+
             db.session.add(user)
             db.session.commit()
             return user
+
+        except ValueError as ve:
+            return ErrorHandler.handle_validation_error(str(ve))
         except Exception as e:
             db.session.rollback()
-            raise RuntimeError("Database error while registering user") from e
+            return ErrorHandler.handle_error_2(e, message="Database error while user register", status_code=500)
 
     @classmethod
     def google_register_user(cls, data):
-        name = data.get('name')
-        email = data.get('email')
-        birthday = data.get('birthday')
-        google_id = data.get('google_id')
-        google_token = data.get('google_token')
-
-        if not name or not email:
-            raise ValueError("Name and email are required for Google registration.")
-
-        user = cls(
-            name=name,
-            email=email,
-            birthday=birthday,
-            google_id=google_id,
-            google_token=google_token
-        )
-
         try:
+            name = data.get('name')
+            email = data.get('email')
+            birthday = data.get('birthday')
+            google_id = data.get('google_id')
+            google_token = data.get('google_token')
+
+            if not name or not email:
+                raise ValueError("Name and email are required for Google registration.")
+
+            user = cls(
+                name=name,
+                email=email,
+                birthday=birthday,
+                google_id=google_id,
+                google_token=google_token
+            )
+
             db.session.add(user)
             db.session.commit()
             return user
+
+        except ValueError as ve:
+            return ErrorHandler.handle_validation_error(str(ve))
         except Exception as e:
             db.session.rollback()
-            raise RuntimeError("Database error while registering user with Google") from e
+            return ErrorHandler.handle_error_2(e, message="Database error while google register", status_code=500)
 
     def update_user(self, data):
         name = data.get('name')
@@ -97,7 +103,7 @@ class User(db.Model, UserMixin):
             db.session.commit()
         except Exception as e:
             db.session.rollback()
-            raise RuntimeError("Database error while updating user") from e
+            return ErrorHandler.handle_error_2(e, message="Database error while user updating", status_code=500)
 
     def add_google_data(self, google_id, google_token):
         self.google_id = google_id
@@ -107,22 +113,22 @@ class User(db.Model, UserMixin):
             db.session.commit()
         except Exception as e:
             db.session.rollback()
-            raise RuntimeError("Database error while adding Google data") from e
+            return ErrorHandler.handle_error_2(e, message="Database error while adding google data", status_code=500)
 
     def verify_email(self):
         self.email_confirmed = True
-
         try:
             db.session.commit()
         except Exception as e:
             db.session.rollback()
-            raise RuntimeError("Database error while verifying email") from e
+            return ErrorHandler.handle_error_2(e, message="Database error while verifying email", status_code=500)
 
     @staticmethod
     def get_user_by_email(email):
         user = User.query.filter_by(email=email).first()
         if not user:
-            raise NotFound(f"User with email '{email}' not found.")
+            return ErrorHandler.handle_error_2(None, message=f"User with email '{email}' not found."
+                                               , status_code=404)
         return user
 
     def get_profile_data(self):

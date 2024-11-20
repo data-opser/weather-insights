@@ -3,7 +3,7 @@ from datetime import datetime
 from sqlalchemy import cast, Date
 from sqlalchemy import Column, Integer, String, Float, DateTime, BigInteger
 from app.responses import WeatherResponse
-from app.error_handler import ErrorHandler
+from app.utils import ErrorHandler
 from app.models import City
 
 class ForecastWeatherHour(db.Model):
