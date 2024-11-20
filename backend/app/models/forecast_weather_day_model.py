@@ -45,15 +45,16 @@ class ForecastWeatherDay(db.Model):
     def get_city_four_day_forecast(cls, city_id):
         try:
             coordinates = City.get_lat_lng_by_id(city_id)
-            if "latitude" in coordinates and "longitude" in coordinates:
-                latitude = coordinates["latitude"]
-                longitude = coordinates["longitude"]
+            # if "latitude" in coordinates and "longitude" in coordinates:
+            latitude = coordinates["latitude"]
+            longitude = coordinates["longitude"]
 
-                list_weather = cls.query.filter(
-                    cls.latitude == latitude,
-                    cls.longitude == longitude
-                ).all()
-                return WeatherResponse.response_weather_days(list_weather)
-
+            list_weather = cls.query.filter(
+                cls.latitude == latitude,
+                cls.longitude == longitude
+            ).all()
+            return WeatherResponse.response_weather_days(list_weather)
+            # else:
+            #     return ErrorHandler.handle_error_2(None, message="City not found", status_code=404)
         except Exception as e:
-            return ErrorHandler.handle_error_2(e, message="Internal Server Error", status_code=500)
+            return ErrorHandler.handle_error_2(None, message="City not found", status_code=404)

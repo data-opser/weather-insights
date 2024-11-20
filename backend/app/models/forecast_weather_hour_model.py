@@ -48,17 +48,19 @@ class ForecastWeatherHour(db.Model):
     def get_city_hourly_weather_by_date(cls, city_id, date):
         try:
             coordinates = City.get_lat_lng_by_id(city_id)
-            if "latitude" in coordinates and "longitude" in coordinates:
-                latitude = coordinates["latitude"]
-                longitude = coordinates["longitude"]
+            # if "latitude" in coordinates and "longitude" in coordinates:
+            latitude = coordinates["latitude"]
+            longitude = coordinates["longitude"]
 
-                date_object = datetime.strptime(date, '%Y-%m-%d').date()
+            date_object = datetime.strptime(date, '%Y-%m-%d').date()
 
-                records = cls.query.filter(
-                    cls.latitude == latitude,
-                    cls.longitude == longitude,
-                    cast(cls.weather_time, Date) == date_object
-                ).all()
-                return  WeatherResponse.response_weather_hours(records)
+            records = cls.query.filter(
+                cls.latitude == latitude,
+                cls.longitude == longitude,
+                cast(cls.weather_time, Date) == date_object
+            ).all()
+            return  WeatherResponse.response_weather_hours(records)
+            # else:
+            #     return ErrorHandler.handle_error_2(None, message="City not found", status_code=404)
         except Exception as e:
-            return ErrorHandler.handle_error_2(e, message="Internal Server Error", status_code=500)
+            return ErrorHandler.handle_error_2(None, message="City not found", status_code=404)

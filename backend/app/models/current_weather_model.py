@@ -66,11 +66,12 @@ class СurrentWeather(db.Model):
     def get_sun_times_for_city(cls, city_id):
         try:
             coordinates = City.get_lat_lng_by_id(city_id)
-            if "latitude" in coordinates and "longitude" in coordinates:
-                latitude = coordinates["latitude"]
-                longitude = coordinates["longitude"]
-                record = cls.query.filter_by(latitude=latitude, longitude=longitude).first()
-
-                return WeatherResponse.response_sun_times(record)
+            # if "latitude" in coordinates and "longitude" in coordinates:
+            latitude = coordinates["latitude"]
+            longitude = coordinates["longitude"]
+            record = cls.query.filter_by(latitude=latitude, longitude=longitude).first()
+            return WeatherResponse.response_sun_times(record)
+            # else:
+            #     return ErrorHandler.handle_error_2(None, message="City not found", status_code=404)
         except Exception as e:
-            return ErrorHandler.handle_error_2(e, message="Internal Server Error", status_code=500)
+            return ErrorHandler.handle_error_2(e, message="City not found", status_code=404)

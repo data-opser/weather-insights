@@ -23,27 +23,22 @@ class City(db.Model):
     population = Column(Float)
     id = Column(db.BigInteger)
 
-    @classmethod
-    def check_city_exists(cls, city_name):
-        try:
-            exists = cls.query.with_entities(cls.city).filter_by(city=city_name).first() is not None
-            return exists
-        except Exception as e:
-            return False
+    # @classmethod
+    # def check_city_exists(cls, city_name):
+    #     try:
+    #         exists = cls.query.with_entities(cls.city).filter_by(city=city_name).first() is not None
+    #         return exists
+    #     except Exception as e:
+    #         return False
+
 
     @classmethod
     def get_lat_lng_by_id(cls, city_id):
-        try:
             record = cls.query.with_entities(cls.lat, cls.lng).filter_by(id=city_id).first()
-            if record:
-                return {
-                    "latitude": record.lat,
-                    "longitude": record.lng
-                }
-            else:
-                return ErrorHandler.handle_error_2(None, message = "City not found", status_code = 404)
-        except Exception as e:
-            return ErrorHandler.handle_error_2(e, message="Failed to found city", status_code=500)
+            if record is None:
+                return {"latitude": None, "longitude": None}
+            return {"latitude": record.lat, "longitude": record.lng}
+
 
     @classmethod
     def get_all_cities_by_id(cls):
@@ -51,6 +46,13 @@ class City(db.Model):
             cities = cls.query.with_entities(cls.id, cls.city).order_by(cls.id).all()
             city_list = [{"id": city.id, "city": city.city} for city in cities]
             return jsonify(city_list)
-
         except Exception as e:
-            return ErrorHandler.handle_error_2(e, message="Failed to retrieve cities", status_code=500 )
+            return ErrorHandler.handle_error_2(e, message="Failed to retrieve cities")
+
+    @classmethod
+    def get_city_name_by_id(cls, city_id):
+       try:
+           city_record = cls.query.with_entities(cls.city).filter_by(id=city_id).first()
+           return jsonify({"id": city_id, "city": city_record.city})
+       except Exception as e:
+           return ErrorHandler.handle_error_2(e, message=f"City with ID '{city_id}' not found.", status_code=404)
