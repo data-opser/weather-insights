@@ -23,22 +23,10 @@ class City(db.Model):
     population = Column(Float)
     id = Column(db.BigInteger)
 
-    # @classmethod
-    # def check_city_exists(cls, city_name):
-    #     try:
-    #         exists = cls.query.with_entities(cls.city).filter_by(city=city_name).first() is not None
-    #         return exists
-    #     except Exception as e:
-    #         return False
-
-
     @classmethod
-    def get_lat_lng_by_id(cls, city_id):
-            record = cls.query.with_entities(cls.lat, cls.lng).filter_by(id=city_id).first()
-            if record is None:
-                return {"latitude": None, "longitude": None}
-            return {"latitude": record.lat, "longitude": record.lng}
-
+    def check_city_exists(cls, city_id):
+        record = cls.query.with_entities(cls.city).filter_by(id=city_id).first()
+        return record
 
     @classmethod
     def get_all_cities_by_id(cls):
@@ -52,6 +40,7 @@ class City(db.Model):
     @classmethod
     def get_city_name_by_id(cls, city_id):
        try:
+           City.check_city_exists(city_id)
            city_record = cls.query.with_entities(cls.city).filter_by(id=city_id).first()
            return jsonify({"id": city_id, "city": city_record.city})
        except Exception as e:

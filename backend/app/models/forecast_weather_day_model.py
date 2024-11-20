@@ -13,6 +13,7 @@ class ForecastWeatherDay(db.Model):
     weather = Column(String)
     weather_description = Column(String)
     weather_time = Column(DateTime)
+    city_id = Column(db.BigInteger)
     city = Column(String)
     country_iso = Column(String)
     longitude = Column(Float)
@@ -44,17 +45,8 @@ class ForecastWeatherDay(db.Model):
     @classmethod
     def get_city_four_day_forecast(cls, city_id):
         try:
-            coordinates = City.get_lat_lng_by_id(city_id)
-            # if "latitude" in coordinates and "longitude" in coordinates:
-            latitude = coordinates["latitude"]
-            longitude = coordinates["longitude"]
-
-            list_weather = cls.query.filter(
-                cls.latitude == latitude,
-                cls.longitude == longitude
-            ).all()
+            City.check_city_exists(city_id)
+            list_weather = cls.query.filter_by(city_id=city_id).all()
             return WeatherResponse.response_weather_days(list_weather)
-            # else:
-            #     return ErrorHandler.handle_error_2(None, message="City not found", status_code=404)
         except Exception as e:
-            return ErrorHandler.handle_error_2(None, message="City not found", status_code=404)
+            return ErrorHandler.handle_error_2(e, message="City not found", status_code=404)
