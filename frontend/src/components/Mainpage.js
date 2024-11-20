@@ -1,52 +1,24 @@
-import React, { useState } from 'react';
-import '../styles/Mainpage.css'
-import CitySearch from './CitySearch';
+import React from 'react';
+import '../styles/MainPage.css'
 import CityList from './CityList';
-import Day from './Day';
 import AddCityButton from './AddCityButton';
-import { GoSun } from "react-icons/go";
-import UserPage from './UserPage';
+import Days from './Days';
+import SunTime from './SunTime';
 
-function Mainpage() {
-  const [activeButton, setActiveButton] = useState('sunrise');
-
+function MainPage() {
   return (
     <div className="main-page">
       <div className='cities'>
         <AddCityButton />
         <CityList />
       </div>
-      <div className='days'>
-        <h1>Weather for the next four days</h1>
-        <div className='day-table'>
-          <Day />
-          <Day />
-          <Day />
-          <Day />
-        </div>
-      </div>
-      <div className='sun-time'>
-        <button 
-          className={`sun-button ${activeButton === 'sunrise' ? 'active' : ''}`} 
-          onClick={() => setActiveButton('sunrise')}
-        >
-          Sunrise
-        </button>
-        <button 
-          className={`sun-button ${activeButton === 'sunset' ? 'active' : ''}`} 
-          onClick={() => setActiveButton('sunset')}
-        >
-          Sunset
-        </button>
-        <GoSun className='sun' />
-        <h1>19:30</h1>
-      </div>
+      <Days />
+      <SunTime />
       <div className='map'>
-        
+
       </div>
     </div>
-
   );
 }
 
-export default Mainpage;
+export default MainPage;

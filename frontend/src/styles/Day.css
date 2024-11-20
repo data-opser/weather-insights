@@ -15,6 +15,10 @@
     cursor: pointer;
 }
 
+.day p {
+    font-size: 25px;
+}
+
 .sun {
     color: yellow;
     width: 40px;
@@ -23,11 +27,18 @@
 
 .raindrop {
     color: blue;
-    width: 25px;
-    height: 25px;
+    width: 45px;
+    height: 45px;
+    padding-top: 8px;
 }
 
 .rain {
     display: flex;
     align-items: center;
+}
+
+@media only screen and (max-width: 900px) {
+    .day p {
+        font-size: 20px;
+    }
 }

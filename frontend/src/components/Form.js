@@ -7,7 +7,8 @@ import { MdOutlineEmail } from "react-icons/md";
 import { LuUnlock } from "react-icons/lu";
 import { IoPersonOutline } from "react-icons/io5";
 import { FiEye, FiEyeOff } from "react-icons/fi";
-import { useInput } from './hooks/inputValidation';
+import { useInput } from './services/inputValidation';
+import api from './services/axiosConfig';
 
 const Form = forwardRef(({ type, setActive, setFormType }, ref) => {
   const formConfig = {
@@ -16,14 +17,14 @@ const Form = forwardRef(({ type, setActive, setFormType }, ref) => {
       buttonText: "Login",
       linkParagraph: "Haven't got an account?",
       linkText: "Sign up",
-      endpoint: "http://localhost:5000/login",
+      endpoint: "/login",
     },
     register: {
       title: "Join us",
       buttonText: "Sign up",
       linkParagraph: "Already have an account?",
       linkText: "Log in",
-      endpoint: "http://localhost:5000/register",
+      endpoint: "/register",
     },
   };
 
@@ -69,34 +70,29 @@ const Form = forwardRef(({ type, setActive, setFormType }, ref) => {
     setSuccess(null);
 
     try {
-      const response = await fetch(config.endpoint, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          name: type === 'register' ? name.value : undefined,
-          surname: type === 'register' ? 'test' : undefined,
-          email: email.value,
-          password: password.value
-        })
-      });
+      const payload = {
+        email: email.value,
+        password: password.value,
+      };
 
-      if (!response.ok) {
-        throw new Error('Something went wrong');
+      if (type === 'register') {
+        payload.name = name.value;
+        payload.surname = 'test';
       }
+
+      const response = await api.post(config.endpoint, payload);
+      console.log(response.data);
 
       setSuccess("Request successful!");
       setTimeout(closeForm, 1000);
-      clearForm();
     } catch (error) {
-      setError(error.message || 'Failed to submit');
+      setError(error.response?.data?.message || 'Failed to submit');
       console.error('Error:', error);
     }
   };
 
   const handleGoogleAuth = () => {
-    window.location.href = 'http://localhost:5000/auth/google';
+    window.location.href = api.defaults.baseURL + '/auth/google';
   };
 
   return (
