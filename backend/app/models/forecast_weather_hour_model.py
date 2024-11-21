@@ -6,6 +6,7 @@ from app.responses import WeatherResponse
 from app.utils import ErrorHandler
 from app.models import City
 
+
 class ForecastWeatherHour(db.Model):
     __tablename__ = 'forecast_weather_report_hour'
     __table_args__ = {'schema': 'prod_dbt'}
@@ -14,6 +15,7 @@ class ForecastWeatherHour(db.Model):
     weather = Column(String)
     weather_description = Column(String)
     weather_time = Column(DateTime)
+    city_id = Column(db.BigInteger)
     city = Column(String)
     country_iso = Column(String)
     longitude = Column(Float)
@@ -47,18 +49,9 @@ class ForecastWeatherHour(db.Model):
     @classmethod
     def get_city_hourly_weather_by_date(cls, city_id, date):
         try:
-            coordinates = City.get_lat_lng_by_id(city_id)
-            if "latitude" in coordinates and "longitude" in coordinates:
-                latitude = coordinates["latitude"]
-                longitude = coordinates["longitude"]
-
-                date_object = datetime.strptime(date, '%Y-%m-%d').date()
-
-                records = cls.query.filter(
-                    cls.latitude == latitude,
-                    cls.longitude == longitude,
-                    cast(cls.weather_time, Date) == date_object
-                ).all()
-                return  WeatherResponse.response_weather_hours(records)
+            City.check_city_exists(city_id)
+            date_object = datetime.strptime(date, '%Y-%m-%d').date()
+            records = cls.query.filter(cls.city_id == city_id, cast(cls.weather_time, Date) == date_object).all()
+            return  WeatherResponse.response_weather_hours(records)
         except Exception as e:
-            return ErrorHandler.handle_error(e, message="Internal Server Error", status_code=500)
+            return ErrorHandler.handle_error(e, message="City not found", status_code=404)

@@ -4,6 +4,7 @@ from app.responses import WeatherResponse
 from app.utils import ErrorHandler
 from app.models import City
 
+
 class ForecastWeatherDay(db.Model):
     __tablename__ = 'forecast_weather_report_day'
     __table_args__ = {'schema': 'prod_dbt'}
@@ -13,6 +14,7 @@ class ForecastWeatherDay(db.Model):
     weather = Column(String)
     weather_description = Column(String)
     weather_time = Column(DateTime)
+    city_id = Column(db.BigInteger)
     city = Column(String)
     country_iso = Column(String)
     longitude = Column(Float)
@@ -44,16 +46,8 @@ class ForecastWeatherDay(db.Model):
     @classmethod
     def get_city_four_day_forecast(cls, city_id):
         try:
-            coordinates = City.get_lat_lng_by_id(city_id)
-            if "latitude" in coordinates and "longitude" in coordinates:
-                latitude = coordinates["latitude"]
-                longitude = coordinates["longitude"]
-
-                list_weather = cls.query.filter(
-                    cls.latitude == latitude,
-                    cls.longitude == longitude
-                ).all()
-                return WeatherResponse.response_weather_days(list_weather)
-
+            City.check_city_exists(city_id)
+            list_weather = cls.query.filter_by(city_id=city_id).all()
+            return WeatherResponse.response_weather_days(list_weather)
         except Exception as e:
-            return ErrorHandler.handle_error(e, message="Internal Server Error", status_code=500)
+            return ErrorHandler.handle_error(e, message="City not found", status_code=404)
