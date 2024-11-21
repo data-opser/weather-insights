@@ -46,7 +46,7 @@ def register_user(data):
         return ErrorHandler.handle_validation_error(str(ve))
     except Exception as e:
         db.session.rollback()
-        return ErrorHandler.handle_error(e, message="Internal Server Error", status_code=500)
+        return ErrorHandler.handle_error(e, message="Internal Server Error while register", status_code=500)
 
 
 def login_user(data):
