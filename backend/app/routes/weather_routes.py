@@ -22,3 +22,8 @@ def fetch_weather_by_date_and_city():
 @weather_bp.route('/cities', methods=['GET'])
 def get_cities():
     return City.get_all_cities_by_id()
+
+@weather_bp.route('/city', methods=['GET'])
+def get_city():
+    city_id = request.args.get('city')
+    return City.get_city_name_by_id(city_id)
