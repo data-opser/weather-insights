@@ -1,24 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { GoPlus } from "react-icons/go";
 import '../styles/AddCityButton.css';
+import SelectCityForm from './SelectCityForm';
+import Modal from './Modal';
 
 function AddCityButton() {
-    const [isClicked, setIsClicked] = useState(false);
+  const [modalActive, setModalActive] = useState(false);
+  const formRef = useRef();
 
-    const handleClick = () => {
-        setIsClicked(!isClicked); // змінюємо стан на протилежний при натисканні
-    };
+  const handleClick = () => {
+    setModalActive(true);
+  };
 
-    return (
-        <button 
-            className={`add-city-button ${isClicked ? 'blue' : ''}`} 
-            onClick={handleClick}
-        >
-            <GoPlus className={`plus ${isClicked ? 'icon-blue' : ''}`} />
-            <span className='add-city-button-text'>add new city</span>
-            
-        </button>
-    );
+  const handleModalClose = () => {
+    if (formRef.current) {
+      formRef.current.clearForm();
+    }
+    setModalActive(false);
+  };
+
+  return (
+    <>
+      <button
+        className={`add-city-button ${modalActive ? 'blue' : ''}`}
+        onClick={handleClick}
+      >
+        <GoPlus className={`plus ${modalActive ? 'icon-blue' : ''}`} />
+        <span className='add-city-button-text'>add new city</span>
+      </button>
+      <Modal active={modalActive} setActive={setModalActive} onClose={handleModalClose}>
+        <SelectCityForm ref={formRef} />
+      </Modal>
+    </>
+  );
 }
 
 export default AddCityButton;

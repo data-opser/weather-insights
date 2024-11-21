@@ -20,14 +20,14 @@
 }
 
 .return-button {
-  height: 15%;
+  height: 50px;
   border: none;
   background: transparent;
   cursor: pointer;
   padding: 0;
   position: absolute;
-  left: 2%;
-  top: 2%;
+  left: 25px;
+  top: 25px;
 }
 
 .return-arrow {
@@ -157,10 +157,8 @@
     right: calc(50% - 25.5px);
   }
 
-  .return-button {
-    height: 9%;
-    left: 4%;
-    top: 6%;
+  .form .return-button {
+    height: 35px;
   }
 }
 
