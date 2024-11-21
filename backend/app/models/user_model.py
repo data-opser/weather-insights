@@ -11,7 +11,7 @@ class User(db.Model, UserMixin):
     __tablename__ = 'user'
     __table_args__ = {'schema': 'user_data'}
 
-    user_id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    user_id = db.Column(UUID(as_uuid=True), primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     birthday = db.Column(db.Date)
     email = db.Column(db.String(120), unique=True, nullable=False)
