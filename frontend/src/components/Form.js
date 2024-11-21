@@ -80,11 +80,19 @@ const Form = forwardRef(({ type, setActive, setFormType, onLoginSuccess }, ref) 
       }
 
       const response = await api.post(config.endpoint, payload);
-      console.log(response.data);
+      console.log(response.data.message);
 
+      if (type === 'register') {
+        setSuccess('Registration successful! Please confirm your email to login.');
+        setFormType('login');
+        return;
+      }
+
+      setSuccess('Login successful!');
+      onLoginSuccess?.();
+      
       setTimeout(() => {
         closeForm();
-        onLoginSuccess?.(); 
       }, 700);
     } catch (error) {
       setError(error.response?.data?.message || 'Failed to submit');

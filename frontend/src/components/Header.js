@@ -26,7 +26,8 @@ function Header() {
 
   const handleLogout = async () => {
     try {
-      await api.post('/logout');
+      const response = await api.post('/logout');
+      console.log(response.data.message);
       setIsLoggedIn(false);
     } catch (error) {
       console.error('Error logging out:', error);

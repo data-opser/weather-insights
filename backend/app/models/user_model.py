@@ -11,7 +11,7 @@ class User(db.Model, UserMixin):
     __tablename__ = 'user'
     __table_args__ = {'schema': 'user_data'}
 
-    user_id = db.Column(UUID(as_uuid=True), primary_key=True)
+    user_id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     name = db.Column(db.String(100), nullable=False)
     birthday = db.Column(db.Date)
     email = db.Column(db.String(120), unique=True, nullable=False)
@@ -125,9 +125,7 @@ class User(db.Model, UserMixin):
 
     @staticmethod
     def get_user_by_email(email):
-        user = User.query.filter_by(email=email).first()
-        if not user:
-            return ErrorHandler.handle_error(None, message=f"User with email '{email}' not found.", status_code=404)
+        user = User.query.filter_by(email=email).first()        
         return user
 
     def get_profile_data(self):
