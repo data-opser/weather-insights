@@ -1,8 +1,9 @@
 from app import db
 from sqlalchemy import Column, Integer, String, Float, DateTime, BigInteger
 from app.responses import WeatherResponse
-from app.error_handler import ErrorHandler
+from app.utils import ErrorHandler
 from app.models import City
+
 
 class ForecastWeatherDay(db.Model):
     __tablename__ = 'forecast_weather_report_day'
@@ -49,4 +50,4 @@ class ForecastWeatherDay(db.Model):
             list_weather = cls.query.filter_by(city_id=city_id).all()
             return WeatherResponse.response_weather_days(list_weather)
         except Exception as e:
-            return ErrorHandler.handle_error_2(e, message="City not found", status_code=404)
+            return ErrorHandler.handle_error(e, message="City not found", status_code=404)

@@ -11,6 +11,7 @@ login_manager = LoginManager()
 oauth = OAuth()
 mail = Mail()
 
+
 def create_app():
     app = Flask(__name__)
 
