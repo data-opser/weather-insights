@@ -77,7 +77,6 @@ const Form = forwardRef(({ type, setActive, setFormType, onLoginSuccess }, ref) 
 
       if (type === 'register') {
         payload.name = name.value;
-        payload.surname = 'test';
       }
 
       const response = await api.post(config.endpoint, payload);
