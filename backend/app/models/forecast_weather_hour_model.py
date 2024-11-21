@@ -3,8 +3,9 @@ from datetime import datetime
 from sqlalchemy import cast, Date
 from sqlalchemy import Column, Integer, String, Float, DateTime, BigInteger
 from app.responses import WeatherResponse
-from app.error_handler import ErrorHandler
+from app.utils import ErrorHandler
 from app.models import City
+
 
 class ForecastWeatherHour(db.Model):
     __tablename__ = 'forecast_weather_report_hour'
@@ -53,4 +54,4 @@ class ForecastWeatherHour(db.Model):
             records = cls.query.filter(cls.city_id == city_id, cast(cls.weather_time, Date) == date_object).all()
             return  WeatherResponse.response_weather_hours(records)
         except Exception as e:
-            return ErrorHandler.handle_error_2(e, message="City not found", status_code=404)
+            return ErrorHandler.handle_error(e, message="City not found", status_code=404)

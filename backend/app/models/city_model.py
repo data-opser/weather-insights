@@ -1,9 +1,10 @@
 from app import db
 from sqlalchemy.orm import deferred
-from sqlalchemy import Column, Integer, String, Float
-from app.error_handler import ErrorHandler
+from sqlalchemy import Column, String, Float
+from app.utils import ErrorHandler
 
 from flask import jsonify
+
 
 class City(db.Model):
     __tablename__ = 'cities'
@@ -35,7 +36,7 @@ class City(db.Model):
             city_list = [{"id": city.id, "city": city.city} for city in cities]
             return jsonify(city_list)
         except Exception as e:
-            return ErrorHandler.handle_error_2(e, message="Failed to retrieve cities")
+            return ErrorHandler.handle_error(e, message="Failed to retrieve cities")
 
     @classmethod
     def get_city_name_by_id(cls, city_id):
@@ -44,4 +45,4 @@ class City(db.Model):
            city_record = cls.query.with_entities(cls.city).filter_by(id=city_id).first()
            return jsonify({"id": city_id, "city": city_record.city})
        except Exception as e:
-           return ErrorHandler.handle_error_2(e, message=f"City with ID '{city_id}' not found.", status_code=404)
+           return ErrorHandler.handle_error(e, message=f"City with ID '{city_id}' not found.", status_code=404)
