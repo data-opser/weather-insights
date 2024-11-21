@@ -16,6 +16,8 @@ def reset_password_request():
             raise ValueError("Email is required")
 
         user = User.get_user_by_email(data['email'])
+        if not user:
+            return ErrorHandler.handle_error(None, message=f"User with email '{data['email']}' not found.", status_code=404)
         return send_password_reset_email(user)
 
     except ValueError as ve:
