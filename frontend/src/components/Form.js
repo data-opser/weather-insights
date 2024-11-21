@@ -10,7 +10,7 @@ import { FiEye, FiEyeOff } from "react-icons/fi";
 import { useInput } from './services/inputValidation';
 import api from './services/axiosConfig';
 
-const Form = forwardRef(({ type, setActive, setFormType }, ref) => {
+const Form = forwardRef(({ type, setActive, setFormType, onLoginSuccess }, ref) => {
   const formConfig = {
     login: {
       title: "Welcome back",
@@ -83,8 +83,10 @@ const Form = forwardRef(({ type, setActive, setFormType }, ref) => {
       const response = await api.post(config.endpoint, payload);
       console.log(response.data);
 
-      setSuccess("Request successful!");
-      setTimeout(closeForm, 1000);
+      setTimeout(() => {
+        closeForm();
+        onLoginSuccess?.(); 
+      }, 700);
     } catch (error) {
       setError(error.response?.data?.message || 'Failed to submit');
       console.error('Error:', error);

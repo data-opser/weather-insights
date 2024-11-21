@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/MainPage.css'
+import '../styles/Mainpage.css'
 import CityList from './CityList';
 import AddCityButton from './AddCityButton';
 import Days from './Days';
