@@ -39,7 +39,9 @@ def register_user(data):
                 return jsonify({'message': 'User data updated successfully.'}), 200
             raise ValueError('User already exists.')
 
-        User.register_user(data)
+        user = User.register_user(data)
+        if not user.email_confirmed:
+            send_email_confirmation(user)
         return jsonify({'message': 'User registered successfully.'}), 201
 
     except ValueError as ve:
