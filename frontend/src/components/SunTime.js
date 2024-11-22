@@ -3,20 +3,21 @@ import '../styles/SunTime.css';
 import { GoSun } from "react-icons/go";
 import api from './services/axiosConfig';
 
-const SunTime = () => {
+const SunTime = ({ cityId }) => {
   const [activeButton, setActiveButton] = useState('sunrise');
-  const [city, setCity] = useState({ id: 1233260021 });
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchSunTime = async () => {
+      if (!cityId) return; // Якщо cityId не вибрано, не робимо запит
+
       setLoading(true);
       setError(null);
 
       try {
-        const response = await api.get(`/suntimes/city?city=${city.id}`);
+        const response = await api.get(`/suntimes/city?city=${cityId}`);
         setData(response.data);
       } catch (error) {
         setError('Failed to fetch sun time');
@@ -26,7 +27,7 @@ const SunTime = () => {
     };
 
     fetchSunTime();
-  }, [city]);
+  }, [cityId]);
 
   const timeToDisplay = activeButton === 'sunrise' ? data?.sunrise_local_time : data?.sunset_local_time;
 

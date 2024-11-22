@@ -1,19 +1,21 @@
-import React from 'react';
-import '../styles/Mainpage.css'
+import React, { useState } from 'react';
+import '../styles/Mainpage.css';
 import CityList from './CityList';
 import AddCityButton from './AddCityButton';
 import Days from './Days';
 import SunTime from './SunTime';
 
 function MainPage() {
+  const [cityId, setCityId] = useState(null);
+
   return (
     <div className="main-page">
       <div className='cities'>
         <AddCityButton />
-        <CityList />
+        <CityList setCityId={setCityId} />
       </div>
-      <Days />
-      <SunTime />
+      <Days cityId={cityId} />
+      <SunTime cityId={cityId} />
       <div className='map'>
 
       </div>

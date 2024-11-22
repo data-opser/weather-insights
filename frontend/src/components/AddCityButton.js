@@ -29,7 +29,7 @@ function AddCityButton() {
         <span className='add-city-button-text'>add new city</span>
       </button>
       <Modal active={modalActive} setActive={setModalActive} onClose={handleModalClose}>
-        <SelectCityForm ref={formRef} />
+        <SelectCityForm ref={formRef} onClose={handleModalClose} />
       </Modal>
     </>
   );
