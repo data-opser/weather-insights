@@ -21,6 +21,13 @@ class User(db.Model, UserMixin):
     created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
     email_confirmed = db.Column(db.Boolean, default=False)
 
+    #Connection with UserCity
+    cities = db.relationship(
+        'UserCity',
+        back_populates='user',
+        cascade="all, delete-orphan"
+    )
+
     def set_password(self, password):
         self.password = generate_password_hash(password)
 
@@ -125,7 +132,7 @@ class User(db.Model, UserMixin):
 
     @staticmethod
     def get_user_by_email(email):
-        user = User.query.filter_by(email=email).first()        
+        user = User.query.filter_by(email=email).first()
         return user
 
     def get_profile_data(self):
