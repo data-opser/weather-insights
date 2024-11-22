@@ -32,8 +32,12 @@ class City(db.Model):
     @classmethod
     def get_all_cities_by_id(cls):
         try:
-            cities = cls.query.with_entities(cls.id, cls.city).order_by(cls.id).all()
-            city_list = [{"id": city.id, "city": city.city} for city in cities]
+            cities = (cls.query.with_entities(cls.id, cls.city, cls.country, cls.iso2, cls.iso3, cls.admin_name)
+                      .order_by(cls.id).all())
+            city_list = [{
+                "id": city.id, "city": city.city, "country": city.country,
+                "iso2": city.iso2, "iso3": city.iso3, "admin_name": city.admin_name
+            } for city in cities]
             return jsonify(city_list)
         except Exception as e:
             return ErrorHandler.handle_error(e, message="Failed to retrieve cities")
