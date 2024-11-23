@@ -1,0 +1,19 @@
+---
+version: 2
+
+sources:
+  - name: weather_data
+    schema: weather_data
+    tables:
+      - name: current_weather
+      - name: current_weather__weather
+      - name: weather_forecast_hourly
+      - name: weather_forecast_hourly__list
+      - name: weather_forecast_hourly__list__weather
+      - name: weather_forecast_daily
+      - name: weather_forecast_daily__list
+      - name: weather_forecast_daily__list__weather
+      - name: air_pollution
+      - name: air_pollution__list
+      - name: air_pollution_forecast
+      - name: air_pollution_forecast__list
