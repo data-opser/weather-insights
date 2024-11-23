@@ -17,7 +17,7 @@ clean-targets:
 models:
   weather_insights:
     +materialized: table
-    +tags: [ "transform", "dbt" ]
+    +tags: ["transform", "dbt"]
     current_weather:
       +tags: "current"
 

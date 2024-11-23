@@ -52,7 +52,6 @@ for entry in ioconf:
 
         data.append(response_data)
 
-
     pipeline = dlt.pipeline(
         pipeline_name=pipeline_name,
         destination='postgres',
@@ -66,4 +65,3 @@ for entry in ioconf:
     )
 
     print(load_info)
-
