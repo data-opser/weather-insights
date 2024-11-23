@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../styles/CityList.css';
 import api from './services/axiosConfig';
+import Flag from 'react-world-flags';
 
 function CityList({ setCityId }) {
   const [activeButton, setActiveButton] = useState(null);
@@ -98,6 +99,7 @@ function CityList({ setCityId }) {
             onContextMenu={(e) => handleContextMenu(e, city.city_id)}
           >
             {city.city_name}
+            <Flag className='city-flag' code={city.iso2}/>
           </button>
         ))
       ) : (

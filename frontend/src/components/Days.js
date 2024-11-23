@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import '../styles/Days.css';
 import Day from './Day';
 import api from './services/axiosConfig';
+import { HiOutlineCog6Tooth } from "react-icons/hi2";
 
 const Days = ({ cityId }) => {
   const [weatherData, setWeatherData] = useState([]);
@@ -30,10 +31,14 @@ const Days = ({ cityId }) => {
   }, [cityId]);
 
   return (
-    <div className='days'>
-      <h1>Weather for the next four days</h1>
-      {loading && <p>Loading...</p>}
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+    <div className='days'>     
+      {loading && <div className='loading'>
+          <HiOutlineCog6Tooth className='cog' alt='loading cog' />
+          <h1>Loading...</h1>
+        </div>
+      }
+      {error && <h1 style={{ color: 'red' }}>{error}</h1>}
+      {!loading && !error && (<h1>Weather for the next four days</h1>)}
       {!loading && !error && (
         <div className='day-table'>
           {weatherData.map((day, index) => (

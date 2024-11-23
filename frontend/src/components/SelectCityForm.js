@@ -10,7 +10,7 @@ const SelectCityForm = forwardRef(({ onClose }, ref) => {
   const [cities, setCities] = useState([]);
   const [searchValue, setSearchValue] = useState('');
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
-  const [isMain, setIsMain] = useState(false); // Додаємо стан для checkbox
+  const [isMain, setIsMain] = useState(false);
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState('');
 

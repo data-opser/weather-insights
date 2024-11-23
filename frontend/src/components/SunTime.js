@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import '../styles/SunTime.css';
 import { GoSun } from "react-icons/go";
 import api from './services/axiosConfig';
+import { HiOutlineCog6Tooth } from "react-icons/hi2";
 
 const SunTime = ({ cityId }) => {
   const [activeButton, setActiveButton] = useState('sunrise');
@@ -11,7 +12,7 @@ const SunTime = ({ cityId }) => {
 
   useEffect(() => {
     const fetchSunTime = async () => {
-      if (!cityId) return; // Якщо cityId не вибрано, не робимо запит
+      if (!cityId) return;
 
       setLoading(true);
       setError(null);
@@ -48,7 +49,11 @@ const SunTime = ({ cityId }) => {
 
       <GoSun className='sun' />
 
-      {loading && <h1>Loading...</h1>}
+      {loading && <div className='loading'>
+        <h1>Loading...</h1>
+        <HiOutlineCog6Tooth className='cog' alt='loading cog' />
+      </div>
+      }
       {error && <h1 style={{ color: 'red' }}>{error}</h1>}
       {data && !loading && !error && timeToDisplay && <h1>{timeToDisplay}</h1>}
     </div>

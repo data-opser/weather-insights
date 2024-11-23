@@ -23,10 +23,20 @@
     margin: 3px;
 }
 
+.city-list button:hover {
+    background-color: rgb(236, 236, 236);    
+    transition: 0.4s;
+}
+
 .city-list button.blue {
     background: rgb(19, 99, 223);
     background: linear-gradient(135deg, rgba(19, 99, 223, 1) 0%, rgba(28, 75, 130, 1) 100%);
     color: white;
+}
+
+.city-list button .city-flag {
+    width: 30px;
+    height: 30px;
 }
 
 .context-menu {
