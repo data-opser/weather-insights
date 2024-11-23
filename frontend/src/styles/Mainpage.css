@@ -2,7 +2,7 @@
     display: grid;
     grid-template-rows: 80px 1fr 1fr;
     grid-template-columns: auto 1fr;
-    min-width: 1300px;
+    width: 1300px;
     justify-self: center;
 }
 
@@ -32,7 +32,7 @@
 
 @media only screen and (max-width: 1300px) {
     .main-page {
-        min-width: 100%;
+        width: 100%;
     }   
 }
 
@@ -63,9 +63,5 @@
 
     .cities .add-city-button .add-city-button-text {
         display: none;
-    }
-
-    .cities .city-list {
-        flex-grow: 1; 
     }
 }

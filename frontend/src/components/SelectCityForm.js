@@ -10,6 +10,7 @@ const SelectCityForm = forwardRef(({ onClose }, ref) => {
   const [cities, setCities] = useState([]);
   const [searchValue, setSearchValue] = useState('');
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+  const [isMain, setIsMain] = useState(false); // Додаємо стан для checkbox
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState('');
 
@@ -51,17 +52,20 @@ const SelectCityForm = forwardRef(({ onClose }, ref) => {
     setMessageType('');
   
     try {
-      const cityId = cities.find(city => city.city === searchValue)?.id;
-      if (!cityId) {
+      const city = cities.find(city => city.city === searchValue);
+      if (!city) {
         setMessage('City not found');
         setMessageType('error');
         return;
       }
   
-      const response = await api.post(`add_user_city/city?city=${cityId}`);
+      const response = await api.post(`/add_user_city/city?city=${city.id}`);
+      if (isMain) {
+        await api.put(`/set_main_user_city/city?city=${city.id}`);
+      }
       console.log(response.data.message);
   
-      setMessage(`${searchValue} added successfully!`);
+      setMessage(`${searchValue} ${isMain ? 'set as main and ' : ''}added successfully!`);
       setMessageType('success');
       clearForm(false);
     } catch (error) {
@@ -70,14 +74,15 @@ const SelectCityForm = forwardRef(({ onClose }, ref) => {
       setMessageType('error');
     }
   };
-  
+
   const clearForm = (isFull = true) => {
-    setSearchValue('');
-    setIsDropdownVisible(false);
+      setSearchValue('');
+      setIsDropdownVisible(false);
+    setIsMain(false);
     if (isFull) {
       setMessage('');
       setMessageType('');
-    }    
+    }
   };
 
   const closeForm = () => {
@@ -127,16 +132,29 @@ const SelectCityForm = forwardRef(({ onClose }, ref) => {
         </div>
       )}
 
+      <div className="checkbox-field">
+        <label>
+          <input
+            type="checkbox"
+            checked={isMain}
+            onChange={(e) => setIsMain(e.target.checked)}
+          />
+          set as main
+        </label>
+      </div>
+
       {message && (
         <div className={`message ${messageType === 'success' ? 'success' : 'error'}`}>
           {message}
         </div>
       )}
 
-      <button type="submit">Add</button>
-      <button type="button" className="return-button" onClick={closeForm}>
-        <IoArrowBack className="return-arrow" />
-      </button>
+      <div className="form-buttons">
+        <button type="submit">Add</button>
+        <button type="button" className="return-button" onClick={closeForm}>
+          <IoArrowBack className="return-arrow" />
+        </button>
+      </div>
     </form>
   );
 });

@@ -7,6 +7,7 @@
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.231);
     overflow-x: auto;
 }
+
 .city-list button {
     background-color: white;
     color: black;
@@ -14,7 +15,7 @@
     cursor: pointer;
     transition: background-color 0.3s, font-size 0.3s ease, padding 0.3s ease;
     border-radius: 0.5em;
-    font-size: medium; 
+    font-size: medium;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -23,7 +24,31 @@
 }
 
 .city-list button.blue {
-    background: rgb(19,99,223);
-    background: linear-gradient(135deg, rgba(19,99,223,1) 0%, rgba(28,75,130,1) 100%);
-    color: white;  
+    background: rgb(19, 99, 223);
+    background: linear-gradient(135deg, rgba(19, 99, 223, 1) 0%, rgba(28, 75, 130, 1) 100%);
+    color: white;
+}
+
+.context-menu {
+    position: absolute;
+    background: white;
+    border-radius: 1em;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    padding: 5px 10px;
+    z-index: 1000;
+}
+
+.context-menu button {
+    display: block;
+    width: 100%;
+    border: none;
+    background: none;
+    padding: 5px 10px;
+    text-align: left;
+    cursor: pointer;
+}
+
+.context-menu button:hover {
+    background-color: #f0f0f0;
+    border-radius: 0.5em;
 }
