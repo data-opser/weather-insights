@@ -1,0 +1,207 @@
+name: linters
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  get-changed-files:
+    runs-on: ubuntu-latest
+    name: Get changed-files
+    permissions:
+      pull-requests: read
+
+    steps:
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v45
+
+      - name: Output all changed files
+        run: |
+          echo "Changed files:"
+          echo "${{ steps.changed-files.outputs.all_changed_files }}" | tr ' ' '\n'
+    outputs:
+      ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
+
+  kotlint-linter:
+    runs-on: ubuntu-latest
+    needs: get-changed-files
+    steps:
+      - name: "Checkout code"
+        uses: actions/checkout@v3
+
+      - name: Check for Kotlin files
+        run: |
+          kt_files=$(echo "${{ needs.get-changed-files.outputs.ALL_CHANGED_FILES }}" | tr ' ' '\n' | grep '\.kt$' || true)
+          if [ -z "$kt_files" ]; then
+            echo "No Kotlin files found"
+            echo "HAS_KT_FILES=false" >> $GITHUB_ENV
+          else
+            echo "Changed Kotlin files:"
+            echo "$kt_files" | tr ' ' '\n'
+            echo "$kt_files" > changed_kotlin_files.txt
+            echo "HAS_KT_FILES=true" >> $GITHUB_ENV
+          fi
+
+      - name: Install Ktlint
+        if: env.HAS_KT_FILES == 'true'
+        run: |
+          curl -sSLO https://github.com/pinterest/ktlint/releases/download/0.48.2/ktlint &&
+          chmod a+x ktlint &&
+          sudo mv ktlint /usr/local/bin/
+
+      - name: Run Ktlint on changed Kotlin files
+        if: env.HAS_KT_FILES == 'true'
+        run: |
+          ktlint $(cat changed_kotlin_files.txt)
+        continue-on-error: true
+
+  javascript-linter:
+    runs-on: ubuntu-latest
+    needs: get-changed-files
+    steps:
+      - name: "Checkout code"
+        uses: actions/checkout@v3
+
+      - name: Check for JavaScript files
+        run: |
+          js_files=$(echo "${{ needs.get-changed-files.outputs.ALL_CHANGED_FILES }}" | tr ' ' '\n' | grep '\.js$' || true)
+          if [ -z "$js_files" ]; then
+            echo "No JavaScript files found"
+            echo "HAS_JS_FILES=false" >> $GITHUB_ENV
+          else
+            echo "Changed JavaScript files:"
+            echo "$js_files" | tr ' ' '\n'
+            echo "$js_files" > changed_js_files.txt
+            echo "HAS_JS_FILES=true" >> $GITHUB_ENV
+          fi
+
+      - name: Install Node.js and npm
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18.18.0"
+
+      - name: Install ESLint
+        if: env.HAS_JS_FILES == 'true'
+        run: |
+          cd frontend
+          npm ci
+
+      - name: Run ESLint on changed JavaScript files
+        if: env.HAS_JS_FILES == 'true'
+        run: |
+          npx eslint $(cat changed_js_files.txt) --config frontend/eslint.config.mjs
+        continue-on-error: true
+
+  python-linter:
+    runs-on: ubuntu-latest
+    needs: get-changed-files
+    steps:
+      - name: "Checkout code"
+        uses: actions/checkout@v3
+
+      - name: Check for Python files
+        run: |
+          py_files=$(echo "${{ needs.get-changed-files.outputs.ALL_CHANGED_FILES }}" | tr ' ' '\n' | grep '\.py$' || true)
+          if [ -z "$py_files" ]; then
+            echo "No Python files found"
+            echo "HAS_PY_FILES=false" >> $GITHUB_ENV
+          else
+            echo "Changed Python files:"
+            echo "$py_files" | tr ' ' '\n'
+            echo "$py_files" > changed_py_files.txt
+            echo "HAS_PY_FILES=true" >> $GITHUB_ENV
+          fi
+
+      - name: Set up Python environment
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.12"
+
+      - name: Install Flake8
+        if: env.HAS_PY_FILES == 'true'
+        run: |
+          python -m pip install --upgrade pip
+          pip install flake8
+
+      - name: Run Flake8 on changed Python files
+        if: env.HAS_PY_FILES == 'true'
+        run: |
+          flake8 $(cat changed_py_files.txt)
+        continue-on-error: true
+
+  sql-linter:
+    runs-on: ubuntu-latest
+    needs: get-changed-files
+    steps:
+      - name: "Checkout code"
+        uses: actions/checkout@v3
+
+      - name: Check for SQL files
+        run: |
+          sql_files=$(echo "${{ needs.get-changed-files.outputs.ALL_CHANGED_FILES }}" | tr ' ' '\n' | grep '\.sql$' || true)
+          if [ -z "$sql_files" ]; then
+            echo "No SQL files found"
+            echo "HAS_SQL_FILES=false" >> $GITHUB_ENV
+          else
+            echo "Changed SQL files:"
+            echo "$sql_files" | tr ' ' '\n'
+            echo "$sql_files" > changed_sql_files.txt
+            echo "HAS_SQL_FILES=true" >> $GITHUB_ENV
+          fi
+
+      - name: Install SQL Fluff
+        if: env.HAS_SQL_FILES == 'true'
+        run: |
+          pip install sqlfluff
+
+      - name: Run SQL Fluff on changed SQL files
+        if: env.HAS_SQL_FILES == 'true'
+        run: |
+          sqlfluff lint $(cat changed_sql_files.txt) --config .sqlfluff
+        continue-on-error: true
+
+  yaml-yml-linter:
+    runs-on: ubuntu-latest
+    needs: get-changed-files
+    steps:
+      - name: "Checkout code"
+        uses: actions/checkout@v3
+
+      - name: Check for YAML/YML files
+        run: |
+          yml_yaml_files=$(echo "${{ needs.get-changed-files.outputs.ALL_CHANGED_FILES }}" | tr ' ' '\n' | grep -E '\.yml$|\.yaml$' || true)
+          if [ -z "$yml_yaml_files" ]; then
+            echo "No YAML files found"
+            echo "HAS_YML_YAML_FILES=false" >> $GITHUB_ENV
+          else
+            echo "Changed YAML/YML files:"
+            echo "$yml_yaml_files" | tr ' ' '\n'
+            echo "$yml_yaml_files" > changed_yml_yaml_files.txt
+            echo "HAS_YML_YAML_FILES=true" >> $GITHUB_ENV
+          fi
+
+      - name: Install Yamllint
+        if: env.HAS_YML_YAML_FILES == 'true'
+        run: |
+          pip install yamllint
+
+      - name: Run Yamllint on changed YAML and YML files
+        if: env.HAS_YML_YAML_FILES == 'true'
+        run: |
+          yamllint -d "{extends: default, rules: {line-length: disable}}" $(cat changed_yml_yaml_files.txt)
+        continue-on-error: true
+
+  html-linter:
+    runs-on: ubuntu-latest
+    needs: get-changed-files
+    steps:
+      - name: "Checkout code"
+        uses: actions/checkout@v3
+
+      - name: Run htmltest
+        uses: wjdp/htmltest-action@master
+        with:
+          path: .
+        continue-on-error: true

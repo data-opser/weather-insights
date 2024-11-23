@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="fragmentBgStartColor" format="color"/>
+    <attr name="fragmentBgMiddleColor" format="color"/>
+    <attr name="fragmentBgMiddleColor2" format="color"/>
+    <attr name="fragmentBgEndColor" format="color"/>
+    <attr name="switchThumbOnColor" format="color"/>
+    <attr name="switchThumbOffColor" format="color"/>
+    <attr name="switchTrackOnColor" format="color"/>
+    <attr name="switchTrackOffColor" format="color"/>
+    <attr name="dialogBgColor" format="color"/>
+    <attr name="navBarColor" format="color"/>
+</resources>

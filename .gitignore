@@ -9,3 +9,8 @@
 terraform.tfstate
 venv/
 *.DS_Store
+feature/add-linters
+operational/airflow/logs/
+*.pyc
+*.env
+backend/venv/

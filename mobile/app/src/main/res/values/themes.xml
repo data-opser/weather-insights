@@ -1,16 +1,26 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
     <style name="Theme.Weatherinsights" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryVariant">@color/primaryVariant</item>
         <item name="colorOnPrimary">@color/onPrimary</item>
-
         <item name="colorSecondary">@color/secondary</item>
         <item name="colorSecondaryVariant">@color/secondaryVariant</item>
         <item name="colorOnSecondary">@color/onSecondary</item>
 
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
-        <item name="android:navigationBarColor">#FF0000</item>
+        <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
+
+        <item name="switchThumbOnColor">@color/switch_thumb_on_day</item>
+        <item name="switchThumbOffColor">@color/switch_thumb_off_day</item>
+        <item name="switchTrackOnColor">@color/switch_track_on_day</item>
+        <item name="switchTrackOffColor">@color/switch_track_off_day</item>
+
+        <item name="dialogBgColor">@color/dialog_bg_day</item>
+        <item name="navBarColor">@color/navBar_day</item>
+        <item name="fragmentBgStartColor">@color/fragment_bg_start_day</item>
+        <item name="fragmentBgMiddleColor">@color/fragment_bg_middle_day</item>
+        <item name="fragmentBgEndColor">@color/fragment_bg_end_day</item>
     </style>
 
     <style name="DialogAnimation">
@@ -18,20 +28,63 @@
         <item name="android:windowExitAnimation">@anim/slide_out</item>
     </style>
 
+
     <!-- DAY STYLE-->
 
+    <style name="Fragment">
+        <item name="android:paddingTop">20dp</item>
+    </style>
+
+    <style name="Layout">
+        <item name="android:backgroundTint">@color/layout_day</item>
+    </style>
 
     <style name="Background">
-        <item name="android:background">@color/primary</item>
+        <item name="android:background">@color/bg_day</item>
+    </style>
+
+    <style name="BackgroundTint">
+        <item name="android:backgroundTint">@color/bg_day</item>
+    </style>
+
+    <style name="Text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/inter</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/text_day</item>
+    </style>
+
+    <style name="TextSmallAndGray">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:fontFamily">@font/inter</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/text_gray_day</item>
+    </style>
+
+    <style name="NavigationView">
+        <item name="itemIconTint">@color/text_day</item>
+        <item name="itemTextColor">@color/text_day</item>
+        <item name="android:background">@drawable/rounded_bottom_nav</item>
+    </style>
+
+    <style name="RoundedFAB" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="FloatingActionButton">
+        <item name="tint">@color/primaryVariant</item>
+        <item name="android:backgroundTint">@color/nav_button_day</item>
+    </style>
+
+    <style name="WindowAnimationTransition">
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
     </style>
 
     <style name="App.Custom.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
         <item name="android:color">@color/selected_item_day</item>
     </style>
-
-
-
-
-
 
 </resources>

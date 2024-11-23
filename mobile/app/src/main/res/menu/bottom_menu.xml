@@ -2,25 +2,25 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/weather"
-        android:title="@string/page1"
+        android:id="@+id/nav_weather"
+        android:title="@string/weather_page"
         android:icon="@drawable/ic_weather" />
 
     <item
-        android:id="@+id/premium"
-        android:title="@string/page2"
+        android:id="@+id/nav_premium"
+        android:title="@string/premium_page"
         android:icon="@drawable/ic_premium" />
 
     <item
         android:title=""/>
 
     <item
-        android:id="@+id/horoscope"
-        android:title="@string/page3"
+        android:id="@+id/nav_horoscope"
+        android:title="@string/horoscope_page"
         android:icon="@drawable/ic_horoscope" />
 
     <item
-        android:id="@+id/settings"
-        android:title="@string/page4"
+        android:id="@+id/nav_settings"
+        android:title="@string/settings_page"
         android:icon="@drawable/ic_settings" />
 </menu>
