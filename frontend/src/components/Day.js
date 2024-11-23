@@ -1,4 +1,7 @@
 import { GoSun } from "react-icons/go";
+import { BsSnow } from "react-icons/bs";
+import { BsCloudRainHeavy } from "react-icons/bs";
+import { BsCloudsFill } from "react-icons/bs";
 import { WiRaindrop } from "react-icons/wi";
 import '../styles/Day.css';
 
@@ -6,13 +9,13 @@ function Day({ date, weather, tempMin, tempMax, humidity, wind }) {
   const getWeatherIcon = () => {
     switch (weather) {
       case 'Snow':
-        return <GoSun className="sun snow" title="Snow" />;
+        return <BsSnow className="weather-icon snow" title="snowy weather" />;
       case 'Clouds':
-        return <GoSun className="sun clouds" title="Clouds" />;
+        return <BsCloudsFill className="weather-icon clouds" title="cloudy weather" />;
       case 'Rain':
-        return <WiRaindrop className="raindrop rain" title="Rain" />;
+        return <BsCloudRainHeavy className="weather-icon rain" title="rainy weather" />;
       default:
-        return <GoSun className="sun default" title="Default weather" />;
+        return <GoSun className="weather-icon clear" title="sunny weather" />;
     }
   };
 
@@ -25,9 +28,9 @@ function Day({ date, weather, tempMin, tempMax, humidity, wind }) {
   };
 
   return (
-    <div className="day">
+    <div className={`day ${weather.toLowerCase()}`}>
       <p>{formatDate(date)}</p>
-      <GoSun className="sun" title="Default weather" />
+      {getWeatherIcon()}
       <p>{formatTemperature(tempMin)}° / {formatTemperature(tempMax)}°</p>
       <div className="rain">
         <WiRaindrop className="raindrop" />

@@ -10,7 +10,7 @@ const Days = ({ cityId }) => {
 
   useEffect(() => {
     const fetchWeather = async () => {
-      if (!cityId) return; // Якщо cityId не вибрано, не робимо запит
+      if (!cityId) return;
 
       setLoading(true);
       setError(null);
