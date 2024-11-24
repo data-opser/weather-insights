@@ -31,11 +31,11 @@ const Days = ({ cityId }) => {
   }, [cityId]);
 
   return (
-    <div className='days'>     
+    <div className='days'>
       {loading && <div className='loading'>
-          <HiOutlineCog6Tooth className='cog' alt='loading cog' />
-          <h1>Loading...</h1>
-        </div>
+        <HiOutlineCog6Tooth className='cog' alt='loading cog' />
+        <h1>Loading...</h1>
+      </div>
       }
       {error && <h1 style={{ color: 'red' }}>{error}</h1>}
       {!loading && !error && (<h1>Weather for the next four days</h1>)}
@@ -44,6 +44,7 @@ const Days = ({ cityId }) => {
           {weatherData.map((day, index) => (
             <Day
               key={index}
+              cityId={cityId}
               date={day.date}
               weather={day.weather}
               tempMin={day.temperature_min}

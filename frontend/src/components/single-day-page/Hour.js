@@ -1,19 +1,19 @@
-import React from 'react';
-import './Hour.css';
+import React from "react";
+import "./Hour.css";
 
-function Hour() {
+function Hour({ time, temperature, temperature_feels_like, pressure, humidity, wind_speed, precipitation }) {
   return (
     <div className="hour-column">
       <div className="hour-header">
-        <p className="hour-time">0:00</p>
+        <p className="hour-time">{time}</p>
         <div className="hour-icon">🌧️</div>
-        <p className="hour-temp">+2°</p>
+        <p className="hour-temp">{temperature}°</p>
       </div>
-      <p className="hour-feels">0°</p>
-      <p className="hour-pressure">767</p>
-      <p className="hour-humidity">49</p>
-      <p className="hour-wind">4.1</p>
-      <p className="hour-precipitation">2</p>
+      <p className="hour-feels">{temperature_feels_like}°</p>
+      <p className="hour-pressure">{pressure}</p>
+      <p className="hour-humidity">{humidity}%</p>
+      <p className="hour-wind">{wind_speed}</p>
+      <p className="hour-precipitation">{precipitation}</p>
     </div>
   );
 }
