@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import '../styles/SunTime.css';
 import { GoSun } from "react-icons/go";
-import api from './services/axiosConfig';
+import api from './axiosConfig';
 import { HiOutlineCog6Tooth } from "react-icons/hi2";
 
 const SunTime = ({ cityId }) => {
@@ -11,7 +11,7 @@ const SunTime = ({ cityId }) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchSunTime = async () => {
+    const fetchSunTime = async () => {  
       if (!cityId) return;
 
       setLoading(true);

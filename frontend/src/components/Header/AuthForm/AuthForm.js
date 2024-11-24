@@ -1,16 +1,16 @@
 import React, { useState, forwardRef, useImperativeHandle } from 'react';
-import '../styles/Form.css';
-import form_weather_icon from '../images/form-weather-icon.png';
-import google_icon from '../images/google-icon.png';
+import './AuthForm.css';
+import form_weather_icon from './form-weather-icon.png';
+import google_icon from './google-icon.png';
 import { IoArrowBack } from "react-icons/io5";
 import { MdOutlineEmail } from "react-icons/md";
 import { LuUnlock } from "react-icons/lu";
 import { IoPersonOutline } from "react-icons/io5";
 import { FiEye, FiEyeOff } from "react-icons/fi";
-import { useInput } from './services/inputValidation';
-import api from './services/axiosConfig';
+import { useInput } from './inputValidation';
+import api from '../../axiosConfig';
 
-const Form = forwardRef(({ type, setActive, setFormType, onLoginSuccess }, ref) => {
+const AuthForm = forwardRef(({ type, setActive, setFormType, onLoginSuccess }, ref) => {
   const formConfig = {
     login: {
       title: "Welcome back",
@@ -210,4 +210,4 @@ const Form = forwardRef(({ type, setActive, setFormType, onLoginSuccess }, ref) 
   );
 });
 
-export default Form;
+export default AuthForm;

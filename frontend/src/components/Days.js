@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import '../styles/Days.css';
 import Day from './Day';
-import api from './services/axiosConfig';
+import api from './axiosConfig';
 import { HiOutlineCog6Tooth } from "react-icons/hi2";
 
 const Days = ({ cityId }) => {

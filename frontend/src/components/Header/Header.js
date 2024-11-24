@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
-import '../styles/Header.css';
-import logo from '../images/logo.png';
+import './Header.css';
+import logo from './logo.png';
 import { CiLogin } from "react-icons/ci";
-import Modal from './Modal';
-import Form from './Form';
-import api from './services/axiosConfig';
+import Modal from '../Modal';
+import AuthForm from './AuthForm/AuthForm';
+import api from '../axiosConfig';
 
 function Header() {
   const [modalActive, setModalActive] = useState(false);
@@ -72,7 +72,7 @@ function Header() {
       )}
 
       <Modal active={modalActive} setActive={setModalActive} onClose={handleModalClose}>
-        <Form
+        <AuthForm
           ref={formRef}
           type={formType}
           setActive={setModalActive}
