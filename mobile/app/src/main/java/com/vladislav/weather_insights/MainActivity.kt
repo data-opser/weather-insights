@@ -1,7 +1,6 @@
 package com.vladislav.weather_insights
 
 import android.Manifest
-import android.app.Dialog
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.SharedPreferences.Editor
@@ -15,7 +14,6 @@ import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -58,7 +56,7 @@ class MainActivity : AppCompatActivity() {
         bottomNavigationView.setOnItemSelectedListener {
             when(it.itemId) {
                 R.id.nav_weather -> replaceFragment(WeatherFragment (), "WeatherFragment")
-                R.id.nav_premium -> replaceFragment(PremiumFragment (),"PremiumFragment")
+                R.id.nav_profile -> replaceFragment(ProfileFragment (),"PremiumFragment")
                 R.id.nav_horoscope -> replaceFragment(HoroscopeFragment (),"HoroscopeFragment")
                 R.id.nav_settings -> replaceFragment(SettingsFragment (),"SettingsFragment")
             }
@@ -114,6 +112,9 @@ class MainActivity : AppCompatActivity() {
         val dialog = BottomSheetDialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.bottom_nav_layout)
+
+        val search = SearchDialog(this)
+        search.changeActiveProcess(dialog)
 
         dialog.show()
         dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT)

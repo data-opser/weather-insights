@@ -26,13 +26,16 @@
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/rounded_top"
+        app:backgroundTint="?attr/navBarColor"
         app:itemActiveIndicatorStyle="@style/App.Custom.Indicator"
         app:labelVisibilityMode="labeled"
         app:menu="@menu/bottom_menu"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        style="@style/NavigationView">
+        app:itemIconTint="?attr/navItemIconTintColor"
+        app:itemTextColor="?attr/navItemTextColor">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"
@@ -41,7 +44,8 @@
             android:layout_gravity="center"
             android:contentDescription="@string/error"
             android:src="@drawable/ic_plus"
-            style="@style/FloatingActionButton"
+            android:backgroundTint="?attr/navFloatingBgColor"
+            app:tint="?attr/navFloatingTintColor"
             app:shapeAppearanceOverlay="@style/RoundedFAB"
             app:layout_anchor="@+id/bottomAppBar"
             app:layout_anchorGravity="center"

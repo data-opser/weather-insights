@@ -1,101 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottomNavLayout"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bottom_dialog_bg">
-
-    <ImageView
-        android:layout_width="70dp"
-        android:layout_height="30dp"
-        android:contentDescription="@string/error"
-        android:src="@drawable/ic_line"
-        android:layout_gravity="center|top"
-        android:scaleType="centerCrop"/>
+    android:padding="0dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        tools:ignore="UseCompoundDrawables">
-
-        <TextView
-            style="@style/Text"
-            android:textAlignment="viewStart"
-            android:text="@string/bottom_menu_title"
-            android:padding="8dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="5dp"
-            android:textSize="28sp" />
-
-    </LinearLayout>
-
-
-
-    <LinearLayout
-        android:id="@+id/layoutVideo"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:padding="10dp">
-
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:paddingBottom="13dp"
+        android:background="@drawable/rounded_dialog_bg">
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_width="70dp"
+            android:layout_height="30dp"
+            android:contentDescription="@string/error"
+            android:src="@drawable/ic_line"
+            android:layout_gravity="center|top"
+            android:scaleType="centerCrop"
+            app:tint="?attr/dialogLineColor"/>
 
-        <TextView
-            style="@style/Text"
-            android:text="Upload a video"
-            android:layout_marginLeft="30dp"
-            android:textSize="16sp"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/layoutShorts"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp">
-
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <TextView
-            style="@style/Text"
-            android:text="Create a short"
-            android:layout_marginLeft="30dp"
-            android:textSize="16sp"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/layoutLive"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="30dp">
-
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <TextView
-            style="@style/Text"
+        <LinearLayout
+            android:id="@+id/searchLinearLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Go live"
-            android:layout_marginLeft="30dp"
-            android:textSize="16sp"/>
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginHorizontal="5dp"
+            android:background="@drawable/rounded_all"
+            android:backgroundTint="?attr/searchBgInertColor">
 
+            <ImageView
+                android:id="@+id/zoomImageView"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:padding="4dp"
+                android:layout_marginStart="5dp"
+                android:src="@drawable/ic_zoom"
+                app:tint="?attr/searchIconInertColor" />
+
+            <EditText
+                style="@style/Text"
+                android:id="@+id/searchEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="addressCity"
+                android:hint="@string/bottom_menu_title"
+                android:inputType="text"
+                android:textSize="18sp"
+                android:paddingHorizontal="4dp"
+                android:paddingVertical="10dp"
+                android:background="@null"
+                android:textColorHint="?attr/searchTextHintColor">
+            </EditText>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="?attr/dialogBgColor">
+        <LinearLayout
+            style="@style/ListItemLayout"
+            android:id="@+id/layoutVideo">
+
+            <TextView
+                style="@style/Text"
+                android:text="Poltava"/>
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/ListItemLayout"
+            android:id="@+id/layoutShorts">
+
+            <TextView
+                style="@style/Text"
+                android:text="Kremenchug"/>
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/ListItemLayout"
+            android:id="@+id/layoutLive">
+
+            <TextView
+                style="@style/Text"
+                android:text="Kyiv"/>
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>
