@@ -3,7 +3,6 @@ package com.vladislav.weather_insights
 import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
-import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -22,7 +21,6 @@ import android.view.ViewGroup
 import android.view.Window
 import android.widget.CompoundButton
 import android.widget.FrameLayout
-import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
@@ -52,12 +50,11 @@ class SettingsFragment : Fragment() {
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var switchNotify: SwitchCompat
     private lateinit var switchTheme: SwitchCompat
-    private lateinit var signLayout: ConstraintLayout
+    private lateinit var signLayout: LinearLayout
     private lateinit var signText: TextView
     private lateinit var editor: Editor
     private lateinit var myActivity: Activity
     private lateinit var pushNotificationPermissionLauncher: ActivityResultLauncher<String>
-    private val REQUEST_CODE_POST_NOTIFICATIONS = 123
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <solid
-        android:color="?attr/dialogBgColor"/>
+    <gradient
+        android:startColor="?attr/dialogHeaderStartColor"
+        android:centerColor="?attr/dialogHeaderCenterColor"
+        android:endColor="?attr/dialogHeaderEndColor"
+        android:angle="270" />
 
     <corners
         android:topLeftRadius="20dp"
