@@ -1,16 +1,16 @@
-import '../styles/App.css'; 
+import '../styles/App.css';
 import Header from './Header/Header';
 import MainPage from './Mainpage';
 import Footer from './Footer';
- 
-function App() { 
-  return ( 
-    <div className="App"> 
-      <Header /> 
-      <MainPage />  
+
+function App() {
+  return (
+    <div className="App">
+      <Header />
+      <MainPage />
       <Footer />
-    </div> 
-  ); 
-} 
- 
+    </div>
+  );
+}
+
 export default App;
