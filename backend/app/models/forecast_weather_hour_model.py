@@ -49,7 +49,10 @@ class ForecastWeatherHour(db.Model):
     @classmethod
     def get_city_hourly_weather_by_date(cls, city_id, date):
         try:
-            City.check_city_exists(city_id)
+            if not City.check_city_exists(city_id):
+                return ErrorHandler.handle_error(None, message=f"City with ID '{city_id}' not found.",
+                                                 status_code=404)
+
             date_object = datetime.strptime(date, '%Y-%m-%d').date()
             records = cls.query.filter(cls.city_id == city_id, cast(cls.weather_time, Date) == date_object).all()
             return  WeatherResponse.response_weather_hours(records)

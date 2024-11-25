@@ -5,6 +5,7 @@ from flask import jsonify
 from app.utils import ErrorHandler
 from app.models.city_model import City
 
+
 class UserCity(db.Model):
     __tablename__ = 'user_city'
     __table_args__ = {'schema': 'user_data'}
@@ -28,22 +29,19 @@ class UserCity(db.Model):
     def get_user_cities(cls, user_id):
         try:
             user_cities = cls.query.filter_by(user_id=user_id).all()
-
             cities = []
             for uc in user_cities:
-                city = City.check_city_exists(uc.city_id)
-                if city:
-                    cities.append({
-                            "city_id": uc.city_id,
-                            "city_name": city.city,
-                            "is_main": uc.is_main
-                        })
-                else:
-                    return ErrorHandler.handle_error(
-                        None,
-                        message=f"City with ID '{uc.city_id}' not found.",
-                        status_code=404
-                    )
+                if not City.check_city_exists(uc.city_id):
+                    return ErrorHandler.handle_error(None, message=f"City with ID '{uc.city_id}' not found.",
+                                                     status_code=404)
+                city_data = City.get_city_data_by_id(uc.city_id)
+                cities.append({
+                        "city_id": uc.city_id,
+                        "city_name": city_data.get('city'),
+                        "is_main": uc.is_main,
+                        "iso2": city_data.get('iso2'),
+                        "country": city_data.get('country'),
+                    })
             return jsonify({'cities': cities}), 200
 
         except Exception as e:
@@ -57,20 +55,21 @@ class UserCity(db.Model):
     def add_user_city(cls, user_id, city_id):
         try:
             city = City.check_city_exists(city_id)
-            if city:
-                if cls.query.filter_by(user_id=user_id, city_id=city_id).first():
-                    raise ValueError("City already added to the user.")
+            if not city:
+                return ErrorHandler.handle_error(None, message=f"City with ID '{city_id}' not found.",
+                                                 status_code=404)
 
-                new_user_city = cls(user_id=user_id, city_id=city_id)
-                db.session.add(new_user_city)
-                db.session.commit()
-                return jsonify({'message': 'City was added to user successfully.'}), 201
-            else:
-                return ErrorHandler.handle_error(
-                    None,
-                    message=f"City with ID '{city_id}' not found.",
-                    status_code=404
-                )
+            if cls.query.filter_by(user_id=user_id, city_id=city_id).first():
+                raise ValueError(f"City '{city[0]}' already added to the user list.")
+
+            # If user hasn't main city, set this as main
+            is_main = True if cls.query.filter_by(user_id=user_id).count() == 0 else False
+
+            new_user_city = cls(user_id=user_id, city_id=city_id, is_main=is_main)
+            db.session.add(new_user_city)
+            db.session.commit()
+            return jsonify({'message': f"City '{city[0]}' was added to user successfully."}), 201
+
         except ValueError as ve:
             return ErrorHandler.handle_validation_error(str(ve))
         except Exception as e:
@@ -81,20 +80,22 @@ class UserCity(db.Model):
     def delete_user_city(cls, user_id, city_id):
         try:
             city = City.check_city_exists(city_id)
-            if city:
-                user_city = cls.query.filter_by(user_id=user_id, city_id=city_id).first()
-                if not user_city:
-                    raise ValueError("City not found for the user.")
+            if not city:
+                return ErrorHandler.handle_error(None, message=f"City with ID '{city_id}' not found.",
+                                                 status_code=404)
+            user_city = cls.query.filter_by(user_id=user_id, city_id=city_id).first()
+            if not user_city:
+                raise ValueError(f"City '{city[0]}' not found in user list.")
 
-                db.session.delete(user_city)
-                db.session.commit()
-                return jsonify({'message': 'City was deleted from user successfully.'}), 200
-            else:
-                return ErrorHandler.handle_error(
-                    None,
-                    message=f"City with ID '{city_id}' not found.",
-                    status_code=404
-                )
+            if user_city.is_main:
+                raise ValueError(
+                    f"Cannot delete the main city '{city[0]}'."
+                    f" Please set another city as main before deleting.")
+
+            db.session.delete(user_city)
+            db.session.commit()
+            return jsonify({'message': f"City '{city[0]}' was deleted from user successfully."}), 200
+
         except ValueError as ve:
             return ErrorHandler.handle_validation_error(str(ve))
         except Exception as e:
@@ -105,21 +106,18 @@ class UserCity(db.Model):
     def set_main_user_city(cls, user_id, city_id):
         try:
             city = City.check_city_exists(city_id)
-            if city:
-                user_city = cls.query.filter_by(user_id=user_id, city_id=city_id).first()
-                if not user_city:
-                    raise ValueError("City not found for the user.")
+            if not city:
+                return ErrorHandler.handle_error(None, message=f"City with ID '{city_id}' not found.",
+                                                 status_code=404)
+            user_city = cls.query.filter_by(user_id=user_id, city_id=city_id).first()
+            if not user_city:
+                raise ValueError(f"City '{city[0]}' not found in user list.")
 
-                cls.query.filter_by(user_id=user_id).update({"is_main": False}, synchronize_session=False)
-                user_city.is_main = True
-                db.session.commit()
-                return jsonify({'message': 'City was set as main for user successfully.'}), 200
-            else:
-                return ErrorHandler.handle_error(
-                    None,
-                    message=f"City with ID '{city_id}' not found.",
-                    status_code=404
-                )
+            cls.query.filter_by(user_id=user_id).update({"is_main": False}, synchronize_session=False)
+            user_city.is_main = True
+            db.session.commit()
+            return jsonify({'message': f"City '{city[0]}' was set as main for user successfully."}), 200
+
         except ValueError as ve:
             return ErrorHandler.handle_validation_error(str(ve))
         except Exception as e:
