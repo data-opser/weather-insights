@@ -2,7 +2,9 @@ package com.vladislav.weather_insights
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.content.res.ColorStateList
+import android.net.Uri
 import android.os.Bundle
 import android.util.TypedValue
 import androidx.fragment.app.Fragment
@@ -15,6 +17,7 @@ import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.cardview.widget.CardView
 
 // TODO: Rename parameter arguments, choose names that match
@@ -33,9 +36,13 @@ class ProfileFragment : Fragment() {
     private var param2: String? = null
 
     private lateinit var myActivity: Activity
-    private lateinit var googleLinearLayout: LinearLayout
-    private lateinit var loginButton: Button
+    private lateinit var titleTextView: TextView
     private lateinit var profileFrameLayout: FrameLayout
+    private lateinit var googleLinearLayout: LinearLayout
+    private lateinit var loginLinearLayout: LinearLayout
+    private lateinit var profileCardView: CardView
+    private lateinit var loginButton: Button
+    private lateinit var goEditButton: Button
 
     private lateinit var emailImageView: ImageView
     private lateinit var pswdImageView: ImageView
@@ -86,14 +93,21 @@ class ProfileFragment : Fragment() {
         myActivity = requireActivity()
         profileFrameLayout = view.findViewById(R.id.profileFrameLayout)
         googleLinearLayout = view.findViewById(R.id.googleLinearLayout)
+        loginLinearLayout = view.findViewById(R.id.loginLinearLayout)
+        profileCardView = view.findViewById(R.id.profileCardView)
+        titleTextView = view.findViewById(R.id.profileTitle)
         loginButton = view.findViewById(R.id.loginButton)
-
+        goEditButton = view.findViewById(R.id.goEditButton)
         emailImageView  = view.findViewById(R.id.emailImageView)
         pswdImageView  = view.findViewById(R.id.pswdImageView)
         emailEditText = view.findViewById(R.id.emailEditText)
         pswdEditText = view.findViewById(R.id.pswdEditText)
         emailCardView = view.findViewById(R.id.emailCardView)
         pswdCardView = view.findViewById(R.id.pswdCardView)
+
+        if(false){ //тут якщо у нас користувач вже залогінений був, то одразу профіль видаєм, нікіта
+            setProfileLayout()
+        }
 
         profileFrameLayout.setOnClickListener {
             if (emailEditText.isFocused) {
@@ -108,8 +122,26 @@ class ProfileFragment : Fragment() {
 
         setOnFocusChangeListener(emailCardView, emailImageView, emailEditText)
         setOnFocusChangeListener(pswdCardView, pswdImageView, pswdEditText)
+
+        loginButton.setOnClickListener{
+            if (true) { // йде запит API Нікітос, і якщо тру, переходимо на профіль
+                setProfileLayout()
+            }
+        }
+
+        goEditButton.setOnClickListener{ // тут перекинути на сторінку зміни інфи на сайті
+            val url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley"
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            startActivity(intent)
+        }
     }
 
+    private fun setProfileLayout(){
+        titleTextView.visibility = View.GONE
+        loginLinearLayout.visibility = View.GONE
+
+        profileCardView.visibility = View.VISIBLE
+    }
     private fun setOnFocusChangeListener(cardView: CardView, imageView: ImageView, editText: EditText) {
         editText.setOnFocusChangeListener { _, hasFocus ->
             run {

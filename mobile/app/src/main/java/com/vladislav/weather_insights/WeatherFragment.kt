@@ -56,10 +56,4 @@ class WeatherFragment : Fragment() {
                 }
             }
     }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-            //requireActivity().findViewById<View>(R.id.mainActivity).setBackgroundResource(R.drawable.gradient_bcgrd_day)
-    }
 }

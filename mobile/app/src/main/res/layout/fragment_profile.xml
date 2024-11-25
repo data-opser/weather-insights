@@ -24,6 +24,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
+        android:id="@+id/loginLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -55,7 +56,6 @@
                     android:layout_marginTop="15dp"
                     app:cardCornerRadius="15dp"
                     app:cardElevation="8dp"
-                    android:background="@drawable/rounded_all"
                     android:backgroundTint="?attr/profileBgInertColor">
 
                     <LinearLayout
@@ -72,6 +72,7 @@
                             android:layout_marginStart="5dp"
                             android:padding="4dp"
                             android:src="@drawable/ic_email"
+                            android:contentDescription="@string/error"
                             app:tint="?attr/profileIconInertColor"
                             app:layout_constraintStart_toStartOf="parent"/>
 
@@ -81,7 +82,7 @@
                             android:layout_width="match_parent"
                             android:autofillHints="addressCity"
                             android:background="@null"
-                            android:hint="@string/bottom_menu_title"
+                            android:hint="@string/profile_email"
                             android:inputType="textEmailAddress"
                             android:paddingHorizontal="4dp"
                             android:paddingVertical="10dp"
@@ -100,7 +101,6 @@
                     android:layout_marginHorizontal="15dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="15dp"
-                    android:background="@drawable/rounded_all"
                     android:backgroundTint="?attr/profileBgInertColor"
                     app:cardCornerRadius="15dp"
                     app:cardElevation="8dp">
@@ -119,6 +119,7 @@
                             android:layout_marginStart="5dp"
                             android:padding="4dp"
                             android:src="@drawable/ic_password"
+                            android:contentDescription="@string/error"
                             app:tint="?attr/profileIconInertColor" />
 
                         <EditText
@@ -127,7 +128,7 @@
                             android:layout_width="match_parent"
                             android:autofillHints="addressCity"
                             android:background="@null"
-                            android:hint="@string/bottom_menu_title"
+                            android:hint="@string/profile_password"
                             android:inputType="textPassword"
                             android:paddingHorizontal="4dp"
                             android:paddingVertical="10dp"
@@ -158,6 +159,7 @@
                 android:id="@+id/googleImageView"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:contentDescription="@string/error"
                 android:src="@drawable/ic_google"/>
 
             <TextView
@@ -179,8 +181,163 @@
             android:layout_marginTop="30dp"
             android:text="@string/profile_login"
             android:layout_gravity="center_horizontal"
-            android:textColor="?attr/loginButtonTextColor"
-            app:backgroundTint="?attr/loginButtonBgColor"
+            android:textColor="#F3F2F4"
+            app:backgroundTint="?attr/buttonBgColor"
             app:layout_constraintTop_toBottomOf="@+id/googleButton"/>
     </LinearLayout>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/profileCardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="?attr/profileDialogBgColor"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="8dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/profileConstraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/profileImageView"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/profile_photo"
+                android:adjustViewBounds="true"
+                app:layout_constraintWidth_percent="0.7"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearanceOverlay="@style/Rounded" />
+
+            <TextView
+                style="@style/Text"
+                android:id="@+id/profileTitleTextView"
+                android:text="@string/profile_title"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                android:layout_marginTop="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/profileImageView"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <TextView
+                style="@style/TextSmallGray"
+                android:id="@+id/locationTextView"
+                android:text="@string/profile_location"
+                android:layout_marginTop="10dp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/profileImageView"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                style="@style/Text"
+                android:id="@+id/nameTextView"
+                android:text="@string/profile_nameSurname"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/profileTitleTextView"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <View
+                style="@style/ListLineView"
+                android:layout_height="1dp"
+                app:layout_constraintTop_toBottomOf="@+id/nameTextView"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                style="@style/TextSmallGray"
+                android:id="@+id/nameDscrpTextView"
+                android:text="@string/profile_nameSurnameDscrp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintTop_toBottomOf="@+id/nameTextView"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                style="@style/Text"
+                android:id="@+id/emailTextView"
+                android:text="@string/profile_emailAddress"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/nameDscrpTextView"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <View
+                style="@style/ListLineView"
+                android:layout_height="1dp"
+                app:layout_constraintTop_toBottomOf="@+id/emailTextView"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                style="@style/TextSmallGray"
+                android:id="@+id/emailDscrpTextView"
+                android:text="@string/profile_emailDscrp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintTop_toBottomOf="@+id/emailTextView"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <RelativeLayout
+                android:id="@+id/birthRelativeLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/birth_background"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@+id/emailDscrpTextView"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <ImageView
+                    android:id="@+id/birthdayIcon"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_alignParentStart="true"
+                    android:contentDescription="@string/error"
+                    android:src="@drawable/ic_birth" />
+
+                <TextView
+                    style="@style/Text"
+                    android:id="@+id/birthDateText"
+                    android:layout_toEndOf="@id/birthdayIcon"
+                    android:text="@string/profile_birthDate"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    style="@style/Text"
+                    android:id="@+id/birthZodiac"
+                    android:layout_below="@id/birthDateText"
+                    android:layout_toEndOf="@id/birthdayIcon"
+                    android:text="@string/profile_birthSign"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+
+            <Button
+                style="@style/Text"
+                android:id="@+id/goEditButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:text="@string/profile_goEdit"
+                android:textColor="?attr/loginButtonTextColor"
+                app:backgroundTint="?attr/buttonBgColor"
+                app:layout_constraintTop_toBottomOf="@+id/birthRelativeLayout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 </FrameLayout>

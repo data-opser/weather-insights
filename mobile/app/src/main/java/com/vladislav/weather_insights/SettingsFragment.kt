@@ -19,7 +19,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import android.widget.CompoundButton
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -27,7 +26,6 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SwitchCompat
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -47,6 +45,8 @@ class SettingsFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+
+    private var isDialogShowing = false
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var switchNotify: SwitchCompat
     private lateinit var switchTheme: SwitchCompat
@@ -100,25 +100,14 @@ class SettingsFragment : Fragment() {
         }
 
 
-        switchTheme.setOnCheckedChangeListener(
-            object : CompoundButton.OnCheckedChangeListener {
-                override fun onCheckedChanged(buttonView: CompoundButton, isChecked: Boolean) {
-                    changeTheme(isChecked)
-                }
-            })
-
-        switchNotify.setOnCheckedChangeListener(
-            object : CompoundButton.OnCheckedChangeListener {
-                override fun onCheckedChanged(buttonView: CompoundButton, isChecked: Boolean) {
-                    changeNotify(isChecked)
-                }
-            })
+        switchTheme.setOnCheckedChangeListener { _, isChecked -> changeTheme(isChecked)}
+        switchNotify.setOnCheckedChangeListener { _, isChecked -> changeNotify(isChecked) }
         signLayout.setOnClickListener{
             showBottomDialog()
         }
     }
 
-    fun changeNotify(isChecked: Boolean){
+    private fun changeNotify(isChecked: Boolean){
         if (isChecked) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 if (ContextCompat.checkSelfPermission(
@@ -136,7 +125,7 @@ class SettingsFragment : Fragment() {
         }
         editor.apply()
     }
-    fun changeTheme(isChecked: Boolean) {
+    private fun changeTheme(isChecked: Boolean) {
         if (isChecked) {
             editor.putBoolean("isNight", true)
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
@@ -170,10 +159,16 @@ class SettingsFragment : Fragment() {
     }
 
     private fun showBottomDialog() {
+        if (isDialogShowing) {return}
+
+        isDialogShowing = true
+
         val dialog = BottomSheetDialog(requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.bottom_sign_layout)
+
         val bottomSheet = dialog.findViewById<FrameLayout>(com.google.android.material.R.id.design_bottom_sheet)
+
         if (bottomSheet != null) {
             val behavior = BottomSheetBehavior.from(bottomSheet)
             behavior.state = BottomSheetBehavior.STATE_EXPANDED
@@ -197,6 +192,10 @@ class SettingsFragment : Fragment() {
 
         signLayouts.forEach { (layout, signName) ->
             setSign(dialog, layout, signName)
+        }
+
+        dialog.setOnDismissListener {
+            isDialogShowing = false
         }
 
         dialog.show()

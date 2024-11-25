@@ -24,6 +24,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {
+    private var isDialogShowing = false
+
     private lateinit var fab: FloatingActionButton
     private lateinit var bottomNavigationView: BottomNavigationView
     private lateinit var sharedPreferences: SharedPreferences
@@ -109,6 +111,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showBottomDialog() {
+        if(isDialogShowing) {return}
+
+        isDialogShowing = true
+
         val dialog = BottomSheetDialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.bottom_nav_layout)
@@ -116,13 +122,18 @@ class MainActivity : AppCompatActivity() {
         val search = SearchDialog(this)
         search.changeActiveProcess(dialog)
 
+        dialog.setOnDismissListener{
+            isDialogShowing = false
+        }
+
         dialog.show()
         dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.window?.attributes?.windowAnimations = R.style.DialogAnimation
         dialog.window?.setGravity(Gravity.BOTTOM)
     }
-    fun setTheme(){
+
+    private fun setTheme(){
         val sharedPreferences = getSharedPreferences("MODE", Context.MODE_PRIVATE)
         if (sharedPreferences.getBoolean("isNight", false)) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
@@ -131,7 +142,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun getColorFromAttr(attr: Int): Int {
+    private fun getColorFromAttr(attr: Int): Int {
         val typedValue = TypedValue()
         theme.resolveAttribute(attr, typedValue, true)
         return typedValue.data
