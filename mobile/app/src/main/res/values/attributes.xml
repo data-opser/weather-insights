@@ -1,13 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <attr name="dialogLineColor" format="color"/>
     <attr name="fragmentBgStartColor" format="color"/>
     <attr name="fragmentBgMiddleColor" format="color"/>
     <attr name="fragmentBgMiddleColor2" format="color"/>
     <attr name="fragmentBgEndColor" format="color"/>
+    <attr name="horoscopeButtonColor" format="color"/>
+
     <attr name="switchThumbOnColor" format="color"/>
     <attr name="switchThumbOffColor" format="color"/>
     <attr name="switchTrackOnColor" format="color"/>
     <attr name="switchTrackOffColor" format="color"/>
-    <attr name="dialogBgColor" format="color"/>
+
     <attr name="navBarColor" format="color"/>
+    <attr name="navItemTextColor" format="color"/>
+    <attr name="navItemIconTintColor" format="color"/>
+    <attr name="navFloatingBgColor" format="color"/>
+    <attr name="navFloatingTintColor" format="color"/>
+
+    <attr name="searchIconActiveColor" format="color"/>
+    <attr name="searchTextActiveColor" format="color"/>
+    <attr name="searchBgActiveColor" format="color"/>
+    <attr name="searchIconInertColor" format="color"/>
+    <attr name="searchTextInertColor" format="color"/>
+    <attr name="searchTextHintColor" format="color"/>
+    <attr name="searchBgInertColor" format="color"/>
+
+    <attr name="dialogSettingsBgColor" format="color"/>
+    <attr name="dialogSignBgColor" format="color"/>
+    <attr name="dialogBgColor" format="color"/>
+    <attr name="dialogHeaderStartColor" format="color"/>
+    <attr name="dialogHeaderCenterColor" format="color"/>
+    <attr name="dialogHeaderEndColor" format="color"/>
+
+    <attr name="googleBgColor" format="color"/>
+    <attr name="googleTextColor" format="color"/>
+    <attr name="loginDialogBgColor" format="color"/>
+    <attr name="loginButtonBgColor" format="color"/>
+    <attr name="loginButtonTextColor" format="color"/>
+    <attr name="profileIconActiveColor" format="color"/>
+    <attr name="profileTextActiveColor" format="color"/>
+    <attr name="profileBgActiveColor" format="color"/>
+    <attr name="profileIconInertColor" format="color"/>
+    <attr name="profileTextInertColor" format="color"/>
+    <attr name="profileTextHintActiveColor" format="color"/>
+    <attr name="profileTextHintInertColor" format="color"/>
+    <attr name="profileBgInertColor" format="color"/>
 </resources>
