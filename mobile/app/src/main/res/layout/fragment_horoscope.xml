@@ -19,31 +19,28 @@
 
         <TextView
             style="@style/Text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="@string/horoscope_setSign_title"
             android:textStyle="bold"
             android:textSize="32sp"
+            android:textColor="@color/white"
             android:layout_gravity="center"
             android:paddingBottom="16dp"/>
 
         <TextView
             style="@style/Text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="@string/horoscope_setSign_descrp"
             android:textSize="22sp"
+            android:textColor="@color/white"
             android:layout_gravity="center"
             android:paddingBottom="44dp"/>
 
         <Button
+            style="@style/Text"
             android:id="@+id/goSettingsButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="@string/horoscope_setSign_button"
             android:textSize="22sp"
             android:layout_gravity="center"
-            android:backgroundTint="@color/primaryVariant"
+            android:backgroundTint="?attr/horoscopeButtonColor"
             android:textColor="@color/white" />
 
     </LinearLayout>
@@ -53,8 +50,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
-        android:scrollbars="none"
-        android:visibility="visible">
+        android:scrollbars="none">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

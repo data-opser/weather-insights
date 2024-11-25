@@ -1,5 +1,5 @@
-from app.services import auth_service, email_confirm_service
-from flask import Blueprint, request, jsonify
+from app.services import auth_service, google_auth_service, email_confirm_service
+from flask import Blueprint, request
 from flask_login import login_required
 
 auth_bp = Blueprint('auth', __name__)
@@ -19,12 +19,12 @@ def login():
 
 @auth_bp.route('/auth/google')
 def google_login():
-    return auth_service.initiate_google_login()
+    return google_auth_service.initiate_google_login()
 
 
 @auth_bp.route('/auth/google/callback')
 def google_callback():
-    return auth_service.handle_google_callback()
+    return google_auth_service.handle_google_callback()
 
 
 @auth_bp.route('/confirm_email/<token>', methods=['GET'])
