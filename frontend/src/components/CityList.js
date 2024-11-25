@@ -99,7 +99,9 @@ function CityList({ setCityId }) {
             onContextMenu={(e) => handleContextMenu(e, city.city_id)}
           >
             {city.city_name}
-            <Flag className='city-flag' code={city.iso2}/>
+            <div className="flag-container">
+              <Flag className='flag' code={city.iso2} />
+            </div>
           </button>
         ))
       ) : (
