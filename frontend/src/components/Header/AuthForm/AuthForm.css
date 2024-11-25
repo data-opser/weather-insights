@@ -26,8 +26,8 @@
   cursor: pointer;
   padding: 0;
   position: absolute;
-  left: 25px;
-  top: 25px;
+  left: 15px;
+  top: 23px;
 }
 
 .return-arrow {
@@ -75,6 +75,7 @@
   outline: none;
   width: 75%;
   font-size: x-large;
+  height: 50%;
 }
 
 .pass-input-field input {
@@ -113,7 +114,7 @@
 
 .link {
   text-align: center;
-  margin-bottom: 10%;
+  margin-bottom: 35px;
 }
 
 .link p, a {
@@ -144,6 +145,8 @@
 @media screen and (max-width: 1200px) {
   .form {
     grid-template-columns: 100%;
+    width: 100%;
+    margin: 0;
   }
   .left-column {
     display: none;
@@ -160,10 +163,22 @@
   .form .return-button {
     height: 35px;
   }
-}
+} 
 
 @media screen and (max-width: 700px) {
-  .form {
-    width: 80%;
+  .input-field input {
+    background: transparent;
+    border: none;
+    outline: none;
+    width: 75%;
+    font-size: 16px;
+  }
+  
+  .input-field input::placeholder {
+    font-size: 27px;
+  }
+
+  .pass-input-field input {
+    font-size: 22px;
   }
 }
