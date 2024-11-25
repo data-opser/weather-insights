@@ -4,7 +4,12 @@ from sqlalchemy.dialects.postgresql import UUID
 import uuid
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
+from cryptography.fernet import Fernet
 from app.utils import ErrorHandler
+import os
+
+
+cipher = Fernet(os.getenv('SECRET_KEY_Fernet'))
 
 
 class User(db.Model, UserMixin):
@@ -17,7 +22,7 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(256))
     google_id = db.Column(db.String(128), unique=True)
-    google_token = db.Column(db.Text)
+    google_refresh_token = db.Column(db.Text)
     created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
     email_confirmed = db.Column(db.Boolean, default=False)
 
@@ -38,6 +43,17 @@ class User(db.Model, UserMixin):
 
     def get_id(self):
         return self.user_id
+
+    def set_refresh_token(self, refresh_token):
+        self.google_refresh_token = cipher.encrypt(refresh_token.encode()).decode()
+
+    def get_refresh_token(self):
+        return cipher.decrypt(self.google_refresh_token.encode()).decode() if self.google_refresh_token else None
+
+    @staticmethod
+    def get_user_by_email(email):
+        user = User.query.filter_by(email=email).first()
+        return user
 
     @classmethod
     def register_user(cls, data):
@@ -64,37 +80,7 @@ class User(db.Model, UserMixin):
             db.session.rollback()
             return ErrorHandler.handle_error(e, message="Database error while user register", status_code=500)
 
-    @classmethod
-    def google_register_user(cls, data):
-        try:
-            name = data.get('name')
-            email = data.get('email')
-            birthday = data.get('birthday')
-            google_id = data.get('google_id')
-            google_token = data.get('google_token')
-
-            if not name or not email:
-                raise ValueError("Name and email are required for Google registration.")
-
-            user = cls(
-                name=name,
-                email=email,
-                birthday=birthday,
-                google_id=google_id,
-                google_token=google_token
-            )
-
-            db.session.add(user)
-            db.session.commit()
-            return user
-
-        except ValueError as ve:
-            return ErrorHandler.handle_validation_error(str(ve))
-        except Exception as e:
-            db.session.rollback()
-            return ErrorHandler.handle_error(e, message="Database error while google register", status_code=500)
-
-    def update_user(self, data):
+    def add_user_data(self, data):
         name = data.get('name')
         birthday = data.get('birthday')
         password = data.get('password')
@@ -112,12 +98,42 @@ class User(db.Model, UserMixin):
             db.session.rollback()
             return ErrorHandler.handle_error(e, message="Database error while user updating", status_code=500)
 
-    def add_google_data(self, google_id, google_token):
-        self.google_id = google_id
-        self.google_token = google_token
-
+    @classmethod
+    def google_register_user(cls, data):
         try:
+            name = data.get('name')
+            email = data.get('email')
+            birthday = data.get('birthday')
+            google_id = data.get('google_id')
+            refresh_token = data.get('refresh_token')
+
+            if not name or not email:
+                raise ValueError("Name and email are required for Google registration.")
+
+            user = cls(
+                name=name,
+                email=email,
+                birthday=birthday,
+                google_id=google_id
+            )
+            db.session.add(user)
             db.session.commit()
+
+            user.set_refresh_token(refresh_token)
+            return user
+
+        except ValueError as ve:
+            return ErrorHandler.handle_validation_error(str(ve))
+        except Exception as e:
+            db.session.rollback()
+            return ErrorHandler.handle_error(e, message="Database error while google register", status_code=500)
+
+    def add_google_data(self, google_id, refresh_token):
+        try:
+            self.google_id = google_id
+            db.session.commit()
+
+            self.set_refresh_token(refresh_token)
         except Exception as e:
             db.session.rollback()
             return ErrorHandler.handle_error(e, message="Database error while adding google data", status_code=500)
@@ -130,10 +146,46 @@ class User(db.Model, UserMixin):
             db.session.rollback()
             return ErrorHandler.handle_error(e, message="Database error while verifying email", status_code=500)
 
-    @staticmethod
-    def get_user_by_email(email):
-        user = User.query.filter_by(email=email).first()
-        return user
+    def drop_email_verification(self):
+        self.email_confirmed = False
+        try:
+            db.session.commit()
+        except Exception as e:
+            db.session.rollback()
+            return ErrorHandler.handle_error(e, message="Database error while dropping email verification",
+                                             status_code=500)
+
+    def update_profile(self, data):
+        name = data.get('name')
+        birthday = data.get('birthday')
+
+        if name:
+            self.name = name
+        if birthday:
+            self.birthday = birthday
+
+        try:
+            db.session.commit()
+        except Exception as e:
+            db.session.rollback()
+            return ErrorHandler.handle_error(e, message="Database error while user profile updating", status_code=500)
+
+    def update_password(self, data):
+        try:
+            old_password = data.get('old_password')
+            new_password = data.get('new_password')
+
+            if self.check_password(old_password):
+                if new_password:
+                    self.set_password(new_password)
+                else:
+                    raise ValueError("New password is required.")
+            else:
+                raise ValueError("Invalid old password.")
+
+        except Exception as e:
+            db.session.rollback()
+            return ErrorHandler.handle_error(e, message="Database error while user password updating", status_code=500)
 
     def get_profile_data(self):
         return {

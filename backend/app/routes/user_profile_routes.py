@@ -8,6 +8,26 @@ from app.utils import ErrorHandler
 user_profile_bp = Blueprint('user_profile', __name__)
 
 
+@user_profile_bp.route('/profile', methods=['GET'])
+@login_required
+def get_profile():
+    return profile_service.get_user_profile(current_user.user_id)
+
+
+@user_profile_bp.route('/update_profile', methods=['PUT'])
+@login_required
+def update_profile():
+    data = request.get_json()
+    return profile_service.update_user_profile(current_user.user_id, data)
+
+
+@user_profile_bp.route('/update_password', methods=['PUT'])
+@login_required
+def update_password():
+    data = request.get_json()
+    return profile_service.update_user_password(current_user.user_id, data)
+
+
 @user_profile_bp.route('/reset_password', methods=['POST'])
 def reset_password_request():
     try:
@@ -23,19 +43,6 @@ def reset_password_request():
 
     except ValueError as ve:
         return ErrorHandler.handle_validation_error(str(ve))
-
-
-@user_profile_bp.route('/profile', methods=['GET'])
-@login_required
-def get_profile():
-    return profile_service.get_user_profile(current_user.user_id)
-
-
-@user_profile_bp.route('/profile', methods=['PUT'])
-@login_required
-def update_profile():
-    data = request.get_json()
-    return profile_service.update_user_profile(current_user.user_id, data)
 
 
 @user_profile_bp.route('/user_cities', methods=['Get'])

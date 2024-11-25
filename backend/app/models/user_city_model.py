@@ -36,7 +36,8 @@ class UserCity(db.Model):
                     cities.append({
                             "city_id": uc.city_id,
                             "city_name": city.city,
-                            "is_main": uc.is_main
+                            "is_main": uc.is_main,
+                            "iso2": city.iso2
                         })
                 else:
                     return ErrorHandler.handle_error(
@@ -59,12 +60,15 @@ class UserCity(db.Model):
             city = City.check_city_exists(city_id)
             if city:
                 if cls.query.filter_by(user_id=user_id, city_id=city_id).first():
-                    raise ValueError("City already added to the user.")
+                    raise ValueError(f"City '{city[0]}' already added to the user list.")
 
-                new_user_city = cls(user_id=user_id, city_id=city_id)
+                # If user hasn't main city, set this as main
+                is_main = True if cls.query.filter_by(user_id=user_id).count() == 0 else False
+
+                new_user_city = cls(user_id=user_id, city_id=city_id, is_main=is_main)
                 db.session.add(new_user_city)
                 db.session.commit()
-                return jsonify({'message': 'City was added to user successfully.'}), 201
+                return jsonify({'message': f"City '{city[0]}' was added to user successfully."}), 201
             else:
                 return ErrorHandler.handle_error(
                     None,
@@ -84,11 +88,16 @@ class UserCity(db.Model):
             if city:
                 user_city = cls.query.filter_by(user_id=user_id, city_id=city_id).first()
                 if not user_city:
-                    raise ValueError("City not found for the user.")
+                    raise ValueError(f"City '{city[0]}' not found in user list.")
+
+                if user_city.is_main:
+                    raise ValueError(
+                        f"Cannot delete the main city '{city[0]}'."
+                        f" Please set another city as main before deleting.")
 
                 db.session.delete(user_city)
                 db.session.commit()
-                return jsonify({'message': 'City was deleted from user successfully.'}), 200
+                return jsonify({'message': f"City '{city[0]}' was deleted from user successfully."}), 200
             else:
                 return ErrorHandler.handle_error(
                     None,
@@ -108,12 +117,12 @@ class UserCity(db.Model):
             if city:
                 user_city = cls.query.filter_by(user_id=user_id, city_id=city_id).first()
                 if not user_city:
-                    raise ValueError("City not found for the user.")
+                    raise ValueError(f"City '{city[0]}' not found in user list.")
 
                 cls.query.filter_by(user_id=user_id).update({"is_main": False}, synchronize_session=False)
                 user_city.is_main = True
                 db.session.commit()
-                return jsonify({'message': 'City was set as main for user successfully.'}), 200
+                return jsonify({'message': f"City '{city[0]}' was set as main for user successfully."}), 200
             else:
                 return ErrorHandler.handle_error(
                     None,
