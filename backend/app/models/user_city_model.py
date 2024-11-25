@@ -5,6 +5,7 @@ from flask import jsonify
 from app.utils import ErrorHandler
 from app.models.city_model import City
 
+
 class UserCity(db.Model):
     __tablename__ = 'user_city'
     __table_args__ = {'schema': 'user_data'}

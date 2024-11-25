@@ -26,7 +26,7 @@ class User(db.Model, UserMixin):
     created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
     email_confirmed = db.Column(db.Boolean, default=False)
 
-    #Connection with UserCity
+    # Connection with UserCity
     cities = db.relationship(
         'UserCity',
         back_populates='user',

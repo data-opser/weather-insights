@@ -1,5 +1,5 @@
 from app.models import User
-from app import login_manager, db
+from app import login_manager
 from app.services.email_confirm_service import send_email_confirmation
 from app.utils import ErrorHandler
 from flask import jsonify

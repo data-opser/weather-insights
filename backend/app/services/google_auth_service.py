@@ -124,4 +124,3 @@ def get_fresh_google_access_token(user):
         return ErrorHandler.handle_validation_error(str(ve))
     except requests.exceptions.RequestException as e:
         return ErrorHandler.handle_error(e, message="Request failed while fetching google token", status_code=500)
-

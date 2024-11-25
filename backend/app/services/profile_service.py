@@ -27,6 +27,7 @@ def update_user_profile(user_id, data):
         return ErrorHandler.handle_error(e, message="Internal server error while updating the user profile.",
                                          status_code=500)
 
+
 def update_user_password(user_id, data):
     try:
         user = User.query.get(user_id)
