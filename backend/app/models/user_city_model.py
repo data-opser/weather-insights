@@ -40,6 +40,7 @@ class UserCity(db.Model):
                         "city_name": city_data.get('city'),
                         "is_main": uc.is_main,
                         "iso2": city_data.get('iso2'),
+                        "country": city_data.get('country'),
                     })
             return jsonify({'cities': cities}), 200
 
