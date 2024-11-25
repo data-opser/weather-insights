@@ -3,7 +3,7 @@ from flask import url_for, session
 from datetime import date, datetime, timedelta, timezone
 from app import oauth, db
 from app.utils import ErrorHandler
-from flask import jsonify
+from flask import jsonify, redirect, flash
 import flask_login
 import os
 import requests
@@ -16,9 +16,7 @@ google = oauth.register(
     authorize_url='https://accounts.google.com/o/oauth2/auth',
     jwks_uri='https://www.googleapis.com/oauth2/v3/certs',
     client_kwargs={
-        'scope': 'openid email profile https://www.googleapis.com/auth/user.birthday.read',
-        'access_type': 'offline',
-        'prompt': 'consent'
+        'scope': 'openid email profile https://www.googleapis.com/auth/user.birthday.read'
     }
 
 )
@@ -69,7 +67,8 @@ def handle_google_callback():
 
             flask_login.login_user(user)
 
-        return jsonify({'message': 'Logged in with Google successfully.'}), 200
+        flash('Logged in with Google successfully.', 'success')
+        return redirect(os.getenv('FRONTEND_LINK'))
 
     except PermissionError as pe:
         return ErrorHandler.handle_error(pe, message=str(pe), status_code=403)
