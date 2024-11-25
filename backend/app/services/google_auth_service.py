@@ -15,7 +15,12 @@ google = oauth.register(
     access_token_url='https://oauth2.googleapis.com/token',
     authorize_url='https://accounts.google.com/o/oauth2/auth',
     jwks_uri='https://www.googleapis.com/oauth2/v3/certs',
-    client_kwargs={'scope': 'openid email profile https://www.googleapis.com/auth/user.birthday.read'}
+    client_kwargs={
+        'scope': 'openid email profile https://www.googleapis.com/auth/user.birthday.read',
+        'access_type': 'offline',
+        'prompt': 'consent'
+    }
+
 )
 
 def initiate_google_login():
@@ -45,9 +50,9 @@ def handle_google_callback():
 
         if existing_user:
             if not existing_user.google_id:
-                existing_user.add_google_data(user_info['sub'], token['refresh_token'])
+                existing_user.add_google_data(user_info['sub'], token.get('refresh_token'))
                 existing_user.verify_email()
-            if not existing_user.birhtday:
+            if not existing_user.birthday:
                 existing_user.update_profile({"birthday": birthday})
 
             flask_login.login_user(existing_user)
@@ -57,7 +62,7 @@ def handle_google_callback():
                 'email': user_info['email'],
                 'birthday': birthday,
                 'google_id': user_info['sub'],
-                'refresh_token': token['refresh_token'],
+                'refresh_token': token.get('refresh_token'),
             }
             user = User.google_register_user(data)
             user.verify_email()

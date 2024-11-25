@@ -119,7 +119,8 @@ class User(db.Model, UserMixin):
             db.session.add(user)
             db.session.commit()
 
-            user.set_refresh_token(refresh_token)
+            if refresh_token:
+                user.set_refresh_token(refresh_token)
             return user
 
         except ValueError as ve:
@@ -133,7 +134,8 @@ class User(db.Model, UserMixin):
             self.google_id = google_id
             db.session.commit()
 
-            self.set_refresh_token(refresh_token)
+            if refresh_token:
+                self.set_refresh_token(refresh_token)
         except Exception as e:
             db.session.rollback()
             return ErrorHandler.handle_error(e, message="Database error while adding google data", status_code=500)
