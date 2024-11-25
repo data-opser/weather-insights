@@ -21,7 +21,7 @@ def register_user(data):
 
         if existing_user:
             if existing_user.google_id:
-                existing_user.drop_email_confirmation()
+                existing_user.drop_email_verification()
                 send_email_confirmation(existing_user)
                 existing_user.add_user_data(data)
                 return jsonify({'message': 'User data updated successfully.'}), 200
