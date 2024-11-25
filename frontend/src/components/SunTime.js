@@ -11,7 +11,7 @@ const SunTime = ({ cityId }) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchSunTime = async () => {  
+    const fetchSunTime = async () => {
       if (!cityId) return;
 
       setLoading(true);
@@ -47,11 +47,10 @@ const SunTime = ({ cityId }) => {
         Sunset
       </button>
 
-      <GoSun className='sun' />
+      <GoSun className={`sun ${loading ? 'spinning' : ''}`} />
 
       {loading && <div className='loading'>
         <h1>Loading...</h1>
-        <HiOutlineCog6Tooth className='cog' alt='loading cog' />
       </div>
       }
       {error && <h1 style={{ color: 'red' }}>{error}</h1>}

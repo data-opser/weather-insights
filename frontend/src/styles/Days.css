@@ -57,22 +57,14 @@
         grid-row: 2;
         grid-column: 1/3;
         min-height: 250px;
+        min-width: auto;
     }
 
     .days h1 {
-        font-size: 29px;
+        font-size: 23px;
     }
 
     .day-table {
         flex-direction: column;
-    }
-
-    .day-table .day {
-        flex-direction: row;
-        justify-content: space-between;
-        padding: 0 20px;
-        margin: 0;
-        margin-bottom: 10px;
-        width: calc(100% - 40px);
     }
 }

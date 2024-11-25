@@ -38,20 +38,24 @@
 
 @media only screen and (max-width: 1000px) {
     .cities .city-list button {
-        min-width: 100px;
+        min-width: 10px;
+        width: 30px;
     }
 
 }
 
 @media only screen and (max-width: 900px) {
     .main-page {
-        grid-template-rows: 80px auto 1fr;
-        grid-template-columns: 50% 50%;
+        grid-template-rows: 80px auto auto 1fr;
     }
 
     .sun-time {
         grid-row: 3;
-        grid-column: 1;
+    }
+
+    .map {
+        grid-row: 4;
+        height: 100%;
     }
 
     .cities .add-city-button {
