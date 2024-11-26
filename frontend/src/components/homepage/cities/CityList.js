@@ -3,16 +3,14 @@ import './CityList.css';
 import api from '../../axiosConfig';
 import Flag from 'react-world-flags';
 
-function CityList({ setCityId }) {
-  const [activeButton, setActiveButton] = useState(null);
-  const [cities, setCities] = useState([]);
+function CityList({ cityList, selectCity, setMainCity, removeCity, activeButton, setActiveButton, setCityList }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [contextMenu, setContextMenu] = useState({ isVisible: false, x: 0, y: 0, cityId: null });
 
   const handleButtonClick = (index, cityId) => {
     setActiveButton(index);
-    setCityId(cityId);
+    selectCity(cityId);
   };
 
   const handleContextMenu = (e, cityId) => {
@@ -27,8 +25,8 @@ function CityList({ setCityId }) {
   const handleDeleteCity = async (cityId) => {
     try {
       const response = await api.post(`delete_user_city/city?city=${cityId}`);
-      console.log(response.data.message);
-      setCities((prevCities) => prevCities.filter((city) => city.city_id !== cityId));
+      console.log(response.data);
+      removeCity(cityId);
       closeContextMenu();
     } catch (error) {
       console.error('Error deleting city:', error);
@@ -38,14 +36,8 @@ function CityList({ setCityId }) {
   const handleSetMainCity = async (cityId) => {
     try {
       const response = await api.put(`/set_main_user_city/city?city=${cityId}`);
-      console.log(response.data.message);
-      setCities((prevCities) =>
-        prevCities.map((city) =>
-          city.city_id === cityId ? { ...city, is_main: true } : { ...city, is_main: false }
-        )
-      );
-      setActiveButton(cities.findIndex((city) => city.city_id === cityId));
-      setCityId(cityId);
+      console.log(response.data);
+      setMainCity(cityId);
       closeContextMenu();
     } catch (error) {
       console.error('Error setting main city:', error);
@@ -60,12 +52,12 @@ function CityList({ setCityId }) {
       try {
         const response = await api.get('/user_cities');
         if (response.data && response.data.cities) {
-          setCities(response.data.cities);
+          setCityList(response.data.cities);
           const mainCity = response.data.cities.find((city) => city.is_main);
           if (mainCity) {
             const mainCityIndex = response.data.cities.findIndex((city) => city.city_id === mainCity.city_id);
             setActiveButton(mainCityIndex);
-            setCityId(mainCity.city_id);
+            selectCity(mainCity.id);
           }
         }
       } catch (error) {
@@ -82,7 +74,7 @@ function CityList({ setCityId }) {
     return () => {
       document.removeEventListener('click', closeContextMenu);
     };
-  }, [setCityId]);
+  }, [setCityList]);
 
   return (
     <div className="city-list">
@@ -96,22 +88,22 @@ function CityList({ setCityId }) {
           <p style={{ color: 'red' }}>{error}</p>
         </div>
       )}
-      {!loading && !error && cities.length > 0 && (
-        cities.map((city, index) => (
+      {!loading && !error && cityList.length > 0 && (
+        cityList.map((city, index) => (
           <button
-            key={city.city_id}
+            key={city.id}
             className={activeButton === index ? 'blue' : ''}
-            onClick={() => handleButtonClick(index, city.city_id)}
-            onContextMenu={(e) => handleContextMenu(e, city.city_id)}
+            onClick={() => handleButtonClick(index, city.id)}
+            onContextMenu={(e) => handleContextMenu(e, city.id)}
           >
-            {city.city_name}
+            {city.city}
             <div className="flag-container">
               <Flag className="flag" code={city.iso2} />
             </div>
           </button>
         ))
       )}
-      {!loading && !error && cities.length === 0 && (
+      {!loading && !error && cityList.length === 0 && (
         <div className="no-cities">
           <h1>No cities found</h1>
         </div>
@@ -122,7 +114,7 @@ function CityList({ setCityId }) {
           className="context-menu"
           style={{ top: `${contextMenu.y}px`, left: `${contextMenu.x}px` }}
         >
-          {!cities.find(city => city.city_id === contextMenu.cityId)?.is_main && (
+          {!cityList.find(city => city.id === contextMenu.cityId)?.is_main && (
             <button onClick={() => handleSetMainCity(contextMenu.cityId)}>Set as main</button>
           )}
           <button onClick={() => handleDeleteCity(contextMenu.cityId)}>Delete</button>
