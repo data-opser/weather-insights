@@ -14,7 +14,13 @@ def register():
 @auth_bp.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
-    return auth_service.login_user(data)
+    return auth_service.session_login_user(data)
+
+
+@auth_bp.route('/token_login', methods=['POST'])
+def token_login():
+    data = request.get_json()
+    return auth_service.token_login_user(data)
 
 
 @auth_bp.route('/auth/google')
