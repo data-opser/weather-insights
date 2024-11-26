@@ -10,6 +10,9 @@
 }
 
 .hour-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     background-color: rgb(155, 215, 252);
     margin-left: -20px;
     margin-right: -20px;
@@ -20,19 +23,35 @@
 .hour-time {
     font-weight: bold;
     font-size: 18px;
+    margin-top: 0;
+    margin-bottom: 10px;
 }
 
-.hour-temp,
+
 .hour-feels,
 .hour-pressure,
 .hour-humidity,
 .hour-wind,
 .hour-precipitation {
-    margin: 7px 0;
+    margin: 10px 0;
+    font-size: 18px;
+}
+
+.hour-temp{
+    margin: 10px 0 0 0;
     font-size: 18px;
 }
 
 .hour-icon {
-    font-size: 24px;
-    margin: 5px 0;
+    font-size: 32px;
+    margin: 10px 0;
+}
+
+.hour-icon-container {
+    display: flex;
+    justify-content: center;
+}
+
+.hour-table-main-text-item {
+    margin: 0;
 }
