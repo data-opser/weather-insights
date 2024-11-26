@@ -12,7 +12,6 @@ def auth_required(f):
         token = request.headers.get('Authorization')
         if token:
             try:
-                print(token)
                 # Remove "Bearer" prefix if present
                 if token.startswith("Bearer "):
                     token = token.split(" ")[1]
@@ -41,4 +40,3 @@ def auth_required(f):
         return ErrorHandler.handle_error(None, message="Authentication required", status_code=401)
 
     return decorated
-

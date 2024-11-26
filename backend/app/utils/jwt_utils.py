@@ -2,6 +2,7 @@ import jwt
 from flask import current_app
 from datetime import datetime, timedelta, timezone
 
+
 class JwtUtils:
 
     @staticmethod

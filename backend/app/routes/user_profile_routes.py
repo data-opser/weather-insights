@@ -3,7 +3,7 @@ from app.models import User, UserCity
 from app.services.password_reset_service import send_password_reset_email
 from app.services import profile_service
 from app.utils import ErrorHandler
-from app.services.auth_decorator import auth_required
+from app.utils.auth_decorator import auth_required
 
 user_profile_bp = Blueprint('user_profile', __name__)
 
@@ -12,8 +12,6 @@ user_profile_bp = Blueprint('user_profile', __name__)
 @auth_required
 def get_profile():
     user = request.current_user
-    if not user:
-        return ErrorHandler.handle_error(None, message="Unauthentificated", status_code = 401)
     return profile_service.get_user_profile(user.user_id)
 
 
