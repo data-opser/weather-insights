@@ -29,14 +29,14 @@ function Day({ date, weather, tempMin, tempMax, humidity, wind, cityId }) {
   return (
     <Link to={`/day/${date}/${cityId}`} className="day-link">
       <div className={`day ${weather.toLowerCase()}`}>
-        <p>{formatDate(date)}</p>
+        <p className="date">{formatDate(date)}</p>
         {getWeatherIcon()}
-        <p>{formatTemperature(tempMin)}° / {formatTemperature(tempMax)}°</p>
-        <div className="rain">
+        <p className="temp">{formatTemperature(tempMin)}° / {formatTemperature(tempMax)}°</p>
+        <div className="humidity">
           <WiRaindrop className="raindrop" />
           <p>{humidity !== undefined ? `${Math.round(humidity)}%` : "N/A"}</p>
         </div>
-        <p>{wind !== undefined ? `${Math.round(wind)} m/s` : "N/A"}</p>
+        <div className="wind-block"><p className="wind-p">{wind !== undefined ? `${Math.round(wind)}` : "N/A"}</p><p className="wind-speed"> m/s</p></div>
       </div>
     </Link>
   );
