@@ -36,13 +36,16 @@ class UserCity(db.Model):
                                                      status_code=404)
                 city_data = City.get_city_data_by_id(uc.city_id)
                 cities.append({
-                        "city_id": uc.city_id,
-                        "city_name": city_data.get('city'),
-                        "is_main": uc.is_main,
-                        "iso2": city_data.get('iso2'),
-                        "country": city_data.get('country'),
-                    })
-            return jsonify({'cities': cities}), 200
+                    "id": uc.city_id,
+                    "city": city_data.get('city'),
+                    "is_main": uc.is_main,
+                    "iso2": city_data.get('iso2'),
+                    "country": city_data.get('country'),
+                })
+
+            sorted_cities = sorted(cities, key=lambda city: not city["is_main"])
+
+            return jsonify({'cities': sorted_cities}), 200
 
         except Exception as e:
             return ErrorHandler.handle_error(
