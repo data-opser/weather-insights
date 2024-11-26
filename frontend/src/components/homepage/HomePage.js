@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import './HomePage.css';
-import CityList from '../CityList';
-import AddCityButton from '../AddCityButton';
-import Days from '../Days';
+import CityList from './cities/CityList';
+import AddCityButton from './cities/AddCityButton';
+import Days from './days/Days';
 import SunTime from './sun-time/SunTime';
 
 const HomePage = () => {

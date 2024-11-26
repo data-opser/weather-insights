@@ -2,7 +2,7 @@ import React, { useEffect, useState, forwardRef, useImperativeHandle } from 'rea
 import { IoArrowBack } from "react-icons/io5";
 import { MdOutlinePlace } from "react-icons/md";
 import { AiOutlineDown, AiOutlineUp } from "react-icons/ai";
-import '../styles/SelectCityForm.css';
+import './SelectCityForm.css';
 import api from '../../axiosConfig';
 import Flag from 'react-world-flags';
 

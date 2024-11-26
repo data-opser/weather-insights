@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { GoSun } from "react-icons/go";
 import { BsSnow, BsCloudRainHeavy, BsCloudsFill } from "react-icons/bs";
 import { WiRaindrop } from "react-icons/wi";
-import "../styles/Day.css";
+import "./Day.css";
 
 function Day({ date, weather, tempMin, tempMax, humidity, wind, cityId }) {
   const getWeatherIcon = () => {

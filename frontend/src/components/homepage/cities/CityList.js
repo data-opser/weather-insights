@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import '../styles/CityList.css';
-import api from './axiosConfig';
+import './CityList.css';
+import api from '../../axiosConfig';
 import Flag from 'react-world-flags';
 
 function CityList({ setCityId }) {
