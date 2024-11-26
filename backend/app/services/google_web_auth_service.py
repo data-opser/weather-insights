@@ -1,12 +1,9 @@
 from app.models import User
-from flask import url_for, session
-from datetime import date, datetime, timedelta, timezone
 from app import oauth, db
-from app.utils import ErrorHandler
-from flask import jsonify, redirect, flash
+from app.utils import ErrorHandler, GoogleUtils
+from flask import jsonify, redirect, flash, url_for, session
 import flask_login
 import os
-import requests
 
 google = oauth.register(
     name='google',
@@ -43,7 +40,7 @@ def handle_google_callback():
         if not user_info:
             raise PermissionError('Failed to fetch user info.')
 
-        birthday = fetch_google_birthday(token.get('access_token'))
+        birthday = GoogleUtils.fetch_google_birthday(token.get('access_token'))
         existing_user = User.get_user_by_email(user_info['email'])
 
         if existing_user:
@@ -74,57 +71,3 @@ def handle_google_callback():
         return ErrorHandler.handle_error(pe, message=str(pe), status_code=403)
     except Exception as e:
         return ErrorHandler.handle_error(e, message="Internal server error during Google login", status_code=500)
-
-
-def fetch_google_birthday(access_token):
-    headers = {'Authorization': f'Bearer {access_token}'}
-
-    try:
-        response = requests.get('https://people.googleapis.com/v1/people/me?personFields=birthdays',
-                                headers=headers)
-        response.raise_for_status()
-
-        birthday_info = response.json().get('birthdays', [{}])[0].get('date', {})
-
-        return date(
-            birthday_info.get('year', 1900),
-            birthday_info.get('month', 1),
-            birthday_info.get('day', 1)
-        )
-
-    except requests.exceptions.RequestException as e:
-        return ErrorHandler.handle_error(e, message="Request failed while fetching birthday",
-                                         status_code=500)
-
-
-def get_fresh_google_access_token(user):
-
-    if not user.google_refresh_token:
-        raise ValueError("Refresh token not available for the user.")
-
-    refresh_token = user.get_refresh_token()
-
-    try:
-        data = {
-            "client_id": google.client_id,
-            "client_secret": google.client_secret,
-            "refresh_token": refresh_token,
-            "grant_type": "refresh_token"
-        }
-
-        response = requests.post(google.access_token_url, data=data)
-        response.raise_for_status()
-
-        token_data = response.json()
-        access_token = token_data.get('access_token')
-
-        if not access_token:
-            return ErrorHandler.handle_error(None, message="Failed to obtain a new access token.",
-                                             status_code=500)
-
-        return access_token
-
-    except ValueError as ve:
-        return ErrorHandler.handle_validation_error(str(ve))
-    except requests.exceptions.RequestException as e:
-        return ErrorHandler.handle_error(e, message="Request failed while fetching google token", status_code=500)
