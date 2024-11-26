@@ -22,6 +22,7 @@ const Days = ({ cityId }) => {
         setWeatherData(filteredData);
       } catch (error) {
         setError('Failed to fetch weather data');
+        console.log(error.message);
       } finally {
         setLoading(false);
       }

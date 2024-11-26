@@ -24,6 +24,7 @@ const SingleDayPage = () => {
         setHourlyData(response.data);
       } catch (error) {
         setError("Failed to fetch hourly data.");
+        console.log(error.message);
       } finally {
         setLoading(false);
       }

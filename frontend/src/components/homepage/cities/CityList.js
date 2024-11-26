@@ -68,8 +68,9 @@ function CityList({ setCityId }) {
             setCityId(mainCity.city_id);
           }
         }
-      } catch (err) {
+      } catch (error) {
         setError('Failed to load cities');
+        console.log(error.message);
       } finally {
         setLoading(false);
       }

@@ -21,6 +21,7 @@ const SunTime = ({ cityId }) => {
         setData(response.data);
       } catch (error) {
         setError('Failed to fetch sun time');
+        console.log(error.message);
       } finally {
         setLoading(false);
       }
