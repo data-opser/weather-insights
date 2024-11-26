@@ -1,4 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import { Link } from "react-router-dom";
 import './Header.css';
 import logo from './logo.png';
 import { CiLogin } from "react-icons/ci";
@@ -51,10 +52,10 @@ function Header() {
 
   return (
     <div className="header">
-      <div className='block-with-logo'>
+      <Link to={'/'} className='block-with-logo'>
         <img className="logo" src={logo} alt="company-logo"></img>
         <p>Weather Insights</p>
-      </div>
+      </Link>
       {isLoggedIn ? (
         <button
           className="login-button"
