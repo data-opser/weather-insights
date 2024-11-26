@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import '../styles/SunTime.css';
 import { GoSun } from "react-icons/go";
 import api from './axiosConfig';
-import { HiOutlineCog6Tooth } from "react-icons/hi2";
 
 const SunTime = ({ cityId }) => {
   const [activeButton, setActiveButton] = useState('sunrise');

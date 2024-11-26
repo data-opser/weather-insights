@@ -23,6 +23,8 @@ export const useValidation = (value, validations) => {
           const regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
           regex.test(String(value).toLowerCase()) ? setEmailError(false) : setEmailError(true);
           break;
+        default:
+          break;
       }
     }
   }, [value]);

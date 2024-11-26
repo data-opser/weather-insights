@@ -198,7 +198,7 @@ const AuthForm = forwardRef(({ type, setActive, setFormType, onLoginSuccess }, r
 
           <div className='link'>
             <p>{config.linkParagraph}</p>
-            <a href='#' onClick={handleLinkClick}>{config.linkText}</a>
+            <button type='button' onClick={handleLinkClick}>{config.linkText}</button>
           </div>
         </form>
       </div>
