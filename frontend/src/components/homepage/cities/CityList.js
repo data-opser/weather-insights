@@ -3,13 +3,12 @@ import './CityList.css';
 import api from '../../axiosConfig';
 import Flag from 'react-world-flags';
 
-function CityList({ cityList, selectCity, setMainCity, removeCity, activeButton, setActiveButton, setCityList }) {
+function CityList({ cityList, selectCity, setMainCity, removeCity, setCityList, currentCityId }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [contextMenu, setContextMenu] = useState({ isVisible: false, x: 0, y: 0, cityId: null });
 
-  const handleButtonClick = (index, cityId) => {
-    setActiveButton(index);
+  const handleButtonClick = (cityId) => {
     selectCity(cityId);
   };
 
@@ -55,8 +54,6 @@ function CityList({ cityList, selectCity, setMainCity, removeCity, activeButton,
           setCityList(response.data.cities);
           const mainCity = response.data.cities.find((city) => city.is_main);
           if (mainCity) {
-            const mainCityIndex = response.data.cities.findIndex((city) => city.city_id === mainCity.city_id);
-            setActiveButton(mainCityIndex);
             selectCity(mainCity.id);
           }
         }
@@ -89,11 +86,11 @@ function CityList({ cityList, selectCity, setMainCity, removeCity, activeButton,
         </div>
       )}
       {!loading && !error && cityList.length > 0 && (
-        cityList.map((city, index) => (
+        cityList.map((city) => (
           <button
             key={city.id}
-            className={activeButton === index ? 'blue' : ''}
-            onClick={() => handleButtonClick(index, city.id)}
+            className={currentCityId === city.id ? 'blue' : ''}
+            onClick={() => handleButtonClick(city.id)}
             onContextMenu={(e) => handleContextMenu(e, city.id)}
           >
             {city.city}

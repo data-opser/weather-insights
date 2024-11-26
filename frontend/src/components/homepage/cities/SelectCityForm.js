@@ -67,9 +67,9 @@ const SelectCityForm = forwardRef(({ onClose, addCity, setMainCity }, ref) => {
       addCity(city);
       if (isMain) {
         await api.put(`/set_main_user_city/city?city=${city.id}`);
-        // setMainCity(city.id);        
+        setMainCity(city.id);
       }
-      console.log(response.data);
+      console.log(response.data.message);
 
       setMessage(`${searchValue} ${isMain ? 'set as main and ' : ''}added successfully!`);
       setMessageType('success');

@@ -6,9 +6,6 @@ import Days from './days/Days';
 import SunTime from './sun-time/SunTime';
 
 const HomePage = () => {
-  const [cityId, setCityId] = useState(null); // former version
-
-  // new version
   const [cityList, setCityList] = useState([]);
   const [currentCityId, setCurrentCityId] = useState(null);
   const [activeButton, setActiveButton] = useState(null);
@@ -23,19 +20,18 @@ const HomePage = () => {
 
   const setMainCity = (cityId) => {
     setCityList((prevCities) =>
-      prevCities.map((city) =>
-        city.city_id === cityId ? { ...city, is_main: true } : { ...city, is_main: false }
-      )
+      prevCities
+        .map((city) =>
+          city.id === cityId ? { ...city, is_main: true } : { ...city, is_main: false }
+        )
+        .sort((a, b) => (b.is_main ? 1 : 0) - (a.is_main ? 1 : 0))
     );
-    setActiveButton(cityList.findIndex((city) => city.city_id === cityId));
     selectCity(cityId);
-  }
+  };
 
   const removeCity = (cityId) => {
     setCityList((prevList) => prevList.filter((city) => city.id !== cityId));
   };
-
-  // end new version
 
   return (
     <div className="home-page">
@@ -49,6 +45,7 @@ const HomePage = () => {
           activeButton={activeButton}
           setActiveButton={setActiveButton}
           setCityList={setCityList}
+          currentCityId={currentCityId}
         />
       </div>
       <Days cityId={currentCityId} />
