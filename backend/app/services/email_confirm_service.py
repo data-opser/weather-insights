@@ -3,9 +3,8 @@ from app import mail
 from app.config import Config
 from itsdangerous import URLSafeTimedSerializer
 from flask_mail import Message
-from flask import url_for, render_template_string, jsonify, redirect, flash
+from flask import url_for, render_template_string, jsonify
 from app.utils import ErrorHandler
-import os
 
 s = URLSafeTimedSerializer(Config.SECRET_KEY)
 
@@ -15,7 +14,7 @@ def send_email_confirmation(user):
         token = s.dumps(user.email, salt='email-confirm-salt')
         confirmation_url = url_for('auth.confirm_email', token=token, _external=True)
 
-        with open("app/emails_templates/email_confirmation.html", "r") as html_file:
+        with open("app/templates/email_confirmation.html", "r") as html_file:
             html_template = html_file.read()
 
         html_body = render_template_string(
@@ -48,11 +47,34 @@ def verify_email_token(token):
             raise PermissionError('The token is invalid or expired.')
 
         user.verify_email()
-        flash('Logged in with Google successfully.', 'success')
-        return redirect(os.getenv('FRONTEND_LINK'))
+
+        with open("app/templates/email_confirmation_success.html", "r") as html_file:
+            success_html_template = html_file.read()
+
+        success_html_body = render_template_string(
+            success_html_template,
+            user=user
+        )
+
+        return success_html_body
 
     except PermissionError as pe:
-        return ErrorHandler.handle_error(pe, message=str(pe), status_code=403)
+        with open("app/templates/email_confirmation_error.html", "r") as html_file:
+            error_html_template = html_file.read()
+
+        error_html_body = render_template_string(
+            error_html_template,
+            error_message=str(pe)
+        )
+
+        return error_html_body
+
     except Exception as e:
-        return ErrorHandler.handle_error(e, message="Internal server error while email confirmation",
-                                         status_code=500)
+        with open("app/templates/email_confirmation_error.html", "r") as html_file:
+            error_html_template = html_file.read()
+
+        error_html_body = render_template_string(
+            error_html_template,
+            error_message="Internal server error during email confirmation."
+        )
+        return error_html_body
