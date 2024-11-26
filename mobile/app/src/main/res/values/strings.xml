@@ -1,10 +1,9 @@
 <resources>
     <string name="app_name">Weather insights</string>
     <string name="weather_page">Weather</string>
-    <string name="premium_page">Premium</string>
+    <string name="profile_page">Profile</string>
     <string name="horoscope_page">Horoscope</string>
     <string name="settings_page">Settings</string>
-    <string name="settings_page_title">App Settings</string>
     <string name="error">error :(</string>
     <string name="bottom_menu_title">Add weather</string>
     <string name="horoscope_setSign_title">Your Zodiac Sign</string>
@@ -43,5 +42,6 @@
     <string name="sign_aquarius">Aquarius</string>
     <string name="sign_pisces">Pisces</string>
 
-
+    <string name="profile_login">Login</string>
+    <string name="profile_google">Sign up with Google</string>
 </resources>

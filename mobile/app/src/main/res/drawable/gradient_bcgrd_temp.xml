@@ -5,9 +5,9 @@
             <gradient
                 android:angle="270"
                 android:dither="true"
-                android:startColor="#4b265c"
-                android:centerColor="#485bc4"
-                android:endColor="#808FE0"/>
+                android:startColor="#A28BE7"
+                android:centerColor="#7676E9"
+                android:endColor="#836CC7"/>
         </shape>
     </item>
 </layer-list>

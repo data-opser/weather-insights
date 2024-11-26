@@ -8,18 +8,25 @@
     <color name="onSecondary">#3762CA</color>
     <color name="white">#FFFFFFFF</color>
     <color name="black">#FF000000</color>
+    <color name="red">#FF0000</color>
 
+    <color name="dialogLine_day">#ffffff</color>
+    <color name="dialogLine_night">#FFD4E5F4</color>
     <color name="selected_item_day">#E1EEF8</color>
     <color name="text_day">#FF000000</color>
     <color name="text_night">#FFD4E5F4</color>
-    <color name="text_gray_day">#9E9E9E</color>
+    <color name="text_gray_day">#7C7A7A</color>
     <color name="text_gray_night">#9E9E9E</color>
-    <color name="nav_button_day">#E1EEF8</color>
-    <color name="dialog_bg_day">#FFFFFF</color>
-    <color name="dialog_bg_night">#13222F</color>
-    <color name="dialog_stroke">#2c2c2c</color>
     <color name="navBar_day">#BDC7F4</color>
     <color name="navBar_night">#152431</color>
+    <color name="horoscopeButton_day">#A58BED</color>
+    <color name="horoscopeButton_night">#1B7DB1</color>
+
+    <color name="itemText_day">#152431</color>
+    <color name="itemText_night">#152431</color>
+    <color name="itemIconTint_day">#152431</color>
+    <color name="itemIconTint_night">#152431</color>
+
     <color name="switch_track_on_day">#157216</color>
     <color name="switch_track_off_day">#6F7FC7</color>
     <color name="switch_track_on_night">#157216</color>
@@ -47,12 +54,71 @@
     <color name="fragment_bg_end_night">#0D1921</color>
     <!-- background gradient  -->
 
+    <color name="settingsDialog_day">#B3BEF4</color>
+    <color name="settingsDialog_night">#152431</color>
+
     <color name="button_bgTint_night">#FF374955</color>
     <color name="panel_light">#FF836D68</color>
     <color name="panel_night">#FF2C3B45</color>
-    <color name="button_system_night">#FFD4E5F4</color>
+    <color name="navFloatingBg_day">#E1EEF8</color>
+    <color name="navFloatingBg_night">#2E4E66</color>
+    <color name="navFloatingTint_day">#1D93D1</color>
+    <color name="navFloatingTint_night">#FFD4E5F4</color>
 
+    <color name="searchIconInert_day">#ffffff</color>
+    <color name="searchIconInert_night">#FFD4E5F4</color>
+    <color name="searchIconActive_day">#737272</color>
+    <color name="searchIconActive_night">#94B1CA</color>
+    <color name="searchBgInert_day">#A18EE2</color>
+    <color name="searchBgInert_night">#1E3347</color>
+    <color name="searchBgActive_day">#ffffff</color>
+    <color name="searchBgActive_night">#22425F</color>
+    <color name="searchTextInert_day">#DBD7D7</color>
+    <color name="searchTextInert_night">#637789</color>
+    <color name="searchTextActive_day">#737272</color>
+    <color name="searchTextActive_night">#637789</color>
+    <color name="searchTextHint_day">#DBD7D7</color>
+    <color name="searchTextHint_night">#637789</color>
+
+    <color name="dialog_stroke">#2c2c2c</color>
+    <color name="dialogSignBgColor_day">#FFFFFF</color>
+    <color name="dialogSignBgColor_night">#1B3042</color>
+    <color name="dialogHeaderStart_day">#8378E6</color>
+    <color name="dialogHeaderStart_night">#172938</color>
+    <color name="dialogHeaderCenter_day">#8B6EE0</color>
+    <color name="dialogHeaderCenter_night">#172938</color>
+    <color name="dialogHeaderEnd_day">#8E73E4</color>
+    <color name="dialogHeaderEnd_night">#172938</color>
+    <color name="dialogBg_day">#ffffff</color>
+    <color name="dialogBg_night">#21394B</color>
     <!-- values-night/colors.xml -->
     <color name="dark_base_color">#4E342E</color>
 
+    <color name="loginDialog_day">#ffffff</color>
+    <color name="loginDialog_night">#121F2A</color>
+    <color name="loginButtonBg_day">#B195FF</color>
+    <color name="loginButtonBg_night">#274966</color>
+    <color name="loginButtonText_day">#FFFFFF</color>
+    <color name="loginButtonText_night">#FFD4E5F4</color>
+    <color name="googleBg_day">#FFFFFF</color>
+    <color name="googleBg_night">#274966</color>
+    <color name="googleText_day">#908F8F</color>
+    <color name="googleText_night">#FFD4E5F4</color>
+
+    <color name="profileIconInert_day">#ffffff</color>
+    <color name="profileIconInert_night">#FFD4E5F4</color>
+    <color name="profileIconActive_day">#908F8F</color>
+    <color name="profileIconActive_night">#8099AF</color>
+    <color name="profileBgInert_day">#A18EE2</color>
+    <color name="profileBgInert_night">#1E3347</color>
+    <color name="profileBgActive_day">#CDC0FB</color>
+    <color name="profileBgActive_night">#294F73</color>
+    <color name="profileTextInert_day">#4A3A84</color>
+    <color name="profileTextInert_night">#ffffff</color>
+    <color name="profileTextActive_day">#4A3A84</color>
+    <color name="profileTextActive_night">#ffffff</color>
+    <color name="profileTextHintInert_day">#C8C5C5</color>
+    <color name="profileTextHintInert_night">#637789</color>
+    <color name="profileTextHintActive_day">#9D9A9D</color>
+    <color name="profileTextHintActive_night">#90A9B8</color>
 </resources>

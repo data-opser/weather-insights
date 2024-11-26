@@ -8,26 +8,61 @@
         <item name="colorSecondary">@color/secondary</item>
         <item name="colorSecondaryVariant">@color/secondaryVariant</item>
         <item name="colorOnSecondary">@color/onSecondary</item>
-
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
+
+        <item name="dialogLineColor">@color/dialogLine_day</item>
 
         <item name="switchThumbOnColor">@color/switch_thumb_on_day</item>
         <item name="switchThumbOffColor">@color/switch_thumb_off_day</item>
         <item name="switchTrackOnColor">@color/switch_track_on_day</item>
         <item name="switchTrackOffColor">@color/switch_track_off_day</item>
 
-        <item name="dialogBgColor">@color/dialog_bg_day</item>
+        <item name="navItemIconTintColor">@color/text_day</item>
+        <item name="navItemTextColor">@color/text_day</item>
+        <item name="dialogSettingsBgColor">@color/settingsDialog_day</item>
+
+        <item name="horoscopeButtonColor">@color/horoscopeButton_day</item>
+
+        <item name="searchBgActiveColor">@color/searchBgActive_day</item>
+        <item name="searchBgInertColor">@color/searchBgInert_day</item>
+        <item name="searchIconInertColor">@color/searchIconInert_day</item>
+        <item name="searchIconActiveColor">@color/searchIconActive_day</item>
+        <item name="searchTextInertColor">@color/searchTextInert_day</item>
+        <item name="searchTextActiveColor">@color/searchTextActive_day</item>
+        <item name="searchTextHintColor">@color/searchTextHint_day</item>
+
+        <item name="navFloatingBgColor">@color/navFloatingBg_day</item>
+        <item name="navFloatingTintColor">@color/navFloatingTint_day</item>
         <item name="navBarColor">@color/navBar_day</item>
         <item name="fragmentBgStartColor">@color/fragment_bg_start_day</item>
         <item name="fragmentBgMiddleColor">@color/fragment_bg_middle_day</item>
         <item name="fragmentBgEndColor">@color/fragment_bg_end_day</item>
+
+        <item name="dialogSignBgColor">@color/dialogSignBgColor_day</item>
+        <item name="dialogBgColor">@color/dialogBg_day</item>
+        <item name="dialogHeaderStartColor">@color/dialogHeaderStart_day</item>
+        <item name="dialogHeaderCenterColor">@color/dialogHeaderCenter_day</item>
+        <item name="dialogHeaderEndColor">@color/dialogHeaderEnd_day</item>
+
+        <item name="googleBgColor">@color/googleBg_day</item>
+        <item name="googleTextColor">@color/googleText_day</item>
+        <item name="loginDialogBgColor">@color/loginDialog_day</item>
+        <item name="loginButtonBgColor">@color/loginButtonBg_day</item>
+        <item name="loginButtonTextColor">@color/loginButtonText_day</item>
+        <item name="profileBgActiveColor">@color/profileBgActive_day</item>
+        <item name="profileBgInertColor">@color/profileBgInert_day</item>
+        <item name="profileIconInertColor">@color/profileIconInert_day</item>
+        <item name="profileIconActiveColor">@color/profileIconActive_day</item>
+        <item name="profileTextInertColor">@color/profileTextInert_day</item>
+        <item name="profileTextActiveColor">@color/profileTextActive_day</item>
+        <item name="profileTextHintInertColor">@color/profileTextHintInert_day</item>
+        <item name="profileTextHintActiveColor">@color/profileTextHintActive_day</item>
     </style>
 
     <style name="DialogAnimation">
         <item name="android:windowEnterAnimation">@anim/slide_in</item>
         <item name="android:windowExitAnimation">@anim/slide_out</item>
     </style>
-
 
     <!-- DAY STYLE-->
 
@@ -43,10 +78,6 @@
         <item name="android:background">@color/bg_day</item>
     </style>
 
-    <style name="BackgroundTint">
-        <item name="android:backgroundTint">@color/bg_day</item>
-    </style>
-
     <style name="Text">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -55,27 +86,32 @@
         <item name="android:textColor">@color/text_day</item>
     </style>
 
-    <style name="TextSmallAndGray">
+    <style name="TextSmallGray">
         <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:fontFamily">@font/inter</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/text_gray_day</item>
     </style>
 
-    <style name="NavigationView">
-        <item name="itemIconTint">@color/text_day</item>
-        <item name="itemTextColor">@color/text_day</item>
-        <item name="android:background">@drawable/rounded_bottom_nav</item>
+    <style name="ListItemLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/inter</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:paddingStart">40dp</item>
+        <item name="android:paddingEnd">40dp</item>
+    </style>
+
+    <style name="ListLineView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0.5dp</item>
+        <item name="android:background">@color/dialog_stroke</item>
     </style>
 
     <style name="RoundedFAB" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
-    </style>
-
-    <style name="FloatingActionButton">
-        <item name="tint">@color/primaryVariant</item>
-        <item name="android:backgroundTint">@color/nav_button_day</item>
     </style>
 
     <style name="WindowAnimationTransition">
@@ -87,4 +123,12 @@
         <item name="android:color">@color/selected_item_day</item>
     </style>
 
+    <style name="login">
+        <item name="searchBgActiveColor">@color/searchBgActive_day</item>
+        <item name="searchBgInertColor">@color/searchBgInert_day</item>
+        <item name="searchIconInertColor">@color/searchIconInert_day</item>
+        <item name="searchIconActiveColor">@color/searchIconActive_day</item>
+        <item name="searchTextInertColor">@color/searchTextInert_day</item>
+        <item name="searchTextActiveColor">@color/searchTextActive_day</item>
+    </style>
 </resources>
