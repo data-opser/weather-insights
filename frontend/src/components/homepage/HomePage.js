@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import '../styles/Mainpage.css';
-import CityList from './CityList';
-import AddCityButton from './AddCityButton';
-import Days from './Days';
-import SunTime from './SunTime';
+import './HomePage.css';
+import CityList from '../CityList';
+import AddCityButton from '../AddCityButton';
+import Days from '../Days';
+import SunTime from './sun-time/SunTime';
 
-function MainPage() {
+const HomePage = () => {
   const [cityId, setCityId] = useState(null);
 
   return (
-    <div className="main-page">
+    <div className="home-page">
       <div className='cities'>
         <AddCityButton />
         <CityList setCityId={setCityId} />
@@ -23,4 +23,4 @@ function MainPage() {
   );
 }
 
-export default MainPage;
+export default HomePage;

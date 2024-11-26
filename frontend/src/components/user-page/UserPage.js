@@ -65,7 +65,6 @@ const UserPage = () => {
 
       </div>
 
-
       <div className="notifications">
         <p className='user-text-bold'>Last notifications</p>
         <div className='notification'>

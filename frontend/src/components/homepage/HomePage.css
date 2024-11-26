@@ -1,4 +1,4 @@
-.main-page {
+.home-page {
     display: grid;
     grid-template-rows: 80px 1fr 1fr;
     grid-template-columns: auto 1fr;
@@ -31,7 +31,7 @@
 }
 
 @media only screen and (max-width: 1300px) {
-    .main-page {
+    .home-page {
         width: 100%;
     }   
 }
@@ -47,7 +47,7 @@
         text-align: center;
         min-width: auto;
     }
-    .main-page {
+    .home-page {
         grid-template-rows: 80px auto auto 1fr;
     }
 

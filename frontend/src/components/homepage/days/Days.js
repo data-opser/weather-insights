@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import '../styles/Days.css';
-import Day from './Day';
+import Day from './homepage/days/Day';
 import api from './axiosConfig';
 import { HiOutlineCog6Tooth } from "react-icons/hi2";
 

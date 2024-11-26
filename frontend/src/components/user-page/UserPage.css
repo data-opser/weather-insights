@@ -70,7 +70,7 @@
 }
 
 .notifications {
-    align-self: flex-end;
+    align-self: center;
 }
 .notification {
     width: 90%;

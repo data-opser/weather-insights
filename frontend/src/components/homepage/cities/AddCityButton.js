@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { GoPlus } from "react-icons/go";
-import '../styles/AddCityButton.css';
+import './AddCityButton.css';
 import SelectCityForm from './SelectCityForm';
-import Modal from './Modal';
+import Modal from '../../Modal';
 
 function AddCityButton() {
   const [modalActive, setModalActive] = useState(false);

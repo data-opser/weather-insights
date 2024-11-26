@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import '../styles/SunTime.css';
+import './SunTime.css';
 import { GoSun } from "react-icons/go";
-import api from './axiosConfig';
+import api from '../../axiosConfig';
 
 const SunTime = ({ cityId }) => {
   const [activeButton, setActiveButton] = useState('sunrise');
