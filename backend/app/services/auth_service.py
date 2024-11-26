@@ -1,9 +1,10 @@
 from app.models import User
 from app import login_manager
 from app.services.email_confirm_service import send_email_confirmation
-from app.utils import ErrorHandler
+from app.utils import ErrorHandler, JwtUtils
 from flask import jsonify
 import flask_login
+from flask import request
 
 
 @login_manager.user_loader
@@ -38,24 +39,10 @@ def register_user(data):
         return ErrorHandler.handle_error(e, message="Internal Server Error while register", status_code=500)
 
 
-def login_user(data):
+def session_login_user(data):
     try:
-        email = data.get('email')
-        if not email:
-            raise ValueError("Email is required for login.")
-
-        user = User.get_user_by_email(email)
-        if not user:
-            raise PermissionError('Invalid credentials.')
-
-        if not user.email_confirmed:
-            send_email_confirmation(user)
-            raise PermissionError("Please confirm your email first.")
-
-        if user.password is None:
-            raise PermissionError('Please login via Google or complete regular registration.')
-
-        if user.check_password(data.get('password')):
+        user = login_user(data)
+        if user:
             flask_login.login_user(user)
             return jsonify({'message': 'Logged in successfully.'}), 200
 
@@ -66,7 +53,46 @@ def login_user(data):
     except PermissionError as pe:
         return ErrorHandler.handle_error(pe, message=str(pe), status_code=403)
     except Exception as e:
-        return ErrorHandler.handle_error(e, message="Internal server error during login", status_code=500)
+        return ErrorHandler.handle_error(e, message="Internal server error during session login", status_code=500)
+
+
+def token_login_user(data):
+    try:
+        user = login_user(data)
+        if user:
+            token = JwtUtils.generate_jwt({'user_id': str(user.user_id)})
+            return jsonify({'message': 'Logged in successfully.', 'token': token}), 200
+
+        raise PermissionError('Invalid credentials.')
+
+    except ValueError as ve:
+        return ErrorHandler.handle_validation_error(str(ve))
+    except PermissionError as pe:
+        return ErrorHandler.handle_error(pe, message=str(pe), status_code=403)
+    except Exception as e:
+        return ErrorHandler.handle_error(e, message="Internal server error during token login", status_code=500)
+
+
+def login_user(data):
+    email = data.get('email')
+    if not email:
+        raise ValueError("Email is required for login.")
+
+    user = User.get_user_by_email(email)
+    if not user:
+        raise PermissionError('Invalid credentials.')
+
+    if not user.email_confirmed:
+        send_email_confirmation(user)
+        raise PermissionError("Please confirm your email first.")
+
+    if user.password is None:
+        raise PermissionError('Please login via Google or complete regular registration.')
+
+    if user.check_password(data.get('password')):
+        return user
+
+    raise PermissionError('Invalid credentials.')
 
 
 def logout_user():

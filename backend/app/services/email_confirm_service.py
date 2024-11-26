@@ -3,9 +3,8 @@ from app import mail
 from app.config import Config
 from itsdangerous import URLSafeTimedSerializer
 from flask_mail import Message
-from flask import url_for, render_template_string, jsonify, redirect, flash
+from flask import url_for, render_template_string, jsonify
 from app.utils import ErrorHandler
-import os
 
 s = URLSafeTimedSerializer(Config.SECRET_KEY)
 
@@ -48,8 +47,7 @@ def verify_email_token(token):
             raise PermissionError('The token is invalid or expired.')
 
         user.verify_email()
-        flash('Logged in with Google successfully.', 'success')
-        return redirect(os.getenv('FRONTEND_LINK'))
+        return jsonify({'message': 'Email was confirmed successfully.'}), 200
 
     except PermissionError as pe:
         return ErrorHandler.handle_error(pe, message=str(pe), status_code=403)
