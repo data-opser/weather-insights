@@ -15,14 +15,28 @@
 }
 
 .hour-table-main-text {
-    padding-left: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    align-content: space-around;
+    padding-left: 10px;
     font-size: 18px;
+    padding-bottom: 47px;
 }
 
 .hour-columns {
     display: flex;
     overflow-x: auto;
     padding: 10px;
+}
+
+.hour-table-main-text-feels,
+.hour-table-main-text-pressure,
+.hour-table-main-text-humidity,
+.hour-table-main-text-wind,
+.hour-table-main-text-precipitation {
+    margin: 10px 0px;
 }
 
 @media screen and (max-width: 1300px) {

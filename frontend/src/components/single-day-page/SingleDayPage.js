@@ -46,14 +46,11 @@ const SingleDayPage = () => {
           <DayList />
           <div className="hour-table">
             <div className="hour-table-main-text">
-              <p>Local time</p>
-              <p>East</p>
-              <p>West</p>
-              <p>It feels</p>
-              <p>Pressure, mm</p>
-              <p>Humidity, %</p>
-              <p>Wind, m/s</p>
-              <p>Precipitation probability, %</p>
+              <p className="hour-table-main-text-feels">It feels</p>
+              <p className="hour-table-main-text-pressure">Pressure, mm</p>
+              <p className="hour-table-main-text-humidity">Humidity, %</p>
+              <p className="hour-table-main-text-wind">Wind, m/s</p>
+              <p className="hour-table-main-text-precipitation">Precipitation probability, %</p>
             </div>
             <div className="hour-columns">
               {hourlyData.map((hour, index) => (
