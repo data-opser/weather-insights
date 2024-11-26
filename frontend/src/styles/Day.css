@@ -88,13 +88,27 @@
 @media only screen and (max-width: 900px) {
     .day {
         flex-direction: row;
-        justify-content: flex-start;
+        justify-content: space-between;
         padding: 0 20px;
         margin: 0;
         margin-bottom: 10px;
         width: calc(100% - 40px);
     }
 
+    
+
+    .day .wind-p {
+        min-width: 40px;
+        text-align: center;
+    }
+
+    .day .wind-block {
+        display: flex;
+        align-items: center;
+        padding: 0;
+    }
+}
+@media only screen and (max-width: 600px) {
     .day p {
         font-size: small;
     }
@@ -133,5 +147,10 @@
         display: flex;
         align-items: center;
         padding: 0;
+    }
+}
+@media only screen and (max-width: 400px) {
+    .day {
+        justify-content: flex-start;
     }
 }
