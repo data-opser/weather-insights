@@ -46,10 +46,10 @@ def token_login():
 
 
 @auth_bp.route('/mobile/auth/google')
-def google_login():
+def google_android_login():
     return google_android_auth_service.initiate_google_android_login()
 
 
 @auth_bp.route('/mobile/auth/google/callback')
-def google_callback():
+def google_android_callback():
     return google_android_auth_service.handle_google_android_callback()
