@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <attr name="dialogLineColor" format="color"/>
     <attr name="fragmentBgStartColor" format="color"/>
     <attr name="fragmentBgMiddleColor" format="color"/>
     <attr name="fragmentBgMiddleColor2" format="color"/>
     <attr name="fragmentBgEndColor" format="color"/>
-    <attr name="horoscopeButtonColor" format="color"/>
+    <attr name="buttonBgColor" format="color"/>
 
     <attr name="switchThumbOnColor" format="color"/>
     <attr name="switchThumbOffColor" format="color"/>
@@ -26,6 +25,8 @@
     <attr name="searchTextHintColor" format="color"/>
     <attr name="searchBgInertColor" format="color"/>
 
+    <attr name="listItemLineColor" format="color"/>
+    <attr name="dialogLineColor" format="color"/>
     <attr name="dialogSettingsBgColor" format="color"/>
     <attr name="dialogSignBgColor" format="color"/>
     <attr name="dialogBgColor" format="color"/>
@@ -36,7 +37,6 @@
     <attr name="googleBgColor" format="color"/>
     <attr name="googleTextColor" format="color"/>
     <attr name="loginDialogBgColor" format="color"/>
-    <attr name="loginButtonBgColor" format="color"/>
     <attr name="loginButtonTextColor" format="color"/>
     <attr name="profileIconActiveColor" format="color"/>
     <attr name="profileTextActiveColor" format="color"/>
@@ -46,4 +46,7 @@
     <attr name="profileTextHintActiveColor" format="color"/>
     <attr name="profileTextHintInertColor" format="color"/>
     <attr name="profileBgInertColor" format="color"/>
+
+    <attr name="profileDialogBgColor" format="color"/>
+    <attr name="birthStrokeColor" format="color"/>
 </resources>

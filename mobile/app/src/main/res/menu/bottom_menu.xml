@@ -12,6 +12,7 @@
         android:icon="@drawable/ic_profile" />
 
     <item
+        android:enabled="false"
         android:title=""/>
 
     <item

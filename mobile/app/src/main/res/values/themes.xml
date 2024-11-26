@@ -10,8 +10,6 @@
         <item name="colorOnSecondary">@color/onSecondary</item>
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
 
-        <item name="dialogLineColor">@color/dialogLine_day</item>
-
         <item name="switchThumbOnColor">@color/switch_thumb_on_day</item>
         <item name="switchThumbOffColor">@color/switch_thumb_off_day</item>
         <item name="switchTrackOnColor">@color/switch_track_on_day</item>
@@ -21,7 +19,7 @@
         <item name="navItemTextColor">@color/text_day</item>
         <item name="dialogSettingsBgColor">@color/settingsDialog_day</item>
 
-        <item name="horoscopeButtonColor">@color/horoscopeButton_day</item>
+        <item name="buttonBgColor">@color/buttonBg_day</item>
 
         <item name="searchBgActiveColor">@color/searchBgActive_day</item>
         <item name="searchBgInertColor">@color/searchBgInert_day</item>
@@ -47,7 +45,6 @@
         <item name="googleBgColor">@color/googleBg_day</item>
         <item name="googleTextColor">@color/googleText_day</item>
         <item name="loginDialogBgColor">@color/loginDialog_day</item>
-        <item name="loginButtonBgColor">@color/loginButtonBg_day</item>
         <item name="loginButtonTextColor">@color/loginButtonText_day</item>
         <item name="profileBgActiveColor">@color/profileBgActive_day</item>
         <item name="profileBgInertColor">@color/profileBgInert_day</item>
@@ -57,6 +54,9 @@
         <item name="profileTextActiveColor">@color/profileTextActive_day</item>
         <item name="profileTextHintInertColor">@color/profileTextHintInert_day</item>
         <item name="profileTextHintActiveColor">@color/profileTextHintActive_day</item>
+
+        <item name="profileDialogBgColor">@color/profileDialogBg_day</item>
+        <item name="birthStrokeColor">@color/birthStroke_day</item>
     </style>
 
     <style name="DialogAnimation">
@@ -70,19 +70,11 @@
         <item name="android:paddingTop">20dp</item>
     </style>
 
-    <style name="Layout">
-        <item name="android:backgroundTint">@color/layout_day</item>
-    </style>
-
-    <style name="Background">
-        <item name="android:background">@color/bg_day</item>
-    </style>
-
     <style name="Text">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:fontFamily">@font/inter</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">19sp</item>
         <item name="android:textColor">@color/text_day</item>
     </style>
 
@@ -90,7 +82,7 @@
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:fontFamily">@font/inter</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">15sp</item>
         <item name="android:textColor">@color/text_gray_day</item>
     </style>
 
@@ -106,10 +98,10 @@
     <style name="ListLineView">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">0.5dp</item>
-        <item name="android:background">@color/dialog_stroke</item>
+        <item name="android:background">@color/listItemLine_day</item>
     </style>
 
-    <style name="RoundedFAB" parent="">
+    <style name="Rounded">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
     </style>
@@ -121,14 +113,5 @@
 
     <style name="App.Custom.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
         <item name="android:color">@color/selected_item_day</item>
-    </style>
-
-    <style name="login">
-        <item name="searchBgActiveColor">@color/searchBgActive_day</item>
-        <item name="searchBgInertColor">@color/searchBgInert_day</item>
-        <item name="searchIconInertColor">@color/searchIconInert_day</item>
-        <item name="searchIconActiveColor">@color/searchIconActive_day</item>
-        <item name="searchTextInertColor">@color/searchTextInert_day</item>
-        <item name="searchTextActiveColor">@color/searchTextActive_day</item>
     </style>
 </resources>

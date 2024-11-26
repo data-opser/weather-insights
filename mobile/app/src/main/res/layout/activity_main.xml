@@ -8,9 +8,8 @@
     android:fitsSystemWindows="true"
     android:windowAnimationStyle="@style/WindowAnimationTransition"
     android:id="@+id/mainActivity"
-    tools:context=".MainActivity"
-    android:background="@drawable/gradient_bcgrd_day">
-    <!-- видалити background -->
+    tools:context=".MainActivity">
+
     <FrameLayout
         android:id="@+id/frame_layout"
         android:layout_width="match_parent"
@@ -46,7 +45,7 @@
             android:src="@drawable/ic_plus"
             android:backgroundTint="?attr/navFloatingBgColor"
             app:tint="?attr/navFloatingTintColor"
-            app:shapeAppearanceOverlay="@style/RoundedFAB"
+            app:shapeAppearanceOverlay="@style/Rounded"
             app:layout_anchor="@+id/bottomAppBar"
             app:layout_anchorGravity="center"
             app:maxImageSize="40dp"
