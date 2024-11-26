@@ -8,6 +8,13 @@
     overflow-x: auto;
 }
 
+.city-list .loading, .error {
+    width: 150px;
+    font-size: 17px;
+    display: flex;
+    justify-content: center;
+}
+
 .city-list button {
     background-color: white;
     color: black;

@@ -54,6 +54,9 @@ function CityList({ setCityId }) {
 
   useEffect(() => {
     const fetchCities = async () => {
+      setLoading(true);
+      setError(null);
+
       try {
         const response = await api.get('/user_cities');
         if (response.data && response.data.cities) {
@@ -65,9 +68,9 @@ function CityList({ setCityId }) {
             setCityId(mainCity.city_id);
           }
         }
-        setLoading(false);
       } catch (err) {
-        setError('Error loading cities');
+        setError('Failed to load cities');
+      } finally {
         setLoading(false);
       }
     };
@@ -80,17 +83,19 @@ function CityList({ setCityId }) {
     };
   }, [setCityId]);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>{error}</div>;
-  }
-
   return (
     <div className="city-list">
-      {cities.length > 0 ? (
+      {loading && (
+        <div className="loading">
+          <p>Loading cities...</p>
+        </div>
+      )}
+      {error && (
+        <div className="error">
+          <p style={{ color: 'red' }}>{error}</p>
+        </div>
+      )}
+      {!loading && !error && cities.length > 0 && (
         cities.map((city, index) => (
           <button
             key={city.city_id}
@@ -100,12 +105,15 @@ function CityList({ setCityId }) {
           >
             {city.city_name}
             <div className="flag-container">
-              <Flag className='flag' code={city.iso2} />
+              <Flag className="flag" code={city.iso2} />
             </div>
           </button>
         ))
-      ) : (
-        <div>No cities found</div>
+      )}
+      {!loading && !error && cities.length === 0 && (
+        <div className="no-cities">
+          <h1>No cities found</h1>
+        </div>
       )}
 
       {contextMenu.isVisible && (
@@ -119,7 +127,6 @@ function CityList({ setCityId }) {
           <button onClick={() => handleDeleteCity(contextMenu.cityId)}>Delete</button>
         </div>
       )}
-
     </div>
   );
 }
