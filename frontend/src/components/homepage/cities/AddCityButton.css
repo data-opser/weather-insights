@@ -1,0 +1,47 @@
+.add-city-button {
+    background-color: white;
+    color: black;
+    padding: 5px; 
+    cursor: pointer;
+    border: none;
+    margin: 20px; 
+    font-size: medium; 
+    border-radius: 0.5em;
+    transition: background-color 0.3s, color 0.3s;
+    display: flex;
+    align-items: center;    
+    min-width: 200px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.231);
+}
+
+.add-city-button:hover {
+    background-color: #E8F1FF;
+}
+
+.plus {
+    color: #1363DF;
+    width: 2em; 
+    height: 2em;
+    transition: color 0.3s;
+}
+
+.icon-blue {
+    color: white;
+}
+
+.add-city-button.blue {
+    color: white;
+    background: linear-gradient(135deg, rgba(19,99,223,1) 0%, rgba(71,181,255,1) 100%);
+}
+
+.plus.icon-blue {
+    color: white;
+}
+
+.add-city-button-text {
+    margin: 0 auto;
+    font-size: medium; 
+    padding-right: 10px;
+}
+
+
