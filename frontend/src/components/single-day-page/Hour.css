@@ -1,0 +1,57 @@
+.hour-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #eaf6fe;
+    border-radius: 6px;
+    margin: 0 5px;
+    padding-top: 0px;
+}
+
+.hour-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(155, 215, 252);
+    margin-left: -20px;
+    margin-right: -20px;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.hour-time {
+    font-weight: bold;
+    font-size: 18px;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+
+.hour-feels,
+.hour-pressure,
+.hour-humidity,
+.hour-wind,
+.hour-precipitation {
+    margin: 10px 0;
+    font-size: 18px;
+}
+
+.hour-temp{
+    margin: 10px 0 0 0;
+    font-size: 18px;
+}
+
+.hour-icon {
+    font-size: 32px;
+    margin: 10px 0;
+}
+
+.hour-icon-container {
+    display: flex;
+    justify-content: center;
+}
+
+.hour-table-main-text-item {
+    margin: 0;
+}

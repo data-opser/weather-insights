@@ -1,0 +1,79 @@
+.CitySearch {
+    margin: 2% 2%;
+    cursor: pointer;
+    display: flex;
+    padding: 1% 2%;
+    background-color: white;
+    border-radius: 1.5em;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.231);
+    justify-content: space-between;
+    width: 20%;
+    height: 35%; /* Автоматична висота для підлаштування до висоти `.week-buttons` */
+    transition: width 0.3s ease, height 0.3s ease; 
+}
+
+.CitySearch input {
+    background-color: rgb(255, 255, 255);
+    color: black;
+    width: 90%;
+    margin: 1% 2%;
+    border-radius: 1.5em;
+    border: 0;
+    font-size: 24px;
+    outline: none;
+}
+
+.loopa {
+    width: auto;
+    height: 90%;
+    color: rgba(0, 0, 0, 0.226);
+}
+
+/* Адаптивні стилі */
+@media (max-width: 1200px) {
+    .CitySearch {
+        width: 30%;
+
+    }
+    .CitySearch input {
+        font-size: 22px;
+    }
+}
+
+@media (max-width: 992px) {
+    .CitySearch {
+        width: 40%;
+
+    }
+    .CitySearch input {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 791px) {
+    .CitySearch {
+        width: 50%;
+        height: 25%;
+    }
+    .CitySearch input {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 576px) {
+    .CitySearch {
+        width: 100%;
+
+    }
+    .CitySearch input {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 400px) {
+    
+    .CitySearch input {
+        font-size: 14px;
+    }
+}
