@@ -34,8 +34,11 @@ def send_email_confirmation(user):
         return jsonify({'message': 'The email confirmation was sent successfully.'}), 200
 
     except Exception as e:
-        return ErrorHandler.handle_error(e, message="Internal server error while sending the email confirmation.",
-                                         status_code=500)
+        return ErrorHandler.handle_error(
+            e,
+            message="Internal server error while sending the email confirmation.",
+            status_code=500
+        )
 
 
 def verify_email_token(token):

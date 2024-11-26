@@ -46,13 +46,20 @@ class City(db.Model):
     def get_city_name_by_id(cls, city_id):
         try:
             if not City.check_city_exists(city_id):
-                return ErrorHandler.handle_error(None, message=f"City with ID '{city_id}' not found.",
-                                                 status_code=404)
+                return ErrorHandler.handle_error(
+                    None,
+                    message=f"City with ID '{city_id}' not found.",
+                    status_code=404
+                )
 
             city_record = cls.query.with_entities(cls.city).filter_by(id=city_id).first()
             return jsonify({"id": city_id, "city": city_record.city})
         except Exception as e:
-            return ErrorHandler.handle_error(e, message="Database error while getting city name", status_code=500)
+            return ErrorHandler.handle_error(
+                e,
+                message="Database error while getting city name",
+                status_code=500
+            )
 
     @classmethod
     def get_city_data_by_id(cls, city_id):
@@ -60,4 +67,8 @@ class City(db.Model):
            city_record = cls.query.with_entities(cls.city, cls.iso2, cls.country).filter_by(id=city_id).first()
            return {"id": city_id, "city": city_record.city, "iso2": city_record.iso2, "country": city_record.country,}
        except Exception as e:
-           return ErrorHandler.handle_error(e, message="Database error while getting city data", status_code=500)
+           raise ErrorHandler.handle_error(
+               e,
+               message="Database error while getting city data",
+               status_code=500
+           )

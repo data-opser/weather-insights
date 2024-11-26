@@ -9,10 +9,17 @@ def get_user_profile(user_id):
         if user:
             return jsonify(user.get_profile_data())
         else:
-            return ErrorHandler.handle_error(None, message="User not found.", status_code=404)
+            return ErrorHandler.handle_error(
+                None,
+                message=f"User with ID '{user_id}' not found.",
+                status_code=404
+            )
     except Exception as e:
-        return ErrorHandler.handle_error(e, message="Internal server error while retrieving the user profile.",
-                                         status_code=500)
+        return ErrorHandler.handle_error(
+            e,
+            message="Internal server error while retrieving the user profile.",
+            status_code=500
+        )
 
 
 def update_user_profile(user_id, data):
@@ -22,10 +29,17 @@ def update_user_profile(user_id, data):
             user.update_profile(data)
             return jsonify({'message': 'Profile updated successfully.'}), 200
         else:
-            return ErrorHandler.handle_error(None, message="User not found.", status_code=404)
+            return ErrorHandler.handle_error(
+                None,
+                message=f"User with ID '{user_id}' not found.",
+                status_code=404
+            )
     except Exception as e:
-        return ErrorHandler.handle_error(e, message="Internal server error while updating the user profile.",
-                                         status_code=500)
+        return ErrorHandler.handle_error(
+            e,
+            message="Internal server error while updating the user profile.",
+            status_code=500
+        )
 
 
 def update_user_password(user_id, data):
@@ -37,5 +51,8 @@ def update_user_password(user_id, data):
         else:
             return ErrorHandler.handle_error(None, message="User not found.", status_code=404)
     except Exception as e:
-        return ErrorHandler.handle_error(e, message="Internal server error while updating password.",
-                                         status_code=500)
+        return ErrorHandler.handle_error(
+            e,
+            message="Internal server error while updating password.",
+            status_code=500
+        )

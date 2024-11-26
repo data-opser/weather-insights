@@ -22,8 +22,11 @@ class GoogleUtils:
             )
 
         except requests.exceptions.RequestException as e:
-            return ErrorHandler.handle_error(e, message="Request failed while fetching birthday",
-                                             status_code=500)
+            return ErrorHandler.handle_error(
+                e,
+                message="Request failed while fetching birthday",
+                status_code=500
+            )
 
     @staticmethod
     def get_fresh_google_access_token(user, google):
@@ -48,12 +51,19 @@ class GoogleUtils:
             access_token = token_data.get('access_token')
 
             if not access_token:
-                return ErrorHandler.handle_error(None, message="Failed to obtain a new access token.",
-                                                 status_code=500)
+                raise ErrorHandler.handle_error(
+                    None,
+                    message="Failed to obtain a new access token.",
+                    status_code=500
+                )
 
             return access_token
 
         except ValueError as ve:
             return ErrorHandler.handle_validation_error(str(ve))
         except requests.exceptions.RequestException as e:
-            return ErrorHandler.handle_error(e, message="Request failed while fetching google token", status_code=500)
+            return ErrorHandler.handle_error(
+                e,
+                message="Request failed while fetching google token",
+                status_code=500
+            )

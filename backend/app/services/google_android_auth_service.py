@@ -23,8 +23,11 @@ def initiate_google_android_login():
         return google_android.authorize_redirect(redirect_uri, nonce=nonce)
 
     except Exception as e:
-        return ErrorHandler.handle_error(e, message="An error occurred during Google login initiation for Android",
-                                         status_code=500)
+        return ErrorHandler.handle_error(
+            e,
+            message="An error occurred during Google login initiation for Android",
+            status_code=500
+        )
 
 
 def handle_google_android_callback():
@@ -68,4 +71,8 @@ def handle_google_android_callback():
     except PermissionError as pe:
         return ErrorHandler.handle_error(pe, message=str(pe), status_code=403)
     except Exception as e:
-        return ErrorHandler.handle_error(e, message="Internal server error during Google login", status_code=500)
+        return ErrorHandler.handle_error(
+            e,
+            message="Internal server error during Google login",
+            status_code=500
+        )

@@ -32,8 +32,11 @@ class UserCity(db.Model):
             cities = []
             for uc in user_cities:
                 if not City.check_city_exists(uc.city_id):
-                    return ErrorHandler.handle_error(None, message=f"City with ID '{uc.city_id}' not found.",
-                                                     status_code=404)
+                    return ErrorHandler.handle_error(
+                        None,
+                        message=f"City with ID '{uc.city_id}' not found.",
+                        status_code=404
+                    )
                 city_data = City.get_city_data_by_id(uc.city_id)
                 cities.append({
                     "id": uc.city_id,
@@ -59,8 +62,11 @@ class UserCity(db.Model):
         try:
             city = City.check_city_exists(city_id)
             if not city:
-                return ErrorHandler.handle_error(None, message=f"City with ID '{city_id}' not found.",
-                                                 status_code=404)
+                return ErrorHandler.handle_error(
+                    None,
+                    message=f"City with ID '{city_id}' not found.",
+                    status_code=404
+                )
 
             if cls.query.filter_by(user_id=user_id, city_id=city_id).first():
                 raise ValueError(f"City '{city[0]}' already added to the user list.")
@@ -77,15 +83,22 @@ class UserCity(db.Model):
             return ErrorHandler.handle_validation_error(str(ve))
         except Exception as e:
             db.session.rollback()
-            return ErrorHandler.handle_error(e, message="Database error while adding city to user", status_code=500)
+            return ErrorHandler.handle_error(
+                e,
+                message="Database error while adding city to user",
+                status_code=500
+            )
 
     @classmethod
     def delete_user_city(cls, user_id, city_id):
         try:
             city = City.check_city_exists(city_id)
             if not city:
-                return ErrorHandler.handle_error(None, message=f"City with ID '{city_id}' not found.",
-                                                 status_code=404)
+                return ErrorHandler.handle_error(
+                    None,
+                    message=f"City with ID '{city_id}' not found.",
+                    status_code=404
+                )
             user_city = cls.query.filter_by(user_id=user_id, city_id=city_id).first()
             if not user_city:
                 raise ValueError(f"City '{city[0]}' not found in user list.")
@@ -103,15 +116,22 @@ class UserCity(db.Model):
             return ErrorHandler.handle_validation_error(str(ve))
         except Exception as e:
             db.session.rollback()
-            return ErrorHandler.handle_error(e, message="Database error while deleting city from user", status_code=500)
+            return ErrorHandler.handle_error(
+                e,
+                message="Database error while deleting city from user",
+                status_code=500
+            )
 
     @classmethod
     def set_main_user_city(cls, user_id, city_id):
         try:
             city = City.check_city_exists(city_id)
             if not city:
-                return ErrorHandler.handle_error(None, message=f"City with ID '{city_id}' not found.",
-                                                 status_code=404)
+                return ErrorHandler.handle_error(
+                    None,
+                    message=f"City with ID '{city_id}' not found.",
+                    status_code=404
+                )
             user_city = cls.query.filter_by(user_id=user_id, city_id=city_id).first()
             if not user_city:
                 raise ValueError(f"City '{city[0]}' not found in user list.")
@@ -125,4 +145,8 @@ class UserCity(db.Model):
             return ErrorHandler.handle_validation_error(str(ve))
         except Exception as e:
             db.session.rollback()
-            return ErrorHandler.handle_error(e, message="Database error while while setting main city", status_code=500)
+            return ErrorHandler.handle_error(
+                e,
+                message="Database error while while setting main city",
+                status_code=500
+            )

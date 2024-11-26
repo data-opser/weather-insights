@@ -48,7 +48,10 @@ class User(db.Model, UserMixin):
         self.google_refresh_token = cipher.encrypt(refresh_token.encode()).decode()
 
     def get_refresh_token(self):
-        return cipher.decrypt(self.google_refresh_token.encode()).decode() if self.google_refresh_token else None
+        if self.google_refresh_token:
+            return cipher.decrypt(self.google_refresh_token.encode()).decode()
+        else:
+            return None
 
     @staticmethod
     def get_user_by_email(email):
@@ -78,7 +81,11 @@ class User(db.Model, UserMixin):
             return ErrorHandler.handle_validation_error(str(ve))
         except Exception as e:
             db.session.rollback()
-            return ErrorHandler.handle_error(e, message="Database error while user register", status_code=500)
+            return ErrorHandler.handle_error(
+                e,
+                message="Database error while user register",
+                status_code=500
+            )
 
     def add_user_data(self, data):
         name = data.get('name')
@@ -96,7 +103,11 @@ class User(db.Model, UserMixin):
             db.session.commit()
         except Exception as e:
             db.session.rollback()
-            return ErrorHandler.handle_error(e, message="Database error while user updating", status_code=500)
+            return ErrorHandler.handle_error(
+                e,
+                message="Database error while user updating",
+                status_code=500
+            )
 
     @classmethod
     def google_register_user(cls, data):
@@ -127,7 +138,11 @@ class User(db.Model, UserMixin):
             return ErrorHandler.handle_validation_error(str(ve))
         except Exception as e:
             db.session.rollback()
-            return ErrorHandler.handle_error(e, message="Database error while google register", status_code=500)
+            return ErrorHandler.handle_error(
+                e,
+                message="Database error while google register",
+                status_code=500
+            )
 
     def add_google_data(self, google_id, refresh_token):
         try:
@@ -138,7 +153,11 @@ class User(db.Model, UserMixin):
                 self.set_refresh_token(refresh_token)
         except Exception as e:
             db.session.rollback()
-            return ErrorHandler.handle_error(e, message="Database error while adding google data", status_code=500)
+            return ErrorHandler.handle_error(
+                e,
+                message="Database error while adding google data",
+                status_code=500
+            )
 
     def verify_email(self):
         self.email_confirmed = True
@@ -146,7 +165,11 @@ class User(db.Model, UserMixin):
             db.session.commit()
         except Exception as e:
             db.session.rollback()
-            return ErrorHandler.handle_error(e, message="Database error while verifying email", status_code=500)
+            return ErrorHandler.handle_error(
+                e,
+                message="Database error while verifying email",
+                status_code=500
+            )
 
     def drop_email_verification(self):
         self.email_confirmed = False
@@ -154,8 +177,11 @@ class User(db.Model, UserMixin):
             db.session.commit()
         except Exception as e:
             db.session.rollback()
-            return ErrorHandler.handle_error(e, message="Database error while dropping email verification",
-                                             status_code=500)
+            return ErrorHandler.handle_error(
+                e,
+                message="Database error while dropping email verification",
+                status_code=500
+            )
 
     def update_profile(self, data):
         name = data.get('name')
@@ -170,7 +196,11 @@ class User(db.Model, UserMixin):
             db.session.commit()
         except Exception as e:
             db.session.rollback()
-            return ErrorHandler.handle_error(e, message="Database error while user profile updating", status_code=500)
+            return ErrorHandler.handle_error(
+                e,
+                message="Database error while user profile updating",
+                status_code=500
+            )
 
     def update_password(self, data):
         try:
@@ -187,7 +217,11 @@ class User(db.Model, UserMixin):
 
         except Exception as e:
             db.session.rollback()
-            return ErrorHandler.handle_error(e, message="Database error while user password updating", status_code=500)
+            return ErrorHandler.handle_error(
+                e,
+                message="Database error while user password updating",
+                status_code=500
+            )
 
     def get_profile_data(self):
         return {
