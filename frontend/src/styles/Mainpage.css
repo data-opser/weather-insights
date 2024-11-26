@@ -38,9 +38,14 @@
 
 
 @media only screen and (max-width: 900px) {
+    .cities .city-list {
+        width: stretch;
+    }
+
     .cities .city-list button {            
         font-size: 15px;
         text-align: center;
+        min-width: auto;
     }
     .main-page {
         grid-template-rows: 80px auto auto 1fr;
