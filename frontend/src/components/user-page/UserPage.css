@@ -39,35 +39,66 @@
     border: 1px solid black;
 }
 
-.user-block2 {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 90%;
-}
+
 .user-text-bold {
     font-weight: bold;
     font-size: 24px;
 }
 .user-block2-text-gray {
     color: gray;
-}
-.form-group {
+    text-align: end;
     width: 90%;
-}
-.name-input {
-    border: 0;
-    font-size: 18px;
-}
-.user-info {
-    color: gray;
-    font-size: 12px;
-    margin: 0;
-    margin-bottom: 5px;
-}
-.separator, .user-email {
     margin: 0;
 }
+
+
+.faq {
+    width: 90%;
+    margin: 20px auto;
+}
+.faq-item {
+    border: 1px solid black;
+    margin-bottom: 10px;
+}
+.faq-title {
+    display: block;
+    cursor: pointer;
+    position: relative;
+}
+.faq-title:after {
+    content: "";
+    display: block;
+    border-style: solid;
+    border-width: 0px 5px 8px 5px;
+    border-color: transparent transparent black transparent;
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+}
+.faq-input:checked + .faq-title:after {
+    display: none;
+}
+.faq-input {
+    appearance: none;
+    position: absolute;
+}
+.faq-input:checked + .faq-text {
+    display: block;
+}
+.faq-text {
+    display: none;
+}
+
+
+
+
+
+
+
+
+
+
 
 .notifications {
     align-self: center;

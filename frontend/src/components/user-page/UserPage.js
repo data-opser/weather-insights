@@ -33,30 +33,27 @@ const UserPage = () => {
           />
         </div>
 
-        <div className='user-block2'>
-          <p className='user-text-bold'>My profile</p>
-          <div>
-            <p className='user-block2-text-gray'>Last login: Nov. 28, 2024, 15:30</p>
-            <p className='user-block2-text-gray'>Location: Kharkiv, Ukraine</p>
+        <p className='user-block2-text-gray'>Last login: Nov. 28, 2024, 15:30</p>
+        <p className='user-text-bold'>My profile</p>
+          
+        <div className='faq'>
+          <div className='faq-item'>
+            <label className='faq-title' for='faq_1'>Name</label>
+            <input className='faq-input' type='checkbox' id='faq_1'></input>
+            <div className='faq-text'>
+              <p>lipsumfgggfg fgfgdggf fghfghfghgfhfg</p>
+            </div>
+          </div>          
+          <div className='faq-item'>
+            <label className='faq-title' for='faq_2'>Date of birth</label>
+            <input className='faq-input' type='checkbox' id='faq_2'></input>
+            <div className='faq-text'>
+              <p>lipsumfgggfg fgfgdggf fghfghfghgfhfg</p>
+            </div>
           </div>
+
         </div>
 
-        <div className='form-group'>
-          <input className='name-input' placeholder='Anton Reshetniak' />
-          <hr className="separator" />
-          <p className="user-info">First name, last name</p>
-
-          <input className='name-input' placeholder='******' />
-          <hr className="separator" />
-          <p className="user-info">Old password</p>
-          <input className='name-input' placeholder='******' />
-          <hr className="separator" />
-          <p className="user-info">New password</p>
-
-          <p className='user-email'>anton.reshetniak@nure.ua</p>
-          <hr className="separator" />
-          <p className="user-info">Email</p>
-        </div>
         <button
           className={`user-button ${activeSaveButton ? 'blue' : ''}`}
           onClick={handleSaveButtonClick}>
