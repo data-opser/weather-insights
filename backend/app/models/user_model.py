@@ -81,11 +81,7 @@ class User(db.Model, UserMixin):
             return ErrorHandler.handle_validation_error(str(ve))
         except Exception as e:
             db.session.rollback()
-            return ErrorHandler.handle_error(
-                e,
-                message="Database error while user register",
-                status_code=500
-            )
+            raise RuntimeError("Database error while user register") from e
 
     def add_user_data(self, data):
         name = data.get('name')
@@ -138,11 +134,7 @@ class User(db.Model, UserMixin):
             return ErrorHandler.handle_validation_error(str(ve))
         except Exception as e:
             db.session.rollback()
-            return ErrorHandler.handle_error(
-                e,
-                message="Database error while google register",
-                status_code=500
-            )
+            raise RuntimeError("Database error while user google register") from e
 
     def add_google_data(self, google_id, refresh_token):
         try:

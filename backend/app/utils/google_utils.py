@@ -28,7 +28,7 @@ class GoogleUtils:
             return None
 
         except requests.exceptions.RequestException as e:
-            raise Exception("Failed to fetch birthday information.") from e
+            raise RuntimeError("Failed to fetch birthday information.") from e
 
     @staticmethod
     def get_user_info(access_token):
@@ -39,7 +39,7 @@ class GoogleUtils:
         if response.status_code == 200:
             return response.json()
         else:
-            raise Exception(f"Error fetching user info: {response.text}")
+            raise RuntimeError(f"Error fetching user info: {response.text}")
 
     @staticmethod
     def get_fresh_google_access_token(user, google):
@@ -73,4 +73,4 @@ class GoogleUtils:
             return access_token
 
         except requests.exceptions.RequestException as e:
-            raise Exception("Request failed while fetching google token.") from e
+            raise RuntimeError("Request failed while fetching google token.") from e

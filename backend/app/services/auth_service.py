@@ -34,6 +34,8 @@ def register_user(data):
 
     except ValueError as ve:
         return ErrorHandler.handle_validation_error(str(ve))
+    except RuntimeError as re:
+        return ErrorHandler.handle_error(re, message=str(re), status_code=500)
     except Exception as e:
         return ErrorHandler.handle_error(
             e,
