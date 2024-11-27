@@ -2,13 +2,14 @@
     display: flex;
     justify-content: center;
     position: relative;
-    gap: 30px;
-    width: 1535px;
+    gap: 50px;
+    max-width: 1300px;
     justify-self: center;
+    margin-top: 20px;
 }
 
 .user, .notifications {
-    width: 40%;
+    width: 50%;
     background-color: white;
     height: 100%;
     border-radius: 1em;
@@ -20,74 +21,122 @@
 }
 .user-block1 {
     position: relative;
+    
 }
 .user-photo {
-    width: 200px;
-    height: 200px;
+    width: 160px;
+    height: 160px;
+    margin: 20px 0 0 0;
+    background-color: #b5e3fe;
     border-radius: 50%;
-    margin: 20px 0;
+    border: 20px #b5e3fe solid;
 }
 .plus-photo {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     cursor: pointer;
     position: absolute;
-    right: 7px;
-    top: 170px;
+    right: 25px;
+    top: 150px;
     background-color: white;
     border-radius: 50%;
     border: 1px solid black;
 }
 
-
+.profile-info {
+    display: flex;
+    width: 85%;
+    justify-content: space-between;
+}
 .user-text-bold {
     font-weight: bold;
     font-size: 24px;
+
 }
 .user-block2-text-gray {
     color: gray;
-    text-align: end;
-    width: 90%;
     margin: 0;
+    align-self: center;
 }
 
 
 .faq {
     width: 90%;
-    margin: 20px auto;
+    margin: 0 auto 20px auto;
 }
 .faq-item {
-    border: 1px solid black;
     margin-bottom: 10px;
+    background-color: #b5e3fe;
+    border-radius: 2em;
+    position: relative;
+}
+.faq-status {
+    padding-left: 20px;
+    margin-bottom: 10px;
+    height: 40px;
+}
+.faq-status p {
+    margin: 0;
+    text-align: center;
 }
 .faq-title {
     display: block;
     cursor: pointer;
     position: relative;
+    padding-left: 20px;
 }
-.faq-title:after {
-    content: "";
+.faq-title-email {
     display: block;
-    border-style: solid;
-    border-width: 0px 5px 8px 5px;
-    border-color: transparent transparent black transparent;
-    position: absolute;
-    top: 50%;
-    right: 15px;
-    transform: translateY(-50%);
+    padding-left: 20px;
 }
-.faq-input:checked + .faq-title:after {
-    display: none;
+.faq-arrow-top {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    cursor: pointer;
+}
+
+.faq-input:checked ~ .faq-label-arrow-top .faq-arrow-top {
+    transform: rotate(180deg); 
+    transition: transform 0.5s; 
 }
 .faq-input {
     appearance: none;
     position: absolute;
 }
-.faq-input:checked + .faq-text {
-    display: block;
+.faq-input:checked ~ .faq-text {
+    max-height: 200px;
 }
 .faq-text {
-    display: none;
+    display: block;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.8s ease;
+    position: relative;     
+}
+.faq-text input {
+    margin: 0px 0px 10px 10px;
+    padding: 10px;
+    border: 0;
+    background-color: #71cbff;
+    font-size: 18px;
+    border-radius: 1em;
+    color: gray;
+}
+.faq-text button {
+    font-size: 18px;
+    position: absolute;
+    right: 20px;
+    margin: 0;
+}
+.faq-title-type {
+    min-width: 150px;
+}
+.faq-title-text {
+    font-weight: bold;
+}
+.faq-title-type, .faq-title-text {
+    display: inline-block;
 }
 
 
@@ -100,9 +149,6 @@
 
 
 
-.notifications {
-    align-self: center;
-}
 .notification {
     width: 90%;
     box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.231);
@@ -126,6 +172,7 @@
     position: absolute;
     right: 10px;
     bottom: 0;
+    margin: 5px 0;
 }
 
 .notification-weather {
@@ -148,7 +195,6 @@
     cursor: pointer;
     margin-bottom: 25px;
     margin-top: 20px;
-    transition: background 0.3s ease;
 }
 .settings, .getback {
     position: absolute;
@@ -169,10 +215,33 @@
     background: linear-gradient(135deg, rgb(0, 66, 165) 0%, rgb(0, 41, 87) 100%);
 }
 
-.user-button:hover {
-    background: linear-gradient(135deg, rgb(0, 148, 188) 0%, rgb(0, 101, 164) 100%);
-}
+
 
 .gray {
     background: rgb(215, 215, 215);
+}
+
+@media only screen and (max-width: 1060px) {
+    .user-page {
+        flex-direction: column;
+        align-items: center;
+    }
+    .user, .notifications {
+        width: 85%;
+        margin: 20px;
+
+    }
+    .faq-title-type {
+        min-width: 50px;
+    }
+    .padding-left {
+        padding-left: 10px;
+    }
+    .faq-text input {
+        font-size: 14px;
+    }
+    .faq-text button {
+        font-size: 14px;
+    }
+   
 }
