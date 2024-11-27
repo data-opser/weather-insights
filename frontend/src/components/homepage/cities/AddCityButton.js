@@ -4,7 +4,7 @@ import './AddCityButton.css';
 import SelectCityForm from './SelectCityForm';
 import Modal from '../../Modal';
 
-function AddCityButton() {
+function AddCityButton( { addCity, setMainCity } ) {
   const [modalActive, setModalActive] = useState(false);
   const formRef = useRef();
 
@@ -29,7 +29,7 @@ function AddCityButton() {
         <span className='add-city-button-text'>add new city</span>
       </button>
       <Modal active={modalActive} setActive={setModalActive} onClose={handleModalClose}>
-        <SelectCityForm ref={formRef} onClose={handleModalClose} />
+        <SelectCityForm ref={formRef} onClose={handleModalClose} addCity={addCity} setMainCity={setMainCity} />
       </Modal>
     </>
   );
