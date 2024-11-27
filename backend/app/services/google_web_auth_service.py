@@ -1,7 +1,7 @@
 from app.models import User
-from app import oauth, db
+from app import oauth
 from app.utils import ErrorHandler, GoogleUtils
-from flask import jsonify, redirect, flash, url_for, session
+from flask import redirect, flash, url_for, session
 import flask_login
 import os
 
@@ -17,6 +17,7 @@ google = oauth.register(
     }
 
 )
+
 
 def initiate_google_login():
     try:

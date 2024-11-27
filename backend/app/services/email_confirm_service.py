@@ -78,6 +78,6 @@ def verify_email_token(token):
 
         error_html_body = render_template_string(
             error_html_template,
-            error_message="Internal server error during email confirmation."
+            error_message=f"Internal server error during email confirmation. {str(e)}"
         )
         return error_html_body

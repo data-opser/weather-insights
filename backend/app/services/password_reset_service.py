@@ -1,9 +1,10 @@
 from flask_mail import Message
 from app import mail, db
 from app.models import User
-import random, string
 from flask import render_template_string, jsonify
 from app.utils import ErrorHandler
+import random
+import string
 
 
 def send_password_reset_email(data):

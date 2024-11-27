@@ -45,7 +45,6 @@ class ForecastWeatherHour(db.Model):
     sunrise_time_utc = Column(DateTime)
     sunset_time_utc = Column(DateTime)
 
-
     @classmethod
     def get_city_hourly_weather_by_date(cls, city_id, date):
         try:
@@ -57,8 +56,11 @@ class ForecastWeatherHour(db.Model):
                 )
 
             date_object = datetime.strptime(date, '%Y-%m-%d').date()
-            records = cls.query.filter(cls.city_id == city_id, cast(cls.weather_time, Date) == date_object).all()
-            return  WeatherResponse.response_weather_hours(records)
+            records = cls.query.filter(
+                cls.city_id == city_id,
+                cast(cls.weather_time, Date) == date_object
+            ).all()
+            return WeatherResponse.response_weather_hours(records)
         except Exception as e:
             return ErrorHandler.handle_error(
                 e,

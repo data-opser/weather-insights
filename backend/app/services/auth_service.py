@@ -4,7 +4,6 @@ from app.services.email_confirm_service import send_email_confirmation
 from app.utils import ErrorHandler, JwtUtils
 from flask import jsonify
 import flask_login
-from flask import request
 
 
 @login_manager.user_loader

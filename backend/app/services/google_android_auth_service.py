@@ -1,5 +1,5 @@
 from app.models import User
-from app import oauth, db
+from app import oauth
 from app.utils import ErrorHandler, GoogleUtils, JwtUtils
 from flask import request, session, jsonify
 import os

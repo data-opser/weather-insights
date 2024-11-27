@@ -2,7 +2,7 @@ from datetime import date
 from app.utils import ErrorHandler
 import requests
 
-qwwq
+
 class GoogleUtils:
 
     @staticmethod

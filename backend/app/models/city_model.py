@@ -2,8 +2,7 @@ from app import db
 from sqlalchemy.orm import deferred
 from sqlalchemy import Column, String, Float
 from app.utils import ErrorHandler
-
-from flask import jsonify, abort
+from flask import jsonify
 
 
 class City(db.Model):
@@ -32,8 +31,11 @@ class City(db.Model):
     @classmethod
     def get_all_cities_by_id(cls):
         try:
-            cities = (cls.query.with_entities(cls.id, cls.city, cls.country, cls.iso2, cls.iso3, cls.admin_name)
-                      .order_by(cls.id).all())
+            cities = (
+                cls.query.with_entities
+                (cls.id, cls.city, cls.country, cls.iso2, cls.iso3, cls.admin_name)
+                .order_by(cls.id).all()
+            )
             city_list = [{
                 "id": city.id, "city": city.city, "country": city.country,
                 "iso2": city.iso2, "iso3": city.iso3, "admin_name": city.admin_name
@@ -64,8 +66,16 @@ class City(db.Model):
     @classmethod
     def get_city_data_by_id(cls, city_id):
        try:
-           city_record = cls.query.with_entities(cls.city, cls.iso2, cls.country).filter_by(id=city_id).first()
-           return {"id": city_id, "city": city_record.city, "iso2": city_record.iso2, "country": city_record.country,}
+           city_record = (
+               cls.query.with_entities(cls.city, cls.iso2, cls.country).
+               filter_by(id=city_id).first()
+           )
+           return {
+               "id": city_id,
+               "city": city_record.city,
+               "iso2": city_record.iso2,
+               "country": city_record.country
+           }
        except Exception as e:
            raise ErrorHandler.handle_error(
                e,
