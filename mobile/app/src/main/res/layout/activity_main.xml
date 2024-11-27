@@ -8,6 +8,7 @@
     android:fitsSystemWindows="true"
     android:windowAnimationStyle="@style/WindowAnimationTransition"
     android:id="@+id/mainActivity"
+    android:background="@drawable/gradient_bcgrd_day"
     tools:context=".MainActivity">
 
     <FrameLayout
