@@ -1,6 +1,6 @@
 .page-hour {
     display: grid;
-    width: 1260px;
+    width: calc(100% - 40px);
     justify-self: center;
     grid-column: 1/3;
     background: white;
@@ -8,6 +8,7 @@
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.231);
     margin: 20px;
     height: 430px;
+    margin-bottom: 0;
 }
 
 .hour-table {
@@ -38,10 +39,4 @@
 .hour-table-main-text-wind,
 .hour-table-main-text-precipitation {
     margin: 10px 0px;
-}
-
-@media screen and (max-width: 1300px) {
-    .page-hour {
-        width: calc(100% - 40px);
-    }
 }
