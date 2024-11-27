@@ -10,24 +10,36 @@ class GoogleUtils:
         headers = {'Authorization': f'Bearer {access_token}'}
 
         try:
-            response = requests.get('https://people.googleapis.com/v1/people/me?personFields=birthdays',
-                                    headers=headers)
+            response = requests.get(
+                'https://people.googleapis.com/v1/people/me?personFields=birthdays',
+                headers=headers
+            )
             response.raise_for_status()
 
             birthday_info = response.json().get('birthdays', [{}])[0].get('date', {})
 
-            return date(
-                birthday_info.get('year', 1900),
-                birthday_info.get('month', 1),
-                birthday_info.get('day', 1)
-            )
+            if 'year' in birthday_info and 'month' in birthday_info and 'day' in birthday_info:
+                return date(
+                    birthday_info['year'],
+                    birthday_info['month'],
+                    birthday_info['day']
+                )
+
+            return None
 
         except requests.exceptions.RequestException as e:
-            return ErrorHandler.handle_error(
-                e,
-                message="Request failed while fetching birthday",
-                status_code=500
-            )
+            raise Exception("Failed to fetch birthday information.") from e
+
+    @staticmethod
+    def get_user_info(access_token):
+        url = 'https://www.googleapis.com/oauth2/v3/userinfo'
+        headers = {'Authorization': f'Bearer {access_token}'}
+
+        response = requests.get(url, headers=headers)
+        if response.status_code == 200:
+            return response.json()
+        else:
+            raise Exception(f"Error fetching user info: {response.text}")
 
     @staticmethod
     def get_fresh_google_access_token(user, google):
@@ -60,11 +72,5 @@ class GoogleUtils:
 
             return access_token
 
-        except ValueError as ve:
-            return ErrorHandler.handle_validation_error(str(ve))
         except requests.exceptions.RequestException as e:
-            return ErrorHandler.handle_error(
-                e,
-                message="Request failed while fetching google token",
-                status_code=500
-            )
+            raise Exception("Request failed while fetching google token.") from e
