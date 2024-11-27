@@ -60,4 +60,3 @@ class СurrentWeather(db.Model):
                 message="Iternal server error while getting sun times.",
                 status_code=500
             )
-        

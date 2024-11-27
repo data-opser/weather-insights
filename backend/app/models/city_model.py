@@ -1,5 +1,4 @@
 from app import db
-from sqlalchemy.orm import deferred
 from sqlalchemy import Column, String, Float
 from app.utils import ErrorHandler
 from flask import jsonify
@@ -65,20 +64,21 @@ class City(db.Model):
 
     @classmethod
     def get_city_data_by_id(cls, city_id):
-       try:
-           city_record = (
-               cls.query.with_entities(cls.city, cls.iso2, cls.country).
-               filter_by(id=city_id).first()
-           )
-           return {
-               "id": city_id,
-               "city": city_record.city,
-               "iso2": city_record.iso2,
-               "country": city_record.country
-           }
-       except Exception as e:
-           raise ErrorHandler.handle_error(
-               e,
-               message="Database error while getting city data",
-               status_code=500
-           )
+        try:
+            city_record = (
+                cls.query.with_entities(cls.city, cls.iso2, cls.country)
+                .filter_by(id=city_id)
+                .first()
+            )
+            return {
+                "id": city_id,
+                "city": city_record.city,
+                "iso2": city_record.iso2,
+                "country": city_record.country,
+            }
+        except Exception as e:
+            raise ErrorHandler.handle_error(
+                e,
+                message="Database error while getting city data",
+                status_code=500,
+            )
