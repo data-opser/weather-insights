@@ -5,7 +5,7 @@ import CityList from './cities/CityList';
 import AddCityButton from './cities/AddCityButton';
 import Days from './days/Days';
 import SunTime from './sun-time/SunTime';
-import SingleDayPage from '../single-day-page/SingleDayPage';
+import SingleDay from './single-day-block/SingleDay';
 
 const HomePage = () => {
   const { isLoggedIn } = useAuth();
@@ -80,7 +80,7 @@ const HomePage = () => {
       <div className='map'>
 
       </div>
-      <SingleDayPage cityId={currentCityId} date={selectedDate} />
+      <SingleDay cityId={currentCityId} date={selectedDate} />
     </div>
   );
 }

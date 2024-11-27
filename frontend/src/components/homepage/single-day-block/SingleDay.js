@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import "./SingleDayPage.css";
+import "./SingleDay.css";
 import Hour from "./Hour";
-import api from "../axiosConfig";
+import api from "../../axiosConfig";
 import { HiOutlineCog6Tooth } from "react-icons/hi2";
 
-const SingleDayPage = ({ date, cityId }) => {
+const SingleDay = ({ date, cityId }) => {
   const [hourlyData, setHourlyData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -68,4 +68,4 @@ const SingleDayPage = ({ date, cityId }) => {
   );
 };
 
-export default SingleDayPage;
+export default SingleDay;
