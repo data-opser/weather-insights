@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import { useAuth } from '../authContext';
 import { Link } from "react-router-dom";
 import './Header.css';
 import logo from './logo.png';
@@ -10,7 +11,7 @@ import api from '../axiosConfig';
 function Header() {
   const [modalActive, setModalActive] = useState(false);
   const [formType, setFormType] = useState('login');
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { isLoggedIn, login, logout } = useAuth();
 
   const formRef = useRef();
 
@@ -29,26 +30,11 @@ function Header() {
     try {
       const response = await api.post('/logout');
       console.log(response.data.message);
-      setIsLoggedIn(false);
+      logout();
     } catch (error) {
       console.error('Error logging out:', error);
     }
   };
-
-  useEffect(() => {
-    const checkLoginStatus = async () => {
-      try {
-        const response = await api.get('/profile');
-        console.log(response.data.message);
-        setIsLoggedIn(true);
-      } catch (error) {
-        console.error('Error checking login status:', error);
-        setIsLoggedIn(false);
-      }
-    }
-
-    checkLoginStatus();
-  }, []);
 
   return (
     <div className="header">
@@ -78,7 +64,7 @@ function Header() {
           type={formType}
           setActive={setModalActive}
           setFormType={setFormType}
-          onLoginSuccess={() => setIsLoggedIn(true)}
+          onLoginSuccess={login}
         />
       </Modal>
 

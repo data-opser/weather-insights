@@ -6,7 +6,7 @@ import './SelectCityForm.css';
 import api from '../../axiosConfig';
 import Flag from 'react-world-flags';
 
-const SelectCityForm = forwardRef(({ onClose }, ref) => {
+const SelectCityForm = forwardRef(({ onClose, addCity, setMainCity }, ref) => {
   const [cities, setCities] = useState([]);
   const [searchValue, setSearchValue] = useState('');
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
@@ -29,8 +29,9 @@ const SelectCityForm = forwardRef(({ onClose }, ref) => {
 
   const filteredCities = searchValue
     ? cities.filter(city =>
-        city.city.toLowerCase().includes(searchValue.toLowerCase())
-      )
+      city.city.toLowerCase().includes(searchValue.toLowerCase()) ||
+      city.country.toLowerCase().includes(searchValue.toLowerCase())
+    )
     : cities;
 
   const toggleDropdown = () => {
@@ -42,7 +43,7 @@ const SelectCityForm = forwardRef(({ onClose }, ref) => {
     if (e.target.value) {
       setIsDropdownVisible(true);
     } else {
-      setIsDropdownVisible(false); 
+      setIsDropdownVisible(false);
     }
   };
 
@@ -50,7 +51,7 @@ const SelectCityForm = forwardRef(({ onClose }, ref) => {
     e.preventDefault();
     setMessage('');
     setMessageType('');
-  
+
     try {
       const city = cities.find(city => city.city === searchValue);
       if (!city) {
@@ -58,13 +59,18 @@ const SelectCityForm = forwardRef(({ onClose }, ref) => {
         setMessageType('error');
         return;
       }
-  
+
       const response = await api.post(`/add_user_city/city?city=${city.id}`);
+      city.admin_name = undefined;
+      city.iso3 = undefined;
+      city.is_main = isMain;
+      addCity(city);
       if (isMain) {
         await api.put(`/set_main_user_city/city?city=${city.id}`);
+        setMainCity(city.id);
       }
       console.log(response.data.message);
-  
+
       setMessage(`${searchValue} ${isMain ? 'set as main and ' : ''}added successfully!`);
       setMessageType('success');
       clearForm(false);
@@ -76,8 +82,8 @@ const SelectCityForm = forwardRef(({ onClose }, ref) => {
   };
 
   const clearForm = (isFull = true) => {
-      setSearchValue('');
-      setIsDropdownVisible(false);
+    setSearchValue('');
+    setIsDropdownVisible(false);
     setIsMain(false);
     if (isFull) {
       setMessage('');
@@ -123,7 +129,7 @@ const SelectCityForm = forwardRef(({ onClose }, ref) => {
                   setSearchValue(city.city);
                 }}
               >
-                {city.city} <div className='country'><p>{city.country}</p> <Flag className='city-flag' code={city.iso2}/></div> 
+                {city.city} <div className='country'><p>{city.country}</p> <Flag className='city-flag' code={city.iso2} /></div>
               </div>
             ))
           ) : (
