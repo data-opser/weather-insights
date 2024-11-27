@@ -25,7 +25,6 @@ export const AuthProvider = ({ children }) => {
 
   const login = () => {
     setIsLoggedIn(true);
-    setTimeout(700);
     window.location.reload();
   };
   
@@ -33,7 +32,6 @@ export const AuthProvider = ({ children }) => {
     setIsLoggedIn(false);
     window.location.reload();
   };
-
 
   return (
     <AuthContext.Provider value={{ isLoggedIn, login, logout }}>

@@ -89,11 +89,8 @@ const AuthForm = forwardRef(({ type, setActive, setFormType, onLoginSuccess }, r
       }
 
       setSuccess('Login successful!');
-      onLoginSuccess?.();
-      
-      setTimeout(() => {
-        closeForm();
-      }, 700);
+      onLoginSuccess?.();      
+      closeForm();
     } catch (error) {
       setError(error.response?.data?.message || 'Failed to submit');
       console.error('Error:', error);

@@ -58,6 +58,7 @@ const HomePage = () => {
       <div className='cities'>
         <AddCityButton addCity={addCity} setMainCity={setMainCity} />
         <CityList
+          isLoggedIn={isLoggedIn}
           cityList={cityList}
           selectCity={selectCity}
           removeCity={removeCity}

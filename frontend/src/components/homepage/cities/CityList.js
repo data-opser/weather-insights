@@ -3,8 +3,8 @@ import './CityList.css';
 import api from '../../axiosConfig';
 import Flag from 'react-world-flags';
 
-function CityList({ cityList, selectCity, setMainCity, removeCity, setCityList, currentCityId }) {
-  const [loading, setLoading] = useState(true);
+function CityList({ isLoggedIn, cityList, selectCity, setMainCity, removeCity, setCityList, currentCityId }) {
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [contextMenu, setContextMenu] = useState({ isVisible: false, x: 0, y: 0, cityId: null });
 
@@ -44,6 +44,8 @@ function CityList({ cityList, selectCity, setMainCity, removeCity, setCityList, 
   };
 
   useEffect(() => {
+    if (!isLoggedIn) return; // Пропускаємо фетчинг для незалогіненого користувача
+
     const fetchCities = async () => {
       setLoading(true);
       setError(null);
@@ -71,21 +73,35 @@ function CityList({ cityList, selectCity, setMainCity, removeCity, setCityList, 
     return () => {
       document.removeEventListener('click', closeContextMenu);
     };
-  }, [setCityList]);
+  }, [isLoggedIn, setCityList]);
 
   return (
     <div className="city-list">
-      {loading && (
+      {isLoggedIn && loading && (
         <div className="loading">
           <p>Loading cities...</p>
         </div>
       )}
-      {error && (
+      {isLoggedIn && error && (
         <div className="error">
           <p style={{ color: 'red' }}>{error}</p>
         </div>
       )}
-      {!loading && !error && cityList.length > 0 && (
+      {!isLoggedIn && cityList.length > 0 && (
+        cityList.map((city) => (
+          <button
+            key={city.id}
+            className={currentCityId === city.id ? 'blue' : ''}
+            onClick={() => handleButtonClick(city.id)}
+          >
+            {city.city}
+            <div className="flag-container">
+              <Flag className="flag" code={city.iso2} />
+            </div>
+          </button>
+        ))
+      )}
+      {isLoggedIn && !loading && !error && cityList.length > 0 && (
         cityList.map((city) => (
           <button
             key={city.id}
@@ -100,7 +116,7 @@ function CityList({ cityList, selectCity, setMainCity, removeCity, setCityList, 
           </button>
         ))
       )}
-      {!loading && !error && cityList.length === 0 && (
+      {!isLoggedIn && cityList.length === 0 && (
         <div className="no-cities">
           <h1>No cities found</h1>
         </div>
