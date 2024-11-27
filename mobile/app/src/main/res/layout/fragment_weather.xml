@@ -1,22 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    style="@style/Fragment"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    tools:context=".WeatherFragment"
     android:padding="0dp"
     android:background="@drawable/gradient_bcgrd_day"
-    tools:context=".WeatherFragment">
+    style="@style/Fragment">
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:contentDescription="@string/error"
         android:scaleType="centerCrop"
-        android:src="@drawable/sky_stars"
+        android:src="@mipmap/stars2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
+    <TextView
+        style="@style/Text"
+        android:id="@+id/cityTextView"
+        android:layout_marginTop="90dp"
+        android:text="@string/weather_city"
+        android:textColor="@color/white"
+        android:textSize="45sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        style="@style/Text"
+        android:id="@+id/temperatureTextView"
+        android:text="@string/weather_temperature"
+        android:textSize="100sp"
+        android:textColor="@color/white"
+        android:fontFamily="@font/opensanslight"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cityTextView" />
+
+    <TextView
+        style="@style/Text"
+        android:id="@+id/weatherStatusTextView"
+        android:text="@string/weather_status"
+        android:textSize="22sp"
+        android:textColor="@color/white"
+        android:includeFontPadding="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/temperatureTextView" />
+
+    <TextView
+        style="@style/Text"
+        android:id="@+id/tempMinMaxTextView"
+        android:text="@string/weather_temperatureMaxMin"
+        android:textSize="22sp"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/weatherStatusTextView" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/tempForDayCardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="15dp"
+        android:backgroundTint="#9882E2"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tempMinMaxTextView" >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="18dp"
+            android:paddingEnd="0dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="18dp">
+
+            <TextView
+                style="@style/Text"
+                android:id="@+id/weatherInfoTextView"
+                android:text="@string/weather_info"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                style="@style/ListLineView"
+                android:id="@+id/line"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="18dp"
+                android:background="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/weatherInfoTextView"/>
+
+            <TextView
+                style="@style/Text"
+                android:id="@+id/weatherTodayTextView"
+                android:text="@string/weather_day_today"
+                android:textColor="@color/white"
+                android:layout_marginTop="12dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/line" />
+
+            <ImageView
+                android:id="@+id/weatherImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/error"
+                android:src="@drawable/ic_weather_moon"
+                android:layout_margin="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/weatherTodayTextView"
+                app:layout_constraintTop_toBottomOf="@+id/weatherTodayTextView" />
+
+            <TextView
+                style="@style/Text"
+                android:text="@string/weather_temperature"
+                android:textSize="26sp"
+                android:textColor="@color/white"
+                android:layout_margin="4dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/weatherTodayTextView"
+                app:layout_constraintTop_toBottomOf="@+id/weatherImageView" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
