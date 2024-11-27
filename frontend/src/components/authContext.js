@@ -7,7 +7,7 @@ export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userData, setUsexcrData] = useState(null);
+  const [userData, setUserData] = useState(null);
 
   useEffect(() => {
     const checkAuthStatus = async () => {

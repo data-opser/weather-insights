@@ -194,7 +194,7 @@ const UserPage = () => {
               </div>
 
             </form>
-          </div>
+          </div>  
         </div>
       </div>
 
