@@ -151,7 +151,6 @@
 .faq-text input {
   margin: 0px 0px 10px 20px;
   padding: 10px;
-  border: 0;
   background-color: white;
   font-size: 18px;
   border-radius: 0.75em;
@@ -159,12 +158,51 @@
   outline: none;
   box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.231);
 }
+.faq-text .field {
+  background-color: white;  
+  border-radius: 0.75em;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.231);
+  width: 200px;
+  margin: 10px 20px;
+  position: relative;
+}
+
+.faq-text .field:first-child {
+  margin-top: 0;
+}
+
+.faq-text .field input {
+  outline: none;
+  height: 100%;
+  margin: 0;
+  border: none;
+  align-self: center;
+  margin: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.faq-text .field input {
+  font-size: medium;
+}
+
+.faq-text .field .icon {
+  width: 25px;
+  height: 25px;
+  opacity: 50%;
+  cursor: pointer;
+  position: absolute;
+  right: 10px;  
+  top: 50%;
+  transform: translateY(-50%); 
+}
 
 .faq-text button {
   font-size: 18px;
   position: absolute;
   right: 20px;
   margin: 0;
+  bottom: 20px;
 }
 
 .faq-text button:disabled {
@@ -222,7 +260,6 @@
   .faq-text button {
     font-size: 14px;
   }
-
 }
 
 @media only screen and (max-width: 600px) {

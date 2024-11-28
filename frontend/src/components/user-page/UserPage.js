@@ -5,6 +5,7 @@ import { useAuth } from '../authContext';
 import './UserPage.css';
 import { GoPlus } from "react-icons/go";
 import { BsPerson } from "react-icons/bs";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 import { AiOutlineDown } from "react-icons/ai";
 import Notifications from './Notifications';
 
@@ -18,23 +19,42 @@ const UserPage = () => {
 
   const handleAddPhotoButtonClick = () => {
     setActiveAddPhotoButton(true);
-  } 
+  }
+
+  const [showOldPassword, setShowOldPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
 
   const { userData, setUserData } = useAuth();
-  const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(null);
+
+  const [nameError, setNameError] = useState(null);
+  const [birthdayError, setBirthdayError] = useState(null);
+  const [passwordError, setPasswordError] = useState(null);
+  const [nameSuccess, setNameSuccess] = useState(null);
+  const [birthdaySuccess, setBirthdaySuccess] = useState(null);
+  const [passwordSuccess, setPasswordSuccess] = useState(null);
 
   const name = useInput('', { isEmpty: true, minLength: 3, maxLength: 119 });
   const birthday = useInput('', { isEmpty: true });
   const oldPassword = useInput('', { isEmpty: true, minLength: 8 });
   const newPassword = useInput('', { isEmpty: true, minLength: 8 });
 
+  const handleOldPasswordEyeClick = () => setShowOldPassword(!showOldPassword);
+  const handleNewPasswordEyeClick = () => setShowNewPassword(!showNewPassword);
+
   const handleSubmit = async (field) => {
-    setError(null);
-    setSuccess(null);
+    if (field === 'name') {
+      setNameError(null);
+      setNameSuccess(null);
+    } else if (field === 'birthday') {
+      setBirthdayError(null);
+      setBirthdaySuccess(null);
+    } else if (field === 'password') {
+      setPasswordError(null);
+      setPasswordSuccess(null);
+    }
 
     try {
-      const payload = {}; 
+      const payload = {};
       if (field === 'name' && name.inputValid) {
         payload.name = name.value;
       } else if (field === 'birthday' && birthday.inputValid) {
@@ -43,33 +63,40 @@ const UserPage = () => {
         payload.old_password = oldPassword.value;
         payload.new_password = newPassword.value;
       } else {
-        setError('Invalid input');
-        return;
+        throw new Error('Invalid input');
       }
+
       let response;
       if (field === 'password') {
+        console.log(payload);
         response = await api.get('/update_password', payload);
       } else {
         response = await api.put('/update_profile', payload);
       }
-      if (response.status === 200) {
-        setSuccess(`${field.charAt(0).toUpperCase() + field.slice(1)} updated successfully`);
-        console.log(response.data.message);
-      }
-      if (field === 'name') setUserData((prev) => ({ ...prev, name: name.value }));
-      if (field === 'birthday') setUserData((prev) => ({ ...prev, birthday: birthday.value }));
 
-      setTimeout(() => setSuccess(null), 3000);
+      if (response.status === 200) {
+        if (field === 'name') setNameSuccess('Name updated successfully');
+        if (field === 'birthday') setBirthdaySuccess('Birthday updated successfully');
+        if (field === 'password') setPasswordSuccess('Password updated successfully');
+
+        if (field === 'name') setUserData((prev) => ({ ...prev, name: name.value }));
+        if (field === 'birthday') setUserData((prev) => ({ ...prev, birthday: birthday.value }));
+      }
+      setTimeout(() => {
+        if (field === 'name') setNameSuccess(null);
+        if (field === 'birthday') setBirthdaySuccess(null);
+        if (field === 'password') setPasswordSuccess(null);
+      }, 3000);
     } catch (error) {
-      console.log(error);
-      setError(error.response?.data?.message || 'Failed to update profile');
+      if (field === 'name') setNameError('Failed to update name');
+      if (field === 'birthday') setBirthdayError('Failed to update birthday');
+      if (field === 'password') setPasswordError('Failed to update password');
     }
   };
 
   return (
     <div className="user-page">
       <div className="user">
-
         <div className='user-block1'>
           <BsPerson className='user-photo' />
           <GoPlus
@@ -81,7 +108,6 @@ const UserPage = () => {
           <p className='user-text-bold'>My profile</p>
           <p className='user-block2-text-gray'>Created at: {userData ? new Date(userData.created_at).toLocaleString() : 'no information'}</p>
         </div>
-
         <div className='faq'>
           <div className='faq-item'>
             <label className='faq-title-email'>
@@ -89,7 +115,6 @@ const UserPage = () => {
               <p className='faq-title-text'>{userData ? userData.email : 'no information'}</p>
             </label>
           </div>
-
           <div className='faq-item'>
             <input className='faq-input' type='checkbox' id='faq_1'></input>
             <label className='faq-title' htmlFor='faq_1'>
@@ -118,13 +143,11 @@ const UserPage = () => {
               <div className='faq-status'>
                 {name.isDirty && name.isEmpty && <p className="error-text">Name cannot be empty</p>}
                 {name.isDirty && !name.isEmpty && name.minLengthError && <p className="error-text">Name is too small</p>}
-                {error && <p className='error-text'>{error}</p>}
-                {success && <p className='success-text'>{success}</p>}
+                {nameError && <p className='error-text'>{nameError}</p>}
+                {nameSuccess && <p className='success-text'>{nameSuccess}</p>}
               </div>
             </form>
-
           </div>
-
           <div className='faq-item'>
             <input className='faq-input' type='checkbox' id='faq_2'></input>
             <label className='faq-title' htmlFor='faq_2'>
@@ -133,11 +156,11 @@ const UserPage = () => {
                 {userData && userData.birthday
                   ? new Date(userData.birthday).toLocaleDateString('en-GB')
                   : 'no information'}
-              </p>            </label>
+              </p>            
+            </label>
             <label className='faq-label-arrow-top' htmlFor="faq_2">
               <AiOutlineDown className="faq-arrow-top" />
             </label>
-
             <form className="faq-text" onSubmit={(e) => { e.preventDefault(); handleSubmit('birthday'); }}>
               <input
                 type="date"
@@ -154,43 +177,54 @@ const UserPage = () => {
               </button>
               <div className='faq-status'>
                 {birthday.isDirty && birthday.isEmpty && <p className="error-text">Select your birthday</p>}
-                {error && <p className='error-text'>{error}</p>}
-                {success && <p className='success-text'>{success}</p>}
+                {birthdayError && <p className='error-text'>{birthdayError}</p>}
+                {birthdaySuccess && <p className='success-text'>{birthdaySuccess}</p>}
               </div>
             </form>
           </div>
-
           <div className='faq-item'>
             <input className='faq-input' type='checkbox' id='faq_3'></input>
             <label className='faq-title' htmlFor='faq_3'><p className='faq-title-type'>Password</p></label>
             <label className='faq-label-arrow-top' htmlFor="faq_3">
               <AiOutlineDown className="faq-arrow-top" />
             </label>
-
             <form className="faq-text" onSubmit={(e) => { e.preventDefault(); handleSubmit('password'); }}>
-              <input
-                type="password"
-                value={oldPassword.value}
-                onChange={oldPassword.onChange}
-                onBlur={oldPassword.onBlur}
-                placeholder="old password"
-              />
-              <div>
+              <div className='field'>
                 <input
-                  type="password"
+                  type={showOldPassword ? "text" : "password"}
+                  value={oldPassword.value}
+                  onChange={oldPassword.onChange}
+                  onBlur={oldPassword.onBlur}
+                  placeholder="old password"
+                />
+                {showOldPassword ? (
+                  <FiEyeOff onClick={handleOldPasswordEyeClick} className='icon show-password' />
+                ) : (
+                  <FiEye onClick={handleOldPasswordEyeClick} className='icon show-password' />
+                )}
+              </div>
+              <div className='field'>
+                <input
+                  type={showNewPassword ? "text" : "password"}
                   value={newPassword.value}
                   onChange={newPassword.onChange}
                   onBlur={newPassword.onBlur}
                   placeholder="new password"
                 />
-                <button
-                  type='submit'
-                  className={`user-button ${activeSaveButton ? 'blue' : ''}`}
-                  onClick={handleSaveButtonClick}
-                  disabled={!oldPassword.inputValid || !newPassword.inputValid}>
-                  Save
-                </button>
-                <div className='faq-status'>
+                {showNewPassword ? (
+                  <FiEyeOff onClick={handleNewPasswordEyeClick} className='icon show-password' />
+                ) : (
+                  <FiEye onClick={handleNewPasswordEyeClick} className='icon show-password' />
+                )}
+              </div>
+              <button
+                type='submit'
+                className={`user-button ${activeSaveButton ? 'blue' : ''}`}
+                onClick={handleSaveButtonClick}
+                disabled={!oldPassword.inputValid || !newPassword.inputValid}>
+                Save
+              </button>
+              <div className='faq-status'>
                   {oldPassword.isDirty && oldPassword.isEmpty ? (
                     <p className="error-text">Old password cannot be empty</p>
                   ) : (
@@ -205,9 +239,9 @@ const UserPage = () => {
                       {newPassword.isDirty && newPassword.minLengthError && <p className="error-text">New password is too short</p>}
                     </>
                   )}
+                  {passwordError && <p className='error-text'>{passwordError}</p>}
+                  {passwordSuccess && <p className='success-text'>{passwordSuccess}</p>}  
                 </div>
-              </div>
-
             </form>
           </div>
         </div>
@@ -215,6 +249,6 @@ const UserPage = () => {
       <Notifications />
     </div>
   );
-}
+};
 
 export default UserPage;
