@@ -5,11 +5,13 @@ import CityList from './cities/CityList';
 import AddCityButton from './cities/AddCityButton';
 import Days from './days/Days';
 import SunTime from './sun-time/SunTime';
+import SingleDay from './single-day-block/SingleDay';
 
 const HomePage = () => {
   const { isLoggedIn } = useAuth();
   const [cityList, setCityList] = useState([]);
   const [currentCityId, setCurrentCityId] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
   const [activeButton, setActiveButton] = useState(null);
 
   const defaultCity = {
@@ -53,6 +55,10 @@ const HomePage = () => {
     setCityList((prevList) => prevList.filter((city) => city.id !== cityId));
   };
 
+  const handleDayClick = (date) => {
+    setSelectedDate(date);
+  };
+
   return (
     <div className="home-page">
       <div className='cities'>
@@ -69,11 +75,12 @@ const HomePage = () => {
           currentCityId={currentCityId}
         />
       </div>
-      <Days cityId={currentCityId} />
+      <Days cityId={currentCityId} onDayClick={handleDayClick} />
       <SunTime cityId={currentCityId} />
       <div className='map'>
 
       </div>
+      <SingleDay cityId={currentCityId} date={selectedDate} />
     </div>
   );
 }

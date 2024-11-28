@@ -22,14 +22,16 @@
   color: inherit;
 }
 
-.logo {
-  border-radius: 50%;
-  height: 50px;
-  padding: 10px;
+.block-with-logo p {
+  margin-left: 10px;
 }
 
-.block-with-logo p {
-  margin: 0;
+.logo {
+  border-radius: 50%;
+  height: 35px;
+  padding: 10px;
+  margin-left: 10px;
+  background: white;
 }
 
 .login-button {

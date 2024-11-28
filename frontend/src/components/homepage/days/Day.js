@@ -4,7 +4,7 @@ import { BsSnow, BsCloudRainHeavy, BsCloudsFill } from "react-icons/bs";
 import { WiRaindrop } from "react-icons/wi";
 import "./Day.css";
 
-function Day({ date, weather, tempMin, tempMax, humidity, wind, cityId }) {
+function Day({ date, weather, tempMin, tempMax, humidity, wind, cityId, onDayClick }) {
   const getWeatherIcon = () => {
     switch (weather) {
       case "Snow":
@@ -27,7 +27,14 @@ function Day({ date, weather, tempMin, tempMax, humidity, wind, cityId }) {
   };
 
   return (
-    <Link to={`/day/${date}/${cityId}`} className="day-link">
+    <Link
+      to="#"
+      className="day-link"
+      onClick={(e) => {
+        e.preventDefault();
+        onDayClick(date);
+      }}
+    >
       <div className={`day ${weather.toLowerCase()}`}>
         <p className="date">{formatDate(date)}</p>
         {getWeatherIcon()}

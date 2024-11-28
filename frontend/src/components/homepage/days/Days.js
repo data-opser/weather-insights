@@ -4,7 +4,7 @@ import Day from './Day';
 import api from '../../axiosConfig';
 import { HiOutlineCog6Tooth } from "react-icons/hi2";
 
-const Days = ({ cityId }) => {
+const Days = ({ cityId, onDayClick }) => {
   const [weatherData, setWeatherData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -20,6 +20,10 @@ const Days = ({ cityId }) => {
         const response = await api.get(`/weatherday/city?city=${cityId}`);
         const filteredData = response.data.slice(0, 4);
         setWeatherData(filteredData);
+        if (filteredData.length > 0 && onDayClick) {
+          onDayClick(filteredData[0].date);
+        }
+
       } catch (error) {
         setError('Failed to fetch weather data');
         console.log(error.message);
@@ -52,6 +56,7 @@ const Days = ({ cityId }) => {
               tempMax={day.temperature_max}
               humidity={day.humidity}
               wind={day.wind_speed}
+              onDayClick={onDayClick}
             />
           ))}
         </div>
