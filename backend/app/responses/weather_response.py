@@ -36,7 +36,10 @@ class WeatherResponse:
                 "wind_speed": round(record.wind_speed, 2),
                 "wind_degree": round(record.wind_degree, 2),
                 "wind_gust": round(record.wind_gust, 2),
-                "clouds_percent": record.clouds_percent
+                "clouds_percent": record.clouds_percent,
+                "rain_precipitation": round(getattr(record, 'rain_precipitation', 0), 2),
+                "snow_precipitation": round(getattr(record, 'snow_precipitation', 0), 2),
+                "pressure_ground_level":round(record.pressure_ground_level, 3)
             } for record in records
         ]
         return jsonify(weather_data)
