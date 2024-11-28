@@ -34,6 +34,10 @@ def update_user_profile(user_id, data):
                 message=f"User with ID '{user_id}' not found.",
                 status_code=404
             )
+    except ValueError as ve:
+        return ErrorHandler.handle_validation_error(str(ve))
+    except RuntimeError as re:
+        return ErrorHandler.handle_error(re, message=str(re), status_code=500)
     except Exception as e:
         return ErrorHandler.handle_error(
             e,
@@ -50,6 +54,10 @@ def update_user_password(user_id, data):
             return jsonify({'message': 'Password updated successfully.'}), 200
         else:
             return ErrorHandler.handle_error(None, message="User not found.", status_code=404)
+    except ValueError as ve:
+        return ErrorHandler.handle_validation_error(str(ve))
+    except RuntimeError as re:
+        return ErrorHandler.handle_error(re, message=str(re), status_code=500)
     except Exception as e:
         return ErrorHandler.handle_error(
             e,

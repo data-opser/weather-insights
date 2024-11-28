@@ -57,6 +57,8 @@ def session_login_user(data):
         return ErrorHandler.handle_validation_error(str(ve))
     except PermissionError as pe:
         return ErrorHandler.handle_error(pe, message=str(pe), status_code=403)
+    except RuntimeError as re:
+        return ErrorHandler.handle_error(re, message=str(re), status_code=500)
     except Exception as e:
         return ErrorHandler.handle_error(
             e,
@@ -78,6 +80,8 @@ def token_login_user(data):
         return ErrorHandler.handle_validation_error(str(ve))
     except PermissionError as pe:
         return ErrorHandler.handle_error(pe, message=str(pe), status_code=403)
+    except RuntimeError as re:
+        return ErrorHandler.handle_error(re, message=str(re), status_code=500)
     except Exception as e:
         return ErrorHandler.handle_error(
             e,
