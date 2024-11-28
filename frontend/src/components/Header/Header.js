@@ -1,9 +1,10 @@
 import { useState, useRef, useEffect } from 'react';
 import { useAuth } from '../authContext';
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import './Header.css';
-import logo from './logo.png';
+import logo from './AuthForm/form-weather-icon.png';
 import { CiLogin } from "react-icons/ci";
+import { CgProfile } from "react-icons/cg";
 import Modal from '../Modal';
 import AuthForm from './AuthForm/AuthForm';
 import api from '../axiosConfig';
@@ -12,6 +13,7 @@ function Header() {
   const [modalActive, setModalActive] = useState(false);
   const [formType, setFormType] = useState('login');
   const { isLoggedIn, login, logout } = useAuth();
+  const location = useLocation();
 
   const formRef = useRef();
 
@@ -43,12 +45,22 @@ function Header() {
         <p>Weather Insights</p>
       </Link>
       {isLoggedIn ? (
-        <button
-          className="login-button"
-          onClick={handleLogout}>
-          <CiLogin className="icon-button-login" />
-          Log out
-        </button>
+        location.pathname === '/profile' ? (
+          <button
+            className="login-button"
+            onClick={handleLogout}>
+            <CiLogin className="icon-button-login" />
+            Log out
+          </button>
+        ) : (
+          <Link to="/profile" className="profile-link">
+            <button
+              className="login-button">
+              <CgProfile className="icon-button-login" />
+              Profile
+            </button>
+          </Link>
+        )
       ) : (
         <button
           className={`login-button ${!modalActive ? 'blue' : ''}`}

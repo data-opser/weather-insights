@@ -22,14 +22,16 @@
   color: inherit;
 }
 
-.logo {
-  border-radius: 50%;
-  height: 50px;
-  padding: 10px;
+.block-with-logo p {
+  margin-left: 10px;
 }
 
-.block-with-logo p {
-  margin: 0;
+.logo {
+  border-radius: 50%;
+  height: 35px;
+  padding: 10px;
+  margin-left: 10px;
+  background: white;
 }
 
 .login-button {
@@ -48,6 +50,7 @@
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.231);
   position: absolute;
   right: 0;
+  top: -5px
 }
 
 .login-button:hover {
@@ -68,6 +71,11 @@
 
 .icon-button-login.white {
   color: white;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
 }
 
 @media only screen and (max-width: 1300px) {

@@ -44,7 +44,7 @@
 }
 
 .sun-time .sun.spinning {
-    animation: spin 30s linear infinite;
+    animation: spin 4s linear infinite;
 }
 
 .sun-time h1 {
