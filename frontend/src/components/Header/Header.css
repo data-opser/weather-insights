@@ -50,6 +50,7 @@
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.231);
   position: absolute;
   right: 0;
+  top: -5px
 }
 
 .login-button:hover {
@@ -70,6 +71,11 @@
 
 .icon-button-login.white {
   color: white;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
 }
 
 @media only screen and (max-width: 1300px) {
