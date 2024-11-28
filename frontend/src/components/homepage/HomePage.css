@@ -1,6 +1,6 @@
 .home-page {
     display: grid;
-    grid-template-rows: 80px 1fr 1fr;
+    grid-template-rows: 80px 1fr 1fr auto;
     grid-template-columns: auto 1fr;
     width: 1300px;
     justify-self: center;
@@ -36,7 +36,6 @@
     }   
 }
 
-
 @media only screen and (max-width: 900px) {
     .cities .city-list {
         width: stretch;
@@ -48,7 +47,7 @@
         min-width: auto;
     }
     .home-page {
-        grid-template-rows: 80px auto auto 1fr;
+        grid-template-rows: 80px repeat(4, auto);
     }
 
     .sun-time {
@@ -58,6 +57,7 @@
     .map {
         grid-row: 4;
         height: 100%;
+        display: none;
     }
 
     .cities .add-city-button {
