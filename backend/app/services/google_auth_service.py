@@ -1,12 +1,9 @@
 from app.models import User
-from flask import url_for, session
-from datetime import date, datetime, timedelta, timezone
-from app import oauth, db
-from app.utils import ErrorHandler
-from flask import jsonify, redirect, flash
+from app import oauth
+from app.utils import ErrorHandler, GoogleUtils, JwtUtils
+from flask import redirect, flash, url_for, session, jsonify
 import flask_login
 import os
-import requests
 
 google = oauth.register(
     name='google',
@@ -21,6 +18,7 @@ google = oauth.register(
 
 )
 
+
 def initiate_google_login():
     try:
         nonce = os.urandom(16).hex()
@@ -29,7 +27,11 @@ def initiate_google_login():
         return google.authorize_redirect(redirect_uri, nonce=nonce)
 
     except Exception as e:
-        return ErrorHandler.handle_error(e, message="An error occurred during Google login initiation", status_code=500)
+        return ErrorHandler.handle_error(
+            e,
+            message="An error occurred during Google login initiation",
+            status_code=500
+        )
 
 
 def handle_google_callback():
@@ -43,7 +45,7 @@ def handle_google_callback():
         if not user_info:
             raise PermissionError('Failed to fetch user info.')
 
-        birthday = fetch_google_birthday(token.get('access_token'))
+        birthday = GoogleUtils.fetch_google_birthday(token.get('access_token'))
         existing_user = User.get_user_by_email(user_info['email'])
 
         if existing_user:
@@ -70,61 +72,64 @@ def handle_google_callback():
         flash('Logged in with Google successfully.', 'success')
         return redirect(os.getenv('FRONTEND_LINK'))
 
+    except ValueError as ve:
+        return ErrorHandler.handle_validation_error(str(ve))
     except PermissionError as pe:
         return ErrorHandler.handle_error(pe, message=str(pe), status_code=403)
+    except RuntimeError as re:
+        return ErrorHandler.handle_error(re, message=str(re), status_code=500)
     except Exception as e:
-        return ErrorHandler.handle_error(e, message="Internal server error during Google login", status_code=500)
-
-
-def fetch_google_birthday(access_token):
-    headers = {'Authorization': f'Bearer {access_token}'}
-
-    try:
-        response = requests.get('https://people.googleapis.com/v1/people/me?personFields=birthdays',
-                                headers=headers)
-        response.raise_for_status()
-
-        birthday_info = response.json().get('birthdays', [{}])[0].get('date', {})
-
-        return date(
-            birthday_info.get('year', 1900),
-            birthday_info.get('month', 1),
-            birthday_info.get('day', 1)
+        return ErrorHandler.handle_error(
+            e,
+            message="Internal server error during Google login",
+            status_code=500
         )
 
-    except requests.exceptions.RequestException as e:
-        return ErrorHandler.handle_error(e, message="Request failed while fetching birthday",
-                                         status_code=500)
 
-
-def get_fresh_google_access_token(user):
-
-    if not user.google_refresh_token:
-        raise ValueError("Refresh token not available for the user.")
-
-    refresh_token = user.get_refresh_token()
-
+def google_android_login(data):
     try:
-        data = {
-            "client_id": google.client_id,
-            "client_secret": google.client_secret,
-            "refresh_token": refresh_token,
-            "grant_type": "refresh_token"
-        }
+        if not data or not data.get('access_token'):
+            raise ValueError("Access token is required")
 
-        response = requests.post(google.access_token_url, data=data)
-        response.raise_for_status()
+        user_info = GoogleUtils.get_user_info(data.get('access_token'))
+        if not user_info:
+            raise PermissionError('Failed to fetch user info.')
 
-        token_data = response.json()
-        access_token = token_data.get('access_token')
+        birthday = GoogleUtils.fetch_google_birthday(data.get('access_token'))
+        existing_user = User.get_user_by_email(user_info.get('email'))
 
-        if not access_token:
-            return ErrorHandler.handle_error(None, message="Failed to obtain a new access token.",
-                                             status_code=500)
+        if existing_user:
+            if not existing_user.google_id:
+                existing_user.add_google_data(user_info.get('sub'), data.get('refresh_token'))
+                existing_user.verify_email()
+            if not existing_user.birthday:
+                existing_user.update_profile({"birthday": birthday})
 
-        return access_token
+            token = JwtUtils.generate_jwt({'user_id': str(existing_user.user_id)})
+        else:
+            data = {
+                'name': user_info.get('given_name'),
+                'email': user_info.get('email'),
+                'birthday': birthday,
+                'google_id': user_info.get('sub'),
+                'refresh_token': data.get('refresh_token'),
+            }
+            user = User.google_register_user(data)
+            user.verify_email()
+
+            token = JwtUtils.generate_jwt({'user_id': str(user.user_id)})
+
+        return jsonify({'message': 'Logged in successfully.', 'token': token}), 200
 
     except ValueError as ve:
         return ErrorHandler.handle_validation_error(str(ve))
-    except requests.exceptions.RequestException as e:
-        return ErrorHandler.handle_error(e, message="Request failed while fetching google token", status_code=500)
+    except PermissionError as pe:
+        return ErrorHandler.handle_error(pe, message=str(pe), status_code=403)
+    except RuntimeError as re:
+        return ErrorHandler.handle_error(re, message=str(re), status_code=500)
+    except Exception as e:
+        return ErrorHandler.handle_error(
+            e,
+            message="Internal server error during Google login",
+            status_code=500
+        )

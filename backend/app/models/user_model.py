@@ -48,7 +48,10 @@ class User(db.Model, UserMixin):
         self.google_refresh_token = cipher.encrypt(refresh_token.encode()).decode()
 
     def get_refresh_token(self):
-        return cipher.decrypt(self.google_refresh_token.encode()).decode() if self.google_refresh_token else None
+        if self.google_refresh_token:
+            return cipher.decrypt(self.google_refresh_token.encode()).decode()
+        else:
+            return None
 
     @staticmethod
     def get_user_by_email(email):
@@ -78,7 +81,7 @@ class User(db.Model, UserMixin):
             return ErrorHandler.handle_validation_error(str(ve))
         except Exception as e:
             db.session.rollback()
-            return ErrorHandler.handle_error(e, message="Database error while user register", status_code=500)
+            raise RuntimeError("Database error while user register") from e
 
     def add_user_data(self, data):
         name = data.get('name')
@@ -96,7 +99,7 @@ class User(db.Model, UserMixin):
             db.session.commit()
         except Exception as e:
             db.session.rollback()
-            return ErrorHandler.handle_error(e, message="Database error while user updating", status_code=500)
+            raise RuntimeError("Database error while user updating") from e
 
     @classmethod
     def google_register_user(cls, data):
@@ -121,13 +124,14 @@ class User(db.Model, UserMixin):
 
             if refresh_token:
                 user.set_refresh_token(refresh_token)
+                db.session.commit()
             return user
 
         except ValueError as ve:
             return ErrorHandler.handle_validation_error(str(ve))
         except Exception as e:
             db.session.rollback()
-            return ErrorHandler.handle_error(e, message="Database error while google register", status_code=500)
+            raise RuntimeError("Database error while user google register") from e
 
     def add_google_data(self, google_id, refresh_token):
         try:
@@ -136,9 +140,10 @@ class User(db.Model, UserMixin):
 
             if refresh_token:
                 self.set_refresh_token(refresh_token)
+                db.session.commit()
         except Exception as e:
             db.session.rollback()
-            return ErrorHandler.handle_error(e, message="Database error while adding google data", status_code=500)
+            raise Exception("Database error while adding google data") from e
 
     def verify_email(self):
         self.email_confirmed = True
@@ -146,7 +151,7 @@ class User(db.Model, UserMixin):
             db.session.commit()
         except Exception as e:
             db.session.rollback()
-            return ErrorHandler.handle_error(e, message="Database error while verifying email", status_code=500)
+            raise RuntimeError("Database error while verifying email") from e
 
     def drop_email_verification(self):
         self.email_confirmed = False
@@ -154,8 +159,7 @@ class User(db.Model, UserMixin):
             db.session.commit()
         except Exception as e:
             db.session.rollback()
-            return ErrorHandler.handle_error(e, message="Database error while dropping email verification",
-                                             status_code=500)
+            raise RuntimeError("Database error while dropping email verification") from e
 
     def update_profile(self, data):
         name = data.get('name')
@@ -170,24 +174,25 @@ class User(db.Model, UserMixin):
             db.session.commit()
         except Exception as e:
             db.session.rollback()
-            return ErrorHandler.handle_error(e, message="Database error while user profile updating", status_code=500)
+            raise RuntimeError("Database error while dropping email verification") from e
 
     def update_password(self, data):
-        try:
-            old_password = data.get('old_password')
-            new_password = data.get('new_password')
+        old_password = data.get('old_password')
+        new_password = data.get('new_password')
 
-            if self.check_password(old_password):
-                if new_password:
-                    self.set_password(new_password)
-                else:
-                    raise ValueError("New password is required.")
+        if self.check_password(old_password):
+            if new_password:
+                self.set_password(new_password)
             else:
-                raise ValueError("Invalid old password.")
+                raise ValueError("New password is required.")
+        else:
+            raise ValueError("Invalid old password.")
 
+        try:
+            db.session.commit()
         except Exception as e:
             db.session.rollback()
-            return ErrorHandler.handle_error(e, message="Database error while user password updating", status_code=500)
+            raise RuntimeError("Database error while updating password") from e
 
     def get_profile_data(self):
         return {

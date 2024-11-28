@@ -20,14 +20,22 @@ def auth_required(f):
                 payload = JwtUtils.decode_jwt(token)
                 user = User.query.get(payload['user_id'])
                 if not user:
-                    return ErrorHandler.handle_error(None, message="User not found.", status_code=404)
+                    return ErrorHandler.handle_error(
+                        None,
+                        message=f"User with ID '{payload['user_id']}' not found.",
+                        status_code=404
+                    )
 
                 # Attach the user to the request context
                 request.current_user = user
             except ValueError as ve:
                 return ErrorHandler.handle_error(ve, status_code=401)
             except Exception as e:
-                return ErrorHandler.handle_error(e, message="Iternal server error while token verify", status_code=500)
+                return ErrorHandler.handle_error(
+                    e,
+                    message="Iternal server error while token verify",
+                    status_code=500
+                )
 
             return f(*args, **kwargs)
 
@@ -37,6 +45,10 @@ def auth_required(f):
             return f(*args, **kwargs)
 
         # If neither session nor token is valid, return an error
-        return ErrorHandler.handle_error(None, message="Authentication required", status_code=401)
+        return ErrorHandler.handle_error(
+            None,
+            message="Authentication required",
+            status_code=401
+        )
 
     return decorated

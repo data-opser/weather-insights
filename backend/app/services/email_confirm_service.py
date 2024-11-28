@@ -34,8 +34,11 @@ def send_email_confirmation(user):
         return jsonify({'message': 'The email confirmation was sent successfully.'}), 200
 
     except Exception as e:
-        return ErrorHandler.handle_error(e, message="Internal server error while sending the email confirmation.",
-                                         status_code=500)
+        return ErrorHandler.handle_error(
+            e,
+            message="Internal server error while sending the email confirmation.",
+            status_code=500
+        )
 
 
 def verify_email_token(token):
@@ -69,12 +72,22 @@ def verify_email_token(token):
 
         return error_html_body
 
+    except RuntimeError as re:
+        with open("app/templates/email_confirmation_error.html", "r") as html_file:
+            error_html_template = html_file.read()
+
+        error_html_body = render_template_string(
+            error_html_template,
+            error_message=str(re)
+        )
+        return error_html_body
+
     except Exception as e:
         with open("app/templates/email_confirmation_error.html", "r") as html_file:
             error_html_template = html_file.read()
 
         error_html_body = render_template_string(
             error_html_template,
-            error_message="Internal server error during email confirmation."
+            error_message=f"Internal server error during email confirmation. {str(e)}"
         )
         return error_html_body

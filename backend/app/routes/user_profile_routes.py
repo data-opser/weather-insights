@@ -1,8 +1,7 @@
 from flask import Blueprint, request
-from app.models import User, UserCity
+from app.models import UserCity
 from app.services.password_reset_service import send_password_reset_email
 from app.services import profile_service
-from app.utils import ErrorHandler
 from app.utils.auth_decorator import auth_required
 
 user_profile_bp = Blueprint('user_profile', __name__)
@@ -33,19 +32,8 @@ def update_password():
 
 @user_profile_bp.route('/reset_password', methods=['POST'])
 def reset_password_request():
-    try:
-        data = request.get_json()
-        if not data or not data.get('email'):
-            raise ValueError("Email is required")
-
-        user = User.get_user_by_email(data['email'])
-        if not user:
-            return ErrorHandler.handle_error(None, message=f"User with email '{data['email']}' not found.",
-                                             status_code=404)
-        return send_password_reset_email(user)
-
-    except ValueError as ve:
-        return ErrorHandler.handle_validation_error(str(ve))
+    data = request.get_json()
+    return send_password_reset_email(data)
 
 
 @user_profile_bp.route('/user_cities', methods=['Get'])

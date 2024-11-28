@@ -47,10 +47,17 @@ class ForecastWeatherDay(db.Model):
     def get_city_four_day_forecast(cls, city_id):
         try:
             if not City.check_city_exists(city_id):
-                return ErrorHandler.handle_error(None, message=f"City with ID '{city_id}' not found.",
-                                                 status_code=404)
+                return ErrorHandler.handle_error(
+                    None,
+                    message=f"City with ID '{city_id}' not found.",
+                    status_code=404
+                )
 
             list_weather = cls.query.filter_by(city_id=city_id).all()
             return WeatherResponse.response_weather_days(list_weather)
         except Exception as e:
-            return ErrorHandler.handle_error(e, message="City not found", status_code=404)
+            return ErrorHandler.handle_error(
+                e,
+                message="Iternal server error while getting daily weather forecast.",
+                status_code=500
+            )

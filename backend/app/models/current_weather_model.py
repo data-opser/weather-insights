@@ -46,11 +46,17 @@ class СurrentWeather(db.Model):
     @classmethod
     def get_sun_times_for_city(cls, city_id):
         try:
-           if not City.check_city_exists(city_id):
-               return ErrorHandler.handle_error(None, message=f"City with ID '{city_id}' not found.",
-                                                status_code=404)
-
-           record = cls.query.filter_by(city_id=city_id).first()
-           return WeatherResponse.response_sun_times(record)
+            if not City.check_city_exists(city_id):
+                return ErrorHandler.handle_error(
+                   None,
+                   message=f"City with ID '{city_id}' not found.",
+                   status_code=404
+                )
+            record = cls.query.filter_by(city_id=city_id).first()
+            return WeatherResponse.response_sun_times(record)
         except Exception as e:
-            return ErrorHandler.handle_error(e, message="City not found", status_code=404)
+            return ErrorHandler.handle_error(
+                e,
+                message="Iternal server error while getting sun times.",
+                status_code=500
+            )
