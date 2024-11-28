@@ -61,7 +61,7 @@
 @media only screen and (max-width: 600px) {
     .hour-table-main-text > p {
         font-size: small;
-        min-width: 113px;
+        min-width: 90px;
     }
     .hour-column > p {
         font-size: small;
