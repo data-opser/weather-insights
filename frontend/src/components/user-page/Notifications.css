@@ -1,0 +1,63 @@
+.notification {
+    width: 90%;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.231);
+    border-radius: 1em;
+    margin: 10px;
+    padding: 10px;
+    position: relative;
+}
+
+.notifications .user-text-bold {
+    align-self: start;
+    margin-left: 20px;
+    margin-bottom: 0;
+}
+
+.notification-name,
+.notification-text-bold {
+    font-weight: bold;
+}
+
+.notification-text {
+    margin-top: 0;
+}
+
+.notification-time {
+    color: gray;
+    position: absolute;
+    right: 10px;
+    bottom: 0;
+    margin: 5px 0;
+}
+
+.notification-weather {
+    display: flex;
+    align-items: center;
+}
+
+.notification-weather img {
+    width: 25px;
+    height: 25px;
+}
+
+.settings,
+.getback {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+}
+
+.settings {
+    right: 50px;
+    top: -60px;
+}
+
+.getback {
+    right: 0;
+    top: -60px;
+}
+
+.user-button.blue {
+    background: linear-gradient(135deg, rgb(0, 66, 165) 0%, rgb(0, 41, 87) 100%);
+}

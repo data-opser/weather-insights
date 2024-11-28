@@ -1,261 +1,244 @@
 .user-page {
-    display: flex;
-    justify-self: center;
-    position: relative;
-    gap: 20px;
-    min-width: 1260px;
-    margin: 20px 20px 0 20px;
+  display: flex;
+  justify-self: center;
+  position: relative;
+  gap: 20px;
+  width: 1260px;
+  margin: 20px 20px 0 20px;
 }
 
-.user, .notifications {
-    width: 50%;
-    background-color: white;
-    height: 100%;
-    border-radius: 1em;
-    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.231);
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    position: relative;
+.user,
+.notifications {
+  width: 50%;
+  background-color: white;
+  height: 100%;
+  border-radius: 1em;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.231);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+  align-self: center;
 }
+
 .user-block1 {
-    position: relative;
-    
+  position: relative;
 }
+
 .user-photo {
-    width: 160px;
-    height: 160px;
-    margin: 20px 0 0 0;
-    background-color: #b5e3fe;
-    border-radius: 50%;
-    border: 20px #b5e3fe solid;
+  width: 160px;
+  height: 160px;
+  margin: 20px 0 0 0;
+  background-color: #ddd;
+  border-radius: 50%;
+  border: 20px #ddd solid;
 }
+
 .plus-photo {
-    width: 40px;
-    height: 40px;
-    cursor: pointer;
-    position: absolute;
-    right: 25px;
-    top: 150px;
-    background-color: white;
-    border-radius: 50%;
-    border: 1px solid black;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  position: absolute;
+  right: 25px;
+  top: 150px;
+  background-color: white;
+  border-radius: 50%;
+  border: 1px solid black;
 }
 
 .profile-info {
-    display: flex;
-    width: 85%;
-    justify-content: space-between;
+  display: flex;
+  width: 85%;
+  justify-content: space-between;
 }
+
 .user-text-bold {
-    font-weight: bold;
-    font-size: 24px;
-
+  font-weight: bold;
+  font-size: 24px;
 }
+
 .user-block2-text-gray {
-    color: gray;
-    margin: 0;
-    align-self: center;
+  color: gray;
+  margin: 0;
+  align-self: center;
 }
-
 
 .faq {
-    width: 90%;
-    margin: 0 auto 20px auto;
+  width: 90%;
+  margin: 0 auto 20px auto;
 }
+
 .faq-item {
-    margin-bottom: 10px;
-    background-color: #b5e3fe;
-    border-radius: 2em;
-    position: relative;
+  margin-bottom: 10px;
+  background-color: #fcdd94;
+  border-radius: 2em;
+  position: relative;
 }
+
 .faq-status {
-    padding-left: 20px;
-    margin-bottom: 10px;
-    height: 40px;
-}
-.faq-status p {
-    margin: 0;
-    text-align: center;
-}
-.faq-title {
-    display: block;
-    cursor: pointer;
-    position: relative;
-    padding-left: 20px;
-}
-.faq-title-email {
-    display: block;
-    padding-left: 20px;
-}
-.faq-arrow-top {
-    position: absolute;
-    right: 20px;
-    top: 20px;
-    cursor: pointer;
-}
-
-.faq-input:checked ~ .faq-label-arrow-top .faq-arrow-top {
-    transform: rotate(180deg); 
-    transition: transform 0.5s; 
-}
-.faq-input {
-    appearance: none;
-    position: absolute;
-}
-.faq-input:checked ~ .faq-text {
-    max-height: 200px;
-}
-.faq-text {
-    display: block;
-    overflow: hidden;
-    max-height: 0;
-    transition: max-height 0.8s ease;
-    position: relative;     
-}
-.faq-text input {
-    margin: 0px 0px 10px 10px;
-    padding: 10px;
-    border: 0;
-    background-color: #71cbff;
-    font-size: 18px;
-    border-radius: 1em;
-    color: gray;
-}
-.faq-text button {
-    font-size: 18px;
-    position: absolute;
-    right: 20px;
-    margin: 0;
-}
-.faq-title-type {
-    min-width: 150px;
-}
-.faq-title-text {
-    font-weight: bold;
-}
-.faq-title-type, .faq-title-text {
-    display: inline-block;
-}
-
-
-
-
-
-
-
-
-
-
-
-.notification {
-    width: 90%;
-    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.231);
-    border-radius: 1em;
-    margin: 10px;
-    padding: 10px;
-    position: relative;
-}
-.notifications .user-text-bold {
-    align-self: start;
-    margin-left: 20px;
-}
-.notification-name, .notification-text-bold {
-    font-weight: bold;
-}
-.notification-text {
-    margin-top: 0;
-}
-.notification-time {
-    color: gray;
-    position: absolute;
-    right: 10px;
-    bottom: 0;
-    margin: 5px 0;
-}
-
-.notification-weather {
-    display: flex;
-    align-items: center;
-}
-.notification-weather img {
-    width: 25px;
-    height: 25px;
+  padding-left: 20px;
+  margin-bottom: 10px;
 }
 
 .user-button {
-    border-radius: 1em;
-    background: rgb(19,99,223);
-    background: linear-gradient(135deg, rgba(19,99,223,1) 0%, rgba(28,75,130,1) 100%);
-    color: white;
-    border: 0;
-    font-size: 24px;
-    padding: 10px 20px;
-    cursor: pointer;
-    margin-bottom: 25px;
-    margin-top: 20px;
-}
-.settings, .getback {
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    cursor: pointer;
-}
-.settings {
-    right: 50px;
-    top: -60px;
-}
-.getback {
-    right: 0;
-    top: -60px;
+  border-radius: 1em;
+  background: rgb(19, 99, 223);
+  background: linear-gradient(135deg, rgba(19, 99, 223, 1) 0%, rgba(28, 75, 130, 1) 100%);
+  color: white;
+  border: 0;
+  font-size: 24px;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin: 10px;
+  padding-top: 9px;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.231);
 }
 
-.user-button.blue {
-    background: linear-gradient(135deg, rgb(0, 66, 165) 0%, rgb(0, 41, 87) 100%);
+.faq-status p {
+  margin: 0 0 0 10px;
+  opacity: 50%;
 }
 
+.faq-status .error-text {
+  color: red;
+}
 
+.faq-status .success-text {
+  color: green;
+}
+
+.faq-title {
+  display: block;
+  cursor: pointer;
+  position: relative;
+  padding-left: 20px;
+}
+
+.faq-title-email {
+  display: block;
+  padding-left: 20px;
+}
+
+.faq-arrow-top {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  cursor: pointer;
+}
+
+.faq-input:checked~.faq-label-arrow-top .faq-arrow-top {
+  transform: rotate(180deg);
+  transition: transform 0.5s;
+}
+
+.faq-input {
+  appearance: none;
+  position: absolute;
+}
+
+.faq-input:checked~.faq-text {
+  max-height: 200px;
+}
+
+.faq-text {
+  display: block;
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.8s ease;
+  position: relative;
+}
+
+.faq-text input {
+  margin: 0px 0px 10px 20px;
+  padding: 10px;
+  border: 0;
+  background-color: white;
+  font-size: 18px;
+  border-radius: 0.75em;
+  border: 0;
+  outline: none;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.231);
+}
+
+.faq-text button {
+  font-size: 18px;
+  position: absolute;
+  right: 20px;
+  margin: 0;
+}
+
+.faq-text button:disabled {
+  cursor: auto;
+}
+
+.faq-title-type {
+  min-width: 150px;
+}
+
+.faq-title-text {
+  font-weight: bold;
+}
+
+.faq-title-type,
+.faq-title-text {
+  display: inline-block;
+}
 
 .gray {
-    background: rgb(215, 215, 215);
+  background: rgb(215, 215, 215);
 }
-@media only screen and (max-width: 1300px) {
-    .user-page {
-        min-width: unset;
-        width: 96%;
-    }
-}
-@media only screen and (max-width: 1060px) {
-    .user-page {
-        flex-direction: column;
-        align-items: center;
-        
-    }
-    .user, .notifications {
-        width: 95%;
-        margin: 20px;
 
-    }
-    .faq-title-type {
-        min-width: 50px;
-    }
-    .padding-left {
-        padding-left: 10px;
-    }
-    .faq-text input {
-        font-size: 14px;
-    }
-    .faq-text button {
-        font-size: 14px;
-    }
-     
+@media only screen and (max-width: 1300px) {
+  .user-page {
+    min-width: unset;
+    width: 96%;
+  }
 }
+
+@media only screen and (max-width: 1060px) {
+  .user-page {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .user,
+  .notifications {
+    width: 95%;
+    margin: 20px;
+  }
+
+  .faq-title-type {
+    min-width: 50px;
+  }
+
+  .padding-left {
+    padding-left: 10px;
+  }
+
+  .faq-text input {
+    font-size: 14px;
+  }
+
+  .faq-text button {
+    font-size: 14px;
+  }
+
+}
+
 @media only screen and (max-width: 600px) {
-    .user-text-bold {
-        font-size: 18px;
-        min-width: 100px;
-    }
-    .user-block2-text-gray {
-        font-size: 14px;
-    }
+
+  .user-page,
+  .notifications {
+    margin: 0 20px;
+    gap: 0;
+  }
+
+  .user-text-bold {
+    font-size: 18px;
+    min-width: 100px;
+  }
+
+  .user-block2-text-gray {
+    font-size: 14px;
+  }
 }

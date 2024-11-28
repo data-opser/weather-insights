@@ -6,19 +6,14 @@ import './UserPage.css';
 import { GoPlus } from "react-icons/go";
 import { BsPerson } from "react-icons/bs";
 import { AiOutlineDown } from "react-icons/ai";
-import raincloud from './raincloud.jfif'
+import Notifications from './Notifications';
 
 const UserPage = () => {
   const [activeSaveButton, setActiveSaveButton] = useState(false);
-  const [activeViewButton, setActiveViewButton] = useState(false);
   const [activeAddPhotoButton, setActiveAddPhotoButton] = useState(false);
 
   const handleSaveButtonClick = () => {
     setActiveSaveButton(true);
-  };
-
-  const handleViewButtonClick = () => {
-    setActiveViewButton(true);
   };
 
   const handleAddPhotoButtonClick = () => {
@@ -62,10 +57,18 @@ const UserPage = () => {
 
       if (field === 'name') setUserData((prev) => ({ ...prev, name: name.value }));
       if (field === 'birthday') setUserData((prev) => ({ ...prev, birthday: birthday.value }));
+
+      setTimeout(() => setSuccess(null), 2000);
     } catch (error) {
+      console.log(error);
       setError(error.response?.data?.message || 'Failed to update profile');
-      console.log(error.message);
+      // console.log(error.message);
     }
+  };
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toISOString().split('T')[0]; // Повертає 'yyyy-MM-dd'
   };
 
   return (
@@ -94,11 +97,11 @@ const UserPage = () => {
 
           <div className='faq-item'>
             <input className='faq-input' type='checkbox' id='faq_1'></input>
-            <label className='faq-title' for='faq_1'>
+            <label className='faq-title' htmlFor='faq_1'>
               <p className='faq-title-type'>Name</p>
               <p className='faq-title-text'>{userData ? userData.name : 'no information'}</p>
             </label>
-            <label className='faq-label-arrow-top' for="faq_1">
+            <label className='faq-label-arrow-top' htmlFor="faq_1">
               <AiOutlineDown className="faq-arrow-top" />
             </label>
 
@@ -119,6 +122,9 @@ const UserPage = () => {
               </button>
               <div className='faq-status'>
                 {name.isDirty && name.isEmpty && <p className="error-text">Name cannot be empty</p>}
+                {name.isDirty && !name.isEmpty && name.minLengthError && <p className="error-text">Name is too small</p>}
+                {error && <p className='error-text'>{error}</p>}
+                {success && <p className='success-text'>{success}</p>}
               </div>
             </form>
 
@@ -126,21 +132,21 @@ const UserPage = () => {
 
           <div className='faq-item'>
             <input className='faq-input' type='checkbox' id='faq_2'></input>
-            <label className='faq-title' for='faq_2'>
-              <p className='faq-title-type'>Date of birth</p>
+            <label className='faq-title' htmlFor='faq_2'>
+              <p className='faq-title-type'>Birthday</p>
               <p className='faq-title-text padding-left'>
                 {userData && userData.birthday
                   ? new Date(userData.birthday).toLocaleDateString('en-GB')
                   : 'no information'}
               </p>            </label>
-            <label className='faq-label-arrow-top' for="faq_2">
+            <label className='faq-label-arrow-top' htmlFor="faq_2">
               <AiOutlineDown className="faq-arrow-top" />
             </label>
 
             <form className="faq-text" onSubmit={(e) => { e.preventDefault(); handleSubmit('birthday'); }}>
               <input
                 type="date"
-                value={birthday.value}
+                value={userData?.birthday ? formatDate(userData.birthday) : ''}
                 onChange={birthday.onChange}
                 onBlur={birthday.onBlur}
               />
@@ -159,8 +165,8 @@ const UserPage = () => {
 
           <div className='faq-item'>
             <input className='faq-input' type='checkbox' id='faq_3'></input>
-            <label className='faq-title' for='faq_3'><p className='faq-title-type'>Password</p></label>
-            <label className='faq-label-arrow-top' for="faq_3">
+            <label className='faq-title' htmlFor='faq_3'><p className='faq-title-type'>Password</p></label>
+            <label className='faq-label-arrow-top' htmlFor="faq_3">
               <AiOutlineDown className="faq-arrow-top" />
             </label>
 
@@ -170,7 +176,7 @@ const UserPage = () => {
                 value={oldPassword.value}
                 onChange={oldPassword.onChange}
                 onBlur={oldPassword.onBlur}
-                placeholder="Old password"
+                placeholder="old password"
               />
               <div>
                 <input
@@ -178,7 +184,7 @@ const UserPage = () => {
                   value={newPassword.value}
                   onChange={newPassword.onChange}
                   onBlur={newPassword.onBlur}
-                  placeholder="New password"
+                  placeholder="new password"
                 />
                 <button
                   type='submit'
@@ -194,35 +200,10 @@ const UserPage = () => {
               </div>
 
             </form>
-          </div>  
+          </div>
         </div>
       </div>
-
-      <div className="notifications">
-        <p className='user-text-bold'>Last notifications</p>
-        <div className='notification'>
-          <div className='notification-weather'>
-            <img src={raincloud}></img>
-            <p className='notification-name'>Rain Alert</p>
-          </div>
-          <p className='notification-text'>Expected rain in your area within the next 30 minutes. <span className='notification-text-bold'>Don’t forget to bring an umbrella if you're heading out!</span></p>
-          <p className='notification-time'>Today, 09:00</p>
-        </div>
-        <div className='notification'>
-          <div className='notification-weather'>
-            <img src={raincloud}></img>
-            <p className='notification-name'>Rain Alert</p>
-          </div>
-          <p className='notification-text'>Expected rain in your area within the next 30 minutes. <span className='notification-text-bold'>Don't forget to bring an umbrella if you're heading out!</span></p>
-          <p className='notification-time'>Today, 09:00</p>
-        </div>
-        <button
-          className={`user-button ${activeViewButton ? 'blue' : ''} `}
-          onClick={handleViewButtonClick}>
-          View all
-        </button>
-      </div>
-
+      <Notifications />
     </div>
   );
 }
