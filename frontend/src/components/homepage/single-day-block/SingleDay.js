@@ -43,7 +43,7 @@ const SingleDay = ({ date, cityId }) => {
         <div className="hour-table">
           <div className="hour-table-main-text">
             <p className="hour-table-main-text-time">Time</p>
-            <p className="hour-table-main-text-type">Weather type</p>
+            <p className="hour-table-main-text-type">Weather</p>
             <p className="hour-table-main-text-degree">Degree, °</p>
             <p className="hour-table-main-text-feels">It feels</p>
             <p className="hour-table-main-text-pressure">Pressure, mm</p>

@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useAuth } from '../authContext';
 import { Link } from "react-router-dom";
 import './Header.css';
-import logo from './logo.png';
+import logo from './AuthForm/form-weather-icon.png';
 import { CiLogin } from "react-icons/ci";
 import Modal from '../Modal';
 import AuthForm from './AuthForm/AuthForm';

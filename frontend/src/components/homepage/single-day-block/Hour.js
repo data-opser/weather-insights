@@ -3,7 +3,7 @@ import "./Hour.css";
 import { GoSun } from "react-icons/go";
 import { BsSnow, BsCloudRainHeavy, BsCloudsFill } from "react-icons/bs";
 
-function Hour({ time, temperature, temperature_feels_like, pressure, humidity, wind_speed, precipitation, weather }) {
+function Hour({ time, temperature, temperature_feels_like, pressure_ground_level, humidity, wind_speed, snow_precipitation, rain_precipitation, weather }) {
 
   const checkValue = (value) => (value ? value : 0);
 
@@ -30,10 +30,10 @@ function Hour({ time, temperature, temperature_feels_like, pressure, humidity, w
         <p className="hour-temp">{Math.round(temperature)}°</p>
       </div>
       <p className="hour-feels">{Math.round(temperature_feels_like)}°</p>
-      <p className="hour-pressure">{checkValue(pressure)}</p>
+      <p className="hour-pressure">{checkValue(pressure_ground_level)}</p>
       <p className="hour-humidity">{humidity}%</p>
       <p className="hour-wind">{Math.round(wind_speed)}</p>
-      <p className="hour-precipitation">{checkValue(precipitation)}</p>
+      <p className="hour-precipitation">{checkValue(Math.round(rain_precipitation + snow_precipitation))}</p>
     </div>
   );
 }
