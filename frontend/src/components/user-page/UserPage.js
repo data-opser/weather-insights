@@ -85,6 +85,7 @@ const UserPage = () => {
       if (field === 'name') setNameError('Failed to update name');
       if (field === 'birthday') setBirthdayError('Failed to update birthday');
       if (field === 'password') setPasswordError('Failed to update password');
+      console.log(`Error: ${error.message}, status: ${error.status}`);
     }
   };
 
