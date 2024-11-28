@@ -18,14 +18,14 @@ const UserPage = () => {
 
   const handleAddPhotoButtonClick = () => {
     setActiveAddPhotoButton(true);
-  }
+  } 
 
   const { userData, setUserData } = useAuth();
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
 
-  const name = useInput(userData?.name || '', { isEmpty: true, minLength: 3, maxLength: 119 });
-  const birthday = useInput(userData?.birthday || '', { isEmpty: true });
+  const name = useInput('', { isEmpty: true, minLength: 3, maxLength: 119 });
+  const birthday = useInput('', { isEmpty: true });
   const oldPassword = useInput('', { isEmpty: true, minLength: 8 });
   const newPassword = useInput('', { isEmpty: true, minLength: 8 });
 
@@ -34,7 +34,7 @@ const UserPage = () => {
     setSuccess(null);
 
     try {
-      const payload = {};
+      const payload = {}; 
       if (field === 'name' && name.inputValid) {
         payload.name = name.value;
       } else if (field === 'birthday' && birthday.inputValid) {
@@ -52,23 +52,18 @@ const UserPage = () => {
       } else {
         response = await api.put('/update_profile', payload);
       }
-      setSuccess(response.data.message || 'Profile updated successfully');
-      console.log(response.data.message);
-
+      if (response.status === 200) {
+        setSuccess(`${field.charAt(0).toUpperCase() + field.slice(1)} updated successfully`);
+        console.log(response.data.message);
+      }
       if (field === 'name') setUserData((prev) => ({ ...prev, name: name.value }));
       if (field === 'birthday') setUserData((prev) => ({ ...prev, birthday: birthday.value }));
 
-      setTimeout(() => setSuccess(null), 2000);
+      setTimeout(() => setSuccess(null), 3000);
     } catch (error) {
       console.log(error);
       setError(error.response?.data?.message || 'Failed to update profile');
-      // console.log(error.message);
     }
-  };
-
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toISOString().split('T')[0]; // Повертає 'yyyy-MM-dd'
   };
 
   return (
@@ -146,7 +141,7 @@ const UserPage = () => {
             <form className="faq-text" onSubmit={(e) => { e.preventDefault(); handleSubmit('birthday'); }}>
               <input
                 type="date"
-                value={userData?.birthday ? formatDate(userData.birthday) : ''}
+                value={birthday.value}
                 onChange={birthday.onChange}
                 onBlur={birthday.onBlur}
               />
@@ -158,7 +153,9 @@ const UserPage = () => {
                 Save
               </button>
               <div className='faq-status'>
-                {birthday.isDirty && birthday.isEmpty && <p className="error-text">Birthday cannot be empty</p>}
+                {birthday.isDirty && birthday.isEmpty && <p className="error-text">Select your birthday</p>}
+                {error && <p className='error-text'>{error}</p>}
+                {success && <p className='success-text'>{success}</p>}
               </div>
             </form>
           </div>
@@ -194,8 +191,20 @@ const UserPage = () => {
                   Save
                 </button>
                 <div className='faq-status'>
-                  {oldPassword.isDirty && oldPassword.isEmpty && <p className="error-text">Old password cannot be empty</p>}
-                  {newPassword.isDirty && newPassword.isEmpty && <p className="error-text">New password cannot be empty</p>}
+                  {oldPassword.isDirty && oldPassword.isEmpty ? (
+                    <p className="error-text">Old password cannot be empty</p>
+                  ) : (
+                    <>
+                      {oldPassword.isDirty && oldPassword.minLengthError && <p className="error-text">Old password is too short</p>}
+                    </>
+                  )}
+                  {newPassword.isDirty && newPassword.isEmpty ? (
+                    <p className="error-text">New password cannot be empty</p>
+                  ) : (
+                    <>
+                      {newPassword.isDirty && newPassword.minLengthError && <p className="error-text">New password is too short</p>}
+                    </>
+                  )}
                 </div>
               </div>
 
