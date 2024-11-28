@@ -65,14 +65,8 @@ const UserPage = () => {
       } else {
         throw new Error('Invalid input');
       }
-
-      let response;
-      if (field === 'password') {
-        console.log(payload);
-        response = await api.get('/update_password', payload);
-      } else {
-        response = await api.put('/update_profile', payload);
-      }
+      
+      const response = await api.put(`/update_${field === 'password' ? 'password' : 'profile'}`, payload);
 
       if (response.status === 200) {
         if (field === 'name') setNameSuccess('Name updated successfully');
