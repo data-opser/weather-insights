@@ -8,11 +8,12 @@
     width: stretch;
 }
 
-.city-list .loading, .error {
-    width: 150px;
+.city-list .loading,
+.error {
     font-size: 17px;
     display: flex;
     align-items: center;
+    padding-left: 10px;
 }
 
 .city-list .error {
@@ -83,4 +84,10 @@
 .context-menu button:hover {
     background-color: #f0f0f0;
     border-radius: 0.5em;
+}
+
+@media screen and (max-width: 900px) {
+    .city-list .loading {
+        font-size: 12px;
+    }
 }

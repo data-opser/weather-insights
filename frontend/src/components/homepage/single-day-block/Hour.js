@@ -33,7 +33,7 @@ function Hour({ time, temperature, temperature_feels_like, pressure_ground_level
       <p className="hour-pressure">{checkValue(pressure_ground_level)}</p>
       <p className="hour-humidity">{humidity}%</p>
       <p className="hour-wind">{Math.round(wind_speed)}</p>
-      <p className="hour-precipitation">{checkValue(Math.round(rain_precipitation + snow_precipitation))}</p>
+      <p className="hour-precipitation">{rain_precipitation + snow_precipitation}</p>
     </div>
   );
 }

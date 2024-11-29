@@ -6,7 +6,7 @@ import './SelectCityForm.css';
 import api from '../../axiosConfig';
 import Flag from 'react-world-flags';
 
-const SelectCityForm = forwardRef(({ onClose, addCity, setMainCity }, ref) => {
+const SelectCityForm = forwardRef(({ onClose, addCity, setMainCity, isLoggedIn, changeDefaultCity }, ref) => {
   const [cities, setCities] = useState([]);
   const [searchValue, setSearchValue] = useState('');
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
@@ -60,19 +60,29 @@ const SelectCityForm = forwardRef(({ onClose, addCity, setMainCity }, ref) => {
         return;
       }
 
-      const response = await api.post(`/add_user_city/city?city=${city.id}`);
       city.admin_name = undefined;
       city.iso3 = undefined;
       city.is_main = isMain;
-      addCity(city);
-      if (isMain) {
-        await api.put(`/set_main_user_city/city?city=${city.id}`);
-        setMainCity(city.id);
-      }
-      console.log(response.data.message);
 
-      setMessage(`${searchValue} ${isMain ? 'set as main and ' : ''}added successfully!`);
-      setMessageType('success');
+      if (isLoggedIn) {
+        const response = await api.post(`/add_user_city/city?city=${city.id}`);
+        console.log(response.data.message);
+        addCity(city);
+
+        if (isMain) {
+          await api.put(`/set_main_user_city/city?city=${city.id}`);
+          setMainCity(city.id);
+        }
+
+        setMessage(`${searchValue} ${isMain ? 'set as main and ' : ''}added successfully!`);
+        setMessageType('success');
+      } else {
+        city.is_main = true;
+        changeDefaultCity(city);
+        setMessage(`City changed to ${searchValue}`);
+        setMessageType('success');
+      }
+
       clearForm(false);
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -102,65 +112,74 @@ const SelectCityForm = forwardRef(({ onClose, addCity, setMainCity }, ref) => {
 
   return (
     <form className="city-form" onSubmit={handleSubmit}>
-      <div className="search-field">
-        <MdOutlinePlace className="icon" />
-        <input
-          type="text"
-          placeholder="Enter city"
-          value={searchValue}
-          onChange={handleInputChange}
-        />
-        <div
-          className="dropdown-icon"
-          onClick={toggleDropdown}
-        >
-          {isDropdownVisible ? <AiOutlineUp className='icon-tr' /> : <AiOutlineDown className='icon-tr' />}
+      <div className='row-first'>
+        <IoArrowBack className="back-button" onClick={closeForm} />
+        <div className="search-field">
+          <MdOutlinePlace className="icon" />
+          <input
+            type="text"
+            placeholder="Enter city"
+            value={searchValue}
+            onChange={handleInputChange}
+          />
+          <div
+            className="dropdown-icon"
+            onClick={toggleDropdown}
+          >
+            {isDropdownVisible ? <AiOutlineUp className='icon-tr' /> : <AiOutlineDown className='icon-tr' />}
+          </div>
         </div>
       </div>
 
       {isDropdownVisible && (
-        <div className="cities">
-          {filteredCities.length > 0 ? (
-            filteredCities.map((city) => (
-              <div
-                className="city"
-                key={city.id}
-                onClick={() => {
-                  setSearchValue(city.city);
-                }}
-              >
-                {city.city} <div className='country'><p>{city.country}</p> <Flag className='city-flag' code={city.iso2} /></div>
-              </div>
-            ))
-          ) : (
-            <div className="city">No cities found</div>
+        <div className='city-block'>
+          <div className="cities">
+            {filteredCities.length > 0 ? (
+              filteredCities.map((city) => (
+                <div
+                  className="city"
+                  key={city.id}
+                  onClick={() => {
+                    setSearchValue(city.city);
+                  }}
+                >
+                  {city.city}
+                  <div className='country'>
+                    <p>{city.country}</p>
+                    <div className='flag-container'>
+                      <Flag className='city-flag' code={city.iso2} />
+                    </div>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="city">No cities found</div>
+            )}
+          </div>
+          {isLoggedIn && (
+            <div className="checkbox-field">
+              <label>
+                <input
+                  type="checkbox"
+                  checked={isMain}
+                  onChange={(e) => setIsMain(e.target.checked)}
+                />
+                set as main
+              </label>
+            </div>
           )}
+          <div className="form-buttons">
+            <button type="submit">
+              {isLoggedIn ? "Add" : "Change city"}
+            </button>
+          </div>
         </div>
       )}
-
-      <div className="checkbox-field">
-        <label>
-          <input
-            type="checkbox"
-            checked={isMain}
-            onChange={(e) => setIsMain(e.target.checked)}
-          />
-          set as main
-        </label>
-      </div>
-
       {message && (
         <div className={`message ${messageType === 'success' ? 'success' : 'error'}`}>
           {message}
         </div>
       )}
-
-      <div className="form-buttons">
-        <button type="submit">Add</button>
-        <button type="button" className="return-button" onClick={closeForm}>
-          <IoArrowBack className="return-arrow" />
-        </button>
-      </div>
     </form>
   );
 });

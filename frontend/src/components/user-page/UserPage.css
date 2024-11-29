@@ -44,6 +44,7 @@
   background-color: white;
   border-radius: 50%;
   border: 1px solid black;
+  display: none;
 }
 
 .profile-info {
@@ -163,7 +164,7 @@
   border-radius: 0.75em;
   box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.231);
   width: 200px;
-  margin: 10px 20px;
+  margin: 20px;
   position: relative;
 }
 

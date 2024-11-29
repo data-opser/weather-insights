@@ -44,7 +44,7 @@ function CityList({ isLoggedIn, cityList, selectCity, setMainCity, removeCity, s
   };
 
   useEffect(() => {
-    if (!isLoggedIn) return; // Пропускаємо фетчинг для незалогіненого користувача
+    if (!isLoggedIn) return;
 
     const fetchCities = async () => {
       setLoading(true);
@@ -99,8 +99,15 @@ function CityList({ isLoggedIn, cityList, selectCity, setMainCity, removeCity, s
               <Flag className="flag" code={city.iso2} />
             </div>
           </button>
-        ))
+        ))          
       )}
+      { !isLoggedIn &&
+        (
+          <div className="loading">
+            <p>Sign up to have more cities</p>
+          </div>
+        )
+      }
       {isLoggedIn && !loading && !error && cityList.length > 0 && (
         cityList.map((city) => (
           <button
