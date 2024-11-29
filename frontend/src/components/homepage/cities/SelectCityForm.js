@@ -6,7 +6,7 @@ import './SelectCityForm.css';
 import api from '../../axiosConfig';
 import Flag from 'react-world-flags';
 
-const SelectCityForm = forwardRef(({ onClose, addCity, setMainCity }, ref) => {
+const SelectCityForm = forwardRef(({ onClose, addCity, setMainCity, isLoggedIn, changeDefaultCity }, ref) => {
   const [cities, setCities] = useState([]);
   const [searchValue, setSearchValue] = useState('');
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
@@ -60,19 +60,29 @@ const SelectCityForm = forwardRef(({ onClose, addCity, setMainCity }, ref) => {
         return;
       }
 
-      const response = await api.post(`/add_user_city/city?city=${city.id}`);
       city.admin_name = undefined;
       city.iso3 = undefined;
       city.is_main = isMain;
-      addCity(city);
-      if (isMain) {
-        await api.put(`/set_main_user_city/city?city=${city.id}`);
-        setMainCity(city.id);
-      }
-      console.log(response.data.message);
 
-      setMessage(`${searchValue} ${isMain ? 'set as main and ' : ''}added successfully!`);
-      setMessageType('success');
+      if (isLoggedIn) {
+        const response = await api.post(`/add_user_city/city?city=${city.id}`);
+        console.log(response.data.message);
+        addCity(city);
+
+        if (isMain) {
+          await api.put(`/set_main_user_city/city?city=${city.id}`);
+          setMainCity(city.id);
+        }
+
+        setMessage(`${searchValue} ${isMain ? 'set as main and ' : ''}added successfully!`);
+        setMessageType('success');
+      } else {
+        city.is_main = true;
+        changeDefaultCity(city);
+        setMessage(`City changed to ${searchValue}`);
+        setMessageType('success');
+      }
+
       clearForm(false);
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -121,7 +131,6 @@ const SelectCityForm = forwardRef(({ onClose, addCity, setMainCity }, ref) => {
         </div>
       </div>
 
-
       {isDropdownVisible && (
         <div className='city-block'>
           <div className="cities">
@@ -147,19 +156,22 @@ const SelectCityForm = forwardRef(({ onClose, addCity, setMainCity }, ref) => {
               <div className="city">No cities found</div>
             )}
           </div>
-          <div className="checkbox-field">
-            <label>
-              <input
-                type="checkbox"
-                checked={isMain}
-                onChange={(e) => setIsMain(e.target.checked)}
-              />
-              set as main
-            </label>
-          </div>
+          {isLoggedIn && (
+            <div className="checkbox-field">
+              <label>
+                <input
+                  type="checkbox"
+                  checked={isMain}
+                  onChange={(e) => setIsMain(e.target.checked)}
+                />
+                set as main
+              </label>
+            </div>
+          )}
           <div className="form-buttons">
-            <button type="submit">Add</button>
-
+            <button type="submit">
+              {isLoggedIn ? "Add" : "Change city"}
+            </button>
           </div>
         </div>
       )}

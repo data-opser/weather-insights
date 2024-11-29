@@ -59,10 +59,15 @@ const HomePage = () => {
     setSelectedDate(date);
   };
 
+  const changeDefaultCity = (city) => {
+    setCityList([city]);
+    setCurrentCityId(city.id);
+  };
+
   return (
     <div className="home-page">
       <div className='cities'>
-        <AddCityButton addCity={addCity} setMainCity={setMainCity} />
+        <AddCityButton addCity={addCity} setMainCity={setMainCity} changeDefaultCity={changeDefaultCity} />
         <CityList
           isLoggedIn={isLoggedIn}
           cityList={cityList}
