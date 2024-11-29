@@ -103,9 +103,7 @@ const SelectCityForm = forwardRef(({ onClose, addCity, setMainCity }, ref) => {
   return (
     <form className="city-form" onSubmit={handleSubmit}>
       <div className='row-first'>
-        <button type="button" className="back-button" onClick={closeForm}>
-          <IoArrowBack className="arrow" />
-        </button>
+        <IoArrowBack className="back-button" onClick={closeForm} />
         <div className="search-field">
           <MdOutlinePlace className="icon" />
           <input
