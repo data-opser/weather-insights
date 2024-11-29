@@ -49,7 +49,7 @@ const SunTime = ({ cityId }) => {
       </button>
       <div className='sun-block'>
         <GoSun className={`sun ${loading ? 'spinning' : ''}`} />
-        <FaCloud className={`cloud ${activeButton === 'sunrise' ? 'not-to-show' : ''}`} />
+        <FaCloud className={`cloud ${activeButton === 'sunrise' ? 'not-to-show' : 'show'}`} />
       </div>
       {loading && <div className='loading'>
         <h1>Loading...</h1>

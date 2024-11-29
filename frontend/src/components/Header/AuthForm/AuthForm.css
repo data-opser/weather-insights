@@ -196,4 +196,9 @@
   .pass-input-field input {
     font-size: 22px;
   }
+
+  .data-form button[type='submit'], .reset-pass-button {
+    border-radius: 0.5em;  
+    font-size: 25px;
+  }
 }

@@ -239,7 +239,7 @@ const AuthForm = forwardRef(({ type, setActive, setFormType, onLoginSuccess }, r
               disabled={!email.inputValid}
               className='reset-pass-button'
             >
-              Reset Password
+              Reset password
             </button>
           )}
           {!isForgotPassword &&
