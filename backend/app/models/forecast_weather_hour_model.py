@@ -59,7 +59,7 @@ class ForecastWeatherHour(db.Model):
             records = cls.query.filter(
                 cls.city_id == city_id,
                 cast(cls.weather_time, Date) == date_object
-            ).all()
+            ).order_by(cls.weather_time).all()
             return WeatherResponse.response_weather_hours(records)
         except Exception as e:
             return ErrorHandler.handle_error(
