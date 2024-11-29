@@ -58,7 +58,7 @@ const SingleDay = ({ date, cityId }) => {
                 time={hour.time}
                 temperature={hour.temperature}
                 temperature_feels_like={hour.temperature_feels_like}
-                pressure={hour.pressure}
+                pressure_ground_level={hour.pressure_ground_level}
                 humidity={hour.humidity}
                 wind_speed={hour.wind_speed}
                 rain_precipitation={hour.rain_precipitation}
