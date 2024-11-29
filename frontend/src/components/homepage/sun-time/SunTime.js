@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import './SunTime.css';
 import { GoSun } from "react-icons/go";
 import api from '../../axiosConfig';
+import { FaCloud } from "react-icons/fa";
 
 const SunTime = ({ cityId }) => {
   const [activeButton, setActiveButton] = useState('sunrise');
@@ -46,9 +47,10 @@ const SunTime = ({ cityId }) => {
       >
         Sunset
       </button>
-
-      <GoSun className={`sun ${loading ? 'spinning' : ''}`} />
-
+      <div className='sun-block'>
+        <GoSun className={`sun ${loading ? 'spinning' : ''}`} />
+        <FaCloud className={`cloud ${activeButton === 'sunrise' ? 'not-to-show' : ''}`} />
+      </div>
       {loading && <div className='loading'>
         <h1>Loading...</h1>
       </div>
