@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../authContext';
+import { useCookies } from 'react-cookie';
 import './HomePage.css';
 import CityList from './cities/CityList';
 import AddCityButton from './cities/AddCityButton';
@@ -15,22 +16,29 @@ const HomePage = () => {
   const [activeButton, setActiveButton] = useState(null);
 
   const defaultCity = {
-    city: "Avarua",
-    country: "Cook Islands",
-    id: 1184217570,
+    city: "London",
+    country: "United Kingdom",
+    id: 1826645935,
     is_main: true,
-    iso2: "CK"
+    iso2: "GB"
   };
+
+  const [cookies, setCookie] = useCookies(['defaultCity']);
 
   useEffect(() => {
     if (!isLoggedIn) {
-      setCityList([defaultCity]);
-      setCurrentCityId(defaultCity.id);
+      if (cookies.defaultCity) {
+        setCityList([cookies.defaultCity]);
+        setCurrentCityId(cookies.defaultCity.id);
+      } else {
+        setCityList([defaultCity]);
+        setCurrentCityId(defaultCity.id);
+      }
     } else {
       setCityList([]);
       setCurrentCityId(null);
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, cookies.defaultCity]);  
 
   const addCity = (newCity) => {
     setCityList((prevList) => [...prevList, newCity]);
@@ -60,6 +68,7 @@ const HomePage = () => {
   };
 
   const changeDefaultCity = (city) => {
+    setCookie('defaultCity', city, { path: '/', maxAge: 604800 });
     setCityList([city]);
     setCurrentCityId(city.id);
   };
