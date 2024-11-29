@@ -44,12 +44,12 @@ const SingleDay = ({ date, cityId }) => {
           <div className="hour-table-main-text">
             <p className="hour-table-main-text-time">Time</p>
             <p className="hour-table-main-text-type">Weather</p>
-            <p className="hour-table-main-text-degree">Degree, °</p>
+            <p className="hour-table-main-text-degree">Degree</p>
             <p className="hour-table-main-text-feels">It feels</p>
-            <p className="hour-table-main-text-pressure">Pressure, mm</p>
-            <p className="hour-table-main-text-humidity">Humidity, %</p>
+            <p className="hour-table-main-text-pressure">Pressure, hPa</p>
+            <p className="hour-table-main-text-humidity">Humidity</p>
             <p className="hour-table-main-text-wind">Wind, m/s</p>
-            <p className="hour-table-main-text-precipitation">Precipitation probability, %</p>
+            <p className="hour-table-main-text-precipitation">Precipitation, mm</p>
           </div>
           <div className="hour-columns">
             {hourlyData.map((hour, index) => (
@@ -61,7 +61,8 @@ const SingleDay = ({ date, cityId }) => {
                 pressure={hour.pressure}
                 humidity={hour.humidity}
                 wind_speed={hour.wind_speed}
-                precipitation={hour.precipitation}
+                rain_precipitation={hour.rain_precipitation}
+                snow_precipitation={hour.snow_precipitation}
                 weather={hour.weather}
               />
             ))}
