@@ -4,3 +4,22 @@
   display: grid;
   grid-template-rows: 70px 1fr 70px;
 }
+
+::-webkit-scrollbar {
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: gray;
+  border-radius: 0.25em;
+}
+
+@media only screen and (max-width: 900px) {
+  ::-webkit-scrollbar {
+      height: 0;
+  }
+}

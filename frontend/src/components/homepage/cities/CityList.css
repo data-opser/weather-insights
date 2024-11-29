@@ -8,7 +8,8 @@
     width: stretch;
 }
 
-.city-list .loading, .error {
+.city-list .loading,
+.error {
     width: 150px;
     font-size: 17px;
     display: flex;

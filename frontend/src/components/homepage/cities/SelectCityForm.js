@@ -102,65 +102,74 @@ const SelectCityForm = forwardRef(({ onClose, addCity, setMainCity }, ref) => {
 
   return (
     <form className="city-form" onSubmit={handleSubmit}>
-      <div className="search-field">
-        <MdOutlinePlace className="icon" />
-        <input
-          type="text"
-          placeholder="Enter city"
-          value={searchValue}
-          onChange={handleInputChange}
-        />
-        <div
-          className="dropdown-icon"
-          onClick={toggleDropdown}
-        >
-          {isDropdownVisible ? <AiOutlineUp className='icon-tr' /> : <AiOutlineDown className='icon-tr' />}
+      <div className='row-first'>
+        <button type="button" className="back-button" onClick={closeForm}>
+          <IoArrowBack className="arrow" />
+        </button>
+        <div className="search-field">
+          <MdOutlinePlace className="icon" />
+          <input
+            type="text"
+            placeholder="Enter city"
+            value={searchValue}
+            onChange={handleInputChange}
+          />
+          <div
+            className="dropdown-icon"
+            onClick={toggleDropdown}
+          >
+            {isDropdownVisible ? <AiOutlineUp className='icon-tr' /> : <AiOutlineDown className='icon-tr' />}
+          </div>
         </div>
       </div>
+
 
       {isDropdownVisible && (
-        <div className="cities">
-          {filteredCities.length > 0 ? (
-            filteredCities.map((city) => (
-              <div
-                className="city"
-                key={city.id}
-                onClick={() => {
-                  setSearchValue(city.city);
-                }}
-              >
-                {city.city} <div className='country'><p>{city.country}</p> <Flag className='city-flag' code={city.iso2} /></div>
-              </div>
-            ))
-          ) : (
-            <div className="city">No cities found</div>
-          )}
+        <div className='city-block'>
+          <div className="cities">
+            {filteredCities.length > 0 ? (
+              filteredCities.map((city) => (
+                <div
+                  className="city"
+                  key={city.id}
+                  onClick={() => {
+                    setSearchValue(city.city);
+                  }}
+                >
+                  {city.city}
+                  <div className='country'>
+                    <p>{city.country}</p>
+                    <div className='flag-container'>
+                      <Flag className='city-flag' code={city.iso2} />
+                    </div>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="city">No cities found</div>
+            )}
+          </div>
+          <div className="checkbox-field">
+            <label>
+              <input
+                type="checkbox"
+                checked={isMain}
+                onChange={(e) => setIsMain(e.target.checked)}
+              />
+              set as main
+            </label>
+          </div>
+          <div className="form-buttons">
+            <button type="submit">Add</button>
+
+          </div>
         </div>
       )}
-
-      <div className="checkbox-field">
-        <label>
-          <input
-            type="checkbox"
-            checked={isMain}
-            onChange={(e) => setIsMain(e.target.checked)}
-          />
-          set as main
-        </label>
-      </div>
-
       {message && (
         <div className={`message ${messageType === 'success' ? 'success' : 'error'}`}>
           {message}
         </div>
       )}
-
-      <div className="form-buttons">
-        <button type="submit">Add</button>
-        <button type="button" className="return-button" onClick={closeForm}>
-          <IoArrowBack className="return-arrow" />
-        </button>
-      </div>
     </form>
   );
 });
