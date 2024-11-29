@@ -36,7 +36,10 @@ class WeatherResponse:
                 "wind_speed": round(record.wind_speed, 2),
                 "wind_degree": round(record.wind_degree, 2),
                 "wind_gust": round(record.wind_gust, 2),
-                "clouds_percent": record.clouds_percent
+                "clouds_percent": record.clouds_percent,
+                "rain_precipitation":round(record.rain_precipitation, 2) if record.rain_precipitation is not None else 0,
+                "snow_precipitation":round(record.snow_precipitation, 2) if record.snow_precipitation is not None else 0,
+                "pressure_ground_level":round(record.pressure_ground_level, 3)
             } for record in records
         ]
         return jsonify(weather_data)
