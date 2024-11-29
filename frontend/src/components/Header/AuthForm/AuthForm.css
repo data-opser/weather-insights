@@ -101,9 +101,9 @@
   color:#333;
 }
 
-.data-form button[type='submit'] {
+.data-form button[type='submit'], .reset-pass-button {
   width: 100%;
-  height: 15%;
+  height: 60px;
   margin: 0% 0% 7%;
   background: #FFE3AB;
   cursor: pointer;
@@ -117,6 +117,10 @@
   margin-bottom: 35px;
 }
 
+.link-forgot {
+  place-self: center;
+}
+
 .link p, button {
   font-size: large;
   display: inline;
@@ -126,7 +130,9 @@
   color: #C5C1C1;
   padding-right: 1%;
 }
-
+.link .forgot-password {
+  display: block;
+}
 .link button {
   border: 0;
   background: none;
@@ -145,7 +151,8 @@
   cursor: pointer;
   border: 8px solid white;
   bottom: -25.5px;
-  right: calc(25% - 25.5px);
+  right: 25%;
+  transform: translateX(25%);
 }
 
 @media screen and (max-width: 1200px) {
@@ -163,11 +170,13 @@
   }
 
   .google-icon {
-    right: calc(50% - 25.5px);
+    right: 50%;
+    transform: translateX(50%);
   }
 
   .form .return-button {
     height: 35px;
+    top: 27px;
   }
 } 
 
