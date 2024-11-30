@@ -61,5 +61,7 @@
     <string name="weather_temperatureMaxMin">Max 24° Min -26°</string>
     <string name="weather_status">Clear</string>
     <string name="weather_info">The weather is cold. It is better to dress warmly</string>
+    <string name="weather_hour_now">Now</string>
     <string name="weather_day_today">Today</string>
+    <string name="weather_day_weekly">Weekly forecast</string>
 </resources>

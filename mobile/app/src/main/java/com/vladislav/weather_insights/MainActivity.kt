@@ -11,25 +11,21 @@ import android.os.Build
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.Gravity
-import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
-import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.vladislav.weather_insights.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private var isDialogShowing = false
 
-    private lateinit var fab: FloatingActionButton
-    private lateinit var bottomNavigationView: BottomNavigationView
+    private lateinit var binding: ActivityMainBinding
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var editor: Editor
 
@@ -40,7 +36,8 @@ class MainActivity : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
         )
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         sharedPreferences = getSharedPreferences("MODE", Context.MODE_PRIVATE)
         editor = sharedPreferences.edit()
@@ -49,8 +46,6 @@ class MainActivity : AppCompatActivity() {
         theme.resolveAttribute(R.attr.navBarColor, typedValue, true)
         window.navigationBarColor = typedValue.data
 
-        bottomNavigationView = findViewById(R.id.bottomNavigationView)
-        fab = findViewById(R.id.fab)
 //        val fragments = supportFragmentManager.fragments
 //        for (fragment in fragments) {
 //            Log.d("FragmentStack", "Fragment in stack: ${fragment.javaClass.simpleName}")
@@ -61,7 +56,7 @@ class MainActivity : AppCompatActivity() {
         }
         setTheme()
 
-        bottomNavigationView.setOnItemSelectedListener {
+        binding.bottomNavigationView.setOnItemSelectedListener {
             when(it.itemId) {
                 R.id.nav_weather -> replaceFragment(WeatherFragment (), "WeatherFragment")
                 R.id.nav_profile -> replaceFragment(ProfileFragment (),"PremiumFragment")
@@ -71,11 +66,11 @@ class MainActivity : AppCompatActivity() {
 
             true
         }
-        fab.setOnClickListener{
+        binding.fab.setOnClickListener{
             showBottomDialog()
         }
 
-        val mainView = findViewById<View>(R.id.mainActivity)
+        val mainView = binding.mainActivity
 
         val colorsGradientBg = intArrayOf(
             getColorFromAttr(R.attr.fragmentBgStartColor),
@@ -154,7 +149,7 @@ class MainActivity : AppCompatActivity() {
         return typedValue.data
     }
 
-    fun selectBottomNavItem(itemId: Int) {
+    fun selectBottomNavItem(itemId: Int) = with(binding){
         bottomNavigationView.selectedItemId = itemId
     }
 }

@@ -100,6 +100,13 @@
         <item name="android:background">@color/listItemLine_night</item>
     </style>
 
+    <style name="SeekBar" parent="Widget.AppCompat.SeekBar">
+        <item name="android:progressDrawable">@drawable/gradient_seekbar</item>
+        <item name="android:thumb">@drawable/seekbar_thumb</item>
+        <item name="android:maxHeight">6dp</item>
+        <item name="android:minHeight">6dp</item>
+    </style>
+
     <style name="App.Custom.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
         <item name="android:color">@color/button_bgTint_night</item>
     </style>

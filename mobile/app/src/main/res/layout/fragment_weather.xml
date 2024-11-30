@@ -61,7 +61,7 @@
         app:layout_constraintTop_toBottomOf="@+id/weatherStatusTextView" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/tempForDayCardView"
+        android:id="@+id/tempHourCardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -74,9 +74,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tempMinMaxTextView" >
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:paddingStart="18dp"
             android:paddingEnd="0dp"
             android:paddingTop="8dp"
@@ -84,54 +85,61 @@
 
             <TextView
                 style="@style/Text"
-                android:id="@+id/weatherInfoTextView"
+                android:id="@+id/hourInfoTextView"
                 android:text="@string/weather_info"
-                android:textColor="@color/white"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:textColor="@color/white"/>
 
             <View
                 style="@style/ListLineView"
-                android:id="@+id/line"
+                android:id="@+id/hourLineView"
                 android:layout_height="0.5dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginEnd="18dp"
-                android:background="@color/white"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/weatherInfoTextView"/>
+                android:background="@color/white"/>
 
-            <TextView
-                style="@style/Text"
-                android:id="@+id/weatherTodayTextView"
-                android:text="@string/weather_day_today"
-                android:textColor="@color/white"
-                android:layout_marginTop="12dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/line" />
-
-            <ImageView
-                android:id="@+id/weatherImageView"
-                android:layout_width="wrap_content"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/hourRecyclerView"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:contentDescription="@string/error"
-                android:src="@drawable/ic_weather_moon"
-                android:layout_margin="8dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/weatherTodayTextView"
-                app:layout_constraintTop_toBottomOf="@+id/weatherTodayTextView" />
+                android:layout_marginTop="12dp"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/tempDayCardView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="#9882E2"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tempHourCardView"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="18dp"
+            android:paddingEnd="18dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="18dp">
 
             <TextView
                 style="@style/Text"
-                android:text="@string/weather_temperature"
-                android:textSize="26sp"
-                android:textColor="@color/white"
-                android:layout_margin="4dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/weatherTodayTextView"
-                app:layout_constraintTop_toBottomOf="@+id/weatherImageView" />
+                android:id="@+id/dayInfoTextView"
+                android:text="@string/weather_day_weekly"
+                android:textColor="@color/white"/>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/dayRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
