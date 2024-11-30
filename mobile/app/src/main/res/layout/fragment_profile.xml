@@ -2,12 +2,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/profileFrameLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingTop="10dp"
-    android:orientation="vertical"
     tools:context=".ProfileFragment"
+    android:id="@+id/profileFrameLayout"
+    android:orientation="vertical"
     style="@style/Fragment">
 
     <TextView

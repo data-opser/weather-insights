@@ -67,7 +67,10 @@
     <!-- DAY STYLE-->
 
     <style name="Fragment">
-        <item name="android:paddingTop">20dp</item>
+        <item name="android:paddingTop">40dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:orientation">vertical</item>
     </style>
 
     <style name="Text">
@@ -109,6 +112,28 @@
     <style name="WindowAnimationTransition">
         <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
         <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+    </style>
+
+    <style name="DailyTempHourlyTime">
+        <item name="android:textColor">@color/white</item>
+        <item name="layout_constraintTop_toTopOf">parent</item>
+    </style>
+
+    <style name="DailyTempHourlyIcon">
+        <item name="android:tint">@color/white</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+    </style>
+
+    <style name="DailyTempHourlyTemp">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+    </style>
+
+    <style name="SeekBar" parent="Widget.AppCompat.SeekBar">
+        <item name="android:progressDrawable">@drawable/gradient_seekbar</item>
+        <item name="android:thumb">@drawable/seekbar_thumb</item>
+        <item name="android:maxHeight">6dp</item>
+        <item name="android:minHeight">6dp</item>
     </style>
 
     <style name="App.Custom.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">

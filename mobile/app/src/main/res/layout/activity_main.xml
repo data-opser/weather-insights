@@ -3,11 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:windowAnimationStyle="@style/WindowAnimationTransition"
-    android:id="@+id/mainActivity"
+    android:background="@drawable/gradient_bcgrd_day"
     tools:context=".MainActivity">
 
     <FrameLayout
@@ -26,6 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_top"
+        android:paddingBottom="10dp"
         app:backgroundTint="?attr/navBarColor"
         app:itemActiveIndicatorStyle="@style/App.Custom.Indicator"
         app:labelVisibilityMode="labeled"
