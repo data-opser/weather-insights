@@ -21,15 +21,14 @@ import android.view.ViewGroup
 import android.view.Window
 import android.widget.FrameLayout
 import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.appcompat.widget.SwitchCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.vladislav.weather_insights.databinding.FragmentSettingsBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -47,11 +46,8 @@ class SettingsFragment : Fragment() {
     private var param2: String? = null
 
     private var isDialogShowing = false
+    private lateinit var binding: FragmentSettingsBinding
     private lateinit var sharedPreferences: SharedPreferences
-    private lateinit var switchNotify: SwitchCompat
-    private lateinit var switchTheme: SwitchCompat
-    private lateinit var signLayout: LinearLayout
-    private lateinit var signText: TextView
     private lateinit var editor: Editor
     private lateinit var myActivity: Activity
     private lateinit var pushNotificationPermissionLauncher: ActivityResultLauncher<String>
@@ -67,9 +63,10 @@ class SettingsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_settings, container, false)
+        binding = FragmentSettingsBinding.inflate(inflater, container, false)
+        return binding.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -77,34 +74,33 @@ class SettingsFragment : Fragment() {
         myActivity = requireActivity()
         sharedPreferences = myActivity.getSharedPreferences("MODE", Context.MODE_PRIVATE)
         editor = sharedPreferences.edit()
-        switchNotify = view.findViewById(R.id.switchNotify)
-        switchTheme = view.findViewById(R.id.switchTheme)
-        signLayout = view.findViewById(R.id.signLayout)
-        signText = view.findViewById(R.id.signText)
-        switchTheme.setChecked(sharedPreferences.getBoolean("isNight", false))
-        switchNotify.setChecked(sharedPreferences.getBoolean("notification", false))
-        signText.text = sharedPreferences.getString("sign", "none")
-        pushNotificationPermissionLauncher = registerForActivityResult(
-            ActivityResultContracts.RequestPermission()
-        ) { isGranted: Boolean ->
-            if (isGranted) {
-                // Дозвіл надано, можна надсилати сповіщення
-                editor.putBoolean("notification", true)
-            } else {
-                // Дозвіл відхилено
-                switchNotify.isChecked = false
-                editor.putBoolean("notification", false)
-                showSettingsDialog()
+
+        binding.apply {
+            pushNotificationPermissionLauncher = registerForActivityResult(
+                ActivityResultContracts.RequestPermission()
+            ) { isGranted: Boolean ->
+                if (isGranted) {
+                    // Дозвіл надано, можна надсилати сповіщення
+                    editor.putBoolean("notification", true)
+                } else {
+                    // Дозвіл відхилено
+                    switchNotify.isChecked = false
+                    editor.putBoolean("notification", false)
+                    showSettingsDialog()
+                }
+                editor.apply()
             }
-            editor.apply()
+
+            signText.text = sharedPreferences.getString("sign", "none")
+            switchTheme.setChecked(sharedPreferences.getBoolean("isNight", false))
+            switchNotify.setChecked(sharedPreferences.getBoolean("notification", false))
+            switchTheme.setOnCheckedChangeListener { _, isChecked -> changeTheme(isChecked)}
+            switchNotify.setOnCheckedChangeListener { _, isChecked -> changeNotify(isChecked) }
+            signLayout.setOnClickListener{
+                showBottomDialog()
+            }
         }
 
-
-        switchTheme.setOnCheckedChangeListener { _, isChecked -> changeTheme(isChecked)}
-        switchNotify.setOnCheckedChangeListener { _, isChecked -> changeNotify(isChecked) }
-        signLayout.setOnClickListener{
-            showBottomDialog()
-        }
     }
 
     private fun changeNotify(isChecked: Boolean){
@@ -205,7 +201,8 @@ class SettingsFragment : Fragment() {
         dialog.window?.setGravity(Gravity.BOTTOM)
     }
 
-    private fun setSign(dialog: BottomSheetDialog, layoutId: Int, signName: String){
+    private fun setSign(dialog: BottomSheetDialog, layoutId: Int,
+                        signName: String) = with(binding){
         val sign = dialog.findViewById<LinearLayout>(layoutId)
 
         sign?.setOnClickListener{

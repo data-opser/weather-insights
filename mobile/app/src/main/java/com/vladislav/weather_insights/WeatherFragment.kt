@@ -37,7 +37,6 @@ class WeatherFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
-
     }
 
     override fun onCreateView(
@@ -64,8 +63,8 @@ class WeatherFragment : Fragment() {
             dayRecyclerView.adapter = dayAdapter
             dayAdapter.addDay(WeatherDay(1, "Today", 27, 21, 32))
             for (countDay in 1..7){
-                val minTemp = countDay + 21
-                val maxTemp = countDay + 32
+                val minTemp = countDay + -5
+                val maxTemp = countDay + 3
                 val day = WeatherDay(1, "Today", (minTemp..maxTemp).random(), minTemp, maxTemp)
                 dayAdapter.addDay(day)
             }

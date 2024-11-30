@@ -12,13 +12,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.Button
 import android.widget.EditText
-import android.widget.FrameLayout
 import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.cardview.widget.CardView
+import com.vladislav.weather_insights.databinding.FragmentProfileBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -35,21 +32,8 @@ class ProfileFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    private lateinit var binding: FragmentProfileBinding
     private lateinit var myActivity: Activity
-    private lateinit var titleTextView: TextView
-    private lateinit var profileFrameLayout: FrameLayout
-    private lateinit var googleLinearLayout: LinearLayout
-    private lateinit var loginLinearLayout: LinearLayout
-    private lateinit var profileCardView: CardView
-    private lateinit var loginButton: Button
-    private lateinit var goEditButton: Button
-
-    private lateinit var emailImageView: ImageView
-    private lateinit var pswdImageView: ImageView
-    private lateinit var emailEditText: EditText
-    private lateinit var pswdEditText: EditText
-    private lateinit var emailCardView: CardView
-    private lateinit var pswdCardView: CardView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,9 +46,10 @@ class ProfileFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false)
+        binding = FragmentProfileBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     companion object {
@@ -91,53 +76,43 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         myActivity = requireActivity()
-        profileFrameLayout = view.findViewById(R.id.profileFrameLayout)
-        googleLinearLayout = view.findViewById(R.id.googleLinearLayout)
-        loginLinearLayout = view.findViewById(R.id.loginLinearLayout)
-        profileCardView = view.findViewById(R.id.profileCardView)
-        titleTextView = view.findViewById(R.id.profileTitle)
-        loginButton = view.findViewById(R.id.loginButton)
-        goEditButton = view.findViewById(R.id.goEditButton)
-        emailImageView  = view.findViewById(R.id.emailImageView)
-        pswdImageView  = view.findViewById(R.id.pswdImageView)
-        emailEditText = view.findViewById(R.id.emailEditText)
-        pswdEditText = view.findViewById(R.id.pswdEditText)
-        emailCardView = view.findViewById(R.id.emailCardView)
-        pswdCardView = view.findViewById(R.id.pswdCardView)
 
         if(false){ //тут якщо у нас користувач вже залогінений був, то одразу профіль видаєм, нікіта
             setProfileLayout()
         }
 
-        profileFrameLayout.setOnClickListener {
-            if (emailEditText.isFocused) {
-                emailEditText.clearFocus()
-                hideKeyboard(emailEditText)
+        binding.apply {
+            profileFrameLayout.setOnClickListener {
+                if (emailEditText.isFocused) {
+                    emailEditText.clearFocus()
+                    hideKeyboard(emailEditText)
+                }
+                if (pswdEditText.isFocused) {
+                    pswdEditText.clearFocus()
+                    hideKeyboard(pswdEditText)
+                }
             }
-            if (pswdEditText.isFocused) {
-                pswdEditText.clearFocus()
-                hideKeyboard(pswdEditText)
+
+            setOnFocusChangeListener(emailCardView, emailImageView, emailEditText)
+            setOnFocusChangeListener(pswdCardView, pswdImageView, pswdEditText)
+
+            loginButton.setOnClickListener{
+                if (true) { // йде запит API Нікітос, і якщо тру, переходимо на профіль
+                    setProfileLayout()
+                }
+            }
+
+            goEditButton.setOnClickListener{ // тут перекинути на сторінку зміни інфи на сайті
+                val url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley"
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                startActivity(intent)
             }
         }
 
-        setOnFocusChangeListener(emailCardView, emailImageView, emailEditText)
-        setOnFocusChangeListener(pswdCardView, pswdImageView, pswdEditText)
-
-        loginButton.setOnClickListener{
-            if (true) { // йде запит API Нікітос, і якщо тру, переходимо на профіль
-                setProfileLayout()
-            }
-        }
-
-        goEditButton.setOnClickListener{ // тут перекинути на сторінку зміни інфи на сайті
-            val url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley"
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-            startActivity(intent)
-        }
     }
 
-    private fun setProfileLayout(){
-        titleTextView.visibility = View.GONE
+    private fun setProfileLayout() = with(binding){
+        profileTitle.visibility = View.GONE
         loginLinearLayout.visibility = View.GONE
 
         profileCardView.visibility = View.VISIBLE
