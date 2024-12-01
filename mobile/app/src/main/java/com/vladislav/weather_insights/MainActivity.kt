@@ -46,19 +46,14 @@ class MainActivity : AppCompatActivity() {
         theme.resolveAttribute(R.attr.navBarColor, typedValue, true)
         window.navigationBarColor = typedValue.data
 
-//        val fragments = supportFragmentManager.fragments
-//        for (fragment in fragments) {
-//            Log.d("FragmentStack", "Fragment in stack: ${fragment.javaClass.simpleName}")
-//        }
-
         if (supportFragmentManager.findFragmentByTag("SettingsFragment") == null) {
-            replaceFragment(WeatherFragment(), "WeatherFragment")
+            replaceFragment(WeatherPreviousFragment(), "WeatherPreviousFragment")
         }
         setTheme()
 
         binding.bottomNavigationView.setOnItemSelectedListener {
             when(it.itemId) {
-                R.id.nav_weather -> replaceFragment(WeatherFragment (), "WeatherFragment")
+                R.id.nav_weather -> replaceFragment(WeatherPreviousFragment (), "WeatherPreviousFragment")
                 R.id.nav_profile -> replaceFragment(ProfileFragment (),"PremiumFragment")
                 R.id.nav_horoscope -> replaceFragment(HoroscopeFragment (),"HoroscopeFragment")
                 R.id.nav_settings -> replaceFragment(SettingsFragment (),"SettingsFragment")
@@ -103,10 +98,6 @@ class MainActivity : AppCompatActivity() {
     fun replaceFragment(fragment: Fragment, tag: String) {
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
-//        fragmentTransaction.setCustomAnimations(
-//            android.R.anim.fade_in,  // Анімація для входу
-//            android.R.anim.fade_out  // Анімація для виходу
-//        )
         fragmentTransaction.replace(R.id.frame_layout, fragment, tag)
         fragmentTransaction.commit()
     }

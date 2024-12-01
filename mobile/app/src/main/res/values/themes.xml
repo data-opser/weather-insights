@@ -41,6 +41,7 @@
         <item name="dialogHeaderStartColor">@color/dialogHeaderStart_day</item>
         <item name="dialogHeaderCenterColor">@color/dialogHeaderCenter_day</item>
         <item name="dialogHeaderEndColor">@color/dialogHeaderEnd_day</item>
+        <item name="dialogWeatherBgColor">@color/dialogWeatherBg_day</item>
 
         <item name="googleBgColor">@color/googleBg_day</item>
         <item name="googleTextColor">@color/googleText_day</item>
@@ -57,6 +58,10 @@
 
         <item name="profileDialogBgColor">@color/profileDialogBg_day</item>
         <item name="birthStrokeColor">@color/birthStroke_day</item>
+
+        <item name="dotsIndicatorSelColor">@color/dotsIndicatorSel_day</item>
+        <item name="dotsIndicatorInertColor">@color/dotsIndicatorInert_day</item>
+
     </style>
 
     <style name="DialogAnimation">
@@ -114,26 +119,11 @@
         <item name="android:windowExitAnimation">@android:anim/fade_out</item>
     </style>
 
-    <style name="DailyTempHourlyTime">
-        <item name="android:textColor">@color/white</item>
-        <item name="layout_constraintTop_toTopOf">parent</item>
-    </style>
-
-    <style name="DailyTempHourlyIcon">
-        <item name="android:tint">@color/white</item>
-        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
-    </style>
-
-    <style name="DailyTempHourlyTemp">
-        <item name="android:textColor">@color/white</item>
-        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
-    </style>
-
     <style name="SeekBar" parent="Widget.AppCompat.SeekBar">
         <item name="android:progressDrawable">@drawable/gradient_seekbar</item>
         <item name="android:thumb">@drawable/seekbar_thumb</item>
-        <item name="android:maxHeight">6dp</item>
-        <item name="android:minHeight">6dp</item>
+        <item name="android:maxHeight">3dp</item>
+        <item name="android:minHeight">3dp</item>
     </style>
 
     <style name="App.Custom.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">

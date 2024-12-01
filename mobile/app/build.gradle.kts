@@ -46,7 +46,7 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.justifiedtextview)
-
+    implementation(libs.dotsindicator)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

@@ -32,6 +32,7 @@
         <item name="dialogHeaderStartColor">@color/dialogHeaderStart_night</item>
         <item name="dialogHeaderCenterColor">@color/dialogHeaderCenter_night</item>
         <item name="dialogHeaderEndColor">@color/dialogHeaderEnd_night</item>
+        <item name="dialogWeatherBgColor">@color/dialogWeatherBg_night</item>
 
         <item name="navBarColor">@color/navBar_night</item>
         <item name="fragmentBgStartColor">@color/fragment_bg_start_night</item>
@@ -53,6 +54,9 @@
 
         <item name="profileDialogBgColor">@color/profileDialogBg_night</item>
         <item name="birthStrokeColor">@color/birthStroke_night</item>
+
+        <item name="dotsIndicatorSelColor">@color/dotsIndicatorSel_night</item>
+        <item name="dotsIndicatorInertColor">@color/dotsIndicatorInert_night</item>
     </style>
 
     <!-- NIGHT STYLE-->
@@ -103,8 +107,8 @@
     <style name="SeekBar" parent="Widget.AppCompat.SeekBar">
         <item name="android:progressDrawable">@drawable/gradient_seekbar</item>
         <item name="android:thumb">@drawable/seekbar_thumb</item>
-        <item name="android:maxHeight">6dp</item>
-        <item name="android:minHeight">6dp</item>
+        <item name="android:maxHeight">3dp</item>
+        <item name="android:minHeight">3dp</item>
     </style>
 
     <style name="App.Custom.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">

@@ -33,6 +33,7 @@
     <attr name="dialogHeaderStartColor" format="color"/>
     <attr name="dialogHeaderCenterColor" format="color"/>
     <attr name="dialogHeaderEndColor" format="color"/>
+    <attr name="dialogWeatherBgColor" format="color"/>
 
     <attr name="googleBgColor" format="color"/>
     <attr name="googleTextColor" format="color"/>
@@ -49,4 +50,7 @@
 
     <attr name="profileDialogBgColor" format="color"/>
     <attr name="birthStrokeColor" format="color"/>
+
+    <attr name="dotsIndicatorSelColor" format="color"/>
+    <attr name="dotsIndicatorInertColor" format="color"/>
 </resources>
