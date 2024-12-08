@@ -1,0 +1,204 @@
+.form {
+  background: #FFFAF1;
+  border-radius: 3em;
+  margin: 20px;
+  padding: 20px;
+  display: grid;
+  position: relative;
+  grid-template-columns: 50% 50%;
+  place-self: center;
+}
+
+.left-column {
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+}
+
+.form-weather-icon {
+  max-width: 70%;
+}
+
+.return-button {
+  height: 50px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  position: absolute;
+  left: 15px;
+  top: 23px;
+}
+
+.return-arrow {
+  width: 100%;
+  height: 100%;
+}
+
+.right-column {
+  display: flex;
+  align-items: center;
+}
+
+.data-form {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.data-form h1 {
+  font-weight: 400;  
+  margin-top: 0;
+}
+
+.data-form .error-text {
+  color:red;
+  opacity: 50%;
+  font-size: 20px;
+  margin-left: 20px;
+}
+
+.input-field {
+  width: 100%;
+  background: #FFF4DE;
+  margin-bottom: 5%;
+  display: flex;
+  align-items: center;
+  height: 75px;
+  border-radius: 1em;
+  color: #C5C1C1;
+}
+
+.input-field input {
+  background: transparent;
+  border: none;
+  outline: none;
+  width: 75%;
+  font-size: x-large;
+  height: 50%;
+}
+
+.pass-input-field input {
+  width: 60%;
+}
+
+.input-field input::placeholder {
+  font-size: xx-large;
+}
+
+.data-form .icon {
+  height: 50%;
+  width: 10%;
+  margin: 5%;
+}
+
+.show-password {
+  cursor: pointer;
+  transition: .5s;
+}
+
+.show-password:hover {
+  color:#333;
+}
+
+.data-form button[type='submit'], .reset-pass-button {
+  width: 100%;
+  height: 60px;
+  margin: 0% 0% 7%;
+  background: #FFE3AB;
+  cursor: pointer;
+  border: none;
+  border-radius: 0.5em;  
+  font-size: 35px;
+}
+
+.link {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.link-forgot {
+  place-self: center;
+}
+
+.link p, button {
+  font-size: large;
+  display: inline;
+}
+
+.link p {
+  color: #C5C1C1;
+  padding-right: 1%;
+}
+.link .forgot-password {
+  display: block;
+}
+.link button {
+  border: 0;
+  background: none;
+  outline: none;
+  color: rgb(95, 95, 250);
+  padding-left: 0;
+  opacity: 80%;
+  cursor: pointer;
+}
+
+.google-icon {
+  height: 35px;
+  position: absolute;
+  background: white;
+  border-radius: 2em;
+  cursor: pointer;
+  border: 8px solid white;
+  bottom: -25.5px;
+  right: 25%;
+  transform: translateX(25%);
+}
+
+@media screen and (max-width: 1200px) {
+  .form {
+    grid-template-columns: 100%;
+    width: 100%;
+    margin: 0;
+  }
+  .left-column {
+    display: none;
+  }
+
+  .data-form h1 {
+    text-align: center;
+  }
+
+  .google-icon {
+    right: 50%;
+    transform: translateX(50%);
+  }
+
+  .form .return-button {
+    height: 35px;
+    top: 27px;
+  }
+} 
+
+@media screen and (max-width: 700px) {
+  .input-field input {
+    background: transparent;
+    border: none;
+    outline: none;
+    width: 75%;
+    font-size: 16px;
+  }
+  
+  .input-field input::placeholder {
+    font-size: 27px;
+  }
+
+  .pass-input-field input {
+    font-size: 22px;
+  }
+
+  .data-form button[type='submit'], .reset-pass-button {
+    border-radius: 0.5em;  
+    font-size: 25px;
+  }
+}

@@ -1,0 +1,73 @@
+.home-page {
+    display: grid;
+    grid-template-rows: 80px 1fr 1fr auto;
+    grid-template-columns: auto 1fr;
+    width: 1300px;
+    justify-self: center;
+}
+
+.cities {
+    grid-row: 1;
+    grid-column: 1/3;
+    display: flex;
+}
+
+.days,
+.map,
+.sun-time {
+    background: white;
+    border-radius: 1em;
+    margin: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.231);
+}
+
+.map,
+.sun-time {
+    grid-column: 2;
+}
+
+.sun-time {
+    grid-row: 2;
+}
+
+@media only screen and (max-width: 1300px) {
+    .home-page {
+        width: 100%;
+    }   
+}
+
+@media only screen and (max-width: 900px) {
+    .cities .city-list {
+        width: stretch;
+    }
+
+    .cities .city-list button {            
+        font-size: 15px;
+        text-align: center;
+        min-width: auto;
+    }
+    .home-page {
+        grid-template-rows: 80px repeat(4, auto);
+    }
+
+    .sun-time {
+        grid-row: 3;
+    }
+
+    .map {
+        grid-row: 4;
+        height: 100%;
+        display: none;
+    }
+
+    .cities .add-city-button {
+        justify-content: center;
+        min-width: 40px;
+        border-radius: 5em;
+        margin-right: 0;
+    }
+
+    .cities .add-city-button .add-city-button-text {
+        display: none;
+    }
+}

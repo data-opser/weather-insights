@@ -1,0 +1,91 @@
+.header {
+  display: flex;
+  align-items: center;
+  min-width: 1300px;
+  justify-self: center;
+  position: relative;
+}
+
+.header p {
+  font-size: 30px;
+}
+
+.login-button {
+  margin: 20px;
+}
+
+.block-with-logo {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.block-with-logo p {
+  margin-left: 10px;
+}
+
+.logo {
+  border-radius: 50%;
+  height: 35px;
+  padding: 10px;
+  margin-left: 10px;
+  background: white;
+}
+
+.login-button {
+  background-color: white;
+  color: black;
+  border: none;
+  border-radius: 0.5em;
+  font-size: 20px;
+  width: 150px;
+  padding: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s, color 0.3s;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.231);
+  position: absolute;
+  right: 0;
+  top: -5px
+}
+
+.login-button:hover {
+  background-color: #E8F1FF;
+}
+
+.login-button.blue {
+  background: linear-gradient(135deg, rgba(19, 99, 223, 1) 0%, rgba(28, 75, 130, 1) 100%);
+  color: white;
+}
+
+.icon-button-login {
+  width: auto;
+  height: 1em;
+  color: #002644;
+  padding-right: 10px;
+}
+
+.icon-button-login.white {
+  color: white;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+@media only screen and (max-width: 1300px) {
+  .header {
+    min-width: 100%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .block-with-logo p {
+    display: none;
+  }
+}

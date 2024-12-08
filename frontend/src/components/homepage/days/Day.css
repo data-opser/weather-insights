@@ -1,0 +1,154 @@
+.day {
+    width: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 0;
+    font-size: 22px;
+    border-radius: 0.5em;
+    margin-right: 10px;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.231);
+    transition: transform 0.3s;
+}
+
+.day-link {
+    text-decoration: none;
+    color: inherit;
+    width: 100%;
+    height: 100%;
+}
+
+.day.snow {
+    background: rgb(223, 223, 223);
+}
+
+.day.clear {
+    background: #F5B278;
+}
+
+.day.rain {
+    background: #9FD9F0;
+}
+
+.day.clouds {
+    background: #969696;
+}
+
+.day:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+}
+
+.day p {
+    font-size: 25px;
+}
+
+.day .weather-icon {
+    width: 40px;
+    height: 40px;
+}
+
+.day .weather-icon.clear {
+    color: yellow;
+}
+
+.day .weather-icon.snow {
+    color: rgb(141, 141, 141);
+}
+
+.day .weather-icon.rain {
+    color: #003cff;
+}
+
+.day .weather-icon.clouds {
+    color: #c3c3c3;
+}
+
+.raindrop {
+    color: blue;
+    width: 45px;
+    height: 45px;
+    padding-top: 8px;
+}
+
+.humidity {
+    display: flex;
+    align-items: center;
+}
+
+.day .wind-block {
+    padding: 20px 0;
+}
+
+.day .wind-p,
+.wind-speed {
+    display: inline;
+}
+
+@media only screen and (max-width: 900px) {
+    .day {
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 0 20px;
+        margin: 0;        
+        margin-bottom: 10px;
+        width: calc(100% - 60px);
+    }   
+
+    .day .wind-p {
+        min-width: 40px;
+        text-align: center;
+    }
+
+    .day .wind-block {
+        display: flex;
+        align-items: center;
+        padding: 0;
+    }
+}
+@media only screen and (max-width: 600px) {
+    .day p {
+        font-size: small;
+    }
+
+    .day .weather-icon {
+        width: 25px;
+        height: 25px;
+    }
+
+    .day .humidity .raindrop {
+        color: rgb(78, 78, 255);
+        width: 25px;
+        height: 25px;
+        padding-top: 4px;
+    }
+
+    .day .date {
+        min-width: 60px;
+    }
+
+    .day .temp {
+        min-width: 80px;
+        text-align: center;
+    }
+
+    .day .humidity {
+        min-width: 60px;
+    }
+
+    .day .wind-p {
+        min-width: 20px;
+        text-align: center;
+    }
+
+    .day .wind-block {
+        display: flex;
+        align-items: center;
+        padding: 0;
+    }
+}
+@media only screen and (max-width: 400px) {
+    .day {
+        justify-content: flex-start;
+    }
+}
