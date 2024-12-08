@@ -58,7 +58,7 @@ class UserCity(db.Model):
             )
 
     @classmethod
-    def get_user_cities_id(cls, user_id):
+    def get_user_city_ids(cls, user_id):
         try:
             user_cities = cls.query.filter_by(user_id=user_id).all()
 
@@ -74,7 +74,7 @@ class UserCity(db.Model):
                     )
                 user_city_ids.append(uc.city_id)
 
-                if uc.city.get("is_main"):
+                if uc.is_main:
                     main_city_id = uc.city_id
 
             return jsonify({'user_cities': user_city_ids, 'main_city': main_city_id}), 200
