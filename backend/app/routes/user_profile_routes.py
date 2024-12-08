@@ -43,6 +43,13 @@ def get_user_cities():
     return UserCity.get_user_cities(user.user_id)
 
 
+@user_profile_bp.route('/user_cities_id', methods=['Get'])
+@auth_required
+def get_user_cities_id():
+    user = request.current_user
+    return UserCity.get_user_cities_id(user.user_id)
+
+
 @user_profile_bp.route('/add_user_city/city', methods=['Post'])
 @auth_required
 def add_user_city():

@@ -58,6 +58,35 @@ class UserCity(db.Model):
             )
 
     @classmethod
+    def get_user_cities_id(cls, user_id):
+        try:
+            user_cities = cls.query.filter_by(user_id=user_id).all()
+
+            user_city_ids = []
+            main_city_id = None
+
+            for uc in user_cities:
+                if not City.check_city_exists(uc.city_id):
+                    return ErrorHandler.handle_error(
+                        None,
+                        message=f"City with ID '{uc.city_id}' not found.",
+                        status_code=404
+                    )
+                user_city_ids.append(uc.city_id)
+
+                if uc.city.get("is_main"):
+                    main_city_id = uc.city_id
+
+            return jsonify({'user_cities': user_city_ids, 'main_city': main_city_id}), 200
+
+        except Exception as e:
+            return ErrorHandler.handle_error(
+                e,
+                message="Database error while retrieving cities for user",
+                status_code=500
+            )
+
+    @classmethod
     def add_user_city(cls, user_id, city_id):
         try:
             city = City.check_city_exists(city_id)
