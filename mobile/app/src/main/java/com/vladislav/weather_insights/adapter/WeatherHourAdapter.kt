@@ -15,10 +15,17 @@ class WeatherHourAdapter : RecyclerView.Adapter<WeatherHourAdapter.WeatherHourVi
     class WeatherHourViewHolder(item: View): RecyclerView.ViewHolder(item){
         private val binding = ItemWeatherHourBinding.bind(item)
 
-        fun bind(hourItem: WeatherHour) = with(binding){
+        fun bind(hourItem: WeatherHour, isLastItem: Boolean) = with(binding){
             weatherHourTextView.text = hourItem.hour
-            //weatherImageView.setImageResource(hourItem.imageId)
+            weatherImageView.setImageResource(hourItem.imageId)
             weatherTempTextView.text = String.format(Locale.getDefault(), "%d°", hourItem.temperature)
+
+            itemView.setPadding(itemView.paddingLeft, itemView.paddingTop, 0, itemView.paddingBottom)
+
+            if (isLastItem) {
+                val paddingRightInPx = (18 * itemView.context.resources.displayMetrics.density).toInt()
+                itemView.setPadding(itemView.paddingLeft, itemView.paddingTop, paddingRightInPx, itemView.paddingBottom)
+            }
         }
     }
 
@@ -29,7 +36,7 @@ class WeatherHourAdapter : RecyclerView.Adapter<WeatherHourAdapter.WeatherHourVi
     }
 
     override fun onBindViewHolder(holder: WeatherHourViewHolder, position: Int) {
-        holder.bind(hourList[position])
+        holder.bind(hourList[position], position == hourList.size - 1)
     }
 
     override fun getItemCount(): Int {

@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.vladislav.weather_insights.R
 import com.vladislav.weather_insights.databinding.ItemWeatherDayBinding
 import com.vladislav.weather_insights.model.WeatherDay
+import java.util.Locale
 
 class WeatherDayAdapter : RecyclerView.Adapter<WeatherDayAdapter.WeatherDayViewHolder>(){
     private val dayList = ArrayList<WeatherDay>()
@@ -15,12 +16,14 @@ class WeatherDayAdapter : RecyclerView.Adapter<WeatherDayAdapter.WeatherDayViewH
         private val binding = ItemWeatherDayBinding.bind(item)
 
         fun bind(dayItem: WeatherDay) = with(binding){
-            //weatherImageView.setImageResource(dayItem.imageId)
+            weatherImageView.setImageResource(dayItem.imageId)
             weatherDayTextView.text = dayItem.day
             temperatureRange.max = dayItem.maxTemp - dayItem.minTemp
             temperatureRange.progress = dayItem.maxTemp - dayItem.currentTemp
-            dayMinTextView.text = dayItem.minTemp.toString()
-            dayMaxTextView.text = dayItem.maxTemp.toString()
+            temperatureRange.isEnabled = false
+
+            dayMinTextView.text = String.format(Locale.getDefault(), "%d°", dayItem.minTemp)
+            dayMaxTextView.text = String.format(Locale.getDefault(), "%d°", dayItem.maxTemp)
         }
     }
 

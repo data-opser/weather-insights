@@ -71,6 +71,8 @@
     <color name="dialogHeaderCenter_night">#172938</color>
     <color name="dialogHeaderEnd_day">#8E73E4</color>
     <color name="dialogHeaderEnd_night">#172938</color>
+    <color name="dialogWeatherBg_day">#9882E2</color>
+    <color name="dialogWeatherBg_night">#223D56</color>
     <color name="dialogBg_day">#ffffff</color>
     <color name="dialogBg_night">#21394B</color>
 
@@ -108,4 +110,9 @@
     <color name="profileDialogBg_night">#1f3749</color>
     <color name="birthStroke_day">#C8A2C8</color>
     <color name="birthStroke_night">#90A9B8</color>
+
+    <color name="dotsIndicatorSel_day">#ffffff</color>
+    <color name="dotsIndicatorSel_night">#ffffff</color>
+    <color name="dotsIndicatorInert_day">#6A5ACD</color>
+    <color name="dotsIndicatorInert_night">#90A9B8</color>
 </resources>

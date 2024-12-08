@@ -80,10 +80,8 @@ class SettingsFragment : Fragment() {
                 ActivityResultContracts.RequestPermission()
             ) { isGranted: Boolean ->
                 if (isGranted) {
-                    // Дозвіл надано, можна надсилати сповіщення
                     editor.putBoolean("notification", true)
                 } else {
-                    // Дозвіл відхилено
                     switchNotify.isChecked = false
                     editor.putBoolean("notification", false)
                     showSettingsDialog()
@@ -138,12 +136,10 @@ class SettingsFragment : Fragment() {
             .setMessage("To receive notifications, please enable notifications in your settings")
             .setPositiveButton("Settings") { _, _ ->
                 val intent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    // Для Android 8.0 (API 26) та новіших
                     Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).apply {
                         putExtra(Settings.EXTRA_APP_PACKAGE, myActivity.packageName)
                     }
                 } else {
-                    // Для Android 7.0 (API 24) та Android 7.1 (API 25)
                     Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
                         data = Uri.parse("package:${myActivity.packageName}")
                     }

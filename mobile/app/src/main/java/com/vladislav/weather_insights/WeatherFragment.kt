@@ -3,9 +3,11 @@ package com.vladislav.weather_insights
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.vladislav.weather_insights.adapter.WeatherDayAdapter
 import com.vladislav.weather_insights.adapter.WeatherHourAdapter
 import com.vladislav.weather_insights.databinding.FragmentWeatherBinding
@@ -28,8 +30,19 @@ class WeatherFragment : Fragment() {
     private var param2: String? = null
 
     private lateinit var binding: FragmentWeatherBinding
+    private val imageList = listOf(
+        R.drawable.weather_day_clear,
+        R.drawable.weather_day_cloud,
+        R.drawable.weather_day_rain,
+        R.drawable.weather_day_snow,
+        R.drawable.weather_night_clear,
+        R.drawable.weather_night_cloud,
+        R.drawable.weather_night_rain,
+        R.drawable.weather_night_snow
+    )
     private val hourAdapter = WeatherHourAdapter()
     private val dayAdapter = WeatherDayAdapter()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,24 +63,39 @@ class WeatherFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         binding.apply {
             hourRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             hourRecyclerView.adapter = hourAdapter
-            hourAdapter.addHour(WeatherHour(1, "Now", 38))
+            hourAdapter.addHour(WeatherHour(imageList[1], "Now", 38))
             for (count in 1..20){
-                val hour = WeatherHour(2, "$count:00", count)
+                val hour = WeatherHour(imageList[1], "$count:00", count)
                 hourAdapter.addHour(hour)
             }
 
             dayRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             dayRecyclerView.adapter = dayAdapter
-            dayAdapter.addDay(WeatherDay(1, "Today", 27, 21, 32))
+            dayAdapter.addDay(WeatherDay(imageList[1], "Today", 27, 21, 32))
             for (countDay in 1..7){
                 val minTemp = countDay + -5
                 val maxTemp = countDay + 3
-                val day = WeatherDay(1, "Today", (minTemp..maxTemp).random(), minTemp, maxTemp)
+                val day = WeatherDay(imageList[2], "Wed", (minTemp..maxTemp).random(), minTemp, maxTemp)
                 dayAdapter.addDay(day)
             }
+
+            hourRecyclerView.addOnItemTouchListener(object : RecyclerView.OnItemTouchListener {
+                override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
+                    rv.parent?.requestDisallowInterceptTouchEvent(true)
+                    return false
+                }
+
+                override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {
+                }
+
+                override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {
+                }
+            })
+
         }
     }
 
