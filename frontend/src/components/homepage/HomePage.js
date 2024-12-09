@@ -14,6 +14,7 @@ const HomePage = () => {
   const [currentCityId, setCurrentCityId] = useState(null);
   const [selectedDate, setSelectedDate] = useState(null);
   const [activeButton, setActiveButton] = useState(null);
+  const [isCityListEmpty, setIsCityListEmpty] = useState(false);
 
   const defaultCity = {
     city: "London",
@@ -38,7 +39,7 @@ const HomePage = () => {
       setCityList([]);
       setCurrentCityId(null);
     }
-  }, [isLoggedIn, cookies.defaultCity]);  
+  }, [isLoggedIn, cookies.defaultCity]);
 
   const addCity = (newCity) => {
     setCityList((prevList) => [...prevList, newCity]);
@@ -73,6 +74,10 @@ const HomePage = () => {
     setCurrentCityId(city.id);
   };
 
+  useEffect(() => {
+    setIsCityListEmpty(cityList.length === 0);
+  }, [cityList]);
+
   return (
     <div className="home-page">
       <div className='cities'>
@@ -87,14 +92,26 @@ const HomePage = () => {
           setActiveButton={setActiveButton}
           setCityList={setCityList}
           currentCityId={currentCityId}
+          isCityListEmpty={isCityListEmpty}
         />
       </div>
-      <Days cityId={currentCityId} onDayClick={handleDayClick} />
-      <SunTime cityId={currentCityId} />
+      <Days
+        cityId={currentCityId}
+        onDayClick={handleDayClick}
+        isCityListEmpty={isCityListEmpty}
+      />
+      <SunTime
+        cityId={currentCityId}
+        isCityListEmpty={isCityListEmpty}
+      />
       <div className='map'>
 
       </div>
-      <SingleDay cityId={currentCityId} date={selectedDate} />
+      <SingleDay 
+      cityId={currentCityId} 
+      date={selectedDate} 
+      isCityListEmpty={isCityListEmpty}
+      />
     </div>
   );
 }

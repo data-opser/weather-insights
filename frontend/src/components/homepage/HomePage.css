@@ -45,6 +45,7 @@
         font-size: 15px;
         text-align: center;
         min-width: auto;
+        max-width: 120px;
     }
     .home-page {
         grid-template-rows: 80px repeat(4, auto);

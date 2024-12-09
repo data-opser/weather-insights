@@ -3,8 +3,9 @@ import './Days.css';
 import Day from './Day';
 import api from '../../axiosConfig';
 import { HiOutlineCog6Tooth } from "react-icons/hi2";
+import { FaCity } from "react-icons/fa";
 
-const Days = ({ cityId, onDayClick }) => {
+const Days = ({ cityId, onDayClick, isCityListEmpty }) => {
   const [weatherData, setWeatherData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -34,6 +35,17 @@ const Days = ({ cityId, onDayClick }) => {
 
     fetchWeather();
   }, [cityId]);
+
+  if (isCityListEmpty) {
+    return (
+      <div className='days'>
+        <div className="loading">
+          <FaCity className='img' alt='city' />
+          <h1>Your city list is empty</h1>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className='days'>

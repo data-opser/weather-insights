@@ -3,7 +3,7 @@ import './CityList.css';
 import api from '../../axiosConfig';
 import Flag from 'react-world-flags';
 
-function CityList({ isLoggedIn, cityList, selectCity, setMainCity, removeCity, setCityList, currentCityId }) {
+function CityList({ isLoggedIn, cityList, selectCity, setMainCity, removeCity, setCityList, currentCityId, isCityListEmpty }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [contextMenu, setContextMenu] = useState({ isVisible: false, x: 0, y: 0, cityId: null });
@@ -14,8 +14,11 @@ function CityList({ isLoggedIn, cityList, selectCity, setMainCity, removeCity, s
 
   const handleContextMenu = (e, cityId) => {
     e.preventDefault();
+    const city = cityList.find((city) => city.id === cityId);
+    if (city?.is_main) return;
     setContextMenu({ isVisible: true, x: e.clientX, y: e.clientY, cityId });
   };
+  
 
   const closeContextMenu = () => {
     setContextMenu({ isVisible: false, x: 0, y: 0, cityId: null });
@@ -94,14 +97,14 @@ function CityList({ isLoggedIn, cityList, selectCity, setMainCity, removeCity, s
             className={currentCityId === city.id ? 'blue' : ''}
             onClick={() => handleButtonClick(city.id)}
           >
-            {city.city}
+            <p className='city-name'>{city.city}</p>
             <div className="flag-container">
               <Flag className="flag" code={city.iso2} />
             </div>
           </button>
         ))          
       )}
-      { !isLoggedIn &&
+      {!isLoggedIn &&
         (
           <div className="loading">
             <p>Sign up to have more cities</p>
@@ -116,16 +119,16 @@ function CityList({ isLoggedIn, cityList, selectCity, setMainCity, removeCity, s
             onClick={() => handleButtonClick(city.id)}
             onContextMenu={(e) => handleContextMenu(e, city.id)}
           >
-            {city.city}
+            <p className='city-name'>{city.city}</p>
             <div className="flag-container">
               <Flag className="flag" code={city.iso2} />
             </div>
           </button>
         ))
       )}
-      {!isLoggedIn && cityList.length === 0 && (
-        <div className="no-cities">
-          <h1>No cities found</h1>
+      {isLoggedIn && !loading && !error && cityList.length === 0 && (
+        <div className="loading">
+          <p>No cities found</p>
         </div>
       )}
 
@@ -134,9 +137,7 @@ function CityList({ isLoggedIn, cityList, selectCity, setMainCity, removeCity, s
           className="context-menu"
           style={{ top: `${contextMenu.y}px`, left: `${contextMenu.x}px` }}
         >
-          {!cityList.find(city => city.id === contextMenu.cityId)?.is_main && (
-            <button onClick={() => handleSetMainCity(contextMenu.cityId)}>Set as main</button>
-          )}
+          <button onClick={() => handleSetMainCity(contextMenu.cityId)}>Set as main</button>
           <button onClick={() => handleDeleteCity(contextMenu.cityId)}>Delete</button>
         </div>
       )}

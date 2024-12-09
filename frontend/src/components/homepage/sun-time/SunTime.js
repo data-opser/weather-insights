@@ -4,7 +4,7 @@ import { GoSun } from "react-icons/go";
 import api from '../../axiosConfig';
 import { FaCloud } from "react-icons/fa";
 
-const SunTime = ({ cityId }) => {
+const SunTime = ({ cityId, isCityListEmpty }) => {
   const [activeButton, setActiveButton] = useState('sunrise');
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -51,12 +51,18 @@ const SunTime = ({ cityId }) => {
         <GoSun className={`sun ${loading ? 'spinning' : ''}`} />
         <FaCloud className={`cloud ${activeButton === 'sunrise' ? 'not-to-show' : 'show'}`} />
       </div>
-      {loading && <div className='loading'>
-        <h1>Loading...</h1>
-      </div>
+      {loading &&
+        <div className='loading'>
+          <h1>Loading...</h1>
+        </div>
+      }
+      {!loading && isCityListEmpty &&
+        <div className='loading'>
+          <h1>Your city list is empty</h1>
+        </div>
       }
       {error && <h1 style={{ color: 'red' }}>{error}</h1>}
-      {data && !loading && !error && timeToDisplay && <h1>{timeToDisplay}</h1>}
+      {data && !loading && !error && !isCityListEmpty && timeToDisplay && <h1>{timeToDisplay}</h1>}
     </div>
   );
 };

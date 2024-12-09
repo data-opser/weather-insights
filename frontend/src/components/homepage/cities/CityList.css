@@ -35,6 +35,12 @@
     margin: 3px;
 }
 
+.city-list button .city-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 .city-list button:hover {
     background-color: rgb(236, 236, 236);
     transition: 0.4s;
@@ -50,6 +56,7 @@
     width: 30px;
     margin-left: 10px;
     border-radius: 5px;
+    flex-shrink: 0;
     overflow: hidden;
     display: flex;
     align-items: center;
