@@ -3,8 +3,9 @@ import "./SingleDay.css";
 import Hour from "./Hour";
 import api from "../../axiosConfig";
 import { HiOutlineCog6Tooth } from "react-icons/hi2";
+import { FaCity } from "react-icons/fa";
 
-const SingleDay = ({ date, cityId }) => {
+const SingleDay = ({ date, cityId, isCityListEmpty }) => {
   const [hourlyData, setHourlyData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -38,8 +39,14 @@ const SingleDay = ({ date, cityId }) => {
           <h1>Loading...</h1>
         </div>
       )}
+      {!loading && isCityListEmpty &&
+        <div className="loading">
+          <FaCity className='img' alt='city' />
+          <h1>Your city list is empty</h1>
+        </div>
+      }
       {error && <h1 style={{ color: "red" }}>{error}</h1>}
-      {!loading && !error && (
+      {!loading && !error && !isCityListEmpty && (
         <div className="hour-table">
           <div className="hour-table-main-text">
             <p className="hour-table-main-text-time">Time</p>
