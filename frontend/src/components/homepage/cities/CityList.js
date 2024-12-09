@@ -94,7 +94,7 @@ function CityList({ isLoggedIn, cityList, selectCity, setMainCity, removeCity, s
             className={currentCityId === city.id ? 'blue' : ''}
             onClick={() => handleButtonClick(city.id)}
           >
-            {city.city}
+            <p className='city-name'>{city.city}</p>
             <div className="flag-container">
               <Flag className="flag" code={city.iso2} />
             </div>
@@ -116,7 +116,7 @@ function CityList({ isLoggedIn, cityList, selectCity, setMainCity, removeCity, s
             onClick={() => handleButtonClick(city.id)}
             onContextMenu={(e) => handleContextMenu(e, city.id)}
           >
-            {city.city}
+            <p className='city-name'>{city.city}</p>
             <div className="flag-container">
               <Flag className="flag" code={city.iso2} />
             </div>
