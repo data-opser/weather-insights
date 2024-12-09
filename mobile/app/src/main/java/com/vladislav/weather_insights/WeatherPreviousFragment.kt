@@ -45,12 +45,12 @@ class WeatherPreviousFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val fragList = listOf(
+        val cityList = listOf(
             WeatherFragment.newInstance("", ""),
             WeatherFragment.newInstance("", ""),
             WeatherFragment.newInstance("", "")
         )
-        val fragAdapter = ViewPagerAdapter(requireActivity(), fragList)
+        val fragAdapter = ViewPagerAdapter(requireActivity(), cityList)
         binding.apply {
             weatherViewPager.adapter = fragAdapter
             weatherViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {

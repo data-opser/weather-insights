@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.vladislav.weather_insights.adapter.CitySearchAdapter
 import com.vladislav.weather_insights.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -111,7 +112,7 @@ class MainActivity : AppCompatActivity() {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.bottom_nav_layout)
 
-        val search = SearchDialog(this)
+        val search = CitySearchAdapter(this)
         search.changeActiveProcess(dialog)
 
         dialog.setOnDismissListener{
