@@ -123,9 +123,9 @@ function CityList({ isLoggedIn, cityList, selectCity, setMainCity, removeCity, s
           </button>
         ))
       )}
-      {!isLoggedIn && cityList.length === 0 && (
-        <div className="no-cities">
-          <h1>No cities found</h1>
+      {isLoggedIn && !loading && !error && cityList.length === 0 && (
+        <div className="loading">
+          <p>No cities found</p>
         </div>
       )}
 
