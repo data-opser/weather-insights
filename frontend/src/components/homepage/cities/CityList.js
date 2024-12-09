@@ -101,7 +101,7 @@ function CityList({ isLoggedIn, cityList, selectCity, setMainCity, removeCity, s
           </button>
         ))          
       )}
-      { !isLoggedIn &&
+      {!isLoggedIn &&
         (
           <div className="loading">
             <p>Sign up to have more cities</p>
