@@ -14,8 +14,11 @@ function CityList({ isLoggedIn, cityList, selectCity, setMainCity, removeCity, s
 
   const handleContextMenu = (e, cityId) => {
     e.preventDefault();
+    const city = cityList.find((city) => city.id === cityId);
+    if (city?.is_main) return;
     setContextMenu({ isVisible: true, x: e.clientX, y: e.clientY, cityId });
   };
+  
 
   const closeContextMenu = () => {
     setContextMenu({ isVisible: false, x: 0, y: 0, cityId: null });
@@ -134,9 +137,7 @@ function CityList({ isLoggedIn, cityList, selectCity, setMainCity, removeCity, s
           className="context-menu"
           style={{ top: `${contextMenu.y}px`, left: `${contextMenu.x}px` }}
         >
-          {!cityList.find(city => city.id === contextMenu.cityId)?.is_main && (
-            <button onClick={() => handleSetMainCity(contextMenu.cityId)}>Set as main</button>
-          )}
+          <button onClick={() => handleSetMainCity(contextMenu.cityId)}>Set as main</button>
           <button onClick={() => handleDeleteCity(contextMenu.cityId)}>Delete</button>
         </div>
       )}
