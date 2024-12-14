@@ -1,4 +1,4 @@
-package com.vladislav.weather_insights
+package com.vladislav.weather_insights.adapter
 
 import android.app.Dialog
 import android.content.Context
@@ -8,11 +8,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.vladislav.weather_insights.MainActivity
+import com.vladislav.weather_insights.R
 import com.vladislav.weather_insights.databinding.BottomNavLayoutBinding
+import com.vladislav.weather_insights.model.City
 
 
-class SearchDialog (private val activity: MainActivity){
+class CitySearchAdapter (private val activity: MainActivity){
     private var binding: BottomNavLayoutBinding = BottomNavLayoutBinding.inflate(LayoutInflater.from(activity))
+    private var cityAdapter = CityAdapter()
 
     fun changeActiveProcess(dialog: Dialog) {
         dialog.setContentView(binding.root)
@@ -49,6 +54,12 @@ class SearchDialog (private val activity: MainActivity){
                     }
                 }
             }
+
+            cityRecyclerView.layoutManager = LinearLayoutManager(dialog.context, LinearLayoutManager.VERTICAL, false)
+            cityRecyclerView.adapter = cityAdapter
+            cityAdapter.addCity(City("Poltava", "Ukraine"))
+            cityAdapter.addCity(City("Kharkiv", "Ukraine"))
+            cityAdapter.addCity(City("Tallinn", "Estonia"))
         }
     }
 

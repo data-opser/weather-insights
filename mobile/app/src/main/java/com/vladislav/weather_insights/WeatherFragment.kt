@@ -67,19 +67,24 @@ class WeatherFragment : Fragment() {
         binding.apply {
             hourRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             hourRecyclerView.adapter = hourAdapter
-            hourAdapter.addHour(WeatherHour(imageList[1], "Now", 38))
-            for (count in 1..20){
-                val hour = WeatherHour(imageList[1], "$count:00", count)
+
+            hourAdapter.addHour(WeatherHour(imageList[0], "Now", 38))
+            for (countHour in 1..20){
+                if(countHour < 8){
+                    hourAdapter.addHour(WeatherHour(imageList[countHour], "$countHour:00", countHour))
+                    continue
+                }
+                val hour = WeatherHour(imageList[1], "$countHour:00", countHour)
                 hourAdapter.addHour(hour)
             }
 
             dayRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             dayRecyclerView.adapter = dayAdapter
-            dayAdapter.addDay(WeatherDay(imageList[1], "Today", 27, 21, 32))
+            dayAdapter.addDay(WeatherDay(imageList[0], "Today", 27, -99, 32))
             for (countDay in 1..7){
                 val minTemp = countDay + -5
                 val maxTemp = countDay + 3
-                val day = WeatherDay(imageList[2], "Wed", (minTemp..maxTemp).random(), minTemp, maxTemp)
+                val day = WeatherDay(imageList[countDay], "Wed", (minTemp..maxTemp).random(), minTemp, maxTemp)
                 dayAdapter.addDay(day)
             }
 
