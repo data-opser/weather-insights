@@ -1,0 +1,40 @@
+name: 'weather_insights'
+version: '1.0.0'
+
+profile: 'weather_insights'
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+models:
+  weather_insights:
+    +materialized: table
+    +tags: ["transform", "dbt"]
+    current_weather:
+      +tags: "current"
+
+seeds:
+  weather_insights:
+    +enabled: true
+    +schema: seeds
+    cities:
+      +column_types:
+        city: varchar
+        city_ascii: varchar
+        lat: float
+        lng: float
+        country: varchar
+        iso2: varchar
+        iso3: varchar
+        admin_name: varchar
+        capital: varchar
+        population: float
+        id: int

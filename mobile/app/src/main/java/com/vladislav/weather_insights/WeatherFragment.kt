@@ -67,13 +67,13 @@ class WeatherFragment : Fragment() {
         binding.apply {
             hourRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             hourRecyclerView.adapter = hourAdapter
+
             hourAdapter.addHour(WeatherHour(imageList[0], "Now", 38))
             for (countHour in 1..20){
                 if(countHour < 8){
                     hourAdapter.addHour(WeatherHour(imageList[countHour], "$countHour:00", countHour))
                     continue
                 }
-
                 val hour = WeatherHour(imageList[1], "$countHour:00", countHour)
                 hourAdapter.addHour(hour)
             }
