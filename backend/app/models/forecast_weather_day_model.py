@@ -53,7 +53,7 @@ class ForecastWeatherDay(db.Model):
                     status_code=404
                 )
 
-            list_weather = cls.query.filter_by(city_id=city_id).all()
+            list_weather = cls.query.filter_by(city_id=city_id).order_by(cls.weather_time).all()
             return WeatherResponse.response_weather_days(list_weather)
         except Exception as e:
             return ErrorHandler.handle_error(
