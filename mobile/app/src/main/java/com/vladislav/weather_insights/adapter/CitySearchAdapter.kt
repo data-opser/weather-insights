@@ -8,8 +8,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
+import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vladislav.weather_insights.MainActivity
+import com.vladislav.weather_insights.Objects.Cities
 import com.vladislav.weather_insights.R
 import com.vladislav.weather_insights.databinding.BottomNavLayoutBinding
 import com.vladislav.weather_insights.model.City
@@ -54,12 +56,25 @@ class CitySearchAdapter (private val activity: MainActivity){
                     }
                 }
             }
+            searchEditText.doOnTextChanged { text, _, _, _ ->
+                val query = text.toString().lowercase()
+                val filteredCities = Cities.getCityNames.keys.filter { city ->
+                    city.lowercase().startsWith(query)
+                }
 
+                cityAdapter.clearCities()
+                for (city in filteredCities) {
+                    cityAdapter.addCity(City(city, Cities.getCityNames[city]?.country ?: ""))
+                }
+                cityAdapter.notifyDataSetChanged()
+            }
             cityRecyclerView.layoutManager = LinearLayoutManager(dialog.context, LinearLayoutManager.VERTICAL, false)
             cityRecyclerView.adapter = cityAdapter
-            cityAdapter.addCity(City("Poltava", "Ukraine"))
-            cityAdapter.addCity(City("Kharkiv", "Ukraine"))
-            cityAdapter.addCity(City("Tallinn", "Estonia"))
+            for(city in Cities.getCityNames.keys){
+                cityAdapter.addCity(City(city, Cities.getCityNames[city]!!.country))
+            }
+
+            // Потрібно зробити обробку натискання на місто зі списку, нафкраще з діалоговим вікном з підтвердженням
         }
     }
 

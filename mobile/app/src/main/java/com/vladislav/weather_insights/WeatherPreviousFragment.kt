@@ -12,7 +12,6 @@ import com.vladislav.weather_insights.databinding.FragmentWeatherPreviousBinding
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 private lateinit var binding: FragmentWeatherPreviousBinding
 /**
@@ -22,14 +21,12 @@ private lateinit var binding: FragmentWeatherPreviousBinding
  */
 class WeatherPreviousFragment : Fragment() {
     // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private var cityId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            cityId = it.getString(ARG_PARAM1)
         }
     }
 
@@ -47,9 +44,9 @@ class WeatherPreviousFragment : Fragment() {
 
 
         val cityList = listOf(
-            WeatherFragment.newInstance("", ""),
-            WeatherFragment.newInstance("", ""),
-            WeatherFragment.newInstance("", "")
+            WeatherFragment.newInstance("1004993580"),
+            WeatherFragment.newInstance("1008162156"),
+            WeatherFragment.newInstance("1012973369")
         )
 
         val fragAdapter = ViewPagerAdapter(requireActivity(), cityList)
@@ -73,11 +70,10 @@ class WeatherPreviousFragment : Fragment() {
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(cityId: String) =
             WeatherPreviousFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+                    putString(ARG_PARAM1, cityId)
                 }
             }
     }

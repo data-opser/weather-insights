@@ -38,4 +38,8 @@ class CityAdapter : RecyclerView.Adapter<CityAdapter.CityViewHolder>(){
         cityList.add(city)
         notifyItemInserted(itemCount - 1)
     }
+
+    fun clearCities(){
+        cityList.clear()
+    }
 }
