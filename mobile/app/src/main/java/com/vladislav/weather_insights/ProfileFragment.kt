@@ -3,6 +3,7 @@ package com.vladislav.weather_insights
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences.Editor
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
@@ -30,6 +31,7 @@ import com.vladislav.weather_insights.Objects.User
 import com.vladislav.weather_insights.databinding.FragmentProfileBinding
 import com.vladislav.weather_insights.model.GoogleResponse
 import com.vladislav.weather_insights.model.LoginRequest
+import com.vladislav.weather_insights.model.UserCityData
 import com.vladislav.weather_insights.model.UserProfile
 import com.vladislav.weather_insights.model.WeatherLogin
 import retrofit2.Call
@@ -54,6 +56,7 @@ class ProfileFragment : Fragment() {
     private lateinit var binding: FragmentProfileBinding
     private lateinit var myActivity: Activity
     private lateinit var googleSignInClient: GoogleSignInClient
+    private lateinit var editor: Editor
     private lateinit var GoogleAuth: GoogleServices
     private lateinit var WeatherApi: WeatherServices
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,6 +73,7 @@ class ProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        editor = requireActivity().getSharedPreferences("MODE", Context.MODE_PRIVATE).edit()
         // Inflate the layout for this fragment
         binding = FragmentProfileBinding.inflate(inflater, container, false)
         return binding.root
@@ -100,7 +104,7 @@ class ProfileFragment : Fragment() {
 
         myActivity = requireActivity()
 
-        if(User.Profile != null){ //тут якщо у нас користувач вже залогінений був, то одразу профіль видаєм, нікіта
+        if(User.Token != null){ //тут якщо у нас користувач вже залогінений був, то одразу профіль видаєм, нікіта
             setProfileLayout()
         }
 
@@ -129,6 +133,21 @@ class ProfileFragment : Fragment() {
                         if (response.isSuccessful) {
                             response.body()?.let {
                                 User.Token = it.token
+                                WeatherApi.getUserCities().enqueue(object : Callback<UserCityData>{
+                                    override fun onResponse(call: Call<UserCityData>, response: Response<UserCityData>) {
+                                        if (response.isSuccessful){
+                                            response.body()?.let { body->
+                                                User.UserCities = body
+                                            }
+                                        }
+                                    }
+
+                                    override fun onFailure(call: Call<UserCityData>, throwable: Throwable) {
+                                        TODO("Not yet implemented")
+                                    }
+                                })
+                                editor.putString("Token", it.token)
+                                editor.apply()
                                 setProfileLayout()
                             }
                         } else {

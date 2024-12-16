@@ -56,6 +56,9 @@ class CitySearchAdapter (private val activity: MainActivity){
                     }
                 }
             }
+            for(city in Cities.getCityNames.keys){
+                cityAdapter.addCity(City(city, Cities.getCityNames[city]!!.country))
+            }
             searchEditText.doOnTextChanged { text, _, _, _ ->
                 val query = text.toString().lowercase()
                 val filteredCities = Cities.getCityNames.keys.filter { city ->
@@ -70,9 +73,7 @@ class CitySearchAdapter (private val activity: MainActivity){
             }
             cityRecyclerView.layoutManager = LinearLayoutManager(dialog.context, LinearLayoutManager.VERTICAL, false)
             cityRecyclerView.adapter = cityAdapter
-            for(city in Cities.getCityNames.keys){
-                cityAdapter.addCity(City(city, Cities.getCityNames[city]!!.country))
-            }
+
 
             // Потрібно зробити обробку натискання на місто зі списку, нафкраще з діалоговим вікном з підтвердженням
         }

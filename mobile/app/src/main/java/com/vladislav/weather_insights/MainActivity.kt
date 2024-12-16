@@ -62,6 +62,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
+
         enableEdgeToEdge()
         window.setFlags(
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
@@ -71,6 +72,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         sharedPreferences = getSharedPreferences("MODE", Context.MODE_PRIVATE)
+        User.Token = sharedPreferences.getString("Token", null)
+        Log.d("Token", User.Token!!)
         editor = sharedPreferences.edit()
 
         val typedValue = TypedValue()
