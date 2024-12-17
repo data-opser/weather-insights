@@ -5,12 +5,12 @@ from authlib.integrations.flask_client import OAuth
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail
 from flask_cors import CORS
+from app.utils.celery_config import celery_init_app
 
 db = SQLAlchemy()
 login_manager = LoginManager()
 oauth = OAuth()
 mail = Mail()
-
 
 def create_app():
     app = Flask(__name__)
@@ -28,6 +28,22 @@ def create_app():
     login_manager.init_app(app)
     oauth.init_app(app)
     mail.init_app(app)
+
+    app.config.from_mapping(
+        CELERY=dict(
+            broker_url="redis://redis",
+            result_backend="redis://redis",
+            task_ignore_result=True,
+            beat_schedule={
+                "task-every-minute": {
+                    "task": "app.tasks.send_scheduled_notifications_service.send_scheduled_notifications",
+                    "schedule": 60,
+                }
+            },
+        ),
+    )
+
+    celery_init_app(app)
 
     with app.app_context():
         db.create_all()
