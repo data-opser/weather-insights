@@ -7,6 +7,7 @@ import AddCityButton from './cities/AddCityButton';
 import Days from './days/Days';
 import SunTime from './sun-time/SunTime';
 import SingleDay from './single-day-block/SingleDay';
+import PollutantConcentration from './pollutant-concentration-block/PollutantConcentration';
 
 const HomePage = () => {
   const { isLoggedIn } = useAuth();
@@ -105,7 +106,7 @@ const HomePage = () => {
         isCityListEmpty={isCityListEmpty}
       />
       <div className='map'>
-
+        <PollutantConcentration />
       </div>
       <SingleDay 
       cityId={currentCityId} 

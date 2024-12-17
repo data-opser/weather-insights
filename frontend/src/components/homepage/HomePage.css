@@ -57,8 +57,7 @@
 
     .map {
         grid-row: 4;
-        height: 100%;
-        display: none;
+        
     }
 
     .cities .add-city-button {

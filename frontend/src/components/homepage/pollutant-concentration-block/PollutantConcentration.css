@@ -1,0 +1,24 @@
+.header-text {
+    font-size: 22px;
+    margin: 10px 0 10px 0;
+
+}
+
+.pollutant-container {
+    text-align: center;
+}
+
+@media only screen and (max-width: 1030px) {
+
+    .header-text {
+        font-size: 16px;
+        margin: 8px 4px 8px 4px;
+    
+    }
+}
+
+@media only screen and (max-width: 900px) {
+    .header-text {
+        font-size: 20px
+    }
+}
