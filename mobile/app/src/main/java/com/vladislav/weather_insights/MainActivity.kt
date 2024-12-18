@@ -9,6 +9,7 @@ import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.ViewGroup
@@ -20,7 +21,17 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.vladislav.weather_insights.adapter.CitySearchAdapter
+import com.vladislav.weather_insights.Interface.WeatherServices
+import com.vladislav.weather_insights.Objects.Cities
+import com.vladislav.weather_insights.Objects.User
+import com.vladislav.weather_insights.Retrofit.WeatherAPI
 import com.vladislav.weather_insights.databinding.ActivityMainBinding
+import com.vladislav.weather_insights.model.CityData
+import com.vladislav.weather_insights.model.WeatherLogin
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
     private var isDialogShowing = false
@@ -28,9 +39,29 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var editor: Editor
+    private lateinit var WeatherApi: WeatherServices
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        WeatherApi = WeatherAPI.retrofitService
+        WeatherApi.getCities().enqueue(object : Callback<ArrayList<CityData>>{
+            override fun onFailure(call: Call<ArrayList<CityData>>, t: Throwable) {
+                Log.d("Error","Error")
+            }
+
+            override fun onResponse(call: Call<ArrayList<CityData>>, response: Response<ArrayList<CityData>>) {
+                if (response.isSuccessful) {
+                    response.body()?.let {
+                        Cities.setCities = it
+                    }
+                    for(item in Cities.getCityIds){
+                        Log.d(item.key,Cities.getCityIds[item.key].toString())
+                    }
+                } else {
+                    Log.e("AuthError", "Response error: ${response.errorBody()?.string()}")
+                }
+            }
+        })
         enableEdgeToEdge()
         window.setFlags(
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
@@ -111,7 +142,7 @@ class MainActivity : AppCompatActivity() {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.bottom_nav_layout)
 
-        val search = SearchDialog(this)
+        val search = CitySearchAdapter(this)
         search.changeActiveProcess(dialog)
 
         dialog.setOnDismissListener{

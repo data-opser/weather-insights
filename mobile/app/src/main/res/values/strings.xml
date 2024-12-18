@@ -57,6 +57,7 @@
     <string name="profile_birthSign">♓ Pisces</string>
     <string name="profile_goEdit">Go to edit</string>
     <string name="weather_city">Poltava</string>
+    <string name="weather_country">Ukraine</string>
     <string name="weather_temperature">-4°</string>
     <string name="weather_temperatureMaxMin">Max 24° Min -26°</string>
     <string name="weather_status">Clear</string>
