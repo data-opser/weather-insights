@@ -121,16 +121,17 @@ const HomePage = () => {
         onClick={() => { if (!notificationsActive) { setNotificationsActive(!notificationsActive) } }}>
         <IoNotificationsOutline className={`notification-block-icon ${notificationsActive ? 'active' : ''}`} />
 
-        <div className='notification-header'>
+        <div className={`notification-header ${notificationsActive ? 'active' : ''}`}>
+          <p>Notifications</p>
           <RxCross2
-            className={`cross ${notificationsActive ? 'active' : ''}`}
+            className='cross'
             onClick={() => {setNotificationsActive(!notificationsActive)}}
           />
         </div>
 
         <PollutionNotifications active={notificationsActive} />
       </div>
-    </div>
+    </div>  
   );
 }
 

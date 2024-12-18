@@ -40,13 +40,23 @@
     transition: .7s;
 }
 
-.notification-header .cross {
+.notification-header p {
+    text-align: center;
+    font-size: 26px;
+    margin: 10px;
+}
+
+.notification-header {
     display: none;
 }
 
-.notification-header .cross.active {
-    font-size: 30px;
+.notification-header.active {
     display: block;
+}
+
+.notification-header .cross {
+    font-size: 30px;
+    top: 15px;
 }
 
 .notification-block.not-active {

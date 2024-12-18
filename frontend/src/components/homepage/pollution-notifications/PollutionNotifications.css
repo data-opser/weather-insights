@@ -4,7 +4,6 @@
     border-radius: 1em;
     overflow-x: hidden;
     display: none;
-    margin-top: 50px;
 }
 
 .PollutionNotifications .AttentionNotification:first-child {
