@@ -8,6 +8,7 @@ import { BsPerson } from "react-icons/bs";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { AiOutlineDown } from "react-icons/ai";
 import Notifications from './Notifications';
+import PollutionNotifications from './pollution-notifications/PollutionNotifications';
 
 const UserPage = () => {
   const [activeSaveButton, setActiveSaveButton] = useState(false);
@@ -242,6 +243,7 @@ const UserPage = () => {
         </div>
       </div>
       <Notifications />
+      <PollutionNotifications />
     </div>
   );
 };
