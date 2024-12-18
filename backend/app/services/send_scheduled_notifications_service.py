@@ -1,21 +1,33 @@
 from flask_mail import Message
-from app import mail
+from app import mail, db
 from datetime import date, timedelta
 from app.models import UserScheduledWeatherNotification, User, UserDevice
+from flask import render_template_string, jsonify
+from app.utils import ErrorHandler
+
 
 def send_scheduled_notifications(app):
-    with app.app_context():
-        print("send_scheduled_notifications\n")
-        # Получаем дату следующего дня
-        tomorrow = date.today() + timedelta(days=1)
+    try:
+        with app.app_context():
+            today = date.today()
 
-        # Получаем все уведомления на следующий день
-        notifications = UserScheduledWeatherNotification.query.filter_by(notification_date=tomorrow).all()
+            notifications = UserScheduledWeatherNotification.query.filter_by(sending_date=today).all()
 
-        for notification in notifications:
-            user = notification.user
-            if user.email_confirmed:  # Проверяем, что email пользователя подтверждён
-                send_email_notification(user.email, notification.city_id, notification.notification_date)
+            for notification in notifications:
+                user = notification.user
+                if user.email_confirmed:
+                    send_email_notification(user.email, notification.city_id, notification.notification_date)
+                    db.session.delete(notification)
+
+            db.session.commit()
+
+    except Exception as e:
+        db.session.rollback()
+        return ErrorHandler.handle_error(
+            e,
+            message="Internal server error while sending scheduled notifications.",
+            status_code=500
+        )
 
 def send_email_notification(email, city_id, notification_date):
 
@@ -24,5 +36,3 @@ def send_email_notification(email, city_id, notification_date):
 
     msg = Message(subject=subject, recipients=[email], body=body)
     mail.send(msg)
-
-

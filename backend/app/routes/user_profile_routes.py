@@ -81,12 +81,12 @@ def get_user_scheduled_notifications():
     return UserScheduledWeatherNotification.get_user_scheduled_notifications(user.user_id)
 
 
-@user_profile_bp.route('/add_user_scheduled_notification', methods=['Post'])
+@user_profile_bp.route('/add_user_scheduled_notifications', methods=['Post'])
 @auth_required
 def add_user_scheduled_notification():
     user = request.current_user
     data = request.get_json()
-    return UserScheduledWeatherNotification.add_user_scheduled_notification(user.user_id, data)
+    return UserScheduledWeatherNotification.add_user_scheduled_notifications(user.user_id, data)
 
 
 @user_profile_bp.route('/delete_user_scheduled_notification/notification', methods=['Post'])
@@ -118,4 +118,3 @@ def delete_user_device():
     user = request.current_user
     device_id = request.args.get('device')
     return UserDevice.delete_user_device_(user.user_id, device_id)
-

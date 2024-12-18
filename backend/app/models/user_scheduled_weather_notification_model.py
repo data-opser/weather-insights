@@ -1,5 +1,5 @@
 from app import db
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from sqlalchemy.dialects.postgresql import UUID
 import uuid
 from flask import jsonify
@@ -24,6 +24,7 @@ class UserScheduledWeatherNotification(db.Model):
     city_id = db.Column(db.BigInteger, nullable=False)
 
     notification_date = db.Column(db.Date, nullable=False)
+    sending_date = db.Column(db.Date, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
 
     user = db.relationship('User', back_populates='scheduled_notifications')
@@ -44,6 +45,7 @@ class UserScheduledWeatherNotification(db.Model):
                 notifications.append({
                     "notification_id": un.notification_id,
                     "notification_date": un.notification_date,
+                    "sending_date": un.sending_date,
                     "created_at": un.created_at,
                     "city": city_data.get('city'),
                     "iso2": city_data.get('iso2'),
@@ -60,12 +62,13 @@ class UserScheduledWeatherNotification(db.Model):
             )
 
     @classmethod
-    def add_user_scheduled_notification(cls, user_id, data):
+    def add_user_scheduled_notifications(cls, user_id, data):
         try:
             notification_date_str = data.get('notification_date')
+            notify_in_days_list = data.get('notify_in_days', [])
             city_id = data.get('city_id')
 
-            if not notification_date_str or not city_id:
+            if not notification_date_str or not city_id or not notify_in_days_list:
                 raise ValueError("Notification date and city are required.")
 
             try:
@@ -76,6 +79,9 @@ class UserScheduledWeatherNotification(db.Model):
             if notification_date <= datetime.now(timezone.utc).date():
                 raise ValueError("Scheduled time must be in the future.")
 
+            if not all(isinstance(day, int) and 0 <= day <= 15 for day in notify_in_days_list):
+                raise ValueError("Each item in 'notify_in_days' must be an integer between 0 and 15.")
+
             city = City.check_city_exists(city_id)
             if not city:
                 return ErrorHandler.handle_error(
@@ -84,16 +90,35 @@ class UserScheduledWeatherNotification(db.Model):
                     status_code=404
                 )
 
-            new_notification = cls(
-                user_id=user_id,
-                city_id=city_id,
-                notification_date=notification_date,
-            )
-            db.session.add(new_notification)
+            notifications = []
+            for notify_in_days in notify_in_days_list:
+                sending_date = notification_date - timedelta(days=notify_in_days)
+
+                if sending_date < datetime.now().date():
+                    continue
+
+                existing_notification = cls.query.filter_by(
+                    user_id=user_id,
+                    city_id=city_id,
+                    notification_date=notification_date,
+                    sending_date=sending_date
+                ).first()
+                if existing_notification:
+                    continue
+
+                new_notification = cls(
+                    user_id=user_id,
+                    city_id=city_id,
+                    notification_date=notification_date,
+                    sending_date = sending_date,
+                )
+                db.session.add(new_notification)
+                notifications.append(new_notification)
+
             db.session.commit()
             return jsonify({
-                'message': 'Scheduled notification created successfully.',
-                'id': str(new_notification.notification_id)
+                'message': f'{len(notifications)} scheduled notifications created successfully.',
+                'ids': [str(notification.notification_id) for notification in notifications]
             }), 201
 
         except ValueError as ve:

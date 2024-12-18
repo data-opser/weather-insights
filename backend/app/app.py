@@ -29,8 +29,6 @@ def create_app():
     login_manager.init_app(app)
     oauth.init_app(app)
     mail.init_app(app)
-
-    app.config['SCHEDULER_API_ENABLED'] = True
     scheduler.init_app(app)
 
     with app.app_context():
@@ -46,10 +44,9 @@ def create_app():
         id='scheduled_notifications',
         func=lambda: send_scheduled_notifications(app),
         trigger='interval',
-        seconds=5,
-        max_instances = 3
+        seconds=60,
+        max_instances = 1
     )
-
     scheduler.start()
 
     return app
