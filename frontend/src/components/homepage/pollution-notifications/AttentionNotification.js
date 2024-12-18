@@ -1,5 +1,4 @@
 import './AttentionNotification.css';
-import attention from '../pollution-notifications/attention.png'
 import { RxCross2 } from "react-icons/rx";
 import { BiSolidError } from "react-icons/bi";
 

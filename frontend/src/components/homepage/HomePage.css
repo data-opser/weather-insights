@@ -14,7 +14,8 @@
 
 .days,
 .map,
-.sun-time {
+.sun-time,
+.notification-block {
     background: white;
     border-radius: 1em;
     margin: 20px;
@@ -28,6 +29,49 @@
 
 .sun-time {
     grid-row: 2;
+}
+
+.notification-block {
+    position: fixed;
+    left: 30px;
+    bottom: 30px;
+    height: 100px;
+    width: 100px;
+    transition: .7s;
+}
+
+.notification-header .cross {
+    display: none;
+}
+
+.notification-header .cross.active {
+    font-size: 30px;
+    display: block;
+}
+
+.notification-block.not-active {
+    cursor: pointer;
+}
+
+.notification-block.active {
+    height: auto;
+    width: auto;
+}
+
+.notification-block.not-active:hover {
+    transform: scale(1.05);
+}
+
+.notification-block .notification-block-icon {
+    font-size: 50px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.notification-block .notification-block-icon.active {
+    display: none;
 }
 
 @media only screen and (max-width: 1300px) {

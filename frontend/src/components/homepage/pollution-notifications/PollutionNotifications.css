@@ -1,0 +1,16 @@
+.PollutionNotifications {
+    height: 330px;
+    background-color: white;
+    border-radius: 1em;
+    overflow-x: hidden;
+    display: none;
+    margin-top: 50px;
+}
+
+.PollutionNotifications .AttentionNotification:first-child {
+    margin-top: 0;
+}
+
+.PollutionNotifications.active {
+    display: block;
+}
