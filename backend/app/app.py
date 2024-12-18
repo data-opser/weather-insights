@@ -5,12 +5,13 @@ from authlib.integrations.flask_client import OAuth
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail
 from flask_cors import CORS
-from app.utils.celery_config import celery_init_app
+from flask_apscheduler import APScheduler
 
 db = SQLAlchemy()
 login_manager = LoginManager()
 oauth = OAuth()
 mail = Mail()
+scheduler = APScheduler()
 
 def create_app():
     app = Flask(__name__)
@@ -29,21 +30,8 @@ def create_app():
     oauth.init_app(app)
     mail.init_app(app)
 
-    app.config.from_mapping(
-        CELERY=dict(
-            broker_url="redis://redis",
-            result_backend="redis://redis",
-            task_ignore_result=True,
-            beat_schedule={
-                "task-every-minute": {
-                    "task": "app.tasks.send_scheduled_notifications_service.send_scheduled_notifications",
-                    "schedule": 60,
-                }
-            },
-        ),
-    )
-
-    celery_init_app(app)
+    app.config['SCHEDULER_API_ENABLED'] = True
+    scheduler.init_app(app)
 
     with app.app_context():
         db.create_all()
@@ -52,5 +40,16 @@ def create_app():
     app.register_blueprint(auth_bp)
     app.register_blueprint(user_profile_bp)
     app.register_blueprint(weather_bp)
+
+    from app.services.send_scheduled_notifications_service import send_scheduled_notifications
+    scheduler.add_job(
+        id='scheduled_notifications',
+        func=lambda: send_scheduled_notifications(app),
+        trigger='interval',
+        seconds=5,
+        max_instances = 3
+    )
+
+    scheduler.start()
 
     return app
