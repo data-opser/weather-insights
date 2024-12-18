@@ -5,6 +5,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences.Editor
 import android.content.res.ColorStateList
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.util.TypedValue
@@ -118,6 +120,14 @@ class ProfileFragment : Fragment() {
                     pswdEditText.clearFocus()
                     hideKeyboard(pswdEditText)
                 }
+            }
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                emailEditText.setAutofillHints(null)
+                emailEditText.setHighlightColor(Color.TRANSPARENT)
+
+                pswdEditText.setAutofillHints(null)
+                pswdEditText.setHighlightColor(Color.TRANSPARENT)
             }
 
             setOnFocusChangeListener(emailCardView, emailImageView, emailEditText)

@@ -72,8 +72,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         sharedPreferences = getSharedPreferences("MODE", Context.MODE_PRIVATE)
-        User.Token = sharedPreferences.getString("Token", null)
-        Log.d("Token", User.Token!!)
+
         editor = sharedPreferences.edit()
 
         val typedValue = TypedValue()
@@ -145,7 +144,7 @@ class MainActivity : AppCompatActivity() {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.bottom_nav_layout)
 
-        val search = CitySearchAdapter(this)
+        val search = CitySearchAdapter(this, dialog)
         search.changeActiveProcess(dialog)
 
         dialog.setOnDismissListener{
