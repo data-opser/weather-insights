@@ -33,3 +33,10 @@
     right: 10px;
     cursor: pointer;
 }
+
+.attention-info-main span, .attention-info span{
+    padding: 0 3px;
+}
+.attention-info-main .pollution-type {
+    padding-right: 0;
+}
