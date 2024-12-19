@@ -6,6 +6,9 @@
     <string name="settings_page">Settings</string>
     <string name="error">error :(</string>
     <string name="bottom_menu_title">City</string>
+    <string name="dialogMessage">Edit data?</string>
+    <string name="dialogYes">Sure</string>
+    <string name="dialogNo">No need</string>
     <string name="horoscope_setSign_title">Your Zodiac Sign</string>
     <string name="horoscope_setSign_descrp">Choose your zodiac sign in settings</string>
     <string name="horoscope_sign_name">Libra</string>
@@ -65,4 +68,6 @@
     <string name="weather_hour_now">Now</string>
     <string name="weather_day_today">Today</string>
     <string name="weather_day_weekly">Weekly forecast</string>
+    <string name="weather_deleteCity">Delete city</string>
+    <string name="weather_mainCity">Make default</string>
 </resources>

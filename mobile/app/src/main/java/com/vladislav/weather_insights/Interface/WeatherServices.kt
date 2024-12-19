@@ -59,22 +59,22 @@ interface WeatherServices {
     )
     fun getUserCities(@Header("Authorization") token: String? = User.Token) : Call<UserCityData>
 
-    @GET("add_user_city/city")
+    @POST("add_user_city/city")
     @Headers(
         "Content-Type: application/json"
     )
-    fun addUserCity(@Header("Authorization") token: String? = User.Token, @Query("city") city: String) : Call<UserCityRequest>
+    fun addUserCity(@Query("city") city: String, @Header("Authorization") token: String? = User.Token) : Call<UserCityRequest>
 
-    @GET("delete_user_city/city")
+    @POST("delete_user_city/city")
     @Headers(
         "Content-Type: application/json"
     )
-    fun deleteUserCity(@Header("Authorization") token: String? = User.Token, @Query("city") city: String) : Call<UserCityRequest>
+    fun deleteUserCity(@Query("city") city: String, @Header("Authorization") token: String? = User.Token) : Call<UserCityRequest>
 
     @FormUrlEncoded
     @PUT("set_main_user_city/city")
     @Headers(
         "Content-Type: application/json"
     )
-    fun setMainUserCity(@Header("Authorization") token: String? = User.Token, @Field("city") city: String) : Call<UserCityRequest>
+    fun setMainUserCity(@Field("city") city: String, @Header("Authorization") token: String? = User.Token) : Call<UserCityRequest>
 }

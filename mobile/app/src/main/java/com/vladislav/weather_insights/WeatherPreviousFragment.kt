@@ -5,7 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
+import com.vladislav.weather_insights.Objects.User
 import com.vladislav.weather_insights.adapter.ViewPagerAdapter
 import com.vladislav.weather_insights.databinding.FragmentWeatherPreviousBinding
 
@@ -43,20 +47,24 @@ class WeatherPreviousFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        val cityList = listOf(
-            WeatherFragment.newInstance("1004993580"),
-            WeatherFragment.newInstance("1008162156"),
-            WeatherFragment.newInstance("1012973369")
-        )
+        val cityList: ArrayList<WeatherFragment> = arrayListOf()
+        for (city in User.UserCities!!.user_cities)
+        {
+            cityList.add(WeatherFragment.newInstance(city))
+        }
 
         val fragAdapter = ViewPagerAdapter(requireActivity(), cityList)
         binding.apply {
             weatherViewPager.adapter = fragAdapter
-            weatherViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-                override fun onPageSelected(position: Int) {
-                    dotsIndicator.attachTo(weatherViewPager)
-                }
-            })
+            TabLayoutMediator(tabLayout, weatherViewPager) { tab, position ->
+                tab.text = ""
+            }.attach()
+
+//            weatherViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+//                override fun onPageSelected(position: Int) {
+//                    dotsIndicator.attachTo(weatherViewPager)
+//                }
+//            })
         }
     }
     companion object {

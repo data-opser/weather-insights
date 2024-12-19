@@ -62,6 +62,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
+
         enableEdgeToEdge()
         window.setFlags(
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
@@ -71,6 +72,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         sharedPreferences = getSharedPreferences("MODE", Context.MODE_PRIVATE)
+
         editor = sharedPreferences.edit()
 
         val typedValue = TypedValue()
@@ -142,7 +144,7 @@ class MainActivity : AppCompatActivity() {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.bottom_nav_layout)
 
-        val search = CitySearchAdapter(this)
+        val search = CitySearchAdapter(this, dialog)
         search.changeActiveProcess(dialog)
 
         dialog.setOnDismissListener{

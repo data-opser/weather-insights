@@ -10,16 +10,16 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
 import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.vladislav.weather_insights.MainActivity
 import com.vladislav.weather_insights.Objects.Cities
 import com.vladislav.weather_insights.R
 import com.vladislav.weather_insights.databinding.BottomNavLayoutBinding
 import com.vladislav.weather_insights.model.City
 
-
-class CitySearchAdapter (private val activity: MainActivity){
+class CitySearchAdapter (private val activity: MainActivity, private val dialog: BottomSheetDialog){
     private var binding: BottomNavLayoutBinding = BottomNavLayoutBinding.inflate(LayoutInflater.from(activity))
-    private var cityAdapter = CityAdapter()
+    private var citySearchRWAdapter = CitySearchRWAdapter(dialog, activity)
 
     fun changeActiveProcess(dialog: Dialog) {
         dialog.setContentView(binding.root)
@@ -56,25 +56,26 @@ class CitySearchAdapter (private val activity: MainActivity){
                     }
                 }
             }
+
+            for(city in Cities.getCityNames.keys){
+                citySearchRWAdapter.addCity(City(city, Cities.getCityNames[city]!!.country, Cities.getCityNames[city]!!.id))
+            }
+
             searchEditText.doOnTextChanged { text, _, _, _ ->
                 val query = text.toString().lowercase()
                 val filteredCities = Cities.getCityNames.keys.filter { city ->
                     city.lowercase().startsWith(query)
                 }
 
-                cityAdapter.clearCities()
+                citySearchRWAdapter.clearCities()
                 for (city in filteredCities) {
-                    cityAdapter.addCity(City(city, Cities.getCityNames[city]?.country ?: ""))
+                    citySearchRWAdapter.addCity(City(city, Cities.getCityNames[city]?.country ?: "", Cities.getCityNames[city]!!.id))
                 }
-                cityAdapter.notifyDataSetChanged()
+
+                citySearchRWAdapter.notifyDataSetChanged()
             }
             cityRecyclerView.layoutManager = LinearLayoutManager(dialog.context, LinearLayoutManager.VERTICAL, false)
-            cityRecyclerView.adapter = cityAdapter
-            for(city in Cities.getCityNames.keys){
-                cityAdapter.addCity(City(city, Cities.getCityNames[city]!!.country))
-            }
-
-            // Потрібно зробити обробку натискання на місто зі списку, нафкраще з діалоговим вікном з підтвердженням
+            cityRecyclerView.adapter = citySearchRWAdapter
         }
     }
 
