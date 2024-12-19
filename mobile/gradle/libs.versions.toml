@@ -14,6 +14,7 @@ retrofit = "2.11.0"
 converterGson = "2.5.0"
 httplogginginterceptor = "4.10.0"
 dotsindicator = "5.1.0"
+uiGraphicsAndroid = "1.7.6"
 
 [libraries]
 dotsindicator = { module = "com.tbuonomo:dotsindicator", version.ref = "dotsindicator" }
@@ -30,6 +31,7 @@ retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = 
 converterGson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "converterGson" }
 google = { group = "com.google.android.gms", name = "play-services-auth", version = "21.2.0"}
 httplogginginterceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "httplogginginterceptor"}
+androidx-ui-graphics-android = { group = "androidx.compose.ui", name = "ui-graphics-android", version.ref = "uiGraphicsAndroid" }
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
