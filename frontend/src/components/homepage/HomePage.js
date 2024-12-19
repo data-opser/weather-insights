@@ -8,6 +8,7 @@ import Days from './days/Days';
 import SunTime from './sun-time/SunTime';
 import SingleDay from './single-day-block/SingleDay';
 import PollutionNotifications from './pollution-notifications/PollutionNotifications';
+import PollutantConcentration from './pollutant-concentration-block/PollutantConcentration';
 import { IoNotificationsOutline } from "react-icons/io5";
 import { RxCross2 } from "react-icons/rx";
 
