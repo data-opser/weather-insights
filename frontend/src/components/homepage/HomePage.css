@@ -90,7 +90,7 @@
     }   
 }
 
-@media only screen and (max-width: 900px) {
+@media only screen and (max-width: 960px) {
     .cities .city-list {
         width: stretch;
     }
@@ -111,7 +111,6 @@
 
     .map {
         grid-row: 4;
-        
     }
 
     .cities .add-city-button {
