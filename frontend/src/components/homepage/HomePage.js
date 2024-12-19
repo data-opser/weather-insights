@@ -99,7 +99,6 @@ const HomePage = () => {
           setActiveButton={setActiveButton}
           setCityList={setCityList}
           currentCityId={currentCityId}
-          isCityListEmpty={isCityListEmpty}
         />
       </div>
       <Days
@@ -118,6 +117,7 @@ const HomePage = () => {
           pollutionData={pollutionData}
           setPollutionData={setPollutionData}
           setMessages={setMessages}
+          setNotificationsActive={setNotificationsActive}
         />
       </div>
       <SingleDay
@@ -127,7 +127,7 @@ const HomePage = () => {
       />
       <div
         className={`notification-block ${notificationsActive ? 'active' : 'not-active'}`}
-        onClick={() => { if (!notificationsActive) { setNotificationsActive(!notificationsActive) } }}>
+        onClick={() => { if (!notificationsActive && messages.length > 0) { setNotificationsActive(!notificationsActive) } }}>
         <IoNotificationsOutline className={`notification-block-icon ${notificationsActive ? 'active' : ''}`} />
 
         <div className={`notification-header ${notificationsActive ? 'active' : ''}`}>

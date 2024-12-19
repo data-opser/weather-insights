@@ -31,6 +31,10 @@
     grid-row: 2;
 }
 
+.map {
+    min-height: 250px;
+}
+
 .notification-block {
     position: fixed;
     left: 30px;

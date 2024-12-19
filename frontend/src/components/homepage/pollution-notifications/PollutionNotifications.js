@@ -1,15 +1,16 @@
 import './PollutionNotifications.css';
 import AttentionNotification from './AttentionNotification';
 
-const PollutionNotifications = ({ active, messages = [], pollutionData = {} }) => {
+const PollutionNotifications = ({ active, messages = [], pollutionData = [] }) => {
   const formattedMessages = messages.map((msg) => {
     const [pollutant, details] = Object.entries(msg)[0];
 
-    // Перевірка, чи є такий ключ у pollutionData
-    const status = pollutionData[pollutant]?.[1] || "Unknown";
+    const normalizedPollutant = pollutant.replace(/₂/g, "2");
+    const pollutantData = pollutionData.find((data) => data.name.replace(/₂/g, "2") === normalizedPollutant);
+    const status = pollutantData ? pollutantData.status : "Unknown";
 
     return {
-      pollutant,
+      pollutant: pollutantData ? pollutantData.name : pollutant,
       details,
       status,
     };
