@@ -1,8 +1,22 @@
 .App {
-  background-color: #b5e3fe;
+  background: linear-gradient(90deg, #7eddff, #6a9bfd, #fae295, #fefbe0);
+  background-size: 300% 300%;
+  animation: gradientAnimation 30s ease infinite;
   min-height: 100vh;
   display: grid;
   grid-template-rows: 70px 1fr 70px;
+}
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 ::-webkit-scrollbar {
