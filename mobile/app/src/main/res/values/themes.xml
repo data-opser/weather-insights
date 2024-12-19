@@ -18,6 +18,7 @@
         <item name="navItemIconTintColor">@color/text_day</item>
         <item name="navItemTextColor">@color/text_day</item>
         <item name="dialogSettingsBgColor">@color/settingsDialog_day</item>
+        <item name="alertDialogBgColor">@color/alertDialogBg_day</item>
 
         <item name="buttonBgColor">@color/buttonBg_day</item>
 

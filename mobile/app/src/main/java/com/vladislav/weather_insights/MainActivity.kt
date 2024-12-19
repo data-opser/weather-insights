@@ -24,11 +24,9 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.vladislav.weather_insights.adapter.CitySearchAdapter
 import com.vladislav.weather_insights.Interface.WeatherServices
 import com.vladislav.weather_insights.Objects.Cities
-import com.vladislav.weather_insights.Objects.User
 import com.vladislav.weather_insights.Retrofit.WeatherAPI
 import com.vladislav.weather_insights.databinding.ActivityMainBinding
 import com.vladislav.weather_insights.model.CityData
-import com.vladislav.weather_insights.model.WeatherLogin
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

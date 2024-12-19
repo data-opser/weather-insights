@@ -6,6 +6,7 @@
     <string name="settings_page">Settings</string>
     <string name="error">error :(</string>
     <string name="bottom_menu_title">City</string>
+    <string name="dialogTitle">Title</string>
     <string name="dialogMessage">Edit data?</string>
     <string name="dialogYes">Sure</string>
     <string name="dialogNo">No need</string>

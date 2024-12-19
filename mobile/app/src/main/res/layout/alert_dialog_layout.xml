@@ -1,0 +1,59 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="6dp"
+    android:background="@drawable/rounded_all"
+    android:backgroundTint="?attr/alertDialogBgColor" >
+
+    <TextView
+        style="@style/Text"
+        android:id="@+id/dialogTitle"
+        android:text="@string/dialogTitle"
+        android:textStyle="bold"
+        android:textColor="#ffffff"
+        android:textSize="22sp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="20dp"
+        android:layout_alignParentTop="true" />
+
+    <TextView
+        style="@style/Text"
+        android:id="@+id/dialogMessage"
+        android:text="@string/dialogMessage"
+        android:textColor="@color/white"
+        android:layout_below="@+id/dialogTitle"
+        android:layout_centerHorizontal="true"
+        android:paddingBottom="16dp" />
+
+    <Button
+        android:id="@+id/confirmButton"
+        style="@style/Text"
+        android:text="@string/dialogYes"
+        android:textColor="#02CC02"
+        android:background="@android:color/transparent"
+        android:layout_below="@+id/dialogMessage"
+        android:layout_alignParentStart="true"
+        android:padding="0dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        app:icon="@drawable/ic_accept"
+        app:iconGravity="start"
+        app:iconTint="@null" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/cancelButton"
+        style="@style/Text"
+        android:layout_below="@+id/dialogMessage"
+        android:layout_alignParentEnd="true"
+        android:background="@android:color/transparent"
+        android:padding="0dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:text="@string/dialogNo"
+        android:textColor="@color/red"
+        app:icon="@drawable/ic_cancel"
+        app:iconGravity="start"
+        app:iconTint="@null" />
+</RelativeLayout>

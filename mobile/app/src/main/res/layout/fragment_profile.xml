@@ -123,7 +123,7 @@
                             style="@style/Text"
                             android:id="@+id/pswdEditText"
                             android:layout_width="match_parent"
-                            android:autofillHints="addressCity"
+                            android:autofillHints="password"
                             android:background="@null"
                             android:hint="@string/profile_password"
                             android:inputType="textPassword"

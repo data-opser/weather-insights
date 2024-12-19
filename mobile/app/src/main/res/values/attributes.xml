@@ -5,6 +5,7 @@
     <attr name="fragmentBgMiddleColor2" format="color"/>
     <attr name="fragmentBgEndColor" format="color"/>
     <attr name="buttonBgColor" format="color"/>
+    <attr name="alertDialogBgColor" format="color"/>
 
     <attr name="switchThumbOnColor" format="color"/>
     <attr name="switchThumbOffColor" format="color"/>

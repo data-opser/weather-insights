@@ -24,25 +24,15 @@ import com.vladislav.weather_insights.model.WeatherDay
 import com.vladislav.weather_insights.model.WeatherDayData
 import com.vladislav.weather_insights.model.WeatherHour
 import com.vladislav.weather_insights.model.WeatherHourData
-import com.vladislav.weather_insights.model.WeatherLogin
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.Timer
 import java.util.TimerTask
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [WeatherFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class WeatherFragment : Fragment() {
-    // TODO: Rename and change types of parameters
     private var cityId: String? = null
 
     private lateinit var binding: FragmentWeatherBinding
@@ -114,7 +104,7 @@ class WeatherFragment : Fragment() {
                             response.body()?.let { dayBody ->
                                 WeatherApi.getWeatherDay(cityId!!,dayBody[0].date).enqueue(object : Callback<ArrayList<WeatherHourData>>{
                                     override fun onFailure(call: Call<ArrayList<WeatherHourData>>, t: Throwable) {
-                                        TODO("Not yet implemented")
+                                        Log.d("Error","Error")
                                     }
 
                                     override fun onResponse(call: Call<ArrayList<WeatherHourData>>, response: Response<ArrayList<WeatherHourData>>) {
@@ -135,14 +125,14 @@ class WeatherFragment : Fragment() {
                                             }
                                         }
                                         else{
-                                            //Обробку помилок
+                                            Log.e("Response error", "Response error: ${response.errorBody()?.string()}")
                                         }
                                     }
                                 })
                             }
                         }
                         else{
-                            // Обробку помилок
+                            Log.e("Response error", "Response error: ${response.errorBody()?.string()}")
                         }
                     }
                 })
@@ -218,15 +208,6 @@ class WeatherFragment : Fragment() {
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment WeatherFragment.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(citiId: String) =
             WeatherFragment().apply {

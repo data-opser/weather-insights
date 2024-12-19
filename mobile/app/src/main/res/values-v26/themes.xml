@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+        <style name="Theme.Weatherinsights" parent="Theme.Material3.DayNight.NoActionBar">
+                <item name="android:autofilledHighlight">@android:color/transparent</item>
+                <item name="colorPrimary">@color/primary</item>
+                <item name="colorPrimaryVariant">@color/primaryVariant</item>
+                <item name="colorOnPrimary">@color/onPrimary</item>
+                <item name="colorSecondary">@color/secondary</item>
+                <item name="colorSecondaryVariant">@color/secondaryVariant</item>
+                <item name="colorOnSecondary">@color/onSecondary</item>
+                <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
+
+                <item name="switchThumbOnColor">@color/switch_thumb_on_day</item>
+                <item name="switchThumbOffColor">@color/switch_thumb_off_day</item>
+                <item name="switchTrackOnColor">@color/switch_track_on_day</item>
+                <item name="switchTrackOffColor">@color/switch_track_off_day</item>
+
+                <item name="navItemIconTintColor">@color/text_day</item>
+                <item name="navItemTextColor">@color/text_day</item>
+                <item name="dialogSettingsBgColor">@color/settingsDialog_day</item>
+
+                <item name="buttonBgColor">@color/buttonBg_day</item>
+                <item name="alertDialogBgColor">@color/alertDialogBg_day</item>
+
+                <item name="searchBgActiveColor">@color/searchBgActive_day</item>
+                <item name="searchBgInertColor">@color/searchBgInert_day</item>
+                <item name="searchIconInertColor">@color/searchIconInert_day</item>
+                <item name="searchIconActiveColor">@color/searchIconActive_day</item>
+                <item name="searchTextInertColor">@color/searchTextInert_day</item>
+                <item name="searchTextActiveColor">@color/searchTextActive_day</item>
+                <item name="searchTextHintColor">@color/searchTextHint_day</item>
+
+                <item name="navFloatingBgColor">@color/navFloatingBg_day</item>
+                <item name="navFloatingTintColor">@color/navFloatingTint_day</item>
+                <item name="navBarColor">@color/navBar_day</item>
+                <item name="fragmentBgStartColor">@color/fragment_bg_start_day</item>
+                <item name="fragmentBgMiddleColor">@color/fragment_bg_middle_day</item>
+                <item name="fragmentBgEndColor">@color/fragment_bg_end_day</item>
+
+                <item name="dialogSignBgColor">@color/dialogSignBgColor_day</item>
+                <item name="dialogBgColor">@color/dialogBg_day</item>
+                <item name="dialogHeaderStartColor">@color/dialogHeaderStart_day</item>
+                <item name="dialogHeaderCenterColor">@color/dialogHeaderCenter_day</item>
+                <item name="dialogHeaderEndColor">@color/dialogHeaderEnd_day</item>
+                <item name="dialogWeatherBgColor">@color/dialogWeatherBg_day</item>
+
+                <item name="googleBgColor">@color/googleBg_day</item>
+                <item name="googleTextColor">@color/googleText_day</item>
+                <item name="loginDialogBgColor">@color/loginDialog_day</item>
+                <item name="loginButtonTextColor">@color/loginButtonText_day</item>
+                <item name="profileBgActiveColor">@color/profileBgActive_day</item>
+                <item name="profileBgInertColor">@color/profileBgInert_day</item>
+                <item name="profileIconInertColor">@color/profileIconInert_day</item>
+                <item name="profileIconActiveColor">@color/profileIconActive_day</item>
+                <item name="profileTextInertColor">@color/profileTextInert_day</item>
+                <item name="profileTextActiveColor">@color/profileTextActive_day</item>
+                <item name="profileTextHintInertColor">@color/profileTextHintInert_day</item>
+                <item name="profileTextHintActiveColor">@color/profileTextHintActive_day</item>
+
+                <item name="profileDialogBgColor">@color/profileDialogBg_day</item>
+                <item name="birthStrokeColor">@color/birthStroke_day</item>
+
+                <item name="dotsIndicatorSelColor">@color/dotsIndicatorSel_day</item>
+                <item name="dotsIndicatorInertColor">@color/dotsIndicatorInert_day</item>
+
+        </style>
+</resources>

@@ -31,7 +31,6 @@ import com.vladislav.weather_insights.Retrofit.GoogleAPI
 import com.vladislav.weather_insights.Retrofit.WeatherAPI
 import com.vladislav.weather_insights.Objects.User
 import com.vladislav.weather_insights.databinding.FragmentProfileBinding
-import com.vladislav.weather_insights.model.GoogleResponse
 import com.vladislav.weather_insights.model.LoginRequest
 import com.vladislav.weather_insights.model.UserCityData
 import com.vladislav.weather_insights.model.UserProfile
@@ -120,14 +119,6 @@ class ProfileFragment : Fragment() {
                     pswdEditText.clearFocus()
                     hideKeyboard(pswdEditText)
                 }
-            }
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                emailEditText.setAutofillHints(null)
-                emailEditText.setHighlightColor(Color.TRANSPARENT)
-
-                pswdEditText.setAutofillHints(null)
-                pswdEditText.setHighlightColor(Color.TRANSPARENT)
             }
 
             setOnFocusChangeListener(emailCardView, emailImageView, emailEditText)
