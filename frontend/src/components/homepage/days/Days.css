@@ -40,6 +40,10 @@
     opacity: 50%;
 }
 
+.loading h1 {
+    font-weight: 400;
+}
+
 .loading .cog {
     animation: spin 3s linear infinite; 
     color: gray; 

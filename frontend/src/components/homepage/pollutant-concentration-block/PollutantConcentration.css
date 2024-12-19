@@ -1,24 +1,95 @@
 .header-text {
     font-size: 22px;
     margin: 10px 0 10px 0;
-
 }
 
 .pollutant-container {
     text-align: center;
+    position: relative;
+    height: 100%;
+}
+
+.pollutant-container .loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.concentration-block {
+    display: grid;
+    grid-gap: 10px;
+    margin: 0 15px 15px 15px;
+}
+
+.main-text {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    align-items: center;
+    justify-items: center;
+    text-align: center
+}
+
+.pollutant-card {
+    border-radius: 10px;
+}
+
+.pollutant-card.good {
+    background-color: #8AC89F;
+}
+
+.pollutant-card.fair {
+    background-color: #CBEC96;
+}
+
+.pollutant-card.moderate {
+    background-color: #F5A25F;
+}
+
+.icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 40px;
+}
+
+.name-text,
+.concentration-text,
+.status-text {
+    text-align: center;
+    font-size: 18px;
+    margin: 14px 0 14px 0;
 }
 
 @media only screen and (max-width: 1030px) {
-
     .header-text {
         font-size: 16px;
         margin: 8px 4px 8px 4px;
-    
+    }
+
+    .name-text,
+    .concentration-text,
+    .status-text {
+        font-size: 14px;
+    }
+
+    .icon {
+        font-size: 22px;
     }
 }
 
 @media only screen and (max-width: 900px) {
     .header-text {
         font-size: 20px
+    }
+
+    .name-text,
+    .concentration-text,
+    .status-text {
+        font-size: 18px;
+    }
+
+    .icon {
+        font-size: 36px;
     }
 }

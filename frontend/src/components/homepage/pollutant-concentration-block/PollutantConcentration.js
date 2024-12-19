@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import './PollutantConcentration.css';
-import './ConcentrationBlock.css';
 import { GiGooeyMolecule, GiMolecule } from "react-icons/gi";
 import { SiMoleculer } from "react-icons/si";
+import { HiOutlineCog6Tooth } from "react-icons/hi2";
+import { FaCity } from "react-icons/fa";
 import api from '../../axiosConfig';
 
 const PollutantConcentration = ({ cityId, isCityListEmpty }) => {
@@ -39,27 +40,44 @@ const PollutantConcentration = ({ cityId, isCityListEmpty }) => {
     fetchPollutionData();
   }, [cityId]);
 
+  if (isCityListEmpty) {
+    return (
+      <div className='pollutant-container'>
+        <div className="loading">
+          <FaCity className='img' alt='city' />
+          <h1>Your city list is empty</h1>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="pollutant-container">
-      <p className="header-text">Pollutant concentration</p>
-      {loading && <p className="loading-text">Loading...</p>}
+      {loading && (
+        <div className='loading'>
+          <HiOutlineCog6Tooth className='cog' alt='loading cog' />
+          <h1>Loading...</h1>
+        </div>)
+      }
       {error && <p className="error-text">{error}</p>}
-      {!loading && !error && isCityListEmpty && <p className="empty-list-text">Your city list is empty</p>}
       {!loading && !error && !isCityListEmpty && (
-        <div className="concentration-block">
-          {pollutionData.map((pollutant, index) => (
-            <div key={index} className={`pollutant-card ${pollutant.status.toLowerCase()}`}>
-              <div className="main-text">
-                <div className="icon">
-                  {pollutant.icon}
+        <>
+          <p className="header-text">Pollutant concentration</p>
+          <div className="concentration-block">
+            {pollutionData.map((pollutant, index) => (
+              <div key={index} className={`pollutant-card ${pollutant.status.toLowerCase()}`}>
+                <div className="main-text">
+                  <div className="icon">
+                    {pollutant.icon}
+                  </div>
+                  <p className="name-text">{pollutant.name}</p>
+                  <p className="concentration-text">{pollutant.concentration} µg/m³</p>
+                  <p className="status-text">{pollutant.status}</p>
                 </div>
-                <p className="name-text">{pollutant.name}</p>
-                <p className="concentration-text">{pollutant.concentration} µg/m³</p>
-                <p className="status-text">{pollutant.status}</p>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        </>
       )}
     </div>
   );
