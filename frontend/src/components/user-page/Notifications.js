@@ -1,36 +1,73 @@
 import './Notifications.css';
-import raincloud from './raincloud.jfif'
+import { RxCross2 } from "react-icons/rx";
 
 const Notifications = () => {
   return (
-    <div className="notifications">
-      <p className='user-text-bold'>Last notifications</p>
-      <div className='notification'>
-        <div className='notification-weather'>
-          <img src={raincloud}></img>
-          <p className='notification-name'>Rain Alert</p>
+    <div className='notifications'>
+      <p className='user-text-center'>Scheduled notifications</p>
+      <div className="notification-city-block">
+        <div className='notification-about-city'>
+          <p className="notification-about-city-name">апапапапапапап</p>
+          <p className="notification-about-city-time">25.12.2024</p>
+          <RxCross2 className="close-button" />
         </div>
-        <p className='notification-text'>Expected rain in your area within the next 30 minutes. <span className='notification-text-bold'>Don't forget to bring an umbrella if you're heading out!</span></p>
-        <p className='notification-time'>Today, 09:00</p>
-      </div>
-      <div className='notification'>
-        <div className='notification-weather'>
-          <img src={raincloud}></img>
-          <p className='notification-name'>Rain Alert</p>
+        <div className='notification-about-city'>
+          <p className="notification-about-city-name">Kharkiv</p>
+          <p className="notification-about-city-time">25.12.2024</p>
+          <RxCross2 className="close-button" />
         </div>
-        <p className='notification-text'>Expected rain in your area within the next 30 minutes. <span className='notification-text-bold'>Don't forget to bring an umbrella if you're heading out!</span></p>
-        <p className='notification-time'>Today, 09:00</p>
-      </div>
-      <div className='notification'>
-        <div className='notification-weather'>
-          <img src={raincloud}></img>
-          <p className='notification-name'>Rain Alert</p>
+        <div className='notification-about-city'>
+          <p className="notification-about-city-name">Kharkiv</p>
+          <p className="notification-about-city-time">25.12.2024</p>
+          <RxCross2 className="close-button" />
         </div>
-        <p className='notification-text'>Expected rain in your area within the next 30 minutes. <span className='notification-text-bold'>Don't forget to bring an umbrella if you're heading out!</span></p>
-        <p className='notification-time'>Today, 09:00</p>
+        <div className='notification-about-city'>
+          <p className="notification-about-city-name">Kharkiv</p>
+          <p className="notification-about-city-time">25.12.2024</p>
+          <RxCross2 className="close-button" />
+        </div>
+        <div className='notification-about-city'>
+          <p className="notification-about-city-name">Kharkiv</p>
+          <p className="notification-about-city-time">25.12.2024</p>
+          <RxCross2 className="close-button" />
+        </div>
       </div>
+      <p className='user-text-center'>Schedule the notification</p>
+      <div className='notification-date-block'>
+        <p>Date</p>
+        <input className='date-input'></input>
+      </div>
+      <div className='notification-town-block'>
+        <p>City</p>
+        <input className='city-input'></input>
+      </div>
+      <div className='notification-title-block'>
+        <p>Title</p>
+        <input className='title-input'></input>
+      </div>
+      <p>Reminder Time</p>
+
+      <div className="radio-buttons-block">
+        <label>
+          <input type="radio" name="radio" value="1 day"></input>
+          <span>1 day</span>
+        </label>
+        <label>
+          <input type="radio" name="radio" value="3 days"></input>
+          <span>3 days</span>
+        </label>
+        <label>
+          <input type="radio" name="radio" value="5 days"></input>
+          <span>5 days</span>
+        </label>
+        <label>
+          <input type="radio" name="radio" value="10 days"></input>
+          <span>10 days</span>
+        </label>
+      </div>
+
       <button className='user-button'>
-        View all
+        Create
       </button>
     </div>
   );

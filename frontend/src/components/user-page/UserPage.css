@@ -15,10 +15,17 @@
   border-radius: 1em;
   box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.231);
   display: flex;
-  align-items: center;
   flex-direction: column;
   position: relative;
   align-self: center;
+}
+
+.notifications {
+  padding: 0 20px;
+}
+
+.user {
+  align-items: center;
 }
 
 .user-block1 {
@@ -82,7 +89,8 @@
 }
 
 .user-button {
-  border-radius: 1em;
+  align-self: center;
+  border-radius: 0.5em;
   background: rgb(19, 99, 223);
   background: linear-gradient(135deg, rgba(19, 99, 223, 1) 0%, rgba(28, 75, 130, 1) 100%);
   color: white;
@@ -159,8 +167,9 @@
   outline: none;
   box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.231);
 }
+
 .faq-text .field {
-  background-color: white;  
+  background-color: white;
   border-radius: 0.75em;
   box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.231);
   width: 200px;
@@ -193,9 +202,9 @@
   opacity: 50%;
   cursor: pointer;
   position: absolute;
-  right: 10px;  
+  right: 10px;
   top: 50%;
-  transform: translateY(-50%); 
+  transform: translateY(-50%);
 }
 
 .faq-text button {
@@ -234,7 +243,7 @@
   }
 }
 
-@media only screen and (max-width: 1060px) {
+@media only screen and (max-width: 1100px) {
   .user-page {
     flex-direction: column;
     align-items: center;

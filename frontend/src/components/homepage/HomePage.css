@@ -14,7 +14,8 @@
 
 .days,
 .map,
-.sun-time {
+.sun-time,
+.notification-block {
     background: white;
     border-radius: 1em;
     margin: 20px;
@@ -28,6 +29,59 @@
 
 .sun-time {
     grid-row: 2;
+}
+
+.notification-block {
+    position: fixed;
+    left: 30px;
+    bottom: 30px;
+    height: 100px;
+    width: 100px;
+    transition: .7s;
+}
+
+.notification-header p {
+    text-align: center;
+    font-size: 26px;
+    margin: 10px;
+}
+
+.notification-header {
+    display: none;
+}
+
+.notification-header.active {
+    display: block;
+}
+
+.notification-header .cross {
+    font-size: 30px;
+    top: 15px;
+}
+
+.notification-block.not-active {
+    cursor: pointer;
+}
+
+.notification-block.active {
+    height: auto;
+    width: auto;
+}
+
+.notification-block.not-active:hover {
+    transform: scale(1.05);
+}
+
+.notification-block .notification-block-icon {
+    font-size: 50px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.notification-block .notification-block-icon.active {
+    display: none;
 }
 
 @media only screen and (max-width: 1300px) {
@@ -69,5 +123,17 @@
 
     .cities .add-city-button .add-city-button-text {
         display: none;
+    }
+
+    .notification-block .notification-block-icon {
+        font-size: 30px;
+    }
+
+    .notification-block {
+        left: 0px;
+        bottom: 40px;
+        height: 50px;
+        width: 50px;
+        box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
     }
 }
