@@ -54,4 +54,6 @@
 
     <attr name="dotsIndicatorSelColor" format="color"/>
     <attr name="dotsIndicatorInertColor" format="color"/>
+    <attr name="weatherMainInertColor" format="color"/>
+    <attr name="weatherMainActiveColor" format="color"/>
 </resources>

@@ -71,10 +71,9 @@ interface WeatherServices {
     )
     fun deleteUserCity(@Query("city") city: String, @Header("Authorization") token: String? = User.Token) : Call<UserCityRequest>
 
-    @FormUrlEncoded
     @PUT("set_main_user_city/city")
     @Headers(
         "Content-Type: application/json"
     )
-    fun setMainUserCity(@Field("city") city: String, @Header("Authorization") token: String? = User.Token) : Call<UserCityRequest>
+    fun setMainUserCity(@Query("city") city: String, @Header("Authorization") token: String? = User.Token) : Call<UserCityRequest>
 }

@@ -30,12 +30,11 @@ class CitySearchRWAdapter(private val dialog: BottomSheetDialog, private val act
             cityTextView.text = cityItem.city
             countryTextView.text = cityItem.country
             cityConstraintLayout.setOnClickListener{
-                showNotifyDialog(cityItem)
-
+                showCityAlertDialog(cityItem)
             }
         }
 
-        private fun showNotifyDialog(cityItem: City) {
+        private fun showCityAlertDialog(cityItem: City) {
             // Тут можливо треба прийняти данні міста, щоб коли користувач погодився
             // він не чекав на відповідь запиту. І треба додати його до списку погод по містах
 
@@ -72,7 +71,6 @@ class CitySearchRWAdapter(private val dialog: BottomSheetDialog, private val act
 
                 cancelButton.setOnClickListener{
                     alertDialog.dismiss()
-
                 }
             }
             alertDialog.show()

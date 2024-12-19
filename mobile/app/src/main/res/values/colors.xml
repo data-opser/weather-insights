@@ -118,4 +118,10 @@
     <color name="dotsIndicatorSel_night">#ffffff</color>
     <color name="dotsIndicatorInert_day">#6A5ACD</color>
     <color name="dotsIndicatorInert_night">#90A9B8</color>
+
+    <color name="weatherMainInert_day">#5BABED</color>
+    <color name="weatherMainInert_night">#1B7DB1</color>
+
+    <color name="weatherMainActive_day">#417CAD</color>
+    <color name="weatherMainActive_night">#125275</color>
 </resources>

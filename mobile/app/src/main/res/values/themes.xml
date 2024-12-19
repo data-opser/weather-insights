@@ -63,6 +63,8 @@
         <item name="dotsIndicatorSelColor">@color/dotsIndicatorSel_day</item>
         <item name="dotsIndicatorInertColor">@color/dotsIndicatorInert_day</item>
 
+        <item name="weatherMainInertColor">@color/weatherMainInert_day</item>
+        <item name="weatherMainActiveColor">@color/weatherMainActive_day</item>
     </style>
 
     <style name="DialogAnimation">

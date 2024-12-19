@@ -57,6 +57,9 @@
 
         <item name="dotsIndicatorSelColor">@color/dotsIndicatorSel_night</item>
         <item name="dotsIndicatorInertColor">@color/dotsIndicatorInert_night</item>
+
+        <item name="weatherMainInertColor">@color/weatherMainInert_night</item>
+        <item name="weatherMainActiveColor">@color/weatherMainActive_night</item>
     </style>
 
     <!-- NIGHT STYLE-->
