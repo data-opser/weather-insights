@@ -106,7 +106,7 @@ const HomePage = () => {
         isCityListEmpty={isCityListEmpty}
       />
       <div className='map'>
-        <PollutantConcentration />
+        <PollutantConcentration cityId={currentCityId} isCityListEmpty={isCityListEmpty} />
       </div>
       <SingleDay 
       cityId={currentCityId} 
