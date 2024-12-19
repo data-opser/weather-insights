@@ -6,8 +6,7 @@ import { HiOutlineCog6Tooth } from "react-icons/hi2";
 import { FaCity } from "react-icons/fa";
 import api from '../../axiosConfig';
 
-const PollutantConcentration = ({ cityId, isCityListEmpty }) => {
-  const [pollutionData, setPollutionData] = useState([]);
+const PollutantConcentration = ({ cityId, isCityListEmpty, pollutionData, setPollutionData, setMessages }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -29,6 +28,7 @@ const PollutantConcentration = ({ cityId, isCityListEmpty }) => {
         ];
 
         setPollutionData(formattedData);
+        setMessages(response.data.messages);
       } catch (error) {
         setError('Failed to fetch pollution data');
         console.error(error.message + error.status);

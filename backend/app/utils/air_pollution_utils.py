@@ -18,7 +18,7 @@ class PollutionThresholds:
         return f"The air currently has elevated {pollutant} levels ({value} μg/m3). {advice_message}" if level != "Good" else ""
 
     thresholds = {
-        "SO2": [(20, "Fair"), (80, "Moderate"), (250, "Poor"), (350, "Very Poor")],
+        "SO2": [(1, "Fair"), (80, "Moderate"), (250, "Poor"), (350, "Very Poor")],
         "NO2": [(40, "Fair"), (70, "Moderate"), (150, "Poor"), (200, "Very Poor")],
         "CO": [(4400, "Fair"), (9400, "Moderate"), (12400, "Poor"), (15400, "Very Poor")]
     }

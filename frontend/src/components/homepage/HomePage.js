@@ -20,6 +20,8 @@ const HomePage = () => {
   const [activeButton, setActiveButton] = useState(null);
   const [isCityListEmpty, setIsCityListEmpty] = useState(false);
   const [notificationsActive, setNotificationsActive] = useState(false);
+  const [pollutionData, setPollutionData] = useState(null);
+  const [messages, setMessages] = useState([]);
 
   const defaultCity = {
     city: "London",
@@ -110,7 +112,13 @@ const HomePage = () => {
         isCityListEmpty={isCityListEmpty}
       />
       <div className='map'>
-        <PollutantConcentration cityId={currentCityId} isCityListEmpty={isCityListEmpty} />
+        <PollutantConcentration
+          cityId={currentCityId}
+          isCityListEmpty={isCityListEmpty}
+          pollutionData={pollutionData}
+          setPollutionData={setPollutionData}
+          setMessages={setMessages}
+        />
       </div>
       <SingleDay
         cityId={currentCityId}
@@ -123,16 +131,20 @@ const HomePage = () => {
         <IoNotificationsOutline className={`notification-block-icon ${notificationsActive ? 'active' : ''}`} />
 
         <div className={`notification-header ${notificationsActive ? 'active' : ''}`}>
-          <p>Notifications</p>
+          <p>Alerts</p>
           <RxCross2
             className='cross'
-            onClick={() => {setNotificationsActive(!notificationsActive)}}
+            onClick={() => { setNotificationsActive(!notificationsActive) }}
           />
         </div>
 
-        <PollutionNotifications active={notificationsActive} />
+        <PollutionNotifications
+          active={notificationsActive}
+          messages={messages}
+          pollutionData={pollutionData}
+        />
       </div>
-    </div>  
+    </div>
   );
 }
 
