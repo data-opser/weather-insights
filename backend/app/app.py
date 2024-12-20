@@ -39,12 +39,12 @@ def create_app():
     app.register_blueprint(user_profile_bp)
     app.register_blueprint(weather_bp)
 
-    from app.services.send_scheduled_notifications_service import send_scheduled_notifications
+    from app.tasks import send_scheduled_notifications
     scheduler.add_job(
         id='scheduled_notifications',
         func=lambda: send_scheduled_notifications(app),
         trigger='interval',
-        seconds=60,
+        seconds=30,
         max_instances = 1
     )
     scheduler.start()

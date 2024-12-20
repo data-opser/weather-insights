@@ -1,5 +1,6 @@
 from app import db
 from datetime import datetime, timezone, timedelta
+from collections import defaultdict
 from sqlalchemy.dialects.postgresql import UUID
 import uuid
 from flask import jsonify
@@ -23,6 +24,7 @@ class UserScheduledWeatherNotification(db.Model):
     )
     city_id = db.Column(db.BigInteger, nullable=False)
 
+    notification_title = db.Column(db.String(128), nullable=False)
     notification_date = db.Column(db.Date, nullable=False)
     sending_date = db.Column(db.Date, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
@@ -35,18 +37,13 @@ class UserScheduledWeatherNotification(db.Model):
             user_notifications = cls.query.filter_by(user_id=user_id).all()
             notifications = []
             for un in user_notifications:
-                if not City.check_city_exists(un.city_id):
-                    return ErrorHandler.handle_error(
-                        None,
-                        message=f"Notification with ID '{un.notification_id}' not found.",
-                        status_code=404
-                    )
+
                 city_data = City.get_city_data_by_id(un.city_id)
                 notifications.append({
                     "notification_id": un.notification_id,
+                    "notification_title": un.notification_title,
                     "notification_date": un.notification_date,
                     "sending_date": un.sending_date,
-                    "created_at": un.created_at,
                     "city": city_data.get('city'),
                     "iso2": city_data.get('iso2'),
                     "country": city_data.get('country'),
@@ -62,14 +59,50 @@ class UserScheduledWeatherNotification(db.Model):
             )
 
     @classmethod
+    def get_grouped_user_scheduled_notifications(cls, user_id):
+        try:
+            user_notifications = cls.query.filter_by(user_id=user_id).all()
+            notifications = defaultdict(list)
+
+            for un in user_notifications:
+                # Grouped by notification_title, notification_date и city_id
+                key = (un.notification_title, un.notification_date, un.city_id)
+                notifications[key].append({
+                    "sending_date": un.sending_date,
+                    "notification_id": str(un.notification_id)
+                })
+
+            grouped_notifications = []
+            for (notification_title, notification_date, city_id), notification_data in notifications.items():
+                city_data = City.get_city_data_by_id(city_id)
+                grouped_notifications.append({
+                    "notification_title": notification_title,
+                    "notification_date": notification_date,
+                    "city": city_data.get('city'),
+                    "iso2": city_data.get('iso2'),
+                    "country": city_data.get('country'),
+                    "notification_data": notification_data
+                })
+
+            return jsonify({'notifications': grouped_notifications}), 200
+
+        except Exception as e:
+            return ErrorHandler.handle_error(
+                e,
+                message="Database error while retrieving scheduled notification for user",
+                status_code=500
+            )
+
+    @classmethod
     def add_user_scheduled_notifications(cls, user_id, data):
         try:
+            notification_title = data.get('notification_title')
             notification_date_str = data.get('notification_date')
             notify_in_days_list = data.get('notify_in_days', [])
             city_id = data.get('city_id')
 
-            if not notification_date_str or not city_id or not notify_in_days_list:
-                raise ValueError("Notification date and city are required.")
+            if not notification_date_str or not city_id or not notify_in_days_list or not notification_title:
+                raise ValueError("Data are required.")
 
             try:
                 notification_date = datetime.strptime(notification_date_str, '%Y-%m-%d').date()
@@ -107,6 +140,7 @@ class UserScheduledWeatherNotification(db.Model):
                     continue
 
                 new_notification = cls(
+                    notification_title = notification_title,
                     user_id=user_id,
                     city_id=city_id,
                     notification_date=notification_date,
@@ -153,5 +187,40 @@ class UserScheduledWeatherNotification(db.Model):
             return ErrorHandler.handle_error(
                 e,
                 message="Database error while deleting scheduled_notification.",
+                status_code=500
+            )
+
+    @classmethod
+    def delete_user_scheduled_notifications(cls, user_id, data):
+        try:
+            notification_ids = data.get('notification_ids')
+
+            if not notification_ids:
+                raise ValueError("Notification ids are required.")
+
+            notifications = cls.query.filter(
+                cls.notification_id.in_(notification_ids), cls.user_id == user_id
+            ).all()
+
+            if not notifications:
+                return ErrorHandler.handle_error(
+                    None,
+                    message="No notifications found with the provided IDs.",
+                    status_code=404
+                )
+
+            for notification in notifications:
+                db.session.delete(notification)
+
+            db.session.commit()
+            return jsonify({'message': 'Scheduled notifications deleted successfully.'}), 200
+
+        except ValueError as ve:
+            return ErrorHandler.handle_validation_error(str(ve))
+        except Exception as e:
+            db.session.rollback()
+            return ErrorHandler.handle_error(
+                e,
+                message="Database error while deleting scheduled notifications.",
                 status_code=500
             )

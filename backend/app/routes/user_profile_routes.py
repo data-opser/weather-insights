@@ -81,6 +81,13 @@ def get_user_scheduled_notifications():
     return UserScheduledWeatherNotification.get_user_scheduled_notifications(user.user_id)
 
 
+@user_profile_bp.route('/grouped_user_scheduled_notifications', methods=['Get'])
+@auth_required
+def get_grouped_user_scheduled_notifications():
+    user = request.current_user
+    return UserScheduledWeatherNotification.get_grouped_user_scheduled_notifications(user.user_id)
+
+
 @user_profile_bp.route('/add_user_scheduled_notifications', methods=['Post'])
 @auth_required
 def add_user_scheduled_notification():
@@ -96,6 +103,13 @@ def delete_user_scheduled_notification():
     notification_id = request.args.get('notification')
     return UserScheduledWeatherNotification.delete_user_scheduled_notification(user.user_id, notification_id)
 
+
+@user_profile_bp.route('/delete_user_scheduled_notifications/', methods=['Post'])
+@auth_required
+def delete_user_scheduled_notifications():
+    user = request.current_user
+    data = request.get_json()
+    return UserScheduledWeatherNotification.delete_user_scheduled_notifications(user.user_id, data)
 
 @user_profile_bp.route('/user_devices', methods=['Get'])
 @auth_required

@@ -1,0 +1,1 @@
+from app.tasks.send_scheduled_notifications import send_scheduled_notifications

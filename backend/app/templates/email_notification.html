@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Insights</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            font-family: Arial, sans-serif;
+        }
+
+        .main-container {
+            max-width: 600px;
+            margin: 20px auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            border: 1px solid #ddd;
+        }
+
+        .header-container {
+            background-color: #E1F4FF;
+            height: 150px;
+            text-align: center;
+            line-height: 150px;
+            position: relative;
+        }
+
+        .header-text {
+            font-size: 20px;
+            color: #333;
+            margin: 0;
+            display: inline-block;
+            vertical-align: middle;
+            line-height: normal;
+        }
+
+        .weather-icon {
+            font-size: 50px;
+            vertical-align: middle;
+            padding-bottom: 5px;
+        }
+
+        .main-content-text-block {
+            padding: 24px;
+        }
+
+        .main-content-header-text {
+            color: #333;
+            margin: 8px 0 22px 0;
+            font-size: 18px;
+        }
+
+        .main-content-text {
+            color: #555;
+            margin: 6px 0 6px 0;
+            font-size: 16px;
+        }
+
+        .main-information-container {
+            margin: 20px 0;
+        }
+
+        .information-section {
+            margin-bottom: 14px;
+            background-color: #E1F4FF;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+
+        .header-text-section {
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-align: left;
+            margin-left: 20px;
+        }
+
+        .section-item {
+            display: inline-block;
+            margin: 8px 20px;
+            font-size: 16px;
+        }
+
+        .section-items-row {
+            text-align: center;
+        }
+
+        .section-hour {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #E1F4FF;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+        .header-hour-text {
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .hour-text {
+            display: inline-block;
+            text-align: left;
+            margin: 8px 20px;
+            font-size: 16px;
+        }
+
+        .section-hours-row {
+            text-align: center;
+        }
+
+        .hour-text-icon {
+            font-size: 26px;
+            margin-right: 8px;
+        }
+
+        .footer {
+            margin-top: 20px;
+            text-align: left;
+            padding: 10px;
+        }
+
+        .footer p {
+            margin: 5px 0;
+            color: #555;
+        }
+
+        .footer a {
+            color: #0078d4;
+            text-decoration: none;
+        }
+
+        .footer-second-section {
+            margin-top: 20px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div class="header-container">
+            <h1 class="header-text">
+                WEATHER INSIGHTS
+                <span class="weather-icon">&#9925;</span>
+            </h1>
+        </div>
+
+        <div class="main-content-text-block">
+            <h2 class="main-content-header-text">Weather Forecast "{{ title }}" for {{ city }} on {{ date }}</h2>
+            <p class="main-content-text">Hello, {{ user_name }} !</p>
+            <p class="main-content-text">Here is the weather forecast you requested:</p>
+
+            <div class="main-information-container">
+                <div class="information-section">
+                    <h3 class="header-text-section">&#127777;Temperature</h3>
+                    <div class="section-items-row">
+                        <p class="section-item">&#129397; Max: {{ temperature_max }}&deg;C</p>
+                        <p class="section-item">&#129398; Min: {{ temperature_min }}&deg;C</p>
+                        <p class="section-item">&#128524; Feels like: {{ feels_like }}&deg;C</p>
+                    </div>
+
+                </div>
+
+                <div class="information-section">
+                    <h3 class="header-text-section">&#127788;&#65039; Air Details</h3>
+                    <div class="section-items-row">
+                        <p class="section-item">&#128168; Wind: {{ wind_speed }} m/s</p>
+                        <p class="section-item">&#128167; Humidity: {{ humidity }}%</p>
+                        <p class="section-item">&#128202; Pressure: {{ pressure }} hPa</p>
+                    </div>
+                </div>
+
+                <div class="information-section">
+                    <h3 class="header-text-section">&#9748; Additional Details</h3>
+                    <div class="section-items-row">
+                        <p class="section-item">&#9729;&#65039; Cloud Cover: {{ cloud_cover }}%</p>
+                        <p class="section-item">&#127783;&#65039; Rain: {{ rain_precipitation }} mm</p>
+                        <p class="section-item">&#127784;&#65039; Snow: {{ snow_precipitation }} mm</p>
+                    </div>
+                </div>
+
+                <div class="section-hour">
+                    <h3 class="header-hour-text">&#128338; Daylight Hours</h3>
+                    <div class="section-hours-row">
+                        <p class="hour-text">
+                            <span class="hour-text-icon">&#127748;</span>
+                            Sunrise: {{ sunrise_time }}
+                        </p>
+
+                        <p class="hour-text">
+                            <span class="hour-text-icon">&#127750;</span>
+                            Sunset: {{ sunset_time }}
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="footer">
+                <p>Want to check the weather for another day? Click here to visit our service.</p>
+                <p>Thank you for using our service!</p>
+
+                <div class="footer-second-section">
+                    <p>Best regards,</p>
+                    <p>The Weather Insights Team</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>
