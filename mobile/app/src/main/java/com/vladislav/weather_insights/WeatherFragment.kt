@@ -1,5 +1,6 @@
 package com.vladislav.weather_insights
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -17,6 +18,7 @@ import com.vladislav.weather_insights.Retrofit.WeatherAPI
 import com.vladislav.weather_insights.adapter.WeatherDayAdapter
 import com.vladislav.weather_insights.adapter.WeatherHourAdapter
 import com.vladislav.weather_insights.databinding.FragmentWeatherBinding
+import com.vladislav.weather_insights.model.UserCityRequest
 import com.vladislav.weather_insights.model.WeatherCityData
 import com.vladislav.weather_insights.model.WeatherDay
 import com.vladislav.weather_insights.model.WeatherDayData
@@ -46,17 +48,6 @@ class WeatherFragment : Fragment() {
     private lateinit var binding: FragmentWeatherBinding
     private lateinit var WeatherApi: WeatherServices
 
-    private val imageList = listOf(
-        R.drawable.weather_day_clear,
-        R.drawable.weather_day_cloud,
-        R.drawable.weather_day_rain,
-        R.drawable.weather_day_snow,
-        R.drawable.weather_night_clear,
-        R.drawable.weather_night_cloud,
-        R.drawable.weather_night_rain,
-        R.drawable.weather_night_snow
-    )
-
     private val weatherImageMap = mapOf(
         "Clear" to R.drawable.weather_day_clear,
         "Clouds" to R.drawable.weather_day_cloud,
@@ -69,7 +60,6 @@ class WeatherFragment : Fragment() {
     )
     private val hourAdapter = WeatherHourAdapter()
     private val dayAdapter = WeatherDayAdapter()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -170,8 +160,6 @@ class WeatherFragment : Fragment() {
                 weatherStatusTextView.text = Weather.getWeatherCitiesData[cityId]!!.WeatherHourData[0].weather
             }
 
-
-
             hourRecyclerView.addOnItemTouchListener(object : RecyclerView.OnItemTouchListener {
                 override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
                     rv.parent?.requestDisallowInterceptTouchEvent(true)
@@ -185,6 +173,47 @@ class WeatherFragment : Fragment() {
                 }
             })
 
+            setMainCityButton.setOnClickListener {
+                WeatherApi.setMainUserCity(cityId!!, User.Token).enqueue(object : Callback<UserCityRequest>{
+                    override fun onFailure(call: Call<UserCityRequest>, t: Throwable) {
+                        Log.d("Error","Error")
+                    }
+
+                    override fun onResponse(call: Call<UserCityRequest>, response: Response<UserCityRequest>) {
+                        if (response.isSuccessful) {
+
+                        }
+                        else{
+                            // Обробку помилок
+                        }
+                    }
+                })
+            }
+
+            deleteCityButton.setOnClickListener {
+                AlertDialog.Builder(activity)
+                    .setTitle("Notification permission")
+                    .setMessage("Delete ${cityTextView.text}?")
+                    .setPositiveButton("Sure") { _, _ -> run {
+                        WeatherApi.deleteUserCity(cityId!!, User.Token).enqueue(object : Callback<UserCityRequest>{
+                            override fun onFailure(call: Call<UserCityRequest>, t: Throwable) {
+                                Log.d("Error","Error")
+                            }
+
+                            override fun onResponse(call: Call<UserCityRequest>, response: Response<UserCityRequest>) {
+                                if (response.isSuccessful) {
+
+                                }
+                                else{
+                                    // Обробку помилок
+                                }
+                            }
+                        })
+                    }
+                    }
+                    .setNegativeButton("No need", null)//{_, _ -> }
+                    .show()
+            }
         }
     }
 
