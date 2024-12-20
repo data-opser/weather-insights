@@ -16,11 +16,11 @@ class WeatherDayAdapter : RecyclerView.Adapter<WeatherDayAdapter.WeatherDayViewH
     class WeatherDayViewHolder(item: View): RecyclerView.ViewHolder(item){
         private val binding = ItemWeatherDayBinding.bind(item)
 
-        //fun bind(dayItem: WeatherDay) = with(binding){
+        fun bind(dayItem: WeatherDay) = with(binding){
             weatherImageView.setImageResource(dayItem.imageId)
             weatherDayTextView.text = dayItem.day
             temperatureRange.max = dayItem.maxTemp - dayItem.minTemp
-            temperatureRange.progress = dayItem.maxTemp - dayItem.currentTemp // полагодити передачу currentTemp
+            temperatureRange.progress = dayItem.maxTemp - dayItem.currentTemp
             temperatureRange.isEnabled = false
             Log.d("wt2",(dayItem.day + "  current: " + dayItem.currentTemp))
             dayMinTextView.text = String.format(Locale.getDefault(), "%d°", dayItem.minTemp)
