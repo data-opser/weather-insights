@@ -3,9 +3,12 @@ package com.vladislav.weather_insights
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences.Editor
 import android.content.res.ColorStateList
-import android.net.Uri
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.util.TypedValue
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,8 +17,28 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.cardview.widget.CardView
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.Task
+import com.vladislav.weather_insights.Interface.GoogleServices
+import com.vladislav.weather_insights.Interface.WeatherServices
+import com.vladislav.weather_insights.Retrofit.GoogleAPI
+import com.vladislav.weather_insights.Retrofit.WeatherAPI
+import com.vladislav.weather_insights.Objects.User
 import com.vladislav.weather_insights.databinding.FragmentProfileBinding
+import com.vladislav.weather_insights.model.GoogleResponse
+import com.vladislav.weather_insights.model.LoginRequest
+import com.vladislav.weather_insights.model.UserCityData
+import com.vladislav.weather_insights.model.UserProfile
+import com.vladislav.weather_insights.model.WeatherLogin
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -31,12 +54,17 @@ class ProfileFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-
+    private val RC_SIGN_IN = 1000
     private lateinit var binding: FragmentProfileBinding
     private lateinit var myActivity: Activity
-
+    private lateinit var googleSignInClient: GoogleSignInClient
+    private lateinit var editor: Editor
+    private lateinit var GoogleAuth: GoogleServices
+    private lateinit var WeatherApi: WeatherServices
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        WeatherApi = WeatherAPI.retrofitService
+        GoogleAuth = GoogleAPI.retrofitService
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
@@ -47,6 +75,7 @@ class ProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        editor = requireActivity().getSharedPreferences("MODE", Context.MODE_PRIVATE).edit()
         // Inflate the layout for this fragment
         binding = FragmentProfileBinding.inflate(inflater, container, false)
         return binding.root
@@ -77,7 +106,7 @@ class ProfileFragment : Fragment() {
 
         myActivity = requireActivity()
 
-        if(false){ //тут якщо у нас користувач вже залогінений був, то одразу профіль видаєм, нікіта
+        if(User.Token != null){ //тут якщо у нас користувач вже залогінений був, то одразу профіль видаєм, нікіта
             setProfileLayout()
         }
 
@@ -93,27 +122,97 @@ class ProfileFragment : Fragment() {
                 }
             }
 
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                emailEditText.setAutofillHints(null)
+                emailEditText.setHighlightColor(Color.TRANSPARENT)
+
+                pswdEditText.setAutofillHints(null)
+                pswdEditText.setHighlightColor(Color.TRANSPARENT)
+            }
+
             setOnFocusChangeListener(emailCardView, emailImageView, emailEditText)
             setOnFocusChangeListener(pswdCardView, pswdImageView, pswdEditText)
 
             loginButton.setOnClickListener{
-                if (true) { // йде запит API Нікітос, і якщо тру, переходимо на профіль
-                    setProfileLayout()
-                }
+                WeatherApi.login(LoginRequest(emailEditText.text.toString(),pswdEditText.text.toString())).enqueue(object : Callback<WeatherLogin>{
+                    override fun onFailure(call: Call<WeatherLogin>, t: Throwable) {
+                        Log.d("Error","Error")
+                    }
+
+                    override fun onResponse(call: Call<WeatherLogin>, response: Response<WeatherLogin>) {
+                        if (response.isSuccessful) {
+                            response.body()?.let {
+                                User.Token = it.token
+                                WeatherApi.getUserCities().enqueue(object : Callback<UserCityData>{
+                                    override fun onResponse(call: Call<UserCityData>, response: Response<UserCityData>) {
+                                        if (response.isSuccessful){
+                                            response.body()?.let { body->
+                                                User.UserCities = body
+                                            }
+                                        }
+                                    }
+
+                                    override fun onFailure(call: Call<UserCityData>, throwable: Throwable) {
+                                        TODO("Not yet implemented")
+                                    }
+                                })
+                                editor.putString("Token", it.token)
+                                editor.apply()
+                                setProfileLayout()
+                            }
+                        } else {
+                            // Потрібно зробити обробку невірного логіну в систему
+                            Log.e("AuthError", "Response error: ${response.errorBody()?.string()}")
+                        }
+                    }
+                })
             }
 
             goEditButton.setOnClickListener{ // тут перекинути на сторінку зміни інфи на сайті
-                val url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley"
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-                startActivity(intent)
+                googleSignInClient.signOut()
+            }
+            googleButton.setOnClickListener {
+                val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                    .requestServerAuthCode("", true)
+                    .requestEmail()
+                    .build()
+
+                googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
+
+                signInWithGoogle()
+                setProfileLayout()
             }
         }
-
     }
 
     private fun setProfileLayout() = with(binding){
         profileTitle.visibility = View.GONE
         loginLinearLayout.visibility = View.GONE
+        if(User.Profile == null){
+            WeatherApi.profile().enqueue(object : Callback<UserProfile>{
+                override fun onFailure(call: Call<UserProfile>, t: Throwable) {
+                    Log.d("Error","Error")
+                }
+
+                override fun onResponse(call: Call<UserProfile>, response: Response<UserProfile>) {
+                    if (response.isSuccessful) {
+                        response.body()?.let {
+                            User.Profile = it
+                            emailTextView.text = User.Profile?.email
+                            nameTextView.text = User.Profile?.name
+                            birthDateText.text = User.Profile?.birthday
+                        }
+                    } else {
+                        Log.e("AuthError", "Response error: ${response.errorBody()?.string()}")
+                    }
+                }
+            })
+        }
+        else{
+            emailTextView.text = User.Profile?.email
+            nameTextView.text = User.Profile?.name
+            birthDateText.text = User.Profile?.birthday
+        }
 
         profileCardView.visibility = View.VISIBLE
     }
@@ -153,5 +252,48 @@ class ProfileFragment : Fragment() {
     private fun hideKeyboard(view: View) {
         val inputMethodManager = myActivity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+    private fun signInWithGoogle() {
+        val signInIntent: Intent = googleSignInClient.signInIntent
+        startActivityForResult(signInIntent, RC_SIGN_IN)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == RC_SIGN_IN) {
+            val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
+            handleSignInResult(task)
+        }
+    }
+
+    private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
+        try {
+            val account: GoogleSignInAccount = completedTask.getResult(ApiException::class.java)
+
+            // Получаем authCode для обмена на токены
+            val authCode = account.serverAuthCode
+//            GoogleAuth.getGoogleTokens(account.serverAuthCode,"","", "com.vladislav.weather_insights:/").enqueue(object : Callback<GoogleResponse> {
+//                override fun onFailure(call: Call<GoogleResponse>, t: Throwable) {
+//                    Log.d("Error","Error")
+//                }
+//
+//                override fun onResponse(call: Call<GoogleResponse>, response: Response<GoogleResponse>) {
+//                    if (response.isSuccessful) {
+//                        response.body()?.let {
+//                            Log.d("refresh", it.refresh_token ?: "No refresh token")
+//                            Log.d("access", it.access_token)
+//                        }
+//                    } else {
+//                        Log.e("GoogleAuthError", "Response error: ${response.errorBody()?.string()}")
+//                    }
+//                }
+//            })
+
+
+        } catch (e: ApiException) {
+            Log.w("GoogleSignIn", "signInResult:failed code=" + e.statusCode)
+            Toast.makeText(requireContext(), "Ошибка авторизации: ${e.message}", Toast.LENGTH_LONG).show()
+        }
     }
 }

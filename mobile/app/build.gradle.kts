@@ -46,8 +46,12 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.justifiedtextview)
+    implementation(libs.retrofit)
+    implementation(libs.converterGson)
+    implementation(libs.google)
+    implementation(libs.httplogginginterceptor)
     implementation(libs.dotsindicator)
-
+    implementation(libs.androidx.ui.graphics.android)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

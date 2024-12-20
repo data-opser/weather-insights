@@ -27,3 +27,8 @@ def get_cities():
 def get_city():
     city_id = request.args.get('city')
     return City.get_city_name_by_id(city_id)
+
+@weather_bp.route('/airpollution/city', methods=['GET'])
+def fetch_air_pollution_data():
+    city_id = request.args.get('city')
+    return СurrentWeather.get_air_pollution_data(city_id)
