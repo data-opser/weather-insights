@@ -64,6 +64,10 @@ const Notifications = () => {
           <input type="radio" name="radio" value="10 days"></input>
           <span>10 days</span>
         </label>
+        <label>
+          <input type="radio" name="radio" value="15 days"></input>
+          <span>15 days</span>
+        </label>
       </div>
 
       <button className='user-button'>

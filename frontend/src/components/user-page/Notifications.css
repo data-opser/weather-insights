@@ -5,7 +5,6 @@
 
 .notification-city-block {
     display: flex;
-    gap: 10px;
     padding-bottom: 10px;
     overflow-x: auto;
     flex-shrink: 1;
@@ -20,8 +19,11 @@
     border-radius: 1em;
     position: relative;
     overflow: hidden;
+    margin-right: 10px;
 }
-
+.notification-about-city:last-child {
+    margin-right: 0;
+}
 .notification-about-city-name {
     width: 110px;
     overflow: hidden;
@@ -77,15 +79,14 @@
 }
 
 .radio-buttons-block {
-    display: flex;
-    gap: 30px;
-    
+    display: flex;   
 }
 
 .radio-buttons-block label {
     display: flex;
     cursor: pointer;
     position: relative;
+
 }
 
 .radio-buttons-block label input {
@@ -97,9 +98,12 @@
 .radio-buttons-block label span {
     display: flex;
     align-items: center;
-    padding: 8px 15px 8px 0;
+    padding: 8px 35px 8px 0;
     border-radius: 0.5em;
     transition: 0.25s ease;
+}
+.radio-buttons-block label:last-child span{
+    padding: 8px 0px;
 }
 
 .radio-buttons-block label span::before {
