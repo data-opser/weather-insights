@@ -45,29 +45,6 @@ class ForecastWeatherHour(db.Model):
     sunrise_time_utc = Column(DateTime)
     sunset_time_utc = Column(DateTime)
 
-    # @classmethod
-    # def get_city_hourly_weather_by_date(cls, city_id, date):
-    #     try:
-    #         if not City.check_city_exists(city_id):
-    #             return ErrorHandler.handle_error(
-    #                 None,
-    #                 message=f"City with ID '{city_id}' not found.",
-    #                 status_code=404
-    #             )
-    #
-    #         date_object = datetime.strptime(date, '%Y-%m-%d').date()
-    #         records = cls.query.filter(
-    #             cls.city_id == city_id,
-    #             cast(cls.weather_time, Date) == date_object
-    #         ).order_by(cls.weather_time).all()
-    #         return WeatherResponse.response_weather_hours(records)
-    #     except Exception as e:
-    #         return ErrorHandler.handle_error(
-    #             e,
-    #             message="Iternal server error while getting weather hourly forecast.",
-    #             status_code=500
-    #         )
-
     @classmethod
     def get_city_hourly_weather(cls, city_id):
         try:
@@ -80,7 +57,6 @@ class ForecastWeatherHour(db.Model):
 
             current_time = datetime.now()
 
-            # Округляем время до начала текущего часа
             current_time = current_time.replace(minute=0, second=0, microsecond=0)
 
             end_time = current_time + timedelta(hours=24)
