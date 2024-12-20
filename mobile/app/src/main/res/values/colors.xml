@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary">#71D4F2</color>
+    <color name="primary">#808FE0</color>
     <color name="primaryVariant">#1D93D1</color>
     <color name="onPrimary">#3762CA</color>
     <color name="secondary">#3762CA</color>
@@ -41,6 +41,9 @@
 
     <color name="settingsDialog_day">#B3BEF4</color>
     <color name="settingsDialog_night">#152431</color>
+
+    <color name="alertDialogBg_day">#D9B099F2</color>
+    <color name="alertDialogBg_night">#223D54</color>
 
     <color name="button_bgTint_night">#FF374955</color>
     <color name="navFloatingBg_day">#E1EEF8</color>
@@ -115,4 +118,10 @@
     <color name="dotsIndicatorSel_night">#ffffff</color>
     <color name="dotsIndicatorInert_day">#6A5ACD</color>
     <color name="dotsIndicatorInert_night">#90A9B8</color>
+
+    <color name="weatherMainInert_day">#5BABED</color>
+    <color name="weatherMainInert_night">#1B7DB1</color>
+
+    <color name="weatherMainActive_day">#417CAD</color>
+    <color name="weatherMainActive_night">#125275</color>
 </resources>

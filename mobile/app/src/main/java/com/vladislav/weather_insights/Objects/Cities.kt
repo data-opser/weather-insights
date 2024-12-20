@@ -1,7 +1,6 @@
 package com.vladislav.weather_insights.Objects
 
 import com.vladislav.weather_insights.model.CityData
-import java.util.Dictionary
 
 object Cities {
 

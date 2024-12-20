@@ -17,7 +17,7 @@ import com.vladislav.weather_insights.R
 import com.vladislav.weather_insights.databinding.BottomNavLayoutBinding
 import com.vladislav.weather_insights.model.City
 
-class CitySearchAdapter (private val activity: MainActivity, private val dialog: BottomSheetDialog){
+class CitySearchAdapter (private val activity: MainActivity, dialog: BottomSheetDialog){
     private var binding: BottomNavLayoutBinding = BottomNavLayoutBinding.inflate(LayoutInflater.from(activity))
     private var citySearchRWAdapter = CitySearchRWAdapter(dialog, activity)
 

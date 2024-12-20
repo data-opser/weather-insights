@@ -31,7 +31,6 @@ import com.vladislav.weather_insights.Retrofit.GoogleAPI
 import com.vladislav.weather_insights.Retrofit.WeatherAPI
 import com.vladislav.weather_insights.Objects.User
 import com.vladislav.weather_insights.databinding.FragmentProfileBinding
-import com.vladislav.weather_insights.model.GoogleResponse
 import com.vladislav.weather_insights.model.LoginRequest
 import com.vladislav.weather_insights.model.UserCityData
 import com.vladislav.weather_insights.model.UserProfile
@@ -122,14 +121,6 @@ class ProfileFragment : Fragment() {
                 }
             }
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                emailEditText.setAutofillHints(null)
-                emailEditText.setHighlightColor(Color.TRANSPARENT)
-
-                pswdEditText.setAutofillHints(null)
-                pswdEditText.setHighlightColor(Color.TRANSPARENT)
-            }
-
             setOnFocusChangeListener(emailCardView, emailImageView, emailEditText)
             setOnFocusChangeListener(pswdCardView, pswdImageView, pswdEditText)
 
@@ -161,7 +152,7 @@ class ProfileFragment : Fragment() {
                                 setProfileLayout()
                             }
                         } else {
-                            // Потрібно зробити обробку невірного логіну в систему
+                            authErrorTextView.visibility = View.VISIBLE
                             Log.e("AuthError", "Response error: ${response.errorBody()?.string()}")
                         }
                     }
@@ -203,7 +194,6 @@ class ProfileFragment : Fragment() {
                             birthDateText.text = User.Profile?.birthday
                         }
                     } else {
-                        Log.e("AuthError", "Response error: ${response.errorBody()?.string()}")
                     }
                 }
             })
@@ -253,6 +243,7 @@ class ProfileFragment : Fragment() {
         val inputMethodManager = myActivity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
+
     private fun signInWithGoogle() {
         val signInIntent: Intent = googleSignInClient.signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)
