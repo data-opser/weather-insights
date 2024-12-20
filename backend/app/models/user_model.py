@@ -32,6 +32,18 @@ class User(db.Model, UserMixin):
         back_populates='user',
         cascade="all, delete-orphan"
     )
+    # Connection with UserDevice
+    devices = db.relationship(
+        'UserDevice',
+        back_populates='user',
+        cascade="all, delete-orphan"
+    )
+    # Connection with UserScheduledWeatherNotification
+    scheduled_notifications = db.relationship(
+        'UserScheduledWeatherNotification',
+        back_populates='user',
+        cascade="all, delete-orphan"
+    )
 
     def set_password(self, password):
         self.password = generate_password_hash(password)

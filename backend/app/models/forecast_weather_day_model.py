@@ -1,5 +1,6 @@
 from app import db
 from sqlalchemy import Column, Integer, String, Float, DateTime, BigInteger
+from datetime import datetime
 from app.responses import WeatherResponse
 from app.utils import ErrorHandler
 from app.models import City
@@ -59,5 +60,35 @@ class ForecastWeatherDay(db.Model):
             return ErrorHandler.handle_error(
                 e,
                 message="Iternal server error while getting daily weather forecast.",
+                status_code=500
+            )
+
+    @classmethod
+    def get_forecast_by_city_date(cls, city_id, date):
+        try:
+            if not City.check_city_exists(city_id):
+                return ErrorHandler.handle_error(
+                    None,
+                    message=f"City with ID '{city_id}' not found.",
+                    status_code=404
+                )
+
+            notification_datetime = datetime.combine(date, datetime.min.time())
+
+            weather_record = cls.query.filter(cls.weather_time == notification_datetime).first()
+
+            if not weather_record:
+                return ErrorHandler.handle_error(
+                    None,
+                    message=f"No weather forecast found for city ID '{city_id}' on {date}.",
+                    status_code=404
+                )
+
+            return WeatherResponse.response_weather_day(weather_record)
+        except Exception as e:
+            print(e)
+            return ErrorHandler.handle_error(
+                e,
+                message="Internal server error while getting weather forecast by date and city.",
                 status_code=500
             )

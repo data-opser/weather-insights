@@ -1,5 +1,5 @@
 from flask import Blueprint, request
-from app.models import UserCity
+from app.models import UserCity, UserScheduledWeatherNotification, UserDevice
 from app.services.password_reset_service import send_password_reset_email
 from app.services import profile_service
 from app.utils.auth_decorator import auth_required
@@ -72,3 +72,63 @@ def set_main_user_city():
     user = request.current_user
     city_id = request.args.get('city')
     return UserCity.set_main_user_city(user.user_id, city_id)
+
+
+@user_profile_bp.route('/user_scheduled_notifications', methods=['Get'])
+@auth_required
+def get_user_scheduled_notifications():
+    user = request.current_user
+    return UserScheduledWeatherNotification.get_user_scheduled_notifications(user.user_id)
+
+
+@user_profile_bp.route('/grouped_user_scheduled_notifications', methods=['Get'])
+@auth_required
+def get_grouped_user_scheduled_notifications():
+    user = request.current_user
+    return UserScheduledWeatherNotification.get_grouped_user_scheduled_notifications(user.user_id)
+
+
+@user_profile_bp.route('/add_user_scheduled_notifications', methods=['Post'])
+@auth_required
+def add_user_scheduled_notification():
+    user = request.current_user
+    data = request.get_json()
+    return UserScheduledWeatherNotification.add_user_scheduled_notifications(user.user_id, data)
+
+
+@user_profile_bp.route('/delete_user_scheduled_notification/notification', methods=['Post'])
+@auth_required
+def delete_user_scheduled_notification():
+    user = request.current_user
+    notification_id = request.args.get('notification')
+    return UserScheduledWeatherNotification.delete_user_scheduled_notification(user.user_id, notification_id)
+
+
+@user_profile_bp.route('/delete_user_scheduled_notifications/', methods=['Post'])
+@auth_required
+def delete_user_scheduled_notifications():
+    user = request.current_user
+    data = request.get_json()
+    return UserScheduledWeatherNotification.delete_user_scheduled_notifications(user.user_id, data)
+
+@user_profile_bp.route('/user_devices', methods=['Get'])
+@auth_required
+def get_user_devices():
+    user = request.current_user
+    return UserDevice.get_user_devices(user.user_id)
+
+
+@user_profile_bp.route('/add_user_device', methods=['Post'])
+@auth_required
+def add_user_device():
+    user = request.current_user
+    data = request.get_json()
+    return UserDevice.add_user_device(user.user_id, data)
+
+
+@user_profile_bp.route('/delete_user_device/device', methods=['Post'])
+@auth_required
+def delete_user_device():
+    user = request.current_user
+    device_id = request.args.get('device')
+    return UserDevice.delete_user_device_(user.user_id, device_id)
