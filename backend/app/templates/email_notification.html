@@ -153,7 +153,7 @@
 
         <div class="main-content-text-block">
             <h2 class="main-content-header-text">Weather Forecast "{{ title }}" for {{ city }} on {{ date }}</h2>
-            <p class="main-content-text">Hello, {{ user_name }} !</p>
+            <p class="main-content-text">Hello, {{ user_name }}!</p>
             <p class="main-content-text">Here is the weather forecast you requested:</p>
 
             <div class="main-information-container">
@@ -203,7 +203,10 @@
             </div>
 
             <div class="footer">
-                <p>Want to check the weather for another day? Click here to visit our service.</p>
+                <p>
+                    Want to check the weather for another day?
+                    <a href="{{ website_url }}" target="_blank" rel="noopener noreferrer">Click here to visit our website!</a>.
+                </p>
                 <p>Thank you for using our service!</p>
 
                 <div class="footer-second-section">

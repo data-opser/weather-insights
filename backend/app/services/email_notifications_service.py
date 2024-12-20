@@ -2,6 +2,7 @@ from flask_mail import Message
 from app import mail
 from flask import render_template_string
 from app.utils import ErrorHandler
+import os
 
 def send_email_notification(notification, user, city_data, weather_data):
     try:
@@ -26,7 +27,8 @@ def send_email_notification(notification, user, city_data, weather_data):
             rain_precipitation=weather_data.get('rain_precipitation'),
             snow_precipitation=weather_data.get('snow_precipitation'),
             sunrise_time=weather_data.get('sunrise_local_time'),
-            sunset_time=weather_data.get('sunset_local_time')
+            sunset_time=weather_data.get('sunset_local_time'),
+            website_url=os.getenv('FRONTEND_LINK')
         )
 
         msg = Message(
