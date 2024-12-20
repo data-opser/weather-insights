@@ -10,6 +10,11 @@
     flex-shrink: 1;
 }
 
+.search-status {
+    width: stretch;
+    text-align: center;
+}
+
 .notification-about-city {
     background-color: #E1F4FF;
     flex: 0 1 auto; 
@@ -51,6 +56,23 @@
     display: flex;
     gap: 20px;
     margin-bottom: 10px;
+    position: relative;
+}
+
+.notification-town-block .status-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 50%;
+}
+
+.notification-town-block .status-icon.good {
+    color: green;
+}
+
+.notification-town-block .status-icon.bad {
+    color: red;
 }
 
 .notification-date-block p,
@@ -69,7 +91,7 @@
     border-radius: 0.5em;
     min-width: 130px;
     padding: 10px;
-    width: 70%;
+    width: stretch;
 }
 
 .notification-date-block .date-input:focus,
