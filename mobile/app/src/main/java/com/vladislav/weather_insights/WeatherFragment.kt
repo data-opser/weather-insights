@@ -2,6 +2,8 @@ package com.vladislav.weather_insights
 
 import android.content.res.ColorStateList
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.util.TypedValue
 import androidx.fragment.app.Fragment
@@ -41,7 +43,7 @@ class WeatherFragment : Fragment() {
 
     private lateinit var binding: FragmentWeatherBinding
     private lateinit var WeatherApi: WeatherServices
-
+    private val handler = Handler(Looper.getMainLooper())
     private val weatherImageMap = mapOf(
         "Clear" to R.drawable.weather_day_clear,
         "Clouds" to R.drawable.weather_day_cloud,
@@ -86,79 +88,81 @@ class WeatherFragment : Fragment() {
                     cityTextView.text = it.city
                 }
             } else {
-                Timer().schedule(object : TimerTask() {
+                val runnable = object : Runnable {
                     override fun run() {
                         if (Cities.citiesLoaded) {
-                            activity?.runOnUiThread { Cities.getCityIds[cityId]?.let {
+                            Cities.getCityIds[cityId]?.let {
                                 cityTextView.text = it.city
-                            } }
-                        }
-                    }
-                }, 0, 10)
-            }
-
-            if (Weather.getWeatherCitiesData[cityId] == null){
-                WeatherApi.getWeatherFourDays(cityId!!).enqueue(object : Callback<ArrayList<WeatherDayData>>{
-                    override fun onFailure(call: Call<ArrayList<WeatherDayData>>, t: Throwable) {
-                        Log.d("Error","Error")
-                    }
-
-                    override fun onResponse(call: Call<ArrayList<WeatherDayData>>, response: Response<ArrayList<WeatherDayData>>) {
-                        if (response.isSuccessful) {
-                            response.body()?.let { dayBody ->
-                                WeatherApi.getWeatherDay(cityId!!).enqueue(object : Callback<ArrayList<WeatherHourData>>{
-                                    override fun onFailure(call: Call<ArrayList<WeatherHourData>>, t: Throwable) {
-                                        Log.d("Error","Error")
-                                    }
-
-                                    override fun onResponse(call: Call<ArrayList<WeatherHourData>>, response: Response<ArrayList<WeatherHourData>>) {
-                                        if(response.isSuccessful){
-                                            response.body()?.let { hourBody ->
-                                                Weather.setNewWeatherCityData(cityId!!, WeatherCityData(dayBody, hourBody))
-                                                for(body in Weather.getWeatherCitiesData[cityId]!!.WeatherHourData){
-                                                    Log.d(body.weather, weatherImageMap[body.weather].toString())
-                                                    hourAdapter.addHour(WeatherHour(weatherImageMap[body.weather]!!,body.time,body.temperature.toDouble().toInt()))
-                                                }
-
-                                                for(body in Weather.getWeatherCitiesData[cityId]!!.WeatherDayData){
-                                                    dayAdapter.addDay(WeatherDay(weatherImageMap[body.weather]!!,body.date,Weather.getWeatherCitiesData[cityId]!!.WeatherHourData[0].temperature.toDouble().toInt(), body.temperature_min.toDouble().toInt(), body.temperature_max.toDouble().toInt()))
-                                                }
-                                                temperatureTextView.text = Weather.getWeatherCitiesData[cityId]!!.WeatherHourData[0].temperature.toDouble().toInt().toString() + "°"
-                                                tempMinMaxTextView.text = "Max " + Weather.getWeatherCitiesData[cityId]!!.WeatherDayData[0].temperature_max.toDouble().toInt().toString() + "° Min " + Weather.getWeatherCitiesData[cityId]!!.WeatherDayData[0].temperature_min.toDouble().toInt().toString() + "°"
-                                                weatherStatusTextView.text = Weather.getWeatherCitiesData[cityId]!!.WeatherHourData[0].weather
-                                                if(User.UserCities?.main_city == cityId){
-                                                    val typedValue = TypedValue()
-                                                    activity?.theme?.resolveAttribute(R.attr.weatherMainActiveColor, typedValue, true)
-                                                    setMainCityButton.isEnabled = false
-                                                    setMainCityButton.backgroundTintList = ColorStateList.valueOf(typedValue.data)
-                                                }
-                                            }
-                                        }
-                                        else{
-                                            Log.e("Response error", "Response error: ${response.errorBody()?.string()}")
-                                        }
-                                    }
-                                })
+                                return
                             }
                         }
-                        else{
-                            Log.e("Response error", "Response error: ${response.errorBody()?.string()}")
-                        }
+                        handler.postDelayed(this, 10)
                     }
-                })
+                }
+                handler.post(runnable)
             }
-            else{
+
+            if (Weather.getWeatherCitiesData[cityId] != null){
                 for(body in Weather.getWeatherCitiesData[cityId]!!.WeatherHourData){
-                    hourAdapter.addHour(WeatherHour(weatherImageMap[body.weather]!!,body.time,body.temperature.toDouble().toInt()))
+                    Log.d(body.weather, weatherImageMap[body.weather].toString())
+                    hourAdapter.addHour(
+                        WeatherHour(weatherImageMap[body.weather]!!,body.time,body.temperature.toDouble().toInt())
+                    )
                 }
 
                 for(body in Weather.getWeatherCitiesData[cityId]!!.WeatherDayData){
-                    dayAdapter.addDay(WeatherDay(weatherImageMap[body.weather]!!,body.date,Weather.getWeatherCitiesData[cityId]!!.WeatherHourData[0].temperature.toDouble().toInt(), body.temperature_min.toDouble().toInt(), body.temperature_max.toDouble().toInt()))
+                    dayAdapter.addDay(
+                        WeatherDay(weatherImageMap[body.weather]!!,body.date,
+                            Weather.getWeatherCitiesData[cityId]!!.WeatherDayData[0].daily_temperature_feels_like.toDouble().toInt(), body.temperature_min.toDouble().toInt(), body.temperature_max.toDouble().toInt())
+                    )
                 }
                 temperatureTextView.text = Weather.getWeatherCitiesData[cityId]!!.WeatherHourData[0].temperature.toDouble().toInt().toString() + "°"
                 tempMinMaxTextView.text = "Max " + Weather.getWeatherCitiesData[cityId]!!.WeatherDayData[0].temperature_max.toDouble().toInt().toString() + "° Min " + Weather.getWeatherCitiesData[cityId]!!.WeatherDayData[0].temperature_min.toDouble().toInt().toString() + "°"
                 weatherStatusTextView.text = Weather.getWeatherCitiesData[cityId]!!.WeatherHourData[0].weather
+                if(User.UserCities?.main_city == cityId){
+                    val typedValue = TypedValue()
+                    activity?.theme?.resolveAttribute(R.attr.weatherMainActiveColor, typedValue, true)
+                    setMainCityButton.isEnabled = false
+                    setMainCityButton.backgroundTintList = ColorStateList.valueOf(typedValue.data)
+                }
             }
+            else {
+                val runnable = object : Runnable {
+                    override fun run() {
+                        if (Weather.getWeatherCitiesData[cityId] != null) {
+                            activity?.runOnUiThread { Weather.getWeatherCitiesData[cityId]?.let {
+                                    for(body in Weather.getWeatherCitiesData[cityId]!!.WeatherHourData){
+                                        Log.d(body.weather, weatherImageMap[body.weather].toString())
+                                        hourAdapter.addHour(
+                                            WeatherHour(weatherImageMap[body.weather]!!,body.time,body.temperature.toDouble().toInt())
+                                        )
+                                    }
+
+                                    for(body in Weather.getWeatherCitiesData[cityId]!!.WeatherDayData){
+                                        dayAdapter.addDay(
+                                            WeatherDay(weatherImageMap[body.weather]!!,body.date,
+                                                Weather.getWeatherCitiesData[cityId]!!.WeatherDayData[0].daily_temperature_feels_like.toDouble().toInt(), body.temperature_min.toDouble().toInt(), body.temperature_max.toDouble().toInt())
+                                        )
+                                    }
+                                    temperatureTextView.text = Weather.getWeatherCitiesData[cityId]!!.WeatherHourData[0].temperature.toDouble().toInt().toString() + "°"
+                                    tempMinMaxTextView.text = "Max " + Weather.getWeatherCitiesData[cityId]!!.WeatherDayData[0].temperature_max.toDouble().toInt().toString() + "° Min " + Weather.getWeatherCitiesData[cityId]!!.WeatherDayData[0].temperature_min.toDouble().toInt().toString() + "°"
+                                    weatherStatusTextView.text = Weather.getWeatherCitiesData[cityId]!!.WeatherHourData[0].weather
+                                    if(User.UserCities?.main_city == cityId){
+                                        val typedValue = TypedValue()
+                                        activity?.theme?.resolveAttribute(R.attr.weatherMainActiveColor, typedValue, true)
+                                        setMainCityButton.isEnabled = false
+                                        setMainCityButton.backgroundTintList = ColorStateList.valueOf(typedValue.data)
+                                    }
+                                }
+                            }
+                            return
+                        }
+                        handler.postDelayed(this, 10)
+                    }
+                }
+                handler.post(runnable)
+            }
+
 
             hourRecyclerView.addOnItemTouchListener(object : RecyclerView.OnItemTouchListener {
                 override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
