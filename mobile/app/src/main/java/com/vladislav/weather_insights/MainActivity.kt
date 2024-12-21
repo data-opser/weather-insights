@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var editor: Editor
     private lateinit var WeatherApi: WeatherServices
-
+    lateinit var WeatherPreviousFragment: WeatherPreviousFragment
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WeatherApi = WeatherAPI.retrofitService
@@ -115,15 +115,18 @@ class MainActivity : AppCompatActivity() {
         val typedValue = TypedValue()
         theme.resolveAttribute(R.attr.navBarColor, typedValue, true)
         window.navigationBarColor = typedValue.data
-
         if (supportFragmentManager.findFragmentByTag("SettingsFragment") == null) {
-            replaceFragment(WeatherPreviousFragment(), "WeatherPreviousFragment")
+            WeatherPreviousFragment = WeatherPreviousFragment()
+            replaceFragment(WeatherPreviousFragment, "WeatherPreviousFragment")
         }
         setTheme()
 
         binding.bottomNavigationView.setOnItemSelectedListener {
             when(it.itemId) {
-                R.id.nav_weather -> replaceFragment(WeatherPreviousFragment (), "WeatherPreviousFragment")
+                R.id.nav_weather -> {
+                    WeatherPreviousFragment = WeatherPreviousFragment()
+                    replaceFragment(WeatherPreviousFragment, "WeatherPreviousFragment")
+                }
                 R.id.nav_profile -> replaceFragment(ProfileFragment (),"PremiumFragment")
                 R.id.nav_horoscope -> replaceFragment(HoroscopeFragment (),"HoroscopeFragment")
                 R.id.nav_settings -> replaceFragment(SettingsFragment (),"SettingsFragment")

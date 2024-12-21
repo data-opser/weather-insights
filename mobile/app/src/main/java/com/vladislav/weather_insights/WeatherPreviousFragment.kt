@@ -17,7 +17,7 @@ private lateinit var binding: FragmentWeatherPreviousBinding
 class WeatherPreviousFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var cityId: String? = null
-
+    private lateinit var fragAdapter: ViewPagerAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -44,7 +44,7 @@ class WeatherPreviousFragment : Fragment() {
             cityList.add(WeatherFragment.newInstance(city))
         }
 
-        val fragAdapter = ViewPagerAdapter(requireActivity(), cityList)
+        fragAdapter = ViewPagerAdapter(requireActivity(), cityList)
         binding.apply {
             weatherViewPager.adapter = fragAdapter
             TabLayoutMediator(tabLayout, weatherViewPager) { tab, position ->
@@ -60,5 +60,15 @@ class WeatherPreviousFragment : Fragment() {
                     putString(ARG_PARAM1, cityId)
                 }
             }
+    }
+    fun addCity(cityId: String){
+        fragAdapter.addFragment(WeatherFragment.newInstance(cityId))
+    }
+
+    fun removeCityById(cityId: String) {
+        val position = fragAdapter.list.indexOfFirst { it.getCityId() == cityId }
+        if (position != -1) {
+            fragAdapter.removeFragment(position)
+        }
     }
 }
