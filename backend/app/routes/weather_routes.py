@@ -13,10 +13,11 @@ def fetch_sunrise_sunset_times():
     city_id = request.args.get('city')
     return СurrentWeather.get_sun_times_for_city(city_id)
 
-@weather_bp.route('/weather/city', methods=['GET'])
+@weather_bp.route('/weather/city/date', methods=['GET'])
 def fetch_weather_by_date_and_city():
+    date = request.args.get('date')
     city_id = request.args.get('city')
-    return ForecastWeatherHour.get_city_hourly_weather(city_id)
+    return ForecastWeatherHour.get_city_hourly_weather(city_id, date)
 
 @weather_bp.route('/cities', methods=['GET'])
 def get_cities():
