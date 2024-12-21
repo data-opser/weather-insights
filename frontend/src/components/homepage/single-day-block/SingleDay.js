@@ -18,7 +18,7 @@ const SingleDay = ({ date, cityId, isCityListEmpty }) => {
       setError(null);
 
       try {
-        const response = await api.get(`/weather/city?city=${cityId}`);
+        const response = await api.get(`/weather/city/date?city=${cityId}&date=${date}`);
         setHourlyData(response.data);
       } catch (error) {
         setError("Failed to fetch hourly data.");

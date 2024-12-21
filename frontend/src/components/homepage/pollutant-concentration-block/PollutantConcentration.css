@@ -43,6 +43,10 @@
     background-color: #F5A25F;
 }
 
+.pollutant-card.poor {
+    background-color: #f58a5f;
+}
+
 .main-text .icon {
     display: flex;
     justify-content: center;
