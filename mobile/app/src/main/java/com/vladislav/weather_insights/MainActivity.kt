@@ -24,9 +24,14 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.vladislav.weather_insights.adapter.CitySearchAdapter
 import com.vladislav.weather_insights.Interface.WeatherServices
 import com.vladislav.weather_insights.Objects.Cities
+import com.vladislav.weather_insights.Objects.User
+import com.vladislav.weather_insights.Objects.Weather
 import com.vladislav.weather_insights.Retrofit.WeatherAPI
 import com.vladislav.weather_insights.databinding.ActivityMainBinding
 import com.vladislav.weather_insights.model.CityData
+import com.vladislav.weather_insights.model.WeatherCityData
+import com.vladislav.weather_insights.model.WeatherDayData
+import com.vladislav.weather_insights.model.WeatherHourData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -42,6 +47,40 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WeatherApi = WeatherAPI.retrofitService
+        for(cityId in User.UserCities!!.user_cities){
+            WeatherApi.getWeatherFourDays(cityId).enqueue(object : Callback<ArrayList<WeatherDayData>>{
+                override fun onFailure(call: Call<ArrayList<WeatherDayData>>, t: Throwable) {
+                    Log.d("Error","Error")
+                }
+
+                override fun onResponse(call: Call<ArrayList<WeatherDayData>>, response: Response<ArrayList<WeatherDayData>>) {
+                    if (response.isSuccessful) {
+                        response.body()?.let { dayBody ->
+                            WeatherApi.getWeatherDay(cityId, dayBody[0].date).enqueue(object : Callback<ArrayList<WeatherHourData>>{
+                                override fun onFailure(call: Call<ArrayList<WeatherHourData>>, t: Throwable) {
+                                    Log.d("Error","Error")
+                                }
+
+                                override fun onResponse(call: Call<ArrayList<WeatherHourData>>, response: Response<ArrayList<WeatherHourData>>) {
+                                    if(response.isSuccessful){
+                                        response.body()?.let { hourBody ->
+                                            Weather.setNewWeatherCityData(cityId, WeatherCityData(dayBody, hourBody))
+
+                                        }
+                                    }
+                                    else{
+                                        Log.e("Response error", "Response error: ${response.errorBody()?.string()}")
+                                    }
+                                }
+                            })
+                        }
+                    }
+                    else{
+                        Log.e("Response error", "Response error: ${response.errorBody()?.string()}")
+                    }
+                }
+            })
+        }
         WeatherApi.getCities().enqueue(object : Callback<ArrayList<CityData>>{
             override fun onFailure(call: Call<ArrayList<CityData>>, t: Throwable) {
                 Log.d("Error","Error")

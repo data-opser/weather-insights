@@ -40,11 +40,11 @@ interface WeatherServices {
     )
     fun getCities() : Call<ArrayList<CityData>>
 
-    @GET("weather/date/city")
+    @GET("weather/city/date")
     @Headers(
         "Content-Type: application/json"
     )
-    fun getWeatherDay(@Query("city") city: String, @Query("date") date: String) : Call<ArrayList<WeatherHourData>>
+    fun getWeatherDay(@Query("city") city: String,@Query("date") date: String) : Call<ArrayList<WeatherHourData>>
 
     @GET("weatherday/city")
     @Headers(

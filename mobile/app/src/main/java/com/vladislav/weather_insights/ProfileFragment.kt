@@ -27,13 +27,20 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.vladislav.weather_insights.Interface.GoogleServices
 import com.vladislav.weather_insights.Interface.WeatherServices
+import com.vladislav.weather_insights.Objects.Cities
 import com.vladislav.weather_insights.Retrofit.GoogleAPI
 import com.vladislav.weather_insights.Retrofit.WeatherAPI
 import com.vladislav.weather_insights.Objects.User
+import com.vladislav.weather_insights.Objects.Weather
 import com.vladislav.weather_insights.databinding.FragmentProfileBinding
 import com.vladislav.weather_insights.model.LoginRequest
 import com.vladislav.weather_insights.model.UserCityData
 import com.vladislav.weather_insights.model.UserProfile
+import com.vladislav.weather_insights.model.WeatherCityData
+import com.vladislav.weather_insights.model.WeatherDay
+import com.vladislav.weather_insights.model.WeatherDayData
+import com.vladislav.weather_insights.model.WeatherHour
+import com.vladislav.weather_insights.model.WeatherHourData
 import com.vladislav.weather_insights.model.WeatherLogin
 import retrofit2.Call
 import retrofit2.Callback
@@ -139,6 +146,43 @@ class ProfileFragment : Fragment() {
                                         if (response.isSuccessful){
                                             response.body()?.let { body->
                                                 User.UserCities = body
+                                                editor.putString("Token", it.token)
+                                                editor.apply()
+                                                for(cityId in User.UserCities!!.user_cities){
+                                                    WeatherApi.getWeatherFourDays(cityId).enqueue(object : Callback<ArrayList<WeatherDayData>>{
+                                                        override fun onFailure(call: Call<ArrayList<WeatherDayData>>, t: Throwable) {
+                                                            Log.d("Error","Error")
+                                                        }
+
+                                                        override fun onResponse(call: Call<ArrayList<WeatherDayData>>, response: Response<ArrayList<WeatherDayData>>) {
+                                                            if (response.isSuccessful) {
+                                                                response.body()?.let { dayBody ->
+                                                                    WeatherApi.getWeatherDay(cityId, dayBody[0].date).enqueue(object : Callback<ArrayList<WeatherHourData>>{
+                                                                        override fun onFailure(call: Call<ArrayList<WeatherHourData>>, t: Throwable) {
+                                                                            Log.d("Error","Error")
+                                                                        }
+
+                                                                        override fun onResponse(call: Call<ArrayList<WeatherHourData>>, response: Response<ArrayList<WeatherHourData>>) {
+                                                                            if(response.isSuccessful){
+                                                                                response.body()?.let { hourBody ->
+                                                                                    Weather.setNewWeatherCityData(cityId, WeatherCityData(dayBody, hourBody))
+
+                                                                                }
+                                                                            }
+                                                                            else{
+                                                                                Log.e("Response error", "Response error: ${response.errorBody()?.string()}")
+                                                                            }
+                                                                        }
+                                                                    })
+                                                                }
+                                                            }
+                                                            else{
+                                                                Log.e("Response error", "Response error: ${response.errorBody()?.string()}")
+                                                            }
+                                                        }
+                                                    })
+                                                }
+                                                setProfileLayout()
                                             }
                                         }
                                     }
@@ -147,9 +191,6 @@ class ProfileFragment : Fragment() {
                                         TODO("Not yet implemented")
                                     }
                                 })
-                                editor.putString("Token", it.token)
-                                editor.apply()
-                                setProfileLayout()
                             }
                         } else {
                             authErrorTextView.visibility = View.VISIBLE
@@ -192,6 +233,8 @@ class ProfileFragment : Fragment() {
                             emailTextView.text = User.Profile?.email
                             nameTextView.text = User.Profile?.name
                             birthDateText.text = User.Profile?.birthday
+                            locationTextView.text = Cities.getCityIds[User.UserCities!!.main_city]!!.city + ", " + Cities.getCityIds[User.UserCities!!.main_city]!!.country
+
                         }
                     } else {
                     }
@@ -202,6 +245,7 @@ class ProfileFragment : Fragment() {
             emailTextView.text = User.Profile?.email
             nameTextView.text = User.Profile?.name
             birthDateText.text = User.Profile?.birthday
+            locationTextView.text = Cities.getCityIds[User.UserCities!!.main_city]!!.city + ", " + Cities.getCityIds[User.UserCities!!.main_city]!!.country
         }
 
         profileCardView.visibility = View.VISIBLE
