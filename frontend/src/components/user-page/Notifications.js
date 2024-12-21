@@ -195,7 +195,7 @@ const Notifications = () => {
             required
           />
         </div>
-        <p>Remind in</p>
+        <p>Sending date</p>
         <div className="radio-buttons-block">
           {[15, 10, 5, 3, 1, 0].map((day) => (
             isDateValid(day) && (
