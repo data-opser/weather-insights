@@ -106,7 +106,7 @@ class WeatherFragment : Fragment() {
                     override fun onResponse(call: Call<ArrayList<WeatherDayData>>, response: Response<ArrayList<WeatherDayData>>) {
                         if (response.isSuccessful) {
                             response.body()?.let { dayBody ->
-                                WeatherApi.getWeatherDay(cityId!!,dayBody[0].date).enqueue(object : Callback<ArrayList<WeatherHourData>>{
+                                WeatherApi.getWeatherDay(cityId!!).enqueue(object : Callback<ArrayList<WeatherHourData>>{
                                     override fun onFailure(call: Call<ArrayList<WeatherHourData>>, t: Throwable) {
                                         Log.d("Error","Error")
                                     }
