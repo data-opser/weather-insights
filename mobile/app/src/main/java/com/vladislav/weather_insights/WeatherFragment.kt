@@ -1,5 +1,6 @@
 package com.vladislav.weather_insights
 
+import android.app.Activity
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.os.Handler
@@ -40,7 +41,7 @@ private const val ARG_PARAM1 = "param1"
 
 class WeatherFragment : Fragment() {
     private var cityId: String? = null
-
+    private lateinit var myActivity: MainActivity
     private lateinit var binding: FragmentWeatherBinding
     private lateinit var WeatherApi: WeatherServices
     private val handler = Handler(Looper.getMainLooper())
@@ -54,12 +55,12 @@ class WeatherFragment : Fragment() {
         "night_Rain" to R.drawable.weather_night_rain,
         "night_Snow" to R.drawable.weather_night_snow
     )
-    private val hourAdapter = WeatherHourAdapter()
-    private val dayAdapter = WeatherDayAdapter()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WeatherApi = WeatherAPI.retrofitService
+        myActivity = requireActivity() as MainActivity
         arguments?.let {
             cityId = it.getString(ARG_PARAM1)
         }
@@ -76,7 +77,8 @@ class WeatherFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        val hourAdapter = WeatherHourAdapter()
+        val dayAdapter = WeatherDayAdapter()
         binding.apply {
             hourRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             hourRecyclerView.adapter = hourAdapter
@@ -130,32 +132,31 @@ class WeatherFragment : Fragment() {
                 val runnable = object : Runnable {
                     override fun run() {
                         if (Weather.getWeatherCitiesData[cityId] != null) {
-                            activity?.runOnUiThread { Weather.getWeatherCitiesData[cityId]?.let {
-                                    for(body in Weather.getWeatherCitiesData[cityId]!!.WeatherHourData){
-                                        Log.d(body.weather, weatherImageMap[body.weather].toString())
-                                        hourAdapter.addHour(
-                                            WeatherHour(weatherImageMap[body.weather]!!,body.time,body.temperature.toDouble().toInt())
-                                        )
-                                    }
-
-                                    for(body in Weather.getWeatherCitiesData[cityId]!!.WeatherDayData){
-                                        dayAdapter.addDay(
-                                            WeatherDay(weatherImageMap[body.weather]!!,body.date,
-                                                Weather.getWeatherCitiesData[cityId]!!.WeatherDayData[0].daily_temperature_feels_like.toDouble().toInt(), body.temperature_min.toDouble().toInt(), body.temperature_max.toDouble().toInt())
-                                        )
-                                    }
-                                    temperatureTextView.text = Weather.getWeatherCitiesData[cityId]!!.WeatherHourData[0].temperature.toDouble().toInt().toString() + "°"
-                                    tempMinMaxTextView.text = "Max " + Weather.getWeatherCitiesData[cityId]!!.WeatherDayData[0].temperature_max.toDouble().toInt().toString() + "° Min " + Weather.getWeatherCitiesData[cityId]!!.WeatherDayData[0].temperature_min.toDouble().toInt().toString() + "°"
-                                    weatherStatusTextView.text = Weather.getWeatherCitiesData[cityId]!!.WeatherHourData[0].weather
-                                    if(User.UserCities?.main_city == cityId){
-                                        val typedValue = TypedValue()
-                                        activity?.theme?.resolveAttribute(R.attr.weatherMainActiveColor, typedValue, true)
-                                        setMainCityButton.isEnabled = false
-                                        setMainCityButton.backgroundTintList = ColorStateList.valueOf(typedValue.data)
-                                    }
+                            Weather.getWeatherCitiesData[cityId]?.let {
+                                for(body in Weather.getWeatherCitiesData[cityId]!!.WeatherHourData){
+                                    Log.d(body.weather, weatherImageMap[body.weather].toString())
+                                    hourAdapter.addHour(
+                                        WeatherHour(weatherImageMap[body.weather]!!,body.time,body.temperature.toDouble().toInt())
+                                    )
                                 }
+
+                                for(body in Weather.getWeatherCitiesData[cityId]!!.WeatherDayData){
+                                    dayAdapter.addDay(
+                                        WeatherDay(weatherImageMap[body.weather]!!,body.date,
+                                            Weather.getWeatherCitiesData[cityId]!!.WeatherDayData[0].daily_temperature_feels_like.toDouble().toInt(), body.temperature_min.toDouble().toInt(), body.temperature_max.toDouble().toInt())
+                                    )
+                                }
+                                temperatureTextView.text = Weather.getWeatherCitiesData[cityId]!!.WeatherHourData[0].temperature.toDouble().toInt().toString() + "°"
+                                tempMinMaxTextView.text = "Max " + Weather.getWeatherCitiesData[cityId]!!.WeatherDayData[0].temperature_max.toDouble().toInt().toString() + "° Min " + Weather.getWeatherCitiesData[cityId]!!.WeatherDayData[0].temperature_min.toDouble().toInt().toString() + "°"
+                                weatherStatusTextView.text = Weather.getWeatherCitiesData[cityId]!!.WeatherHourData[0].weather
+                                if(User.UserCities?.main_city == cityId){
+                                    val typedValue = TypedValue()
+                                    activity?.theme?.resolveAttribute(R.attr.weatherMainActiveColor, typedValue, true)
+                                    setMainCityButton.isEnabled = false
+                                    setMainCityButton.backgroundTintList = ColorStateList.valueOf(typedValue.data)
+                                }
+                                return
                             }
-                            return
                         }
                         handler.postDelayed(this, 10)
                     }
@@ -221,7 +222,7 @@ class WeatherFragment : Fragment() {
 
                             override fun onResponse(call: Call<UserCityRequest>, response: Response<UserCityRequest>) {
                                 if (response.isSuccessful) {
-
+                                    myActivity.WeatherPreviousFragment.removeCityById(cityId!!)
                                 }
                                 else{
                                     // Обробку помилок
@@ -237,6 +238,10 @@ class WeatherFragment : Fragment() {
                 alertDialog.show()
             }
         }
+    }
+
+    fun getCityId(): String? {
+        return cityId
     }
 
     companion object {
