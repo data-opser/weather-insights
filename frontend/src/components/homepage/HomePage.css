@@ -14,7 +14,8 @@
 
 .days,
 .map,
-.sun-time {
+.sun-time,
+.notification-block {
     background: white;
     border-radius: 1em;
     margin: 20px;
@@ -30,13 +31,85 @@
     grid-row: 2;
 }
 
+.map {
+    min-height: 250px;
+}
+
+.notification-block {
+    position: fixed;
+    left: 30px;
+    bottom: 30px;
+    height: 100px;
+    width: 100px;
+    transition: .7s;
+}
+
+.notification-header p {
+    text-align: center;
+    font-size: 26px;
+    margin: 10px;
+}
+
+.notification-header {
+    display: none;
+}
+
+.notification-header.active {
+    display: block;
+}
+
+.notification-header .cross {
+    font-size: 30px;
+    top: 15px;
+}
+
+.notification-block.not-active {
+    cursor: pointer;
+}
+
+.notification-block.active {
+    height: auto;
+    width: auto;
+}
+
+.notification-block.not-active:hover {
+    transform: scale(1.05);
+}
+
+.notification-block .notification-block-icon {
+    font-size: 50px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.notification-block .notification-block-icon.active {
+    display: none;
+}
+
+.notification-block .messages-counter {
+    position: absolute;
+    left: 60%;
+    top: 30%;
+    transform: translate(-50%, -50%);
+    height: 25px;
+    width: 25px;
+    background: red;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
 @media only screen and (max-width: 1300px) {
     .home-page {
         width: 100%;
     }   
 }
 
-@media only screen and (max-width: 900px) {
+@media only screen and (max-width: 960px) {
     .cities .city-list {
         width: stretch;
     }
@@ -57,8 +130,6 @@
 
     .map {
         grid-row: 4;
-        height: 100%;
-        display: none;
     }
 
     .cities .add-city-button {
@@ -70,5 +141,23 @@
 
     .cities .add-city-button .add-city-button-text {
         display: none;
+    }
+
+    .notification-block .notification-block-icon {
+        font-size: 30px;
+    }
+
+    .notification-block {
+        left: 0px;
+        bottom: 40px;
+        height: 50px;
+        width: 50px;
+        box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .notification-block .messages-counter {
+        height: 15px;
+        width: 15px;
+        font-size: 10px;
     }
 }

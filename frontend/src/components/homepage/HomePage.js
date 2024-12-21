@@ -7,6 +7,10 @@ import AddCityButton from './cities/AddCityButton';
 import Days from './days/Days';
 import SunTime from './sun-time/SunTime';
 import SingleDay from './single-day-block/SingleDay';
+import PollutionNotifications from './pollution-notifications/PollutionNotifications';
+import PollutantConcentration from './pollutant-concentration-block/PollutantConcentration';
+import { IoNotificationsOutline } from "react-icons/io5";
+import { RxCross2 } from "react-icons/rx";
 
 const HomePage = () => {
   const { isLoggedIn } = useAuth();
@@ -15,6 +19,9 @@ const HomePage = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [activeButton, setActiveButton] = useState(null);
   const [isCityListEmpty, setIsCityListEmpty] = useState(false);
+  const [notificationsActive, setNotificationsActive] = useState(false);
+  const [pollutionData, setPollutionData] = useState(null);
+  const [messages, setMessages] = useState([]);
 
   const defaultCity = {
     city: "London",
@@ -92,7 +99,6 @@ const HomePage = () => {
           setActiveButton={setActiveButton}
           setCityList={setCityList}
           currentCityId={currentCityId}
-          isCityListEmpty={isCityListEmpty}
         />
       </div>
       <Days
@@ -105,13 +111,40 @@ const HomePage = () => {
         isCityListEmpty={isCityListEmpty}
       />
       <div className='map'>
-
+        <PollutantConcentration
+          cityId={currentCityId}
+          isCityListEmpty={isCityListEmpty}
+          pollutionData={pollutionData}
+          setPollutionData={setPollutionData}
+          setMessages={setMessages}
+          setNotificationsActive={setNotificationsActive}
+        />
       </div>
-      <SingleDay 
-      cityId={currentCityId} 
-      date={selectedDate} 
-      isCityListEmpty={isCityListEmpty}
+      <SingleDay
+        cityId={currentCityId}
+        date={selectedDate}
+        isCityListEmpty={isCityListEmpty}
       />
+      <div
+        className={`notification-block ${notificationsActive ? 'active' : 'not-active'}`}
+        onClick={() => { if (!notificationsActive && messages.length > 0) { setNotificationsActive(!notificationsActive) } }}>
+        <IoNotificationsOutline className={`notification-block-icon ${notificationsActive ? 'active' : ''}`} />
+        {messages.length != 0 && !notificationsActive && <div className='messages-counter'>{messages.length}</div>}
+
+        <div className={`notification-header ${notificationsActive ? 'active' : ''}`}>
+          <p>Alerts</p>
+          <RxCross2
+            className='cross'
+            onClick={() => { setNotificationsActive(!notificationsActive) }}
+          />
+        </div>
+
+        <PollutionNotifications
+          active={notificationsActive}
+          messages={messages}
+          pollutionData={pollutionData}
+        />
+      </div>
     </div>
   );
 }

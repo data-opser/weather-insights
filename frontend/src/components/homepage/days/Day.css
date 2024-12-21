@@ -85,7 +85,7 @@
     display: inline;
 }
 
-@media only screen and (max-width: 900px) {
+@media only screen and (max-width: 960px) {
     .day {
         flex-direction: row;
         justify-content: space-between;

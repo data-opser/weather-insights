@@ -1,0 +1,20 @@
+.PollutionNotifications {
+    max-height: 320px;
+    overflow-x: hidden;
+    display: none;
+    max-width: 500px;
+}
+
+.PollutionNotifications .AttentionNotification:first-child {
+    margin-top: 0;
+}
+
+.PollutionNotifications.active {
+    display: block;
+}
+
+@media only screen and (max-width: 900px) {
+    .PollutionNotifications {
+        height: 160px;
+    }
+}

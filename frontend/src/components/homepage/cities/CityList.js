@@ -3,7 +3,7 @@ import './CityList.css';
 import api from '../../axiosConfig';
 import Flag from 'react-world-flags';
 
-function CityList({ isLoggedIn, cityList, selectCity, setMainCity, removeCity, setCityList, currentCityId, isCityListEmpty }) {
+function CityList({ isLoggedIn, cityList, selectCity, setMainCity, removeCity, setCityList, currentCityId }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [contextMenu, setContextMenu] = useState({ isVisible: false, x: 0, y: 0, cityId: null });

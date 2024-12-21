@@ -1,0 +1,144 @@
+.header-text {
+    font-size: 22px;
+    margin: 10px 0 10px 0;
+}
+
+.pollutant-container {
+    text-align: center;
+    position: relative;
+    height: 100%;
+}
+
+.pollutant-container .loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.concentration-block {
+    display: grid;
+    grid-gap: 10px;
+    margin: 0 15px 15px 15px;
+}
+
+.main-text {
+    display: flex;
+    justify-content: space-between;
+}
+
+.pollutant-card {
+    border-radius: 10px;
+}
+
+.pollutant-card.good {
+    background-color: #8AC89F;
+}
+
+.pollutant-card.fair {
+    background-color: #CBEC96;
+}
+
+.pollutant-card.moderate {
+    background-color: #F5A25F;
+}
+
+.pollutant-card.poor {
+    background-color: #f58a5f;
+}
+
+.main-text .icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 40px;
+    min-width: 50px;
+}
+
+.name-text {
+    min-width: 40px;
+}
+
+.concentration-text {
+    min-width: 110px;
+}
+
+.status-text {
+    min-width: 95px;
+    padding-right: 5px;
+}
+
+.name-text,
+.concentration-text,
+.status-text {
+    font-size: 18px;
+    margin: 14px 0;
+}
+
+@media only screen and (max-width: 1105px) {
+    .header-text {
+        font-size: 16px;
+        margin: 8px 4px 8px 4px;
+    }
+
+    .main-text .icon {
+        display: none;
+    }
+
+    .name-text,
+    .concentration-text,
+    .status-text {
+        font-size: 14px;
+    }
+
+    .main-text {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .name-text {
+        min-width: 20px;
+    }
+
+    .concentration-text {
+        min-width: 80px;
+    }
+
+    .status-text {
+        min-width: 35px;
+    }
+}
+
+@media only screen and (max-width: 960px) {
+    .header-text {
+        font-size: 20px
+    }
+
+    .main-text .icon {
+        display: block;
+    }
+
+    .main-text {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+
+    .name-text,
+    .concentration-text,
+    .status-text {
+        font-size: 18px;
+    }
+
+    .icon {
+        font-size: 36px;
+    }
+    .name-text {
+        min-width: 40px;
+    }
+    
+    .concentration-text {
+        min-width: 110px;
+    }
+    
+    .status-text {
+        min-width: 95px;
+    }
+}
