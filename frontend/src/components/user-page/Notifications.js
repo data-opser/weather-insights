@@ -15,6 +15,8 @@ const Notifications = () => {
   const [message, setMessage] = useState('');
   const [cities, setCities] = useState([]);
   const [isCityValid, setIsCityValid] = useState(false);
+  const [scheduledNotifications, setScheduledNotifications] = useState([]);
+  const [updateTrigger, setUpdateTrigger] = useState(false);
 
   useEffect(() => {
     const fetchCities = async () => {
@@ -28,6 +30,26 @@ const Notifications = () => {
 
     fetchCities();
   }, []);
+
+  useEffect(() => {
+    const fetchScheduledNotifications = async () => {
+      try {
+        const response = await api.get('/grouped_user_scheduled_notifications');
+        setScheduledNotifications(response.data.notifications);
+      } catch (error) {
+        console.error('Error fetching notifications:', error);
+      }
+    };
+
+    fetchScheduledNotifications();
+  }, [updateTrigger]);
+
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => setMessage(''), 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [message]);
 
   const handleSearchChange = (e) => {
     const value = e.target.value;
@@ -83,9 +105,26 @@ const Notifications = () => {
     try {
       const response = await api.post('/add_user_scheduled_notifications', payload);
       setMessage(response.data.message);
+      setUpdateTrigger((prev) => !prev);
     } catch (error) {
-      console.error('Error creating notifications:', error, 'status: ', error.status);
+      console.error('Error creating notifications:', error);
       setMessage('Failed to create notification');
+    }
+  };
+
+  const handleDeleteGroup = async (notificationData) => {
+    const notificationIds = JSON.stringify({ notification_ids: notificationData.map(item => item.notification_id) });
+    console.log(notificationIds);
+    try {
+      const response = await api.post('/delete_user_scheduled_notifications', notificationIds);
+      setMessage(response.data.message);
+
+      setScheduledNotifications((prev) =>
+        prev.filter((group) => group.notification_data !== notificationData)
+      );
+    } catch (error) {
+      console.error('Error deleting notifications:', error);
+      setMessage('Failed to delete notification group');
     }
   };
 
@@ -93,16 +132,17 @@ const Notifications = () => {
     <div className='notifications'>
       <p className='user-text-center'>Scheduled notifications</p>
       <div className="notification-city-block">
-        <div className='notification-about-city'>
-          <p className="notification-about-city-name">апапапапапапап</p>
-          <p className="notification-about-city-time">25.12.2024</p>
-          <RxCross2 className="close-button" />
-        </div>
-        <div className='notification-about-city'>
-          <p className="notification-about-city-name">Kharkiv</p>
-          <p className="notification-about-city-time">25.12.2024</p>
-          <RxCross2 className="close-button" />
-        </div>
+        {scheduledNotifications.map((group, index) => (
+          <div key={index} className='notification-about-city'>
+            <p className="notification-about-city-title">{group.notification_title}</p>
+            <p className="notification-about-city-name">{group.city}</p>
+            <p className="notification-about-city-time">{new Date(group.notification_date).toLocaleDateString()}</p>
+            <RxCross2
+              className="close-button"
+              onClick={() => handleDeleteGroup(group.notification_data)}
+            />
+          </div>
+        ))}
       </div>
       <form onSubmit={handleFormSubmit}>
         <p className='user-text-center'>Schedule the notification</p>
