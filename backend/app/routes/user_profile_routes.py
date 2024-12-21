@@ -104,7 +104,7 @@ def delete_user_scheduled_notification():
     return UserScheduledWeatherNotification.delete_user_scheduled_notification(user.user_id, notification_id)
 
 
-@user_profile_bp.route('/delete_user_scheduled_notifications/', methods=['Post'])
+@user_profile_bp.route('/delete_user_scheduled_notifications', methods=['Post'])
 @auth_required
 def delete_user_scheduled_notifications():
     user = request.current_user

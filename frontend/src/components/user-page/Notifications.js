@@ -10,7 +10,6 @@ const Notifications = () => {
   const [notificationDate, setNotificationDate] = useState('');
   const [cityId, setCityId] = useState(null);
   const [searchValue, setSearchValue] = useState('');
-  const [filteredCities, setFilteredCities] = useState([]);
   const [selectedDays, setSelectedDays] = useState([0]);
   const [message, setMessage] = useState('');
   const [cities, setCities] = useState([]);
@@ -59,7 +58,6 @@ const Notifications = () => {
       const filtered = cities.filter(city =>
         city.city.toLowerCase().includes(value.toLowerCase())
       );
-      setFilteredCities(filtered);
 
       const isValid = filtered.some(city => city.city.toLowerCase() === value.toLowerCase());
       setIsCityValid(isValid);
@@ -71,7 +69,6 @@ const Notifications = () => {
         setCityId(null);
       }
     } else {
-      setFilteredCities([]);
       setIsCityValid(false);
       setCityId(null);
     }
@@ -113,10 +110,10 @@ const Notifications = () => {
   };
 
   const handleDeleteGroup = async (notificationData) => {
-    const notificationIds = JSON.stringify({ notification_ids: notificationData.map(item => item.notification_id) });
-    console.log(notificationIds);
     try {
-      const response = await api.post('/delete_user_scheduled_notifications', notificationIds);
+      const payload = { notification_ids: notificationData.map(item => item.notification_id) };
+      const response = await api.post('/delete_user_scheduled_notifications', payload);
+
       setMessage(response.data.message);
 
       setScheduledNotifications((prev) =>
@@ -192,12 +189,11 @@ const Notifications = () => {
                 onChange={() => handleCheckboxChange(day)}
               />
               <span>
-                {day === 0 ? 'today' : `${day} day${day > 1 ? 's' : ''}`}
+                {day === 0 ? 'your date' : `${day} day${day > 1 ? 's' : ''}`}
               </span>
             </label>
           ))}
         </div>
-
         <button type='submit' className='user-button'>
           Create
         </button>
