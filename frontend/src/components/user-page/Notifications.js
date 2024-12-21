@@ -125,6 +125,23 @@ const Notifications = () => {
     }
   };
 
+  const calculateReminderDate = (days) => {
+    if (!notificationDate) return '';
+    const date = new Date(notificationDate);
+    date.setDate(date.getDate() - days);
+
+    const options = { month: 'short', day: 'numeric' };
+    return date.toLocaleDateString('en-US', options);
+  };
+
+  const isDateValid = (days) => {
+    if (!notificationDate) return false;
+    const reminderDate = new Date(notificationDate);
+    reminderDate.setDate(reminderDate.getDate() - days);
+    const today = new Date();
+    return reminderDate >= today;
+  };
+
   return (
     <div className='notifications'>
       <p className='user-text-center'>Scheduled notifications</p>
@@ -178,20 +195,22 @@ const Notifications = () => {
             required
           />
         </div>
-        <p>When to remind</p>
+        <p>Remind in</p>
         <div className="radio-buttons-block">
-          {[0, 1, 3, 5, 10, 15].map((day) => (
-            <label key={day}>
-              <input
-                type="checkbox"
-                value={day}
-                checked={selectedDays.includes(day)}
-                onChange={() => handleCheckboxChange(day)}
-              />
-              <span>
-                {day === 0 ? 'your date' : `${day} day${day > 1 ? 's' : ''}`}
-              </span>
-            </label>
+          {[15, 10, 5, 3, 1, 0].map((day) => (
+            isDateValid(day) && (
+              <label key={day}>
+                <input
+                  type="checkbox"
+                  value={day}
+                  checked={selectedDays.includes(day)}
+                  onChange={() => handleCheckboxChange(day)}
+                />
+                <span>
+                  {calculateReminderDate(day)}
+                </span>
+              </label>
+            )
           ))}
         </div>
         <button type='submit' className='user-button'>
