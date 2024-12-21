@@ -46,7 +46,7 @@ class ForecastWeatherHour(db.Model):
     sunset_time_utc = Column(DateTime)
 
     @classmethod
-    def get_city_hourly_weather(cls, city_id):
+    def get_city_hourly_weather(cls, city_id, date):
         try:
             if not City.check_city_exists(city_id):
                 return ErrorHandler.handle_error(
@@ -55,9 +55,13 @@ class ForecastWeatherHour(db.Model):
                     status_code=404
                 )
 
-            current_time = datetime.now()
+            input_date = datetime.strptime(date, '%Y-%m-%d').date()
+            current_date = datetime.now().date()
 
-            current_time = current_time.replace(minute=0, second=0, microsecond=0)
+            if input_date == current_date:
+                current_time = datetime.now().replace(minute=0, second=0, microsecond=0)
+            else:
+                current_time = datetime.combine(input_date, datetime.min.time())
 
             end_time = current_time + timedelta(hours=24)
 
@@ -75,3 +79,4 @@ class ForecastWeatherHour(db.Model):
                 message="Internal server error while getting weather hourly forecast.",
                 status_code=500
             )
+
