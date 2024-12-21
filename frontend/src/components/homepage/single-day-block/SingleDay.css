@@ -27,6 +27,11 @@
     display: flex;
     overflow-x: auto;
     padding: 10px;
+    padding-left: 0;
+}
+
+.hour-columns .hour-column:first-child {
+    margin-left: 0;
 }
 
 .hour-table-main-text>p {

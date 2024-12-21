@@ -129,6 +129,7 @@ const HomePage = () => {
         className={`notification-block ${notificationsActive ? 'active' : 'not-active'}`}
         onClick={() => { if (!notificationsActive && messages.length > 0) { setNotificationsActive(!notificationsActive) } }}>
         <IoNotificationsOutline className={`notification-block-icon ${notificationsActive ? 'active' : ''}`} />
+        {messages.length != 0 && !notificationsActive && <div className='messages-counter'>{messages.length}</div>}
 
         <div className={`notification-header ${notificationsActive ? 'active' : ''}`}>
           <p>Alerts</p>
