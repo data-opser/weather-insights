@@ -1,26 +1,24 @@
 package com.vladislav.weather_insights.adapter
 
-import android.app.AlertDialog
-import android.content.Intent
-import android.net.Uri
-import android.os.Build
-import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.vladislav.weather_insights.MainActivity
 import com.vladislav.weather_insights.Objects.User
 import com.vladislav.weather_insights.R
 import com.vladislav.weather_insights.Retrofit.WeatherAPI
+import com.vladislav.weather_insights.databinding.AlertDialogLayoutBinding
 import com.vladislav.weather_insights.databinding.ItemCityBinding
 import com.vladislav.weather_insights.model.City
 import com.vladislav.weather_insights.model.UserCityRequest
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.Locale
 
 class CitySearchRWAdapter(private val dialog: BottomSheetDialog, private val activity: MainActivity) : RecyclerView.Adapter<CitySearchRWAdapter.CityViewHolder>(){
     private val cityList = ArrayList<City>()
@@ -32,37 +30,50 @@ class CitySearchRWAdapter(private val dialog: BottomSheetDialog, private val act
             cityTextView.text = cityItem.city
             countryTextView.text = cityItem.country
             cityConstraintLayout.setOnClickListener{
-                showNotifyDialog(cityItem)
-
+                showCityAlertDialog(cityItem)
             }
         }
 
-        private fun showNotifyDialog(cityItem: City) {
+        private fun showCityAlertDialog(cityItem: City) {
             // Тут можливо треба прийняти данні міста, щоб коли користувач погодився
             // він не чекав на відповідь запиту. І треба додати його до списку погод по містах
-            AlertDialog.Builder(activity)
-                .setTitle("Notification permission")
-                .setMessage("Add ${cityItem.city}?")
-                .setPositiveButton("Sure") { _, _ -> run {
-                        dialog.dismiss()
-                        WeatherAPI.retrofitService.addUserCity(cityItem.cityId).enqueue(object :
-                            Callback<UserCityRequest> {
-                            override fun onFailure(call: Call<UserCityRequest>, t: Throwable) {
-                               Log.d("Error","Error")
-                            }
 
-                            override fun onResponse(call: Call<UserCityRequest>, response: Response<UserCityRequest>) {
-                                if (response.isSuccessful) {
-                                    User.UserCities!!.user_cities.add(cityItem.cityId)
-                                } else {
-                                    Log.e("AuthError", "Response error: ${response.errorBody()?.string()}")
-                                }
+            val dialogView = LayoutInflater.from(activity).inflate(R.layout.alert_dialog_layout, null)
+            val binding = AlertDialogLayoutBinding.bind(dialogView)
+
+            val alertDialog = MaterialAlertDialogBuilder(activity)
+                .setView(dialogView)
+                .create()
+
+            binding.apply {
+                dialogTitle.text = String.format(Locale.getDefault(), "City")
+                dialogMessage.text = String.format(Locale.getDefault(), "Add %s?", cityItem.city)
+
+                confirmButton.setOnClickListener {
+                    alertDialog.dismiss()
+                    dialog.dismiss()
+
+                    WeatherAPI.retrofitService.addUserCity(cityItem.cityId).enqueue(object :
+                        Callback<UserCityRequest> {
+                        override fun onFailure(call: Call<UserCityRequest>, t: Throwable) {
+                            Log.d("Error","Error")
+                        }
+
+                        override fun onResponse(call: Call<UserCityRequest>, response: Response<UserCityRequest>) {
+                            if (response.isSuccessful) {
+                                User.UserCities!!.user_cities.add(cityItem.cityId)
+                            } else {
+                                Log.e("AuthError", "Response error: ${response.errorBody()?.string()}")
                             }
-                        })
-                    }
+                        }
+                    })
                 }
-                .setNegativeButton("No need", null)//{_, _ -> }
-                .show()
+
+                cancelButton.setOnClickListener{
+                    alertDialog.dismiss()
+                }
+            }
+            alertDialog.show()
         }
     }
 

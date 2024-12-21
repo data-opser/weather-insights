@@ -1,6 +1,7 @@
 from app import db
 from sqlalchemy import Column, Integer, String, Float, DateTime, BigInteger
-from datetime import datetime
+from datetime import datetime, timedelta
+from sqlalchemy import func
 from app.responses import WeatherResponse
 from app.utils import ErrorHandler
 from app.models import City
@@ -44,6 +45,7 @@ class ForecastWeatherDay(db.Model):
     sunrise_time_utc = Column(DateTime)
     sunset_time_utc = Column(DateTime)
 
+
     @classmethod
     def get_city_four_day_forecast(cls, city_id):
         try:
@@ -54,12 +56,33 @@ class ForecastWeatherDay(db.Model):
                     status_code=404
                 )
 
-            list_weather = cls.query.filter_by(city_id=city_id).order_by(cls.weather_time).all()
-            return WeatherResponse.response_weather_days(list_weather)
+            current_date = datetime.now().date()
+
+            forecast = []
+
+            for day_offset in range(4):
+                day_start = current_date + timedelta(days=day_offset)
+                day_end = day_start + timedelta(days=1)
+
+                record = (
+                    cls.query.filter(
+                        cls.city_id == city_id,
+                        cls.weather_time >= day_start,
+                        cls.weather_time < day_end
+                    )
+                    .order_by(cls.weather_time)
+                    .first()
+                )
+
+                if record:
+                    forecast.append(record)
+
+            return WeatherResponse.response_weather_days(forecast)
+
         except Exception as e:
             return ErrorHandler.handle_error(
                 e,
-                message="Iternal server error while getting daily weather forecast.",
+                message="Internal server error while getting daily weather forecast.",
                 status_code=500
             )
 
