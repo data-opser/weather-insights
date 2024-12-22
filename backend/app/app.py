@@ -6,7 +6,10 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail
 from flask_cors import CORS
 from flask_apscheduler import APScheduler
+import firebase_admin
+from firebase_admin import credentials
 
+cred = credentials.Certificate('google-services.json')
 db = SQLAlchemy()
 login_manager = LoginManager()
 oauth = OAuth()
@@ -38,6 +41,8 @@ def create_app():
     app.register_blueprint(auth_bp)
     app.register_blueprint(user_profile_bp)
     app.register_blueprint(weather_bp)
+
+    firebase_admin.initialize_app(cred)
 
     from app.tasks import send_scheduled_notifications
     scheduler.add_job(

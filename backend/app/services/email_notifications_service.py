@@ -6,8 +6,6 @@ import os
 
 def send_email_notification(notification, user, city_data, weather_data):
     try:
-        print("send")
-
         with open("app/templates/email_notification.html", "r") as html_file:
             html_template = html_file.read()
 
