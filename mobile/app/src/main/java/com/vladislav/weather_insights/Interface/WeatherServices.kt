@@ -5,6 +5,7 @@ import com.vladislav.weather_insights.model.CityData
 import com.vladislav.weather_insights.model.LoginRequest
 import com.vladislav.weather_insights.model.UserCityData
 import com.vladislav.weather_insights.model.UserCityRequest
+import com.vladislav.weather_insights.model.UserDevice
 import com.vladislav.weather_insights.model.UserProfile
 import com.vladislav.weather_insights.model.WeatherDayData
 import com.vladislav.weather_insights.model.WeatherHourData
@@ -76,4 +77,10 @@ interface WeatherServices {
         "Content-Type: application/json"
     )
     fun setMainUserCity(@Query("city") city: String, @Header("Authorization") token: String? = User.Token) : Call<UserCityRequest>
+
+    @POST("add_user_device")
+    @Headers(
+        "Content-Type: application/json"
+    )
+    fun addUserDevice(@Body data: UserDevice, @Header("Authorization") token: String? = User.Token) : Call<UserCityRequest>
 }

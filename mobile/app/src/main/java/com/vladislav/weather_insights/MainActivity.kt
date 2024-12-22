@@ -1,6 +1,7 @@
 package com.vladislav.weather_insights
 
 import android.Manifest
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.SharedPreferences.Editor
@@ -15,12 +16,16 @@ import android.view.Gravity
 import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.firebase.Firebase
+import com.google.firebase.messaging.messaging
 import com.vladislav.weather_insights.adapter.CitySearchAdapter
 import com.vladislav.weather_insights.Interface.WeatherServices
 import com.vladislav.weather_insights.Objects.Cities
