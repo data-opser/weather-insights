@@ -1,6 +1,7 @@
 package com.vladislav.weather_insights
 
 import android.app.Activity
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences.Editor
@@ -19,12 +20,13 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
-import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
+import com.google.firebase.Firebase
+import com.google.firebase.messaging.messaging
 import com.vladislav.weather_insights.Interface.GoogleServices
 import com.vladislav.weather_insights.Interface.WeatherServices
 import com.vladislav.weather_insights.Objects.Cities
@@ -35,6 +37,8 @@ import com.vladislav.weather_insights.Objects.Weather
 import com.vladislav.weather_insights.databinding.FragmentProfileBinding
 import com.vladislav.weather_insights.model.LoginRequest
 import com.vladislav.weather_insights.model.UserCityData
+import com.vladislav.weather_insights.model.UserCityRequest
+import com.vladislav.weather_insights.model.UserDevice
 import com.vladislav.weather_insights.model.UserProfile
 import com.vladislav.weather_insights.model.WeatherCityData
 import com.vladislav.weather_insights.model.WeatherDay
@@ -63,7 +67,6 @@ class ProfileFragment : Fragment() {
     private val RC_SIGN_IN = 1000
     private lateinit var binding: FragmentProfileBinding
     private lateinit var myActivity: Activity
-    private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var editor: Editor
     private lateinit var GoogleAuth: GoogleServices
     private lateinit var WeatherApi: WeatherServices
@@ -141,6 +144,35 @@ class ProfileFragment : Fragment() {
                         if (response.isSuccessful) {
                             response.body()?.let {
                                 User.Token = it.token
+                                Firebase.messaging.token.addOnCompleteListener(
+                                    OnCompleteListener { task ->
+                                        if (!task.isSuccessful) {
+                                            Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+                                            return@OnCompleteListener
+                                        }
+
+                                        // Get new FCM registration token
+                                        val token = task.result
+
+                                        WeatherApi.addUserDevice(UserDevice(token, "Iphone 24 ultra pro max terabyte")).enqueue(object : Callback<UserCityRequest>{
+                                            override fun onResponse(
+                                                call: Call<UserCityRequest>,
+                                                responce: Response<UserCityRequest>
+                                            ) {
+
+                                            }
+
+                                            override fun onFailure(
+                                                call: Call<UserCityRequest>,
+                                                throwable: Throwable
+                                            ) {
+
+                                            }
+                                        })
+
+                                        Log.d(TAG, token)
+                                    },
+                                )
                                 WeatherApi.getUserCities().enqueue(object : Callback<UserCityData>{
                                     override fun onResponse(call: Call<UserCityData>, response: Response<UserCityData>) {
                                         if (response.isSuccessful){
@@ -201,7 +233,7 @@ class ProfileFragment : Fragment() {
             }
 
             goEditButton.setOnClickListener{ // тут перекинути на сторінку зміни інфи на сайті
-                googleSignInClient.signOut()
+
             }
             googleButton.setOnClickListener {
                 val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -209,9 +241,6 @@ class ProfileFragment : Fragment() {
                     .requestEmail()
                     .build()
 
-                googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
-
-                signInWithGoogle()
                 setProfileLayout()
             }
         }
@@ -288,47 +317,12 @@ class ProfileFragment : Fragment() {
         inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
-    private fun signInWithGoogle() {
-        val signInIntent: Intent = googleSignInClient.signInIntent
-        startActivityForResult(signInIntent, RC_SIGN_IN)
-    }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == RC_SIGN_IN) {
-            val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
-            handleSignInResult(task)
-        }
-    }
-
-    private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
-        try {
-            val account: GoogleSignInAccount = completedTask.getResult(ApiException::class.java)
-
-            // Получаем authCode для обмена на токены
-            val authCode = account.serverAuthCode
-//            GoogleAuth.getGoogleTokens(account.serverAuthCode,"","", "com.vladislav.weather_insights:/").enqueue(object : Callback<GoogleResponse> {
-//                override fun onFailure(call: Call<GoogleResponse>, t: Throwable) {
-//                    Log.d("Error","Error")
-//                }
-//
-//                override fun onResponse(call: Call<GoogleResponse>, response: Response<GoogleResponse>) {
-//                    if (response.isSuccessful) {
-//                        response.body()?.let {
-//                            Log.d("refresh", it.refresh_token ?: "No refresh token")
-//                            Log.d("access", it.access_token)
-//                        }
-//                    } else {
-//                        Log.e("GoogleAuthError", "Response error: ${response.errorBody()?.string()}")
-//                    }
-//                }
-//            })
-
-
-        } catch (e: ApiException) {
-            Log.w("GoogleSignIn", "signInResult:failed code=" + e.statusCode)
-            Toast.makeText(requireContext(), "Ошибка авторизации: ${e.message}", Toast.LENGTH_LONG).show()
         }
     }
 }
