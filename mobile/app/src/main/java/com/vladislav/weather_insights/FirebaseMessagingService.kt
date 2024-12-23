@@ -9,6 +9,7 @@ import android.media.RingtoneManager
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import androidx.core.text.HtmlCompat
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import com.google.firebase.messaging.FirebaseMessagingService
@@ -130,8 +131,9 @@ class FirebaseMessagingService : FirebaseMessagingService() {
         val channelId = getString(R.string.default_notification_channel_id)
         val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
-            .setSmallIcon(R.drawable.ic_stat_ic_notification)
-            .setContentTitle(messageTitle)
+            .setSmallIcon(R.drawable.ic_weather)
+            .setColor(getColor(R.color.notify_background))
+            .setContentTitle(HtmlCompat.fromHtml("<b>$messageTitle</b>", HtmlCompat.FROM_HTML_MODE_LEGACY))
             .setContentText(messageBody)
             .setAutoCancel(true)
             .setSound(defaultSoundUri)
