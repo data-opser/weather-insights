@@ -1,6 +1,5 @@
 package com.vladislav.weather_insights.Objects
 
-import com.vladislav.weather_insights.model.CityData
 import com.vladislav.weather_insights.model.UserCityData
 import com.vladislav.weather_insights.model.UserProfile
 
@@ -9,7 +8,7 @@ object User {
 
     private var profile: UserProfile? = null
 
-    private var userCities: UserCityData? = null
+    private var userCities: UserCityData? = UserCityData(arrayListOf("1004993580"), "1004993580")
 
     var Token: String?
         get() = token

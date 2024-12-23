@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.google.plugin)
 }
 
 android {
@@ -42,15 +43,19 @@ dependencies {
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.worker)
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.justifiedtextview)
     implementation(libs.retrofit)
     implementation(libs.converterGson)
-    implementation(libs.google)
+    implementation(platform(libs.google.firebase.bom))
+    implementation(libs.google.firebase)
     implementation(libs.httplogginginterceptor)
     implementation(libs.dotsindicator)
+    implementation(libs.androidx.ui.graphics.android)
+    implementation(libs.firebase.messaging)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

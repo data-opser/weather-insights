@@ -5,6 +5,7 @@ import com.vladislav.weather_insights.model.CityData
 import com.vladislav.weather_insights.model.LoginRequest
 import com.vladislav.weather_insights.model.UserCityData
 import com.vladislav.weather_insights.model.UserCityRequest
+import com.vladislav.weather_insights.model.UserDevice
 import com.vladislav.weather_insights.model.UserProfile
 import com.vladislav.weather_insights.model.WeatherDayData
 import com.vladislav.weather_insights.model.WeatherHourData
@@ -40,11 +41,11 @@ interface WeatherServices {
     )
     fun getCities() : Call<ArrayList<CityData>>
 
-    @GET("weather/date/city")
+    @GET("weather/city/date")
     @Headers(
         "Content-Type: application/json"
     )
-    fun getWeatherDay(@Query("city") city: String, @Query("date") date: String) : Call<ArrayList<WeatherHourData>>
+    fun getWeatherDay(@Query("city") city: String,@Query("date") date: String) : Call<ArrayList<WeatherHourData>>
 
     @GET("weatherday/city")
     @Headers(
@@ -59,22 +60,27 @@ interface WeatherServices {
     )
     fun getUserCities(@Header("Authorization") token: String? = User.Token) : Call<UserCityData>
 
-    @GET("add_user_city/city")
+    @POST("add_user_city/city")
     @Headers(
         "Content-Type: application/json"
     )
-    fun addUserCity(@Header("Authorization") token: String? = User.Token, @Query("city") city: String) : Call<UserCityRequest>
+    fun addUserCity(@Query("city") city: String, @Header("Authorization") token: String? = User.Token) : Call<UserCityRequest>
 
-    @GET("delete_user_city/city")
+    @POST("delete_user_city/city")
     @Headers(
         "Content-Type: application/json"
     )
-    fun deleteUserCity(@Header("Authorization") token: String? = User.Token, @Query("city") city: String) : Call<UserCityRequest>
+    fun deleteUserCity(@Query("city") city: String, @Header("Authorization") token: String? = User.Token) : Call<UserCityRequest>
 
-    @FormUrlEncoded
     @PUT("set_main_user_city/city")
     @Headers(
         "Content-Type: application/json"
     )
-    fun setMainUserCity(@Header("Authorization") token: String? = User.Token, @Field("city") city: String) : Call<UserCityRequest>
+    fun setMainUserCity(@Query("city") city: String, @Header("Authorization") token: String? = User.Token) : Call<UserCityRequest>
+
+    @POST("add_user_device")
+    @Headers(
+        "Content-Type: application/json"
+    )
+    fun addUserDevice(@Body data: UserDevice, @Header("Authorization") token: String? = User.Token) : Call<UserCityRequest>
 }

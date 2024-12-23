@@ -1,5 +1,7 @@
 from app import db
 from sqlalchemy import Column, Integer, String, Float, DateTime, BigInteger
+from datetime import datetime, timedelta
+from sqlalchemy import func
 from app.responses import WeatherResponse
 from app.utils import ErrorHandler
 from app.models import City
@@ -43,6 +45,7 @@ class ForecastWeatherDay(db.Model):
     sunrise_time_utc = Column(DateTime)
     sunset_time_utc = Column(DateTime)
 
+
     @classmethod
     def get_city_four_day_forecast(cls, city_id):
         try:
@@ -53,11 +56,62 @@ class ForecastWeatherDay(db.Model):
                     status_code=404
                 )
 
-            list_weather = cls.query.filter_by(city_id=city_id).order_by(cls.weather_time).all()
-            return WeatherResponse.response_weather_days(list_weather)
+            current_date = datetime.now().date()
+
+            forecast = []
+
+            for day_offset in range(4):
+                day_start = current_date + timedelta(days=day_offset)
+                day_end = day_start + timedelta(days=1)
+
+                record = (
+                    cls.query.filter(
+                        cls.city_id == city_id,
+                        cls.weather_time >= day_start,
+                        cls.weather_time < day_end
+                    )
+                    .order_by(cls.weather_time)
+                    .first()
+                )
+
+                if record:
+                    forecast.append(record)
+
+            return WeatherResponse.response_weather_days(forecast)
+
         except Exception as e:
             return ErrorHandler.handle_error(
                 e,
-                message="Iternal server error while getting daily weather forecast.",
+                message="Internal server error while getting daily weather forecast.",
+                status_code=500
+            )
+
+    @classmethod
+    def get_forecast_by_city_date(cls, city_id, date):
+        try:
+            if not City.check_city_exists(city_id):
+                return ErrorHandler.handle_error(
+                    None,
+                    message=f"City with ID '{city_id}' not found.",
+                    status_code=404
+                )
+
+            notification_datetime = datetime.combine(date, datetime.min.time())
+
+            weather_record = cls.query.filter(cls.weather_time == notification_datetime).first()
+
+            if not weather_record:
+                return ErrorHandler.handle_error(
+                    None,
+                    message=f"No weather forecast found for city ID '{city_id}' on {date}.",
+                    status_code=404
+                )
+
+            return WeatherResponse.response_weather_day(weather_record)
+        except Exception as e:
+            print(e)
+            return ErrorHandler.handle_error(
+                e,
+                message="Internal server error while getting weather forecast by date and city.",
                 status_code=500
             )

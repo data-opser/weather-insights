@@ -6,6 +6,10 @@
     <string name="settings_page">Settings</string>
     <string name="error">error :(</string>
     <string name="bottom_menu_title">City</string>
+    <string name="dialogTitle">Title</string>
+    <string name="dialogMessage">Edit data?</string>
+    <string name="dialogYes">Sure</string>
+    <string name="dialogNo">No need</string>
     <string name="horoscope_setSign_title">Your Zodiac Sign</string>
     <string name="horoscope_setSign_descrp">Choose your zodiac sign in settings</string>
     <string name="horoscope_sign_name">Libra</string>
@@ -53,6 +57,7 @@
     <string name="profile_nameSurnameDscrp">Name Surname</string>
     <string name="profile_emailAddress">belousvladislav7@gmail.com</string>
     <string name="profile_emailDscrp">Email</string>
+    <string name="profile_auth_error">Incorrect login or password</string>
     <string name="profile_birthDate">February 21, 2005</string>
     <string name="profile_birthSign">♓ Pisces</string>
     <string name="profile_goEdit">Go to edit</string>
@@ -65,4 +70,9 @@
     <string name="weather_hour_now">Now</string>
     <string name="weather_day_today">Today</string>
     <string name="weather_day_weekly">Weekly forecast</string>
+    <string name="weather_deleteCity">Delete city</string>
+    <string name="weather_mainCity">Make default</string>
+    <string name="default_notification_channel_id">default_channel_id</string>
+    <string name="fcm_message">Weather Insights</string>
+    <string name="msg_token_fmt">FCM registration Token: %s</string>
 </resources>

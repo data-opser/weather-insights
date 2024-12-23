@@ -16,6 +16,22 @@ class WeatherResponse:
         ]
         return jsonify(weather_data)
 
+    def response_weather_day(record):
+        weather_data = {
+            "temperature_max": round(record.temperature_max, 2) if record.temperature_max is not None else 0,
+            "temperature_min": round(record.temperature_min, 2) if record.temperature_min is not None else 0,
+            "daily_temperature_feels_like": round(record.daily_temperature_feels_like, 2) if record.daily_temperature_feels_like is not None else 0,
+            "wind_speed": round(record.wind_speed, 2) if record.wind_speed is not None else 0,
+            "humidity": round(record.humidity, 2) if record.humidity is not None else 0,
+            "pressure": round(record.pressure, 3) if record.pressure is not None else 0,
+            "clouds_percent": round(record.clouds_percent, 2) if record.clouds_percent is not None else 0,
+            "rain_precipitation": round(record.rain_precipitation, 2) if record.rain_precipitation is not None else 0,
+            "snow_precipitation": round(record.snow_precipitation, 2) if record.snow_precipitation is not None else 0,
+            "sunrise_local_time": record.sunrise_time_local.strftime("%H:%M"),
+            "sunset_local_time": record.sunset_time_local.strftime("%H:%M"),
+        }
+        return weather_data
+
     @staticmethod
     def response_sun_times(record):
         sun_times = {

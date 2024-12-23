@@ -2,6 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/weatherConstraintLayout"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     tools:context=".WeatherFragment"
     android:padding="0dp"
     style="@style/Fragment">
@@ -156,14 +159,47 @@
                         android:nestedScrollingEnabled="false"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
+
+            <Button
+                style="@style/Text"
+                android:id="@+id/setMainCityButton"
+                android:backgroundTint="?attr/weatherMainInertColor"
+                android:text="@string/weather_mainCity"
+                android:textColor="@color/white"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="15dp"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                app:layout_constraintTop_toBottomOf="@+id/tempDayCardView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/deleteCityButton" />
+
+            <com.google.android.material.button.MaterialButton
+                style="@style/Text"
+                android:id="@+id/deleteCityButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@android:color/transparent"
+                android:text="@string/weather_deleteCity"
+                android:textColor="@color/red"
+                app:icon="@drawable/ic_delete"
+                app:iconGravity="start"
+                app:iconPadding="8dp"
+                app:iconTint="@color/red"
+                app:layout_constraintTop_toBottomOf="@+id/tempDayCardView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/setMainCityButton" />
+
             <View
                 android:layout_width="0dp"
                 android:layout_height="1dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="100dp"
                 app:layout_constraintTop_toBottomOf="@+id/tempDayCardView"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:background="@android:color/transparent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

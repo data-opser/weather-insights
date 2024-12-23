@@ -1,5 +1,6 @@
 package com.vladislav.weather_insights.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,7 +22,7 @@ class WeatherDayAdapter : RecyclerView.Adapter<WeatherDayAdapter.WeatherDayViewH
             temperatureRange.max = dayItem.maxTemp - dayItem.minTemp
             temperatureRange.progress = dayItem.maxTemp - dayItem.currentTemp
             temperatureRange.isEnabled = false
-
+            Log.d("wt2",(dayItem.day + "  current: " + dayItem.currentTemp))
             dayMinTextView.text = String.format(Locale.getDefault(), "%d°", dayItem.minTemp)
             dayMaxTextView.text = String.format(Locale.getDefault(), "%d°", dayItem.maxTemp)
         }

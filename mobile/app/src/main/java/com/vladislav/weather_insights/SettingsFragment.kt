@@ -84,7 +84,7 @@ class SettingsFragment : Fragment() {
                 } else {
                     switchNotify.isChecked = false
                     editor.putBoolean("notification", false)
-                    showSettingsDialog()
+                    showNotifyDialog()
                 }
                 editor.apply()
             }
@@ -130,7 +130,7 @@ class SettingsFragment : Fragment() {
         editor.apply()
     }
 
-    private fun showSettingsDialog() {
+    private fun showNotifyDialog() {
         AlertDialog.Builder(myActivity)
             .setTitle("Notification permission")
             .setMessage("To receive notifications, please enable notifications in your settings")

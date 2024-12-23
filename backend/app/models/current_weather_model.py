@@ -77,10 +77,11 @@ class СurrentWeather(db.Model):
             messages = []
 
             for pollutant, value in {
-                "SO2": record.air_pollution_so2,
-                "NO2": record.air_pollution_no2,
-                "CO": record.air_pollution_co,
+                "SO2": record.air_pollution_so2 or 0,
+                "NO2": record.air_pollution_no2 or 0,
+                "CO": record.air_pollution_co or 0,
             }.items():
+
                 level = PollutionThresholds.determine_pollution_level(pollutant, value)
                 pollution_data[pollutant] = [value, level]
 

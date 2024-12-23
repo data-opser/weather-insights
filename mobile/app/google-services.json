@@ -1,1 +1,29 @@
-{"installed":{"client_id":"448584360054-6e76av574rfispp8dn8ub5a3emngbubj.apps.googleusercontent.com","project_id":"weather-insights-440518","auth_uri":"https://accounts.google.com/o/oauth2/auth","token_uri":"https://oauth2.googleapis.com/token","auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs"}}
+{
+  "project_info": {
+    "project_number": "209550526845",
+    "project_id": "weather-insights-3364b",
+    "storage_bucket": "weather-insights-3364b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:209550526845:android:2baa42fcdcbfa5717ca414",
+        "android_client_info": {
+          "package_name": "com.vladislav.weather_insights"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbdYJazqdqhImkvM_kJ3FG_lqTbf2N9T0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
