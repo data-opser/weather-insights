@@ -5,42 +5,39 @@
 
 .notification-city-block {
     display: flex;
-    padding-bottom: 10px;
-    overflow-x: auto;
-    flex-shrink: 1;
-}
-
-.search-status {
-    width: stretch;
-    text-align: center;
+    flex-wrap: wrap;
+    justify-content: start;
+    gap: 10px;
+    overflow-y: auto;
+    height: 100px;
 }
 
 .notification-about-city {
     background-color: #E1F4FF;
-    flex: 0 1 auto; 
-    min-width: 100px; 
-    max-width: 200px; 
+    min-width: 175px;
     padding: 15px;
     border-radius: 1em;
     position: relative;
-    overflow: hidden;
-    margin-right: 10px;
-}
-.notification-about-city:last-child {
-    margin-right: 0;
-}
-.notification-about-city-name {
-    width: 110px;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    box-sizing: border-box;
 }
 
-.notification-about-city p {
-    margin: 0;
+
+
+.notification-about-city-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 110px;
 }
 
 .notification-about-city-time {
     padding-top: 5px;
+    overflow: hidden;
+    width: 110px;
+}
+
+.notification-about-city p {
+    margin: 0;
 }
 
 .close-button {
@@ -92,6 +89,7 @@
     min-width: 130px;
     padding: 10px;
     width: stretch;
+    font-size: 18px;
 }
 
 .notification-date-block .date-input:focus,
@@ -101,7 +99,8 @@
 }
 
 .radio-buttons-block {
-    display: flex;   
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .radio-buttons-block label {
@@ -124,7 +123,8 @@
     border-radius: 0.5em;
     transition: 0.25s ease;
 }
-.radio-buttons-block label:last-child span{
+
+.radio-buttons-block label:last-child span {
     padding: 8px 0px;
 }
 
@@ -153,10 +153,34 @@
     transition: 0.25s ease;
 }
 
-.radio-buttons-block label input:checked ~ span::after {
+.radio-buttons-block label input:checked~span::after {
     background-color: #3998CF;
 }
 
 .user-button.blue {
     background: linear-gradient(135deg, rgb(0, 66, 165) 0%, rgb(0, 41, 87) 100%);
+}
+
+@media only screen and (max-width: 600px) {
+    .notification-about-city {
+        min-width: 130px;
+    }
+
+    .notification-about-city-name {
+        width: 80px;
+    }
+
+    .notification-about-city-time {
+        width: 80px;
+    }
+
+    .user-text-center {
+        font-size: 20px;
+    }
+
+    .notification-date-block,
+    .notification-town-block,
+    .notification-title-block {
+        width: 270px;
+    }
 }
