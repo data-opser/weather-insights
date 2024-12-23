@@ -7,27 +7,32 @@ const Notifications = () => {
       <p className='user-text-center'>Scheduled notifications</p>
       <form>
         <div className="notification-city-block">
-          <div className='notification-about-city'>
-            <p className="notification-about-city-name">апапапапапапап</p>
+          <div className="notification-about-city">
+            <p className="notification-about-city-name">fgfgfgfgfgfgfgfgf</p>
             <p className="notification-about-city-time">25.12.2024</p>
             <RxCross2 className="close-button" />
           </div>
-          <div className='notification-about-city'>
+          <div className="notification-about-city">
             <p className="notification-about-city-name">Kharkiv</p>
             <p className="notification-about-city-time">25.12.2024</p>
             <RxCross2 className="close-button" />
           </div>
-          <div className='notification-about-city'>
+          <div className="notification-about-city">
             <p className="notification-about-city-name">Kharkiv</p>
             <p className="notification-about-city-time">25.12.2024</p>
             <RxCross2 className="close-button" />
           </div>
-          <div className='notification-about-city'>
+          <div className="notification-about-city">
             <p className="notification-about-city-name">Kharkiv</p>
             <p className="notification-about-city-time">25.12.2024</p>
             <RxCross2 className="close-button" />
           </div>
-          <div className='notification-about-city'>
+          <div className="notification-about-city">
+            <p className="notification-about-city-name">Kharkiv</p>
+            <p className="notification-about-city-time">25.12.2024</p>
+            <RxCross2 className="close-button" />
+          </div>
+          <div className="notification-about-city">
             <p className="notification-about-city-name">Kharkiv</p>
             <p className="notification-about-city-time">25.12.2024</p>
             <RxCross2 className="close-button" />
