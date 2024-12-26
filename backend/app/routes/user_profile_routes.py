@@ -126,9 +126,9 @@ def add_user_device():
     return UserDevice.add_user_device(user.user_id, data)
 
 
-@user_profile_bp.route('/delete_user_device/device', methods=['Post'])
+@user_profile_bp.route('/delete_user_device', methods=['Post'])
 @auth_required
 def delete_user_device():
     user = request.current_user
-    device_id = request.args.get('device')
-    return UserDevice.delete_user_device_(user.user_id, device_id)
+    data = request.get_json()
+    return UserDevice.delete_device_by_token_and_user(user.user_id, data)
