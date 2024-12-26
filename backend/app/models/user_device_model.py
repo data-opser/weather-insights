@@ -3,13 +3,7 @@ from datetime import datetime, timezone
 from sqlalchemy.dialects.postgresql import UUID
 import uuid
 from flask import jsonify
-from cryptography.fernet import Fernet
 from app.utils import ErrorHandler
-import os
-
-
-cipher = Fernet(os.getenv('SECRET_KEY_Fernet'))
-
 
 class UserDevice(db.Model):
     __tablename__ = 'user_device'
@@ -31,12 +25,9 @@ class UserDevice(db.Model):
 
     user = db.relationship('User', back_populates='devices')
 
-    def set_device_token(self, device_token):
-        self.device_token = cipher.encrypt(device_token.encode()).decode()
-
     def get_device_token(self):
         if self.device_token:
-            return cipher.decrypt(self.device_token.encode()).decode()
+            return self.device_token
         else:
             return None
 
@@ -72,22 +63,19 @@ class UserDevice(db.Model):
             if not device_token:
                 raise ValueError("Device token is required.")
 
-            encrypted_token = cipher.encrypt(device_token.encode()).decode()
-
             # Check if the device already exists for this user
-            existing_user_device = cls.query.filter_by(user_id=user_id, device_token=encrypted_token).first()
+            existing_user_device = cls.query.filter_by(user_id=user_id, device_token=device_token).first()
             if existing_user_device:
                 raise ValueError("This device is already registered for the user.")
 
             # Check if the device already exists for other user
-            user_device = cls.query.filter_by(device_token=encrypted_token).first()
+            user_device = cls.query.filter_by(device_token=device_token).first()
             if user_device:
                 db.session.delete(user_device)
                 db.session.commit()
 
             # Create a new user device
-            new_device = cls(user_id=user_id, device_info=device_info)
-            new_device.set_device_token(device_token)
+            new_device = cls(user_id=user_id, device_info=device_info, device_token=device_token)
 
             db.session.add(new_device)
             db.session.commit()
@@ -113,10 +101,8 @@ class UserDevice(db.Model):
             if not device_token:
                 raise ValueError("Device token is required.")
 
-            encrypted_token = cipher.encrypt(device_token.encode()).decode()
-
             # Find the device by user_id and token
-            user_device = cls.query.filter_by(user_id=user_id, device_token=encrypted_token).first()
+            user_device = cls.query.filter_by(user_id=user_id, device_token=device_token).first()
             if not user_device:
                 raise ValueError("Device not found for the specified user and token.")
 
