@@ -236,11 +236,7 @@ class ProfileFragment : Fragment() {
 
             }
             googleButton.setOnClickListener {
-                val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                    .requestServerAuthCode("", true)
-                    .requestEmail()
-                    .build()
-
+                (requireActivity() as MainActivity).replaceFragment(GoogleSignInFragment(), "GoogleSignInFragment")
                 setProfileLayout()
             }
         }
@@ -325,4 +321,5 @@ class ProfileFragment : Fragment() {
         if (requestCode == RC_SIGN_IN) {
         }
     }
+
 }

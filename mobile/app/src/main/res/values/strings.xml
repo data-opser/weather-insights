@@ -75,4 +75,13 @@
     <string name="default_notification_channel_id">default_channel_id</string>
     <string name="fcm_message">Weather Insights</string>
     <string name="msg_token_fmt">FCM registration Token: %s</string>
+    <string name="default_web_client_id">448584360054-2stv4ro8rhr3c1r3a31qtjtk0pfdc803.apps.googleusercontent.com</string>
+    <string name="firebase_status_fmt">Firebase UID: %s</string>
+    <string name="firebase_user_management">Firebase User Management</string>
+
+    <string name="google_status_fmt">Google User: %s</string>
+    <string name="google_title_text">Google Sign In</string>
+    <string name="signed_out">Signed Out</string>
+    <string name="desc_firebase_lockup">Firebase logo and name</string>
+    <string name="sign_out">Sign Out</string>
 </resources>
