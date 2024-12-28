@@ -3,6 +3,7 @@ import logo from '../Header/AuthForm/form-weather-icon.png';
 import { BsQrCode } from "react-icons/bs";
 import { LuPhoneCall } from "react-icons/lu";
 import { BsEnvelope } from "react-icons/bs";
+import qrcode from './qrcode.png'
 
 function Footer() {
   return (
@@ -14,7 +15,7 @@ function Footer() {
         </div>
         <div className='mobile-app'>
           <p>Mobile application</p>
-          <BsQrCode className='app-qrcode' />
+          <img className='app-qrcode' src={qrcode} alt="qrcode"></img>
         </div>
         <div className='phone-number'>
           <LuPhoneCall />

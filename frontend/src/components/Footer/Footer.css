@@ -26,6 +26,7 @@
   border-radius: 0.5em;
   padding: 10px;
   box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.231);
+  min-height: 70px;
 }
 
 .phone-number,
@@ -44,8 +45,8 @@
 }
 
 .app-qrcode {
-  width: 50px;
-  height: 50px;
+  width: 70px;
+  height: 70px;
   margin-left: 10px;
 }
 
