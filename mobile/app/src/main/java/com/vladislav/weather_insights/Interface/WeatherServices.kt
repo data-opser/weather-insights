@@ -2,6 +2,7 @@ package com.vladislav.weather_insights.Interface
 
 import com.vladislav.weather_insights.Objects.User
 import com.vladislav.weather_insights.model.CityData
+import com.vladislav.weather_insights.model.FirebaseLoginRequest
 import com.vladislav.weather_insights.model.HoroscopeData
 import com.vladislav.weather_insights.model.LoginRequest
 import com.vladislav.weather_insights.model.UserCityData
@@ -95,4 +96,5 @@ interface WeatherServices {
     @Headers(
         "Content-Type: application/json"
     )
+    fun firebaseLogin(@Body data: FirebaseLoginRequest) : Call<WeatherLogin>
 }

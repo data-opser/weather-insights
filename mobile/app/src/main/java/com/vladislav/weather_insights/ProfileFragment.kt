@@ -47,6 +47,7 @@ import com.vladislav.weather_insights.Retrofit.WeatherAPI
 import com.vladislav.weather_insights.Objects.User
 import com.vladislav.weather_insights.Objects.Weather
 import com.vladislav.weather_insights.databinding.FragmentProfileBinding
+import com.vladislav.weather_insights.model.FirebaseLoginRequest
 import com.vladislav.weather_insights.model.LoginRequest
 import com.vladislav.weather_insights.model.UserCityData
 import com.vladislav.weather_insights.model.UserCityRequest
@@ -395,6 +396,117 @@ class ProfileFragment : BaseFragment() {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "signInWithCredential:success")
                     val user = auth.currentUser
+                    user?.getIdToken(true)?.addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            val token = task.result?.token
+                            if (token != null) {
+                                WeatherApi.firebaseLogin(FirebaseLoginRequest(token)).enqueue(object : Callback<WeatherLogin> {
+                                    override fun onResponse(
+                                        call: Call<WeatherLogin>,
+                                        response: Response<WeatherLogin>
+                                    ) {
+                                        if (response.isSuccessful) {
+                                            response.body()?.let {
+                                                User.Token = it.token
+                                                Firebase.messaging.token.addOnCompleteListener(
+                                                    OnCompleteListener { task ->
+                                                        if (!task.isSuccessful) {
+                                                            Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+                                                            return@OnCompleteListener
+                                                        }
+
+                                                        // Get new FCM registration token
+                                                        val token = task.result
+
+                                                        WeatherApi.addUserDevice(UserDevice(token, "Iphone 24 ultra pro max terabyte")).enqueue(object : Callback<UserCityRequest>{
+                                                            override fun onResponse(
+                                                                call: Call<UserCityRequest>,
+                                                                responce: Response<UserCityRequest>
+                                                            ) {
+
+                                                            }
+
+                                                            override fun onFailure(
+                                                                call: Call<UserCityRequest>,
+                                                                throwable: Throwable
+                                                            ) {
+
+                                                            }
+                                                        })
+
+                                                        Log.d(TAG, token)
+                                                    },
+                                                )
+                                                WeatherApi.getUserCities().enqueue(object : Callback<UserCityData>{
+                                                    override fun onResponse(call: Call<UserCityData>, response: Response<UserCityData>) {
+                                                        if (response.isSuccessful){
+                                                            response.body()?.let { body->
+                                                                User.UserCities = body
+                                                                editor.putString("Token", it.token)
+                                                                editor.apply()
+                                                                for(cityId in User.UserCities!!.user_cities){
+                                                                    WeatherApi.getWeatherFourDays(cityId).enqueue(object : Callback<ArrayList<WeatherDayData>>{
+                                                                        override fun onFailure(call: Call<ArrayList<WeatherDayData>>, t: Throwable) {
+                                                                            Log.d("Error","Error")
+                                                                        }
+
+                                                                        override fun onResponse(call: Call<ArrayList<WeatherDayData>>, response: Response<ArrayList<WeatherDayData>>) {
+                                                                            if (response.isSuccessful) {
+                                                                                response.body()?.let { dayBody ->
+                                                                                    WeatherApi.getWeatherDay(cityId, dayBody[0].date).enqueue(object : Callback<ArrayList<WeatherHourData>>{
+                                                                                        override fun onFailure(call: Call<ArrayList<WeatherHourData>>, t: Throwable) {
+                                                                                            Log.d("Error","Error")
+                                                                                        }
+
+                                                                                        override fun onResponse(call: Call<ArrayList<WeatherHourData>>, response: Response<ArrayList<WeatherHourData>>) {
+                                                                                            if(response.isSuccessful){
+                                                                                                response.body()?.let { hourBody ->
+                                                                                                    Weather.setNewWeatherCityData(cityId, WeatherCityData(dayBody, hourBody))
+
+                                                                                                }
+                                                                                            }
+                                                                                            else{
+                                                                                                Log.e("Response error", "Response error: ${response.errorBody()?.string()}")
+                                                                                            }
+                                                                                        }
+                                                                                    })
+                                                                                }
+                                                                            }
+                                                                            else{
+                                                                                Log.e("Response error", "Response error: ${response.errorBody()?.string()}")
+                                                                            }
+                                                                        }
+                                                                    })
+                                                                }
+                                                                setProfileLayout()
+                                                            }
+                                                        }
+                                                    }
+
+                                                    override fun onFailure(call: Call<UserCityData>, throwable: Throwable) {
+                                                        TODO("Not yet implemented")
+                                                    }
+                                                })
+                                            }
+                                        }
+                                    }
+
+                                    override fun onFailure(call: Call<WeatherLogin>, throwable: Throwable) {
+                                        // Обработка ошибки
+                                        throwable.printStackTrace()
+                                    }
+                                })
+                            } else {
+                                // Обработка случая, когда token == null
+                                Log.e("FirebaseAuth", "Token is null")
+                            }
+                        } else {
+                            // Обработка ошибки получения токена
+                            task.exception?.let { exception ->
+                                Log.e("FirebaseAuth", "Error getting token", exception)
+                            }
+                        }
+                    }
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "signInWithCredential:failure", task.exception)
