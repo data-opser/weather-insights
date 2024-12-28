@@ -14,3 +14,4 @@ operational/airflow/logs/
 *.pyc
 *.env
 backend/venv/
+backend/google-services.json

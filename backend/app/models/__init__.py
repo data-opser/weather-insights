@@ -6,3 +6,4 @@ from app.models.forecast_weather_hour_model import ForecastWeatherHour
 from app.models.forecast_weather_day_model import ForecastWeatherDay
 from app.models.user_scheduled_weather_notification_model import UserScheduledWeatherNotification
 from app.models.user_device_model import UserDevice
+from app.models.horoscope_model import Horoscope

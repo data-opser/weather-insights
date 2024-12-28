@@ -10,6 +10,8 @@
     <color name="black">#FF000000</color>
     <color name="red">#FF0000</color>
 
+    <color name="notify_background">#3EA8FF</color>
+
     <color name="listItemLine_day">#2c2c2c</color>
     <color name="listItemLine_night">#D4E5F4</color>
     <color name="selected_item_day">#E1EEF8</color>
