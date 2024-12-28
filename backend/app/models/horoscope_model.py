@@ -10,16 +10,14 @@ class Horoscope(db.Model):
     __table_args__ = {'schema': 'prod_dbt'}
 
     row_id = Column(BigInteger, primary_key=True)
-    sign_id = Column(BigInteger)  # Assuming int8 maps to BigInteger
+    sign_id = Column(BigInteger)
     sign_name = Column(String)
     prediction = Column(String)
-    prediction_date = Column(String)  # Assuming varchar maps to String
+    prediction_date = Column(String)
 
     @classmethod
     def get_all_predictions(cls):
-        """Fetch all predictions with specific fields."""
         try:
-            # Выполняем запрос с выбором только нужных полей
             predictions = (
                 db.session.query(
                     cls.sign_name,
@@ -27,7 +25,6 @@ class Horoscope(db.Model):
                     cls.prediction
                 ).all()
             )
-            # Преобразуем результат в список словарей
             prediction_list = [{
                 "sign_name": prediction.sign_name,
                 "date": prediction.prediction_date,
