@@ -1,5 +1,6 @@
 package com.vladislav.weather_insights
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.res.ColorStateList
 import android.os.Bundle
@@ -33,6 +34,8 @@ import com.vladislav.weather_insights.model.WeatherHourData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.Locale
 import java.util.Timer
 import java.util.TimerTask
@@ -75,6 +78,7 @@ class WeatherFragment : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("NewApi")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val hourAdapter = WeatherHourAdapter()
@@ -114,7 +118,7 @@ class WeatherFragment : Fragment() {
 
                 for(body in Weather.getWeatherCitiesData[cityId]!!.WeatherDayData){
                     dayAdapter.addDay(
-                        WeatherDay(weatherImageMap[body.weather]!!,body.date,
+                        WeatherDay(weatherImageMap[body.weather]!!,LocalDate.parse(body.date, DateTimeFormatter.ofPattern("yyyy-MM-dd")).dayOfWeek.toString().substring(0,3),
                             Weather.getWeatherCitiesData[cityId]!!.WeatherDayData[0].daily_temperature_feels_like.toDouble().toInt(), body.temperature_min.toDouble().toInt(), body.temperature_max.toDouble().toInt())
                     )
                 }
@@ -130,6 +134,7 @@ class WeatherFragment : Fragment() {
             }
             else {
                 val runnable = object : Runnable {
+                    @SuppressLint("NewApi")
                     override fun run() {
                         if (Weather.getWeatherCitiesData[cityId] != null) {
                             Weather.getWeatherCitiesData[cityId]?.let {
@@ -142,7 +147,8 @@ class WeatherFragment : Fragment() {
 
                                 for(body in Weather.getWeatherCitiesData[cityId]!!.WeatherDayData){
                                     dayAdapter.addDay(
-                                        WeatherDay(weatherImageMap[body.weather]!!,body.date,
+                                        WeatherDay(weatherImageMap[body.weather]!!,
+                                            LocalDate.parse(body.date, DateTimeFormatter.ofPattern("yyyy-MM-dd")).dayOfWeek.toString().substring(0, 3),
                                             Weather.getWeatherCitiesData[cityId]!!.WeatherDayData[0].daily_temperature_feels_like.toDouble().toInt(), body.temperature_min.toDouble().toInt(), body.temperature_max.toDouble().toInt())
                                     )
                                 }
