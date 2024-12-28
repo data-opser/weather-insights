@@ -128,11 +128,14 @@ class User(db.Model, UserMixin):
             user = cls(
                 name=name,
                 email=email,
-                birthday=birthday,
                 google_id=google_id
             )
             db.session.add(user)
             db.session.commit()
+
+            if birthday:
+                user.birthday=birthday
+                db.session.commit()
 
             if refresh_token:
                 user.set_refresh_token(refresh_token)
@@ -145,7 +148,7 @@ class User(db.Model, UserMixin):
             db.session.rollback()
             raise RuntimeError("Database error while user google register") from e
 
-    def add_google_data(self, google_id, refresh_token):
+    def add_google_data(self, google_id, refresh_token=None):
         try:
             self.google_id = google_id
             db.session.commit()

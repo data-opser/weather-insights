@@ -1,6 +1,6 @@
 from app.models import User
 from app import oauth
-from app.utils import ErrorHandler, GoogleUtils, JwtUtils
+from app.utils import ErrorHandler, GoogleUtils
 from flask import redirect, flash, url_for, session, jsonify
 import flask_login
 import os
@@ -70,55 +70,6 @@ def handle_google_callback():
 
         flash('Logged in with Google successfully.', 'success')
         return redirect(os.getenv('FRONTEND_LINK'))
-
-    except ValueError as ve:
-        return ErrorHandler.handle_validation_error(str(ve))
-    except PermissionError as pe:
-        return ErrorHandler.handle_error(pe, message=str(pe), status_code=403)
-    except RuntimeError as re:
-        return ErrorHandler.handle_error(re, message=str(re), status_code=500)
-    except Exception as e:
-        return ErrorHandler.handle_error(
-            e,
-            message="Internal server error during Google login",
-            status_code=500
-        )
-
-
-def google_android_login(data):
-    try:
-        if not data or not data.get('access_token'):
-            raise ValueError("Access token is required")
-
-        user_info = GoogleUtils.get_user_info(data.get('access_token'))
-        if not user_info:
-            raise PermissionError('Failed to fetch user info.')
-
-        birthday = GoogleUtils.fetch_google_birthday(data.get('access_token'))
-        existing_user = User.get_user_by_email(user_info.get('email'))
-
-        if existing_user:
-            if not existing_user.google_id:
-                existing_user.add_google_data(user_info.get('sub'), data.get('refresh_token'))
-                existing_user.verify_email()
-            if not existing_user.birthday:
-                existing_user.update_profile({"birthday": birthday})
-
-            token = JwtUtils.generate_jwt({'user_id': str(existing_user.user_id)})
-        else:
-            data = {
-                'name': user_info.get('given_name'),
-                'email': user_info.get('email'),
-                'birthday': birthday,
-                'google_id': user_info.get('sub'),
-                'refresh_token': data.get('refresh_token'),
-            }
-            user = User.google_register_user(data)
-            user.verify_email()
-
-            token = JwtUtils.generate_jwt({'user_id': str(user.user_id)})
-
-        return jsonify({'message': 'Logged in successfully.', 'token': token}), 200
 
     except ValueError as ve:
         return ErrorHandler.handle_validation_error(str(ve))
