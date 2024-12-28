@@ -28,7 +28,7 @@ def google_callback():
     return google_auth_service.handle_google_callback()
 
 
-@auth_bp.route('/firebase_auth')
+@auth_bp.route('/firebase_auth',  methods=['POST'])
 def firebase_auth():
     data = request.get_json()
     return firebase_auth_service.firebase_auth(data)
