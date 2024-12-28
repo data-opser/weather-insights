@@ -29,7 +29,7 @@ def google_callback():
 
 
 @auth_bp.route('/firebase_auth')
-def google_callback():
+def firebase_auth():
     data = request.get_json()
     return firebase_auth_service.firebase_auth(data)
 
