@@ -2,6 +2,7 @@ package com.vladislav.weather_insights.Interface
 
 import com.vladislav.weather_insights.Objects.User
 import com.vladislav.weather_insights.model.CityData
+import com.vladislav.weather_insights.model.HoroscopeData
 import com.vladislav.weather_insights.model.LoginRequest
 import com.vladislav.weather_insights.model.UserCityData
 import com.vladislav.weather_insights.model.UserCityRequest
@@ -83,4 +84,10 @@ interface WeatherServices {
         "Content-Type: application/json"
     )
     fun addUserDevice(@Body data: UserDevice, @Header("Authorization") token: String? = User.Token) : Call<UserCityRequest>
+
+    @GET("horoscope")
+    @Headers(
+        "Content-Type: application/json"
+    )
+    fun takeHoroscope() : Call<ArrayList<HoroscopeData>>
 }
