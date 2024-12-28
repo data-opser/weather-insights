@@ -90,4 +90,9 @@ interface WeatherServices {
         "Content-Type: application/json"
     )
     fun takeHoroscope() : Call<ArrayList<HoroscopeData>>
+
+    @POST("firebase_auth")
+    @Headers(
+        "Content-Type: application/json"
+    )
 }
