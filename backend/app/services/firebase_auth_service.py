@@ -5,15 +5,15 @@ from app.models import User
 
 def firebase_auth(data):
     try:
-        firebase_uid = data.get('firebase_uid')
-        if not firebase_uid:
-            raise ValueError("firebase_uid is required for firebase authentication.")
+        firebase_id_token = data.get('firebase_id_token')
+        if not firebase_id_token:
+            raise ValueError("firebase_id_token is required for firebase authentication.")
 
-        decoded_firebase_uid = FirebaseUtils.verify_token(firebase_uid)
-        if decoded_firebase_uid:
-            user_email = decoded_firebase_uid.get('email')
-            user_name = decoded_firebase_uid.get('name')
-            user_google_id = decoded_firebase_uid.get('sub')
+        decoded_firebase_id_token = FirebaseUtils.verify_token(firebase_id_token)
+        if decoded_firebase_id_token:
+            user_email = decoded_firebase_id_token.get('email')
+            user_name = decoded_firebase_id_token.get('name')
+            user_google_id = decoded_firebase_id_token.get('sub')
 
             existing_user = User.get_user_by_email(user_email)
 
@@ -35,7 +35,7 @@ def firebase_auth(data):
 
             return  jsonify({'message': 'Firebase logged in successfully.', 'token': token}), 200
         else:
-            raise PermissionError('Invalid token.')
+            raise PermissionError('Invalid firebase_id_token.')
 
     except ValueError as ve:
         return ErrorHandler.handle_validation_error(str(ve))
