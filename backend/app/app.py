@@ -5,13 +5,13 @@ from authlib.integrations.flask_client import OAuth
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail
 from flask_cors import CORS
-# from flask_apscheduler import APScheduler
+from flask_apscheduler import APScheduler
 
 db = SQLAlchemy()
 login_manager = LoginManager()
 oauth = OAuth()
 mail = Mail()
-# scheduler = APScheduler()
+scheduler = APScheduler()
 
 def create_app():
     app = Flask(__name__)
@@ -29,7 +29,7 @@ def create_app():
     login_manager.init_app(app)
     oauth.init_app(app)
     mail.init_app(app)
-    # scheduler.init_app(app)
+    scheduler.init_app(app)
 
     with app.app_context():
         db.create_all()
@@ -40,14 +40,14 @@ def create_app():
     app.register_blueprint(weather_bp)
     app.register_blueprint(horoscope_bp)
 
-    # from app.tasks import send_scheduled_notifications
-    # scheduler.add_job(
-    #     id='scheduled_notifications',
-    #     func=lambda: send_scheduled_notifications(app),
-    #     trigger='interval',
-    #     seconds=30,
-    #     max_instances = 1
-    # )
-    # scheduler.start()
+    from app.tasks import send_scheduled_notifications
+    scheduler.add_job(
+        id='scheduled_notifications',
+        func=lambda: send_scheduled_notifications(app),
+        trigger='interval',
+        seconds=30,
+        max_instances = 1
+    )
+    scheduler.start()
 
     return app
