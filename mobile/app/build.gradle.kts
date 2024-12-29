@@ -56,6 +56,8 @@ dependencies {
     implementation(libs.dotsindicator)
     implementation(libs.androidx.ui.graphics.android)
     implementation(libs.firebase.messaging)
+    implementation(libs.firebase.auth.ktx)
+    implementation(libs.play.services.auth)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

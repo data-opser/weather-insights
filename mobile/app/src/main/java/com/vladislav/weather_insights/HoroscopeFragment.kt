@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.vladislav.weather_insights.Objects.Horoscope
 import com.vladislav.weather_insights.databinding.FragmentHoroscopeBinding
 
 // TODO: Rename parameter arguments, choose names that match
@@ -82,8 +83,8 @@ class HoroscopeFragment : Fragment() {
                 signNoneLayout.visibility = View.VISIBLE
             } else{
                 // Прописуємо інфу для гороскопу
-                signNameTextView.text = getString(R.string.horoscope_sign_name)
-                signInfoTextView.text = getString(R.string.horoscope_sign_descrp)
+                signNameTextView.text = sign
+                signInfoTextView.text = Horoscope.getHoroscope[sign]!!.prediction
             }
         }
     }

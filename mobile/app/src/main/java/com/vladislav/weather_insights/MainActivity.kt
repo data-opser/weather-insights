@@ -29,11 +29,13 @@ import com.google.firebase.messaging.messaging
 import com.vladislav.weather_insights.adapter.CitySearchAdapter
 import com.vladislav.weather_insights.Interface.WeatherServices
 import com.vladislav.weather_insights.Objects.Cities
+import com.vladislav.weather_insights.Objects.Horoscope
 import com.vladislav.weather_insights.Objects.User
 import com.vladislav.weather_insights.Objects.Weather
 import com.vladislav.weather_insights.Retrofit.WeatherAPI
 import com.vladislav.weather_insights.databinding.ActivityMainBinding
 import com.vladislav.weather_insights.model.CityData
+import com.vladislav.weather_insights.model.HoroscopeData
 import com.vladislav.weather_insights.model.WeatherCityData
 import com.vladislav.weather_insights.model.WeatherDayData
 import com.vladislav.weather_insights.model.WeatherHourData
@@ -52,6 +54,23 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WeatherApi = WeatherAPI.retrofitService
+        WeatherApi.takeHoroscope().enqueue(object : Callback<ArrayList<HoroscopeData>>{
+            override fun onResponse(
+                call: Call<ArrayList<HoroscopeData>>,
+                response: Response<ArrayList<HoroscopeData>>
+            ) {
+                if (response.isSuccessful){
+                    response.body()?.let {
+                        Horoscope.setHoroscope = it
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<ArrayList<HoroscopeData>>, throwable: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+        })
         for(cityId in User.UserCities!!.user_cities){
             WeatherApi.getWeatherFourDays(cityId).enqueue(object : Callback<ArrayList<WeatherDayData>>{
                 override fun onFailure(call: Call<ArrayList<WeatherDayData>>, t: Throwable) {

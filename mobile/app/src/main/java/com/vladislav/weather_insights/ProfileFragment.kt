@@ -1,9 +1,11 @@
 package com.vladislav.weather_insights
 
 import android.app.Activity
+import android.app.PendingIntent
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
+import android.content.IntentSender
 import android.content.SharedPreferences.Editor
 import android.content.res.ColorStateList
 import android.graphics.Color
@@ -19,13 +21,22 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.activity.result.IntentSenderRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.cardview.widget.CardView
+import com.google.android.gms.auth.api.identity.GetSignInIntentRequest
+import com.google.android.gms.auth.api.identity.Identity
+import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.auth.auth
 import com.google.firebase.messaging.messaging
 import com.vladislav.weather_insights.Interface.GoogleServices
 import com.vladislav.weather_insights.Interface.WeatherServices
@@ -35,6 +46,7 @@ import com.vladislav.weather_insights.Retrofit.WeatherAPI
 import com.vladislav.weather_insights.Objects.User
 import com.vladislav.weather_insights.Objects.Weather
 import com.vladislav.weather_insights.databinding.FragmentProfileBinding
+import com.vladislav.weather_insights.model.FirebaseLoginRequest
 import com.vladislav.weather_insights.model.LoginRequest
 import com.vladislav.weather_insights.model.UserCityData
 import com.vladislav.weather_insights.model.UserCityRequest
@@ -60,16 +72,23 @@ private const val ARG_PARAM2 = "param2"
  * Use the [ProfileFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class ProfileFragment : Fragment() {
+class ProfileFragment : BaseFragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
     private val RC_SIGN_IN = 1000
+
+    private val signInLauncher = registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { result ->
+        handleSignInResult(result.data)
+    }
+
+    private lateinit var auth: FirebaseAuth
     private lateinit var binding: FragmentProfileBinding
     private lateinit var myActivity: Activity
     private lateinit var editor: Editor
     private lateinit var GoogleAuth: GoogleServices
     private lateinit var WeatherApi: WeatherServices
+    private lateinit var signInClient: SignInClient
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WeatherApi = WeatherAPI.retrofitService
@@ -114,7 +133,8 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         myActivity = requireActivity()
-
+        signInClient = Identity.getSignInClient(requireContext())
+        auth = Firebase.auth
         if(User.Token != null){ //тут якщо у нас користувач вже залогінений був, то одразу профіль видаєм, нікіта
             setProfileLayout()
         }
@@ -236,12 +256,17 @@ class ProfileFragment : Fragment() {
 
             }
             googleButton.setOnClickListener {
-                val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                    .requestServerAuthCode("", true)
-                    .requestEmail()
+                val signInRequest = GetSignInIntentRequest.builder()
+                    .setServerClientId(getString(R.string.default_web_client_id))
                     .build()
 
-                setProfileLayout()
+                signInClient.getSignInIntent(signInRequest)
+                    .addOnSuccessListener { pendingIntent ->
+                        launchSignIn(pendingIntent)
+                    }
+                    .addOnFailureListener { e ->
+                        Log.e(TAG, "Google Sign-in failed", e)
+                    }
             }
         }
     }
@@ -262,7 +287,12 @@ class ProfileFragment : Fragment() {
                             emailTextView.text = User.Profile?.email
                             nameTextView.text = User.Profile?.name
                             birthDateText.text = User.Profile?.birthday
-                            locationTextView.text = Cities.getCityIds[User.UserCities!!.main_city]!!.city + ", " + Cities.getCityIds[User.UserCities!!.main_city]!!.country
+                            try {
+                                locationTextView.text = Cities.getCityIds[User.UserCities!!.main_city]!!.city + ", " + Cities.getCityIds[User.UserCities!!.main_city]!!.country
+                            } catch (e: Exception) {
+
+                            }
+
 
                         }
                     } else {
@@ -274,7 +304,11 @@ class ProfileFragment : Fragment() {
             emailTextView.text = User.Profile?.email
             nameTextView.text = User.Profile?.name
             birthDateText.text = User.Profile?.birthday
-            locationTextView.text = Cities.getCityIds[User.UserCities!!.main_city]!!.city + ", " + Cities.getCityIds[User.UserCities!!.main_city]!!.country
+            try {
+                locationTextView.text = Cities.getCityIds[User.UserCities!!.main_city]!!.city + ", " + Cities.getCityIds[User.UserCities!!.main_city]!!.country
+            } catch (e: Exception) {
+
+            }
         }
 
         profileCardView.visibility = View.VISIBLE
@@ -324,5 +358,160 @@ class ProfileFragment : Fragment() {
 
         if (requestCode == RC_SIGN_IN) {
         }
+    }
+    private fun launchSignIn(pendingIntent: PendingIntent) {
+        try {
+            val intentSenderRequest = IntentSenderRequest.Builder(pendingIntent)
+                .build()
+            signInLauncher.launch(intentSenderRequest)
+        } catch (e: IntentSender.SendIntentException) {
+            Log.e(TAG, "Couldn't start Sign In: ${e.localizedMessage}")
+        }
+    }
+    private fun handleSignInResult(data: Intent?) {
+        // Result returned from launching the Sign In PendingIntent
+        try {
+            // Google Sign In was successful, authenticate with Firebase
+            val credential = signInClient.getSignInCredentialFromIntent(data)
+            val idToken = credential.googleIdToken
+            if (idToken != null) {
+                Log.d(TAG, "firebaseAuthWithGoogle: ${credential.id}")
+                firebaseAuthWithGoogle(idToken)
+            } else {
+                // Shouldn't happen.
+                Log.d(TAG, "No ID token!")
+            }
+        } catch (e: ApiException) {
+            // Google Sign In failed, update UI appropriately
+            Log.w(TAG, "Google sign in failed", e)
+        }
+    }
+    private fun firebaseAuthWithGoogle(idToken: String) {
+        showProgressBar()
+        val credential = GoogleAuthProvider.getCredential(idToken, null)
+        auth.signInWithCredential(credential)
+            .addOnCompleteListener(requireActivity()) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d(TAG, "signInWithCredential:success")
+                    val user = auth.currentUser
+                    user?.getIdToken(true)?.addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            val token = task.result?.token
+                            if (token != null) {
+                                WeatherApi.firebaseLogin(FirebaseLoginRequest(token)).enqueue(object : Callback<WeatherLogin> {
+                                    override fun onResponse(
+                                        call: Call<WeatherLogin>,
+                                        response: Response<WeatherLogin>
+                                    ) {
+                                        if (response.isSuccessful) {
+                                            response.body()?.let {
+                                                User.Token = it.token
+                                                Firebase.messaging.token.addOnCompleteListener(
+                                                    OnCompleteListener { task ->
+                                                        if (!task.isSuccessful) {
+                                                            Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+                                                            return@OnCompleteListener
+                                                        }
+
+                                                        // Get new FCM registration token
+                                                        val token = task.result
+
+                                                        WeatherApi.addUserDevice(UserDevice(token, "Iphone 24 ultra pro max terabyte")).enqueue(object : Callback<UserCityRequest>{
+                                                            override fun onResponse(
+                                                                call: Call<UserCityRequest>,
+                                                                responce: Response<UserCityRequest>
+                                                            ) {
+
+                                                            }
+
+                                                            override fun onFailure(
+                                                                call: Call<UserCityRequest>,
+                                                                throwable: Throwable
+                                                            ) {
+
+                                                            }
+                                                        })
+
+                                                        Log.d(TAG, token)
+                                                    },
+                                                )
+                                                WeatherApi.getUserCities().enqueue(object : Callback<UserCityData>{
+                                                    override fun onResponse(call: Call<UserCityData>, response: Response<UserCityData>) {
+                                                        if (response.isSuccessful){
+                                                            response.body()?.let { body->
+                                                                User.UserCities = body
+                                                                editor.putString("Token", it.token)
+                                                                editor.apply()
+                                                                for(cityId in User.UserCities!!.user_cities){
+                                                                    WeatherApi.getWeatherFourDays(cityId).enqueue(object : Callback<ArrayList<WeatherDayData>>{
+                                                                        override fun onFailure(call: Call<ArrayList<WeatherDayData>>, t: Throwable) {
+                                                                            Log.d("Error","Error")
+                                                                        }
+
+                                                                        override fun onResponse(call: Call<ArrayList<WeatherDayData>>, response: Response<ArrayList<WeatherDayData>>) {
+                                                                            if (response.isSuccessful) {
+                                                                                response.body()?.let { dayBody ->
+                                                                                    WeatherApi.getWeatherDay(cityId, dayBody[0].date).enqueue(object : Callback<ArrayList<WeatherHourData>>{
+                                                                                        override fun onFailure(call: Call<ArrayList<WeatherHourData>>, t: Throwable) {
+                                                                                            Log.d("Error","Error")
+                                                                                        }
+
+                                                                                        override fun onResponse(call: Call<ArrayList<WeatherHourData>>, response: Response<ArrayList<WeatherHourData>>) {
+                                                                                            if(response.isSuccessful){
+                                                                                                response.body()?.let { hourBody ->
+                                                                                                    Weather.setNewWeatherCityData(cityId, WeatherCityData(dayBody, hourBody))
+
+                                                                                                }
+                                                                                            }
+                                                                                            else{
+                                                                                                Log.e("Response error", "Response error: ${response.errorBody()?.string()}")
+                                                                                            }
+                                                                                        }
+                                                                                    })
+                                                                                }
+                                                                            }
+                                                                            else{
+                                                                                Log.e("Response error", "Response error: ${response.errorBody()?.string()}")
+                                                                            }
+                                                                        }
+                                                                    })
+                                                                }
+                                                                setProfileLayout()
+                                                            }
+                                                        }
+                                                    }
+
+                                                    override fun onFailure(call: Call<UserCityData>, throwable: Throwable) {
+                                                        TODO("Not yet implemented")
+                                                    }
+                                                })
+                                            }
+                                        }
+                                    }
+
+                                    override fun onFailure(call: Call<WeatherLogin>, throwable: Throwable) {
+                                        // Обработка ошибки
+                                        throwable.printStackTrace()
+                                    }
+                                })
+                            } else {
+                                // Обработка случая, когда token == null
+                                Log.e("FirebaseAuth", "Token is null")
+                            }
+                        } else {
+                            // Обработка ошибки получения токена
+                            task.exception?.let { exception ->
+                                Log.e("FirebaseAuth", "Error getting token", exception)
+                            }
+                        }
+                    }
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w(TAG, "signInWithCredential:failure", task.exception)
+                }
+
+                hideProgressBar()
+            }
     }
 }

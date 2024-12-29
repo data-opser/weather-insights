@@ -12,7 +12,20 @@
           "package_name": "com.vladislav.weather_insights"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "209550526845-g7oibmu1r0qpn163uaf3fq4s2rsfg314.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vladislav.weather_insights",
+            "certificate_hash": "ccc4efb5550c97c7be43bd53147fe071e5661ce1"
+          }
+        },
+        {
+          "client_id": "209550526845-i9d1attpi1qf1lub3arf4a6n00gjhkk5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAbdYJazqdqhImkvM_kJ3FG_lqTbf2N9T0"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "209550526845-i9d1attpi1qf1lub3arf4a6n00gjhkk5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
