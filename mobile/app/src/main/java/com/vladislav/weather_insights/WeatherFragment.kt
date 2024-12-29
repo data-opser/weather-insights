@@ -13,6 +13,7 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -130,6 +131,7 @@ class WeatherFragment : Fragment() {
                     activity?.theme?.resolveAttribute(R.attr.weatherMainActiveColor, typedValue, true)
                     setMainCityButton.isEnabled = false
                     setMainCityButton.backgroundTintList = ColorStateList.valueOf(typedValue.data)
+                    deleteCityButton.visibility = View.GONE
                 }
             }
             else {
@@ -189,6 +191,7 @@ class WeatherFragment : Fragment() {
                 activity?.theme?.resolveAttribute(R.attr.weatherMainActiveColor, typedValue, true)
                 setMainCityButton.isEnabled = false
                 setMainCityButton.backgroundTintList = ColorStateList.valueOf(typedValue.data)
+                deleteCityButton.visibility = View.GONE
 
                 WeatherApi.setMainUserCity(cityId!!, User.Token).enqueue(object : Callback<UserCityRequest>{
                     override fun onFailure(call: Call<UserCityRequest>, t: Throwable) {
