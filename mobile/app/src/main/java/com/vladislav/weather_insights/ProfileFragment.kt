@@ -38,7 +38,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.auth
 import com.google.firebase.messaging.messaging
-import com.vladislav.weather_insights.GoogleSignInFragment.Companion
 import com.vladislav.weather_insights.Interface.GoogleServices
 import com.vladislav.weather_insights.Interface.WeatherServices
 import com.vladislav.weather_insights.Objects.Cities
