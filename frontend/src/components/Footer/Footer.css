@@ -1,6 +1,81 @@
 .footer {
+  margin: 20px 0px;
+  width: 1300px;
+  display: flex;
+  flex-direction: column;
+  justify-self: center;
+}
+
+.footer .footer-info {
   background: transparent;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin: 0px 20px 0px 20px;
+}
+
+.mobile-app,
+.phone-number,
+.our-email,
+.footer-logo {
+  display: flex;
+  align-items: center;
   justify-content: center;
+  background-color: white;
+  border-radius: 0.5em;
+  padding: 10px;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.231);
+  min-height: 70px;
+}
+
+.phone-number,
+.our-email {
+  height: 40px;
+}
+
+.phone-number p,
+.our-email p,
+.footer-logo p {
+  margin-left: 10px;
+}
+
+.lastblock {
+  text-align: center;
+}
+
+.app-qrcode {
+  width: 70px;
+  height: 70px;
+  margin-left: 10px;
+}
+
+@media only screen and (max-width: 1300px) {
+  .footer {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 1050px) {
+  .footer .footer-info div {
+    flex: 0 0 calc(50% - 10px);
+    box-sizing: border-box;
+    padding: 20px;
+  }
+
+  .phone-number,
+  .our-email {
+    margin-top: 20px;
+  }
+}
+
+
+@media only screen and (max-width: 730px) {
+  .footer .footer-info div {
+    flex: 0 0 100%;
+    padding: 10px;
+  }
+  .mobile-app {
+    margin-top: 20px;
+  }
 }

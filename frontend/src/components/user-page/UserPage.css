@@ -9,7 +9,6 @@
 
 .user,
 .notifications {
-  width: 50%;
   background-color: white;
   height: 100%;
   border-radius: 1em;
@@ -17,15 +16,16 @@
   display: flex;
   flex-direction: column;
   position: relative;
-  align-self: center;
 }
 
 .notifications {
+  width: 60%;
   padding: 20px;
   box-sizing: border-box;
 }
 
 .user {
+  width: 40%;
   align-items: center;
 }
 
