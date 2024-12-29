@@ -16,10 +16,10 @@ DBT_PROFILES_PATH = f"{DBT_PROJECT_PATH}/profiles.yml"
 HOROSCOPE_CLIENT_ID = os.environ['HOROSCOPE_CLIENT_ID'] = Variable.get("HOROSCOPE_CLIENT_ID")
 HOROSCOPE_CLIENT_SECRET = os.environ['HOROSCOPE_CLIENT_SECRET'] = Variable.get("HOROSCOPE_CLIENT_SECRET")
 
-PG_DATABASE = os.environ['PG_DATABASE'] = Variable.get("PG_DATABASE")
-PG_HOST = os.environ['PG_HOST'] = Variable.get("PG_HOST")
-PG_PASSWORD = os.environ['PG_PASSWORD'] = Variable.get("PG_PASSWORD")
-PG_USER = os.environ['PG_USER']= Variable.get("PG_USER")
-PG_PORT = os.environ['PG_PORT'] = Variable.get("PG_PORT")
+PG_DATABASE = os.environ['CREDENTIALS__DATABASE'] = Variable.get("CREDENTIALS__DATABASE")
+PG_HOST = os.environ['CREDENTIALS__HOST'] = Variable.get("CREDENTIALS__HOST")
+PG_PASSWORD = os.environ['CREDENTIALS__PASSWORD'] = Variable.get("CREDENTIALS__PASSWORD")
+PG_USER = os.environ['CREDENTIALS__USERNAME'] = Variable.get("CREDENTIALS__USERNAME")
+PG_PORT = os.environ['CREDENTIALS_PORT'] = Variable.get("CREDENTIALS__PORT")
 
-os.environ['WEATHER_API_KEY']= Variable.get("WEATHER_API_KEY")
+os.environ['WEATHER_API_KEY'] = Variable.get("WEATHER_API_KEY")
