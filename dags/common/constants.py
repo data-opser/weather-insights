@@ -20,6 +20,6 @@ PG_DATABASE = os.environ['CREDENTIALS__DATABASE'] = Variable.get("CREDENTIALS__D
 PG_HOST = os.environ['CREDENTIALS__HOST'] = Variable.get("CREDENTIALS__HOST")
 PG_PASSWORD = os.environ['CREDENTIALS__PASSWORD'] = Variable.get("CREDENTIALS__PASSWORD")
 PG_USER = os.environ['CREDENTIALS__USERNAME'] = Variable.get("CREDENTIALS__USERNAME")
-PG_PORT = os.environ['CREDENTIALS_PORT'] = Variable.get("CREDENTIALS__PORT")
+PG_PORT = os.environ['CREDENTIALS__PORT'] = Variable.get("CREDENTIALS__PORT")
 
 os.environ['WEATHER_API_KEY'] = Variable.get("WEATHER_API_KEY")

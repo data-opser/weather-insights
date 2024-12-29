@@ -19,6 +19,13 @@ from airflow.models import DAG, Variable
 def generate_dbt_dag() -> DAG:
     dbt_project_config = ProjectConfig(
         dbt_project_path=DBT_PROJECT_PATH,
+        env_vars={
+            "PG_HOST": PG_HOST,
+            "PG_USER": PG_USER,
+            "PG_PORT": PG_PORT,
+            "PG_DATABASE": PG_DATABASE,
+            "PG_PASSWORD": PG_PASSWORD,
+        }
     )
 
     dbt_profile_config = ProfileConfig(
@@ -40,14 +47,6 @@ def generate_dbt_dag() -> DAG:
         'operator_args': {
             "dbt_cmd_global_flags": ["--debug"],
             "vars": {"etl_ts": "{{ data_interval_end.strftime('%Y-%m-%d-%H:%M:%S') }}"},
-            "env": {
-                "ENV": AIRFLOW_ENV,
-                "PG_HOST": PG_HOST,
-                "PG_USER": PG_USER,
-                "PG_PORT": PG_PORT,
-                "PG_DATABASE": PG_DATABASE,
-                "PG_PASSWORD": PG_PASSWORD,
-            },
             "install_deps": True
         }
     }
