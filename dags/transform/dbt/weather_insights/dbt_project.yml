@@ -18,8 +18,8 @@ models:
   weather_insights:
     +materialized: table
     +tags: ["transform", "dbt"]
-    current_weather:
-      +tags: "current"
+    weather:
+      +tags: "weather"
 
 seeds:
   weather_insights:

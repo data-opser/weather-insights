@@ -17,3 +17,8 @@ sources:
       - name: air_pollution__list
       - name: air_pollution_forecast
       - name: air_pollution_forecast__list
+
+  - name: horoscope_data
+    schema: horoscope_data
+    tables:
+      - name: horoscope
