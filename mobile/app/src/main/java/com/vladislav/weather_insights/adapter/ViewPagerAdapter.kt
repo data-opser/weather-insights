@@ -23,8 +23,7 @@ import com.vladislav.weather_insights.WeatherFragment
     fun removeFragment(position: Int) {
         if (position in list.indices) {
             list.removeAt(position)
-            notifyItemRemoved(position)
-            notifyItemRangeChanged(position, list.size)
+            notifyItemRemoved(position - 1)
         }
     }
 }
