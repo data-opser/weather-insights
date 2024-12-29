@@ -1,5 +1,5 @@
 weather_insights:
-  target: "{{ 'prod' if env_var('ENV', 'dev') == 'prod' else 'dev' }}"
+  target: "{{ env_var('ENV', 'dev') }}"
   outputs:
     dev:
       type: postgres
