@@ -1,27 +1,13 @@
 import os
 import pandas as pd
-# from dotenv import load_dotenv
 
 import dlt
 from dlt.sources.helpers import requests
 import logging
 
+
 logger = logging.getLogger()
 
-# # Load environment variables
-# load_dotenv()
-# os.environ['CREDENTIALS__DATABASE'] = os.getenv('PG_DATABASE')
-# os.environ['CREDENTIALS__PASSWORD'] = os.getenv('PG_PASSWORD')
-# os.environ['CREDENTIALS__USERNAME'] = os.getenv('PG_USER')
-# os.environ['CREDENTIALS__HOST'] = os.getenv('PG_HOST')
-
-ioconf = [
-    'weather:current_weather',
-    'forecast/hourly:weather_forecast_hourly',
-    'forecast/daily:weather_forecast_daily',
-    'air_pollution:air_pollution',
-    'air_pollution/forecast:air_pollution_forecast'
-]
 
 def fetch_and_load_data(endpoint, table_name):
     cwd = os.getcwd()

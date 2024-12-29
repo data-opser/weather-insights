@@ -2,26 +2,18 @@
 
 from cosmos import ProjectConfig, ProfileConfig, RenderConfig, LoadMode, DbtTaskGroup
 
-import dlt
-from dlt.helpers.airflow_helper import PipelineTasksGroup
-
 from ingest.pull.weather.weather import fetch_and_load_data as weather_pull
 from ingest.pull.horoscope.horoscope import fetch_and_load_data as horoscope_pull
 
 from common.tasks import start_task, end_task
-# from common.utils import name, get_var
-# from common.config.config_tools import render_sql_template
 from common.constants import (DBT_PROJECT_PATH, DBT_PROFILES_PATH, ENV as AIRFLOW_ENV, DAGS_PATH,
                               PG_HOST, PG_USER, PG_PORT, PG_DATABASE, PG_PASSWORD)
-# from dag_factory import DLT_TASKS
-# from dag_factory.models import Dag
+
 from airflow.utils.task_group import TaskGroup
 from airflow.operators.python import PythonOperator
-# from airflow.utils.task_group import TaskGroup
+
 from airflow.utils.dates import days_ago
 from airflow.models import DAG, Variable
-
-# from ingest.common.utils import inject_creds
 
 
 def generate_dbt_dag() -> DAG:
